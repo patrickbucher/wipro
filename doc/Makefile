@@ -1,7 +1,7 @@
 all: document.pdf
 
 document.pdf: document.tex document.bbl document.toc
-	xelatex document.tex
+	xelatex document.tex && xelatex document.tex
 
 document.bbl: document.aux document.bib
 	bibtex document
@@ -13,4 +13,4 @@ document.aux:
 	xelatex document.tex
 
 clean:
-	rm -f *.bbl *.toc *.aux *.out *.blg *.log *.lof *.lot
+	rm -f *.bbl *.toc *.aux *.out *.blg *.log *.lof *.lot *.lol *.lol
