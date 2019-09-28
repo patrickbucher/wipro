@@ -1,0 +1,14 @@
+digraph {
+	rankdir=LR;
+	node [fontname="DejaVu Sans", fontsize="12pt"];
+	edge [fontname="DejaVu Sans", fontsize="12pt"];
+
+	"Projektstart" [shape="point"];
+	"MS1" [shape="diamond"];
+	"MS2" [shape="diamond"];
+	"MS3" [shape="diamond"];
+	"MS4" [shape="diamond"];
+
+	"Projektstart" -> "MS1" [label="Initialisierungsphase"];
+	"MS1" -> "MS"
+}
