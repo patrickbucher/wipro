@@ -1,0 +1,31 @@
+- alle Dokumente
+	- Untertitel "Wirtschaftsprojekt" ersetzen mit "Wirtschaftsprojekt 'px (PEAX Command Line Client)'"
+- Rahmenplan
+	- Titel ändern ("Projektplan" -> "Rahmenplan")
+	- grafisch ausarbeiten (Zeitstrahl; Phasen und Meilensteine)
+	- Projektziele einarbeiten (textuell beschreiben)
+		- 2 Ziele iterativ ("Softwaredokumentation" und "lauffähiger Prototyp")
+		- 2 Ziele konkret ("Teststrategie, Testdrehbuch, Testbericht" und "Abschlussbericht")
+	- Zeitaufwände abschätzen (in welchem Zeitraum soll ca. wie viel Arbeit geleistet werden)
+	- keine Scrum-Begriffe verwenden (Sprints -> Realisierungsphase)
+		- Phasen: Analyse, Konzeption, Realisierung (fachliche Tätigkeiten)
+	- Konzeption erwähnen (Woche 3?)
+- Meilensteinplan
+	- Artefakte erwähnen
+	- Meilensteine als "Knacknüsse" zu verstehen (fachliche Ziele: was ist wann lauffähig?)
+	- 3-4 Meilensteine
+		- nach Initialisierungsphase (Woche 4)
+			- Analyse
+			- Grobkonzept
+			- Backlog
+			- SysSpec
+			- Testplan/Teststrategie
+		- nach Sprint 2 und 4 (Wochen 8 und 13)
+		- Projektabgabe (Woche 14)
+- Projektstrukturplan (neu): evtl. erstellen mit Arbeitspaketen (nachdem Backlog steht)
+- Meilensteinberichte (zukünftig)
+	- soll/ist von Aufwand einander gegenüberstellen
+- Dokumentation ("Bericht")
+	- Kontextdiagramm und SysSpec gehören in den Anhang
+	- Hauptteil ca. 15 Seiten
+- Bis Sonntag Abend Rahmenplan und Meilensteinplan an Roger Diehl schicken
