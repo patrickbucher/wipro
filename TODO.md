@@ -1,0 +1,17 @@
+- Evaluation Programmiersprache abschliessen
+- Problemstellung analysieren
+- Testkonzept erarbeiten
+	- agile Testquadranten
+- SysSpec
+	- Systemübersicht (Komponentendiagramm)
+	- Kontextdiagramm
+	- Begriffe, Abkürzungen und Referenzen
+	- Architektur- und Design-Entscheide
+		- Modelle und Sichten
+		- Daten (Mengengerüst, Strukturen)
+	- Konfiguration
+	- Schnittstellen
+		- externe
+		- interne
+	- Environment-Anforderungen
+- Backlog erstellen und priorisieren
