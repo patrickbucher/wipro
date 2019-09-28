@@ -13,4 +13,6 @@ author: Patrick Bucher
 | So, 22.09.2019 |     1.0 | Dokumentation | Notizen zur Technologie-Evaluation (Programmiersprache)                 |
 | Di, 24.09.2019 |     1.0 | Dokumentation | Literraturrecherche (Architektur, Kommandozeile, Unix-Prinzip, Testing) |
 | Do, 26.09.2019 |     1.0 | Projekt       | Rahmen- und Meilensteinplan vorbereitet; Meilensteinbericht 1 entworfen |
-|                | **6.5** | **Total**     |                                                                         |
+| Fr, 27.09.2019 |     1.0 | Projekt       | Besprechung Rahmen- und Meilenstienplan mit Betreuer                    |
+| Fr, 27.09.2019 |     1.0 | Projekt       | Vorbereitung auf Workshop (Slides erstellen, Teststrategie skizzieren)  |
+|                | **8.5** | **Total**     |                                                                         |
