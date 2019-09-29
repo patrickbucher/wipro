@@ -16,4 +16,5 @@ author: Patrick Bucher
 | Fr, 27.09.2019 |      1.0 | Projekt       | Besprechung Rahmen- und Meilenstienplan mit Betreuer                    |
 | Fr, 27.09.2019 |      1.0 | Projekt       | Vorbereitung auf Workshop (Slides erstellen, Teststrategie skizzieren)  |
 | Sa, 28.09.2019 |      2.0 | Projekt       | Projektplan gemäss Besprechung überarbeitet                             |
-|                | **10.5** | **Total**     |                                                                         |
+| So, 29.09.2019 |      1.0 | Recherche     | Recherche zur sicheren Verwahrung von Tokens angestellt                 |
+|                | **11.5** | **Total**     |                                                                         |
