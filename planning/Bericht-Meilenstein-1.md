@@ -1,6 +1,6 @@
 ---
 title: Bericht Meilenstein 1
-subtitle: Wirtschaftsprojekt
+subtitle: 'Wirtschaftsprojekt «px: PEAX Command Line Client»'
 author: Patrick Bucher
 ---
 
