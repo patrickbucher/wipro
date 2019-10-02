@@ -15,8 +15,9 @@ author: Patrick Bucher
 | Do, 26.09.2019 |      1.0 | Projekt       | Rahmen- und Meilensteinplan vorbereitet; Meilensteinbericht 1 entworfen |
 | Fr, 27.09.2019 |      1.0 | Projekt       | Besprechung Rahmen- und Meilenstienplan mit Betreuer                    |
 | Fr, 27.09.2019 |      1.0 | Projekt       | Vorbereitung auf Workshop (Slides erstellen, Teststrategie skizzieren)  |
+| Sa, 28.09.2019 |      2.5 | Projekt       | Workshop Vorgehensmodell                                                |
 | Sa, 28.09.2019 |      2.0 | Projekt       | Projektplan gemäss Besprechung überarbeitet                             |
 | So, 29.09.2019 |      1.0 | Recherche     | Recherche zur sicheren Verwahrung von Tokens angestellt                 |
 | Mo, 30.09.2019 |      1.0 | Recherche     | Library für betriebssystemweiten Keystore ausprobiert                   |
 | Mi, 02.10.2019 |      0.5 | Dokumentation | Struktur der Dokumentation gemäss Dokument «Aufbau Bericht» angepasst   |
-|                | **13.0** | **Total**     |                                                                         |
+|                | **15.5** | **Total**     |                                                                         |
