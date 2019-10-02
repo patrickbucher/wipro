@@ -18,4 +18,5 @@ author: Patrick Bucher
 | Sa, 28.09.2019 |      2.0 | Projekt       | Projektplan gemäss Besprechung überarbeitet                             |
 | So, 29.09.2019 |      1.0 | Recherche     | Recherche zur sicheren Verwahrung von Tokens angestellt                 |
 | Mo, 30.09.2019 |      1.0 | Recherche     | Library für betriebssystemweiten Keystore ausprobiert                   |
-|                | **12.5** | **Total**     |                                                                         |
+| Mi, 02.10.2019 |      0.5 | Dokumentation | Struktur der Dokumentation gemäss Dokument «Aufbau Bericht» angepasst   |
+|                | **13.0** | **Total**     |                                                                         |
