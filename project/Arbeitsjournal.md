@@ -20,4 +20,5 @@ author: Patrick Bucher
 | So, 29.09.2019 |      1.0 | Recherche     | Recherche zur sicheren Verwahrung von Tokens angestellt                 |
 | Mo, 30.09.2019 |      1.0 | Recherche     | Library für betriebssystemweiten Keystore ausprobiert                   |
 | Mi, 02.10.2019 |      0.5 | Dokumentation | Struktur der Dokumentation gemäss Dokument «Aufbau Bericht» angepasst   |
-|                | **15.5** | **Total**     |                                                                         |
+| Mi, 02.10.2019 |      0.5 | Dokumentation | Teststrategie erläutern                                                 |
+|                | **16.0** | **Total**     |                                                                         |
