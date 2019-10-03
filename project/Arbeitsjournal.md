@@ -20,6 +20,7 @@ author: Patrick Bucher
 | So, 29.09.2019 |      1.0 | Recherche     | Recherche zur sicheren Verwahrung von Tokens angestellt                 |
 | Mo, 30.09.2019 |      1.0 | Recherche     | Library für betriebssystemweiten Keystore ausprobiert                   |
 | Mi, 02.10.2019 |      0.5 | Dokumentation | Struktur der Dokumentation gemäss Dokument «Aufbau Bericht» angepasst   |
-| Mi, 02.10.2019 |      0.5 | Dokumentation | Teststrategie erläutert                                                 |
+| Mi, 02.10.2019 |      0.5 | Dokumentation | Teststrategie grob skizziert                                            |
 | Do, 03.10.2019 |      0.5 | Dokumentation | Verschiedene Aspekte im Zusammenhang mit der PEAX-Umgebung analysiert   |
-|                | **16.5** | **Total**     |                                                                         |
+| Do, 03.10.2019 |      1.0 | Dokumentation | Teststrategie: Agile Testing Quadrants Q1 und Q2 ausgearbeitet          |
+|                | **17.5** | **Total**     |                                                                         |
