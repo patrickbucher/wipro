@@ -1,3 +1,48 @@
 \section{Problemstellung}
 
-TODO: Analyse des Projektauftrags
+\subsection{Analyse des Projektauftrags}
+
+Die Umgebung der PEAX API einerseits
+
+\subsubsection{Endpoints}
+
+Eine RESTful-API besteht aus einer Reihe sogenannter \textit{Endpoints}, d.h Pfade zu Ressourcen, die abgefragt und/oder manipuliert werden können.
+
+\subsubsection{HTTP-Methoden}
+
+Ein Endpoint kann über eine oder mehrere HTTP-Methoden angesprochen werden \cite[Abschnitt 4.3]{RFC7231}. Im Kontext der PEAX API sind folgende Methoden relevant:
+
+\begin{itemize}
+	\item \texttt{GET}
+	\item \texttt{HEAD}
+	\item \texttt{POST}
+	\item \texttt{PUT}
+	\item \texttt{DELETE}
+	\item \texttt{OPTIONS}
+	\item \texttt{PATCH} \cite{RFC5789}
+\end{itemize}
+
+\subsubsection{HTTP Status-Codes}
+
+Eine Antwort auf eine HTTP-Anfrage enthält jeweils einen Status-Code \cite[Abschnitt 6]{RFC7231}. Bei der PEAX API werden u.a. folgende Status-Codes häufig verwendet:
+
+\begin{itemize}
+	\item \texttt{200 OK}: Die Anfrage hat funktioniert.
+	\item \texttt{201 Created}: Die Anfrage hat funktioniert, und dabei wurde eine neue Ressource erzeugt.
+	\item \texttt{204 No Content}: Die Anfrage konnte ausgeführt werden, liefert aber keinen Inhalt zurück (etwa in einer Suche mit einem Begriff, zu dem keine Ressource gefunden werden kann).
+	\item \texttt{204 Partial Content}: Der zurückgelieferte Payload repräsentiert nur einen Teil der gefundenen Informationen. Wird etwa beim Paging eingesetzt.
+	\item \texttt{400 Bad Request}: Die Anfrage wurde fehlerhaft gestellt (ungültige oder fehlende Feldwerte).
+	\item \texttt{401 Unauthorized}: Der Benutzer ist nicht autorisiert, d.h. nicht eingeloggt im weitesten Sinne.
+	\item \texttt{403 Forbidden}: Der Benutzer ist zwar eingeloggt, hat aber keine Berechtigung mit der gewählten Methode auf die jeweilige Resource zuzugreifen.
+	\item \texttt{404 Not Found}: Die Resource wurde nicht gefunden; deutet auf eine fehlerhafte URL hin.
+	\item \texttt{405 Method Not Allowed}: Die Resource unterstützt die gewählte Methode nicht.
+	\item \texttt{415 Unsupported Media Type}: Das Format des mitgelieferten Payloads wird nicht unterstützt. In der PEAX API sind dies etwa Dokumentformate, die beim Hochladen nicht erlaubt sind (z.B. \texttt{.exe}-Dateien).
+	\item \texttt{500 Internal Server Error}: Obwohl die Anfrage korrekt formuliert und angenommen worden ist, kam es bei der Verarbeitung derselben zu einem serverseitigem Fehler.\footnote{In der PEAX API kommt es gelegentlich zu solchen Fehlern, die stattdessen mit dem Status \texttt{400 Bad Request} und einer aussagekräftigen Fehlermeldung beantwortet werden müssten. Wird z.B. bei der Einlieferung von Dokument-Metadaten eine syntaktisch fehlerhafte IBAN mitgegeben, tritt der Fehler erst bei der internen Verarbeitung, und nicht schon bei der Validierung der Anfrage auf. Hier besteht Handlungsbedarf aufseiten der Backend-Entwicklung.}
+	\item \texttt{380 Unknown}: Dieser Status ist nicht Teil der HTTP-Spezifikation, wird aber nach einem Login-Versuch verwendet, wenn eine Zwei-Faktor-Authentifizierung (SMS, One Time Password) verlangt wird, und ist somit für die vorliegende Arbeit von hoher Relevanz.
+\end{itemize}
+
+\subsubsection{Umgebungen}
+\subsubsection{Arten von Parametern}
+\subsubsection{Benutzer}
+\subsubsection{Betriebssysteme}
+\subsubsection{Shells} 
