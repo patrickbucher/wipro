@@ -24,4 +24,5 @@ author: Patrick Bucher
 | Do, 03.10.2019 |      0.5 | Dokumentation | Verschiedene Aspekte im Zusammenhang mit der PEAX-Umgebung analysiert   |
 | Do, 03.10.2019 |      1.0 | Dokumentation | Teststrategie: Agile Testing Quadrants Q1 und Q2 ausgearbeitet          |
 | Fr, 04.10.2019 |      0.5 | Projekt       | Besprechung Projektplan und -fortschritt mit Betreuer                   |
-|                | **18.0** | **Total**     |                                                                         |
+| Sa, 05.10.2019 |      1.0 | Dokumentation | Kontextdiagramm erstellt                                                |
+|                | **19.0** | **Total**     |                                                                         |

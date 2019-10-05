@@ -1,0 +1,47 @@
+digraph kontextdiagramm {
+
+	rankdir="LR";
+	dpi="150";
+
+	graph [fontname="DejaVu Sans", nodesep="0.6"];
+	node [fontname="DejaVu Sans"];
+	edge [fontname="DejaVu Sans"];
+
+	subgraph cluster_systemkontext {
+		fontname="DejaVu Sans";
+		label="Systemkontext";
+
+		"IDP" [shape="ellipse"];
+		"IDP API" [shape="box"];
+
+		"Backend" [shape="ellipse"];
+		"User API" [shape="box"];
+		"Delivery API" [shape="box"];
+		"Admin API" [shape="box"];
+
+		"px" [shape="doublecircle",style="filled",fillcolor="black",fontcolor="white",margin="0.3"];
+	}
+
+	"Frontend (Portal)" [shape="ellipse"];
+	"Frontend (Backoffice)" [shape="ellipse"];
+
+	"Portal User" [shape="plain"];
+	"Backoffice User" [shape="plain"];
+	"Scanning Center" [shape="plain"];
+	"Developer" [shape="plain"];
+
+	"IDP API" -> "IDP";
+	"Frontend (Portal)" -> "IDP API";
+	"Frontend (Backoffice)" -> "IDP API";
+	"Scanning Center" -> "IDP API";
+
+	"Portal User" -> "Frontend (Portal)" -> "User API" -> "Backend";
+	"Backoffice User" -> "Frontend (Backoffice)" -> "Admin API" -> "Backend";
+	"Scanning Center" -> "Delivery API" -> "Backend";
+
+	"Developer" -> "px";
+	"px" -> "IDP API";
+	"px" -> "User API";
+	"px" -> "Admin API";
+	"px" -> "Delivery API";
+}
