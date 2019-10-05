@@ -23,4 +23,5 @@ author: Patrick Bucher
 | Mi, 02.10.2019 |      0.5 | Dokumentation | Teststrategie grob skizziert                                            |
 | Do, 03.10.2019 |      0.5 | Dokumentation | Verschiedene Aspekte im Zusammenhang mit der PEAX-Umgebung analysiert   |
 | Do, 03.10.2019 |      1.0 | Dokumentation | Teststrategie: Agile Testing Quadrants Q1 und Q2 ausgearbeitet          |
-|                | **17.5** | **Total**     |                                                                         |
+| Fr, 04.10.2019 |      0.5 | Projekt       | Besprechung Projektplan und -fortschritt mit Betreuer                   |
+|                | **18.0** | **Total**     |                                                                         |
