@@ -3,12 +3,12 @@ digraph kontextdiagramm {
 	rankdir="LR";
 	dpi="150";
 
-	graph [fontname="DejaVu Sans", nodesep="0.6"];
-	node [fontname="DejaVu Sans"];
-	edge [fontname="DejaVu Sans"];
+	graph [fontname="Nimbus Sans", nodesep="0.6"];
+	node [fontname="Nimbus Sans"];
+	edge [fontname="Nimbus Sans"];
 
 	subgraph cluster_systemkontext {
-		fontname="DejaVu Sans";
+		fontname="Nimbus Sans";
 		label="Systemkontext";
 
 		"IDP" [shape="ellipse"];

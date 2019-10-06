@@ -1,6 +1,6 @@
-PDF_PARAMS=-s --pdf-engine=xelatex -V documentclass=scrartcl -V papersize=a4 -V lang=de -V fontsize=11pt -V geometry=left=2cm,right=2cm,top=2cm,bottom=4cm
-PDF_PARAMS_LANDSCAPE=-s --pdf-engine=xelatex -V documentclass=scrartcl -V papersize=a4 -V lang=de -V fontsize=11pt -V geometry=left=2cm,right=2cm,top=2cm,bottom=4cm,landscape
-FONT_PARAMS=-V mainfont="DejaVu Serif" -V sansfont="DejaVu Sans" -V monofont="DejaVu Sans Mono"
+PDF_PARAMS=-s --pdf-engine=xelatex -V documentclass=scrartcl -V papersize=a4 -V lang=de -V fontsize=11pt
+PDF_PARAMS_LANDSCAPE=-s --pdf-engine=xelatex -V documentclass=scrartcl -V papersize=a4 -V lang=de -V fontsize=11pt -V geometry=landscape
+FONT_PARAMS=-V mainfont="Nimbus Roman" -V sansfont="Nimbus Sans" -V monofont="Nimbus Mono PS"
 DATE=-V date="`date +'%d.%m.%Y'`"
 
 all: Projektplan.pdf Arbeitsjournal.pdf Rahmenplan.pdf Meilensteinplan.pdf Bericht-Meilenstein-1.pdf
