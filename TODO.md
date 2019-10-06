@@ -1,7 +1,5 @@
 - Evaluation Programmiersprache abschliessen
 - Problemstellung analysieren
-- Testkonzept erarbeiten
-	- agile Testquadranten
 - SysSpec
 	- Systemübersicht (Komponentendiagramm)
 	- Kontextdiagramm

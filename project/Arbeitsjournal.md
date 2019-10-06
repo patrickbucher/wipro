@@ -25,4 +25,5 @@ author: Patrick Bucher
 | Do, 03.10.2019 |      1.0 | Dokumentation | Teststrategie: Agile Testing Quadrants Q1 und Q2 ausgearbeitet          |
 | Fr, 04.10.2019 |      0.5 | Projekt       | Besprechung Projektplan und -fortschritt mit Betreuer                   |
 | Sa, 05.10.2019 |      1.0 | Dokumentation | Kontextdiagramm erstellt                                                |
-|                | **19.0** | **Total**     |                                                                         |
+| So, 06.10.2019 |      1.5 | Dokumentation | Teststrategie fertig ausformuliert                                      |
+|                | **20.5** | **Total**     |                                                                         |

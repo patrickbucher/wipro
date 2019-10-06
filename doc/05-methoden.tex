@@ -43,8 +43,23 @@ Das Schreiben von Skripts ist meistens ein Prozess, dem üblicherweise mehrere m
 
 \subsubsection{Q3: manuell}
 
-TODO: Usability und User Acceptance Testing (durch Mitarbeiter)
+Nach jedem Sprint erhalten die Entwickler bei PEAX Zugang zum aktuellen Stand der Software mit einem Changelog. Sie haben nun eine Woche Zeit, sich mit den neuen Features vertraut zu machen, und auszuprobieren, ob sich die Software wie gewünscht verhält.
+
+Hier geht es weniger um die Korrektheit gemäss Spezifikation (Akzeptanzkriterien in den User Stories), welche bereits durch Tests in Q1 und Q2 gewährleistet werden sollte, sondern um \textit{User Acceptance Tests}. Hiermit wird geprüft, ob das Inkrement die Bedürfnisse der Benutzer erfüllt und ihren Zielen dient. «Another kind of acceptance testing is \textit{user acceptance testing}. Commonly used in Agile environments, user acceptance testing (UAT) checks that the system meets the goals of the users and operates in a manner acceptable to them \cite[p. 85]{testing}.
+
+Auch soll im Rahmen dieser Tests die \textit{Usability} des Inkrements überprüft werden. Stossen mehrere Tester auf die gleichen Probleme? Wurde ein Feature (z.B. ein Subcommand) schlecht benannt, sodass dessen Semantik unklar ist? Ist die angebotene Hilfe-Funktion zu einem Befehl unklar oder schlecht formuliert?
+
+Die Tests in Q3 sind jeweils in der ersten Wochenhälfte nach einem Sprint durchzuführen, sodass die Rückmeldungen für die Planung des nächsten Sprints, der in der darauffolgenden Woche startet, berücksichtigt werden kann.
 
 \subsubsection{Q4: Tools}
 
-TODO: Benchmarks, Linter
+Für die Qualitätssicherung können verschiedene Werkzeuge zum Einsatz kommen:
+
+\begin{description}
+	\item[Benchmarks]: Bieten sich bei der Implementierung einer performancekritischen Funktion mehrere Varianten an, ist die bessere Variante mithilfe von Benchmarks zu bestimmen. Die integrierte Benchmark-Funktion des \texttt{go}-Tools\footnote{\texttt{go test -bench=[pattern]}}, die eine Funktion so oft laufen lässt, bis eine statistisch relevante Aussage über deren Performance gemacht werden kann, ist hierzu völlig ausreichend \cite[p. 321]{gopl}.
+	\item[Profiling]: Im Profiling geht es darum, die kritischen Stellen im Code im Bezug auf Rechenzeit, Speicherverbrauch und blockierende Operationen zu ermitteln, um Aufgrund dieser Erkenntnis effektive Optimierungen am Code vornehmen zu können (Flaschenhalsoptimierung). Hierzu bietet das \texttt{go}-Tool\footnote{\texttt{go test -cpuprofile/-memprofile/-blockprofile=[Ausgabedatei]}} wiederum sehr mächtige Werkzeuge out-of-the-box an \cite[p. 324]{gopl}.
+	\item[Quellcodeanalyse]: Kompilierbarer und korrekter Quellcode ist nicht automatisch auch guter Quellcode im Bezug auf Klarheit, Einfachheit, Eleganz und Best Practices. Beispielsweise sollen nach Möglichkeit keine veralteten und unsicheren APIs verwendet werden. Exportierte Funktionen, d.h. die öffentliche Schnittstelle eines Moduls, muss dokumentiert sein. Hierzu gibt es einerseits das Tool \texttt{go vet}\footnote{Vet examines Go source code and reports suspicious constructs, such as
+		Printf calls whose arguments do not align with the format string.}, das zum Lieferumfang von Go gehört, und potenzielle Fehler im Code meldet. Das Zusatztool \texttt{golint}\footnote{\url{https://github.com/golang/lint}} meldet stilistische Unschönheiten im Code.
+\end{description}
+
+Da es bei diesen Tools nicht um kategorische Qualitätskriterien (richtig oder falsch), sondern eher um kontinuierliche (schnell/langsam, hoher/tiefer Speicherverbrauch, hohe/tiefer Quellcodequalität) handelt, die einer subjektiven Interpretation bedürfen, sollen diese Tools nicht Teil der CI-Pipeline sein, sondern kontinuierlich (\texttt{go vet} und \texttt{golint}) und bei konkretem Bedarf (Benchmarking, Profiling) im Entwicklungsprozess eingesetzt werden. Um eine gewisse Quellcodeanalyse gewährleisten zu können, ist die Ausgabe von \texttt{go vet} und \texttt{golint} am Ende eines jeden Sprints summarisch zu dokumentieren.\footnote{Da die Ausformulierung von Rechtfertigungen oftmals anstrengender ist als die notwendigen Korrekturen am Code vorzunehmen, ist diese Massnahme als Anreiz zu verstehen, die erhaltenen Warnungen zu behandeln statt zu ignorieren.}
