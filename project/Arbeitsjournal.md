@@ -29,4 +29,5 @@ author: Patrick Bucher
 | So, 06.10.2019 |      1.0 | Recherche     | Recherche zu Testing und Programmiersprachen (Go und Rust)               |
 | So, 06.10.2019 |      1.0 | Dokumentation | Evaluation Programmiersprache abgeschlossen                              |
 | So, 06.10.2019 |      0.5 | Dokumentation | Umstellung auf kompakte Nimbus-Schriftartenfamilie (Dokumente, Grafiken) |
-|                | **23.0** | **Total**     |                                                                          |
+| So, 06.10.2019 |      1.0 | Projekt       | Erarbeitung Backlog und Formulierung der User Stories                    |
+|                | **24.0** | **Total**     |                                                                          |
