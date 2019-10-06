@@ -1,5 +1,3 @@
-- alle Dokumente
-	- Untertitel "Wirtschaftsprojekt" ersetzen mit "Wirtschaftsprojekt 'px (PEAX Command Line Client)'"
 - Rahmenplan
 	- Titel ändern ("Projektplan" -> "Rahmenplan")
 	- grafisch ausarbeiten (Zeitstrahl; Phasen und Meilensteine)
