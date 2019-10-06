@@ -24,7 +24,8 @@ author: Patrick Bucher
 |   | Generische `PATCH`-Schnittstelle                        | offen                   |
 |   | Ausführung von Befehlen für mehrere Umgebungen          | offen                   |
 |   | Fortschrittsanzeige bei längeren Vorgängen              | offen                   |
-|   | Ausgabe von Login-Informationen                         | offen                   |
+|   | Ausgabe von Tokens                                      | offen                   |
+|   | Inspektion von Tokens                                   | offen                   |
 
 # User Stories
 
