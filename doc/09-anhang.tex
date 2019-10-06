@@ -2,12 +2,32 @@
 
 \subsection{Systemspezifikation}
 
+\subsubsection{Systemkontext}
+
 \begin{figure}
 	\centering
 	\includegraphics[width=\linewidth]{pics/kontextdiagramm.png}
 	\caption{Kontextdiagramm: \texttt{px} als der Gegenstand der Arbeit innerhalb des Systemkontexts}
 	\label{fig:kontextdiagramm}
 \end{figure}
+
+Im Kontextdiagramm (\imgref{fig:kontextdiagramm}) wird die zu entwickelnde Komponente \texttt{px} im Systemkontext von PEAX dargestellt. Andere Komponenten sind als Ellipsen, Schnittstellen als Rechtecke dargestellt. Ausserhalb vom Systemkonzexts befindet sich die irrelevante Umgebung (d.h. die Frontend-Anwendungen). Die im Kontextdiagramm verwendeten Begriffe haben folgende Bedeutungen:
+
+\begin{itemize}
+	\item \texttt{px}: Der PEAX Command Line Client (Gegenstand der vorliegenden Arbeit)
+	\item Developer: Ein Softwareentwickler (im weitesten Sinne) bei PEAX, der \texttt{px} verwendet.
+	\item Backoffice User: Ein PEAX-Angestellter mit administrativen Befugnissen (Benutzerverwaltung).
+	\item Portal User: Ein Benutzer des PEAX-Portals (Kunde).
+	\item Scanning Center: Zulieferfirma, welche die umgeleitete Papierpost der PEAX-Kunden erhält, diese einscannt und dem betreffenden Kunden ins Portal stellt.
+	\item Frontend (Backoffice): Ein Web-GUI für administrative Tätigkeiten zum internen Gebrauch.
+	\item Frontend (Portal): Ein Web-GUI für die Kunden von PEAX (das eigentliche Portal).
+	\item Admin API: RESTful API für administrative Aufgaben
+	\item Delivery API: RESTful API zum Einliefern von Dokumenten über Zulieferer
+	\item User API: RESTful API für die Operationen der Kunden
+	\item IDP API: RESTful API für das Token-Management (OAuth 2.0/OpenID Connect)
+	\item Backend: Serverseitige Software mit Businesslogik und Datenspeicher
+	\item IDP: Identity Provider, API-übergreifende Benutzer- und Zugangsverwaltung (AuthN/AuthZ)
+\end{itemize}
 
 \subsection{Technologie-Evaluation}
 
