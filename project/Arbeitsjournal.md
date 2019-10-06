@@ -26,4 +26,6 @@ author: Patrick Bucher
 | Fr, 04.10.2019 |      0.5 | Projekt       | Besprechung Projektplan und -fortschritt mit Betreuer                   |
 | Sa, 05.10.2019 |      1.0 | Dokumentation | Kontextdiagramm erstellt                                                |
 | So, 06.10.2019 |      1.5 | Dokumentation | Teststrategie fertig ausformuliert                                      |
-|                | **20.5** | **Total**     |                                                                         |
+| So, 06.10.2019 |      1.0 | Recherche     | Recherche zu Testing und Programmiersprachen (Go und Rust)              |
+| So, 06.10.2019 |      1.0 | Dokumentation | Evaluation Programmiersprache abgeschlossen                             |
+|                | **22.5** | **Total**     |                                                                         |

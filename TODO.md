@@ -1,8 +1,6 @@
-- Evaluation Programmiersprache abschliessen
 - Problemstellung analysieren
 - SysSpec
 	- Systemübersicht (Komponentendiagramm)
-	- Kontextdiagramm
 	- Begriffe, Abkürzungen und Referenzen
 	- Architektur- und Design-Entscheide
 		- Modelle und Sichten
