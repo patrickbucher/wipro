@@ -44,4 +44,4 @@ Bei einem erneuten Treffen mit dem Betreuer wurde der verbesserte Projektplan al
 
 Das bereits in der Firma skizzierte Backlog habe ich überarbeitet und nach den Meilensteinzielen gruppiert. Ich formulierte die User Stories für den ersten Sprint aus und plante diese entsprechend ein.
 
-Das Grobkonzept konnte aus zeitlichen Gründen nur stichwortartig festgehalten werden und muss nun während der Umsetzungsphase noch ausformuliert werden.
+Analyse und Grobkonzept wurden bereits stichwortartig im Confluence von PEAX festgehalten, konnten aber aus zeitlichen Gründen noch nicht in die Dokumentation übernommen werden. Dies muss noch nachgeholt werden.
