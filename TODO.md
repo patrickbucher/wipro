@@ -1,5 +1,7 @@
-- Problemstellung analysieren
-- SysSpec
+- Backlog erstellen und priorisieren
+- Analyse
+- Grobkonzept
+- SysSpec (Anhang)
 	- Systemübersicht (Komponentendiagramm)
 	- Begriffe, Abkürzungen und Referenzen
 	- Architektur- und Design-Entscheide
@@ -10,4 +12,3 @@
 		- externe
 		- interne
 	- Environment-Anforderungen
-- Backlog erstellen und priorisieren
