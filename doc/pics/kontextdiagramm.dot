@@ -16,7 +16,7 @@ digraph kontextdiagramm {
 
 		"Backend" [shape="ellipse"];
 		"User API" [shape="box"];
-		"Delivery API" [shape="box"];
+		"Agent API" [shape="box"];
 		"Admin API" [shape="box"];
 
 		"px" [shape="doublecircle",style="filled",fillcolor="black",fontcolor="white",margin="0.3"];
@@ -37,11 +37,11 @@ digraph kontextdiagramm {
 
 	"Portal User" -> "Frontend (Portal)" -> "User API" -> "Backend";
 	"Backoffice User" -> "Frontend (Backoffice)" -> "Admin API" -> "Backend";
-	"Scanning Center" -> "Delivery API" -> "Backend";
+	"Scanning Center" -> "Agent API" -> "Backend";
 
 	"Developer" -> "px";
 	"px" -> "IDP API";
 	"px" -> "User API";
 	"px" -> "Admin API";
-	"px" -> "Delivery API";
+	"px" -> "Agent API";
 }

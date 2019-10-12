@@ -14,7 +14,7 @@ author: Patrick Bucher
 | 6 | Generische `GET`-Schnittstelle                 | eingeplant für Sprint 1 | 3            |
 |   | Verbesserung der Hilfe-Funktion                | vorgesehen für Sprint 2 |
 |   | Automatische Aktualisierung von Tokens         | vorgesehen für Sprint 2 |
-|   | Login für Delivery API                         | vorgesehen für Sprint 2 |
+|   | Login für Agent API                            | vorgesehen für Sprint 2 |
 |   | Einliefern von Dokumenten per Delivey API      | offen                   |
 |   | Einliefern von Dokumenten per User API         | offen                   |
 |   | Einlieferung von Verzeichnissen mit Dokumenten | offen                   |
@@ -44,7 +44,7 @@ Als Entwickler möchte ich sämtliche relevanten PEAX-Umgebungen vorkonfiguriert
 Akzeptanzkriterien:
 
 1. Es sollen die Umgebungen `dev`, `test`, `devpatch`, `testpatch`, `stage`, `prod`, `perf` und `prototype` zur Verfügung stehen.
-2. Für jede Umgebung muss eine erreichbare URL zum jeweiligen Identity Provider und zu den relevanten APIs (User API, Admin API, Delivery API) automatisch generiert werden können.
+2. Für jede Umgebung muss eine erreichbare URL zum jeweiligen Identity Provider und zu den relevanten APIs (User API, Admin API, Agent API) automatisch generiert werden können.
 
 ## 2: Erweiterung der CI-Pipeline
 
