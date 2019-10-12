@@ -31,4 +31,5 @@ author: Patrick Bucher
 | So, 06.10.2019 |      0.5 | Dokumentation | Umstellung auf kompakte Nimbus-Schriftartenfamilie (Dokumente, Grafiken) |
 | So, 06.10.2019 |      1.5 | Projekt       | Erarbeitung Backlog und Formulierung der User Stories                    |
 | So, 06.10.2019 |      0.5 | Dokumentation | Kontextdiagramm verdeutlicht und Glossar dazu geschrieben                |
-|                | **25.0** | **Total**     |                                                                          |
+| Sa, 12.10.2019 |      1.0 | Dokumentation | Ausgangslage im Kapitel Problemstellung beschrieben                      |
+|                | **26.0** | **Total**     |                                                                          |
