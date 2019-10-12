@@ -32,4 +32,6 @@ author: Patrick Bucher
 | So, 06.10.2019 |      1.5 | Projekt       | Erarbeitung Backlog und Formulierung der User Stories                    |
 | So, 06.10.2019 |      0.5 | Dokumentation | Kontextdiagramm verdeutlicht und Glossar dazu geschrieben                |
 | Sa, 12.10.2019 |      1.0 | Dokumentation | Ausgangslage im Kapitel Problemstellung beschrieben                      |
-|                | **26.0** | **Total**     |                                                                          |
+| Sa, 12.10.2019 |      0.5 | Umsetzung     | Einrichten der Entwicklungsumgebung (private Hardware)                   |
+| Sa, 12.10.2019 |      0.5 | Umsetzung     | Aktualisierung von Versionen (Go 1.13, Alpine 3.10 für CI-Container)     |
+|                | **27.0** | **Total**     |                                                                          |
