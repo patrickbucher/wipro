@@ -66,6 +66,24 @@ Akzeptanzkriterien:
 1. Der Ausführungsschritt `script` soll nur dann ausgeführt werden, wenn die vorherigen Schritte `build` und `test` erfolgreich waren.
 2. Um der Pipeline ein weiteres Skript hinzufügen zu können, soll die neu erstellte Skriptdatei nur an einer einzigen Stelle (Konfigurationsdatei) hinzugefügt werden müssen.
 
+### Testprotokoll
+
+- zunächst Skript erstellt, das die anderen Skripts ausführt
+- ein scheiterndes und ein durchlaufendes Skript erstellt und in ersterem referenziert
+- Pipeline für GitLab konfiguriert, Test erfolgreich gescheitert, d.h. scheiterndes Skript hat die Pipeline wie gewünscht zum Abbruch gebracht
+- scheiterndes Skript aus der Liste entfernt, Pipelien lief nun durch
+- Artefakt kompilieren und dem Skript zur Verfügung stellen
+- Minimaltest mit `px help` durchführen
+- Login-Testfall (mit Variablen via GitLab) erstellt
+- gescheiterte Versuche mit `px login` gaben Status 0 zurück, musste korrigiert werden
+- Login-Skript hat schliesslich wie gewünscht funktioniert
+
+### Notizen
+
+- viel Zeit aufgrund mangelhafter Bash-Kenntnisse verloren (iterieren über Liste von Skriptdateien)
+- Akzeptanzkriterium 1 über den Haufen geworfen: das Artefakt aus dem `build`-Schritt kann nicht im `script`-Schritt verwendet werden, darum eigene Kompilierung im `script`-Schritt; dafür höhere Performance
+- Aufwand schlussendlich überschätzt
+
 ## 3: Login mit Zwei-Faktor-Authentifizierung
 
 Als Benutzer möchte ich mich per Zwei-Faktor-Authentifizierung einloggen können, damit ich `px` auch mit entsprechend konfigurierten Zugängen verwenden kann.

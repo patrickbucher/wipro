@@ -35,4 +35,5 @@ author: Patrick Bucher
 | Sa, 12.10.2019 |      0.5 | Umsetzung     | Einrichten der Entwicklungsumgebung (private Hardware)                   |
 | Sa, 12.10.2019 |      0.5 | Umsetzung     | Aktualisierung von Versionen (Go 1.13, Alpine 3.10 für CI-Container)     |
 | So, 13.10.2019 |      0.5 | Umsetzung     | Story 1: Konfiguration sämtlicher Umgebungen                             |
-|                | **27.5** | **Total**     |                                                                          |
+| So, 13.10.2019 |      1.5 | Umsetzung     | Story 2: Einrichten einer GitLab-CI-Pipeline für geskriptete Testfälle   |
+|                | **29.0** | **Total**     |                                                                          |
