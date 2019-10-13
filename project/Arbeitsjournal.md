@@ -34,4 +34,5 @@ author: Patrick Bucher
 | Sa, 12.10.2019 |      1.0 | Dokumentation | Ausgangslage im Kapitel Problemstellung beschrieben                      |
 | Sa, 12.10.2019 |      0.5 | Umsetzung     | Einrichten der Entwicklungsumgebung (private Hardware)                   |
 | Sa, 12.10.2019 |      0.5 | Umsetzung     | Aktualisierung von Versionen (Go 1.13, Alpine 3.10 für CI-Container)     |
-|                | **27.0** | **Total**     |                                                                          |
+| So, 13.10.2019 |      0.5 | Umsetzung     | Story 1: Konfiguration sämtlicher Umgebungen                             |
+|                | **27.5** | **Total**     |                                                                          |

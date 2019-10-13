@@ -46,6 +46,17 @@ Akzeptanzkriterien:
 1. Es sollen die Umgebungen `dev`, `test`, `devpatch`, `testpatch`, `stage`, `prod`, `perf` und `prototype` zur Verfügung stehen.
 2. Für jede Umgebung muss eine erreichbare URL zum jeweiligen Identity Provider und zu den relevanten APIs (User API, Admin API, Agent API) automatisch generiert werden können.
 
+### Testprotokoll
+
+1. automatisiert: `env_test.go`
+2. manuell: Login auf verschiedenen Umgebungen (nicht alle, manche sind heruntergefahren)
+
+### Notizen
+
+- table-driven test design (gopl p. 306)
+- Ausnahme: `prod`-Umgebung (via PEAX-Subdomains, issuer bei OAuth-Tokens relevant, siehe Mobile App)
+- Aufwand: ca. 1 Stunde
+
 ## 2: Erweiterung der CI-Pipeline
 
 Als Entwickler möchte ich `px` in Skripts einbauen können, welche anschliessend in der CI-Pipeline berücksichtigt, d.h. ausgeführt werden.
