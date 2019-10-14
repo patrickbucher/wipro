@@ -84,6 +84,8 @@ Akzeptanzkriterien:
 - Akzeptanzkriterium 1 über den Haufen geworfen: das Artefakt aus dem `build`-Schritt kann nicht im `script`-Schritt verwendet werden, darum eigene Kompilierung im `script`-Schritt; dafür höhere Performance
 - Aufwand schlussendlich überschätzt
 
+TODO: muss lokal auch einfach getestet werden können
+
 ## 3: Login mit Zwei-Faktor-Authentifizierung
 
 Als Benutzer möchte ich mich per Zwei-Faktor-Authentifizierung einloggen können, damit ich `px` auch mit entsprechend konfigurierten Zugängen verwenden kann.
@@ -93,6 +95,17 @@ Akzeptanzkriterien:
 1. Die Abfrage des zweiten Faktors soll interaktiv passieren.
 2. Es sollen die Authentifizierungsarten SMS und OTP (One-Time Password) unterstützt werden.
 3. Das Login soll auch weiterhin ohne Zwei-Faktor-Authentifizierung funktionieren.
+
+### Testprotokoll
+
+TODO
+
+### Notizen
+
+- bevor die bestehende `login`-Funktion erweitert werden konnte, musste sie zunächst etwas aufgeräumt werden
+- hierzu wurden verschiedene Teilaspekte (interaktive Abfrage fehlender Credentials, Erstellen des Requests und Parsen der Response) in eigene Funktionen ausgelagert
+- die `script`-Pipeline zahlte sich bereits aus, zumal die `login()`-Funktion direkt in `cmd/px.go` implementiert war und darum nicht durch einen Unit Test abgedeckt war
+- das Refactoring wurde schliesslich ausgedehnt; es enstanden neue Submodule `px/tokenstore` und `px/utils`
 
 ## 4: Sichere Verwahrung der Tokens
 
