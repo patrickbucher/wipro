@@ -50,6 +50,9 @@ Akzeptanzkriterien:
 
 1. automatisiert: `env_test.go`
 2. manuell: Login auf verschiedenen Umgebungen (nicht alle, perf/prototype sind heruntergefahren, prod benötigt 2FA) erfolgreich
+    1. login vor Registrierung: 401
+    2. login nach Registrierung/vor Verifizierung: 403
+    3. login nach Verifizierung: 200
 
 ### Notizen
 
