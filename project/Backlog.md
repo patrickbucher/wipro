@@ -49,7 +49,7 @@ Akzeptanzkriterien:
 ### Testprotokoll
 
 1. automatisiert: `env_test.go`
-2. manuell: Login auf verschiedenen Umgebungen (nicht alle, manche sind heruntergefahren)
+2. manuell: Login auf verschiedenen Umgebungen (nicht alle, perf/prototype sind heruntergefahren, prod benötigt 2FA) erfolgreich
 
 ### Notizen
 
