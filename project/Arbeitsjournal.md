@@ -36,6 +36,8 @@ author: Patrick Bucher
 | Sa, 12.10.2019 |      0.5 | Umsetzung     | Aktualisierung von Versionen (Go 1.13, Alpine 3.10 für CI-Container)      |
 | So, 13.10.2019 |      0.5 | Umsetzung     | Story 1: Konfiguration sämtlicher Umgebungen                              |
 | So, 13.10.2019 |      1.5 | Umsetzung     | Story 2: Einrichten einer GitLab-CI-Pipeline für geskriptete Testfälle    |
-| Mo, 14.10.2019 |      1.5 | Umsetzung     | Story 3: Refactoring der Login-Funktion; Aufteilung in Untermodule        |
+| Mo, 14.10.2019 |      1.5 | Umsetzung     | Story 3: Refactoring der Login-Funktion (Aufteilung in Untermodule)       |
 | Mo, 14.10.2019 |      0.5 | Testing       | Story 1: Login getestet (`dev`, `devpatch`, `test`, `testpatch`, `stage`) |
-|                | **31.0** | **Total**     |                                                                           |
+| Di, 15.10.2019 |      0.5 | Umsetzung     | Story 2: lokale Ausführung der CI-Pipeline                                |
+| Di, 15.10.2019 |      1.0 | Umsetzung     | Story 3: Refactoring der Login-Funktion (neuer flow für 2FA)              |
+|                | **32.5** | **Total**     |                                                                           |

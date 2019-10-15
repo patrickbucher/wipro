@@ -6,7 +6,7 @@ author: Patrick Bucher
 
 | # | User Story                                     | Status                  | Story Points |
 |--:|------------------------------------------------|-------------------------|--------------|
-| 1 | Konfiguration sämtlicher Umgebungen            | eingeplant für Sprint 1 | 1            |
+| 1 | Konfiguration sämtlicher Umgebungen            | umgesetzt               | 1            |
 | 2 | Erweiterung der CI-Pipeline                    | eingeplant für Sprint 1 | 5            |
 | 3 | Login mit Zwei-Faktor-Authentifizierung        | eingeplant für Sprint 1 | 3            |
 | 4 | Sichere Verwahrung der Tokens                  | eingeplant für Sprint 1 | 5            |
@@ -86,8 +86,10 @@ Akzeptanzkriterien:
 - viel Zeit aufgrund mangelhafter Bash-Kenntnisse verloren (iterieren über Liste von Skriptdateien)
 - Akzeptanzkriterium 1 über den Haufen geworfen: das Artefakt aus dem `build`-Schritt kann nicht im `script`-Schritt verwendet werden, darum eigene Kompilierung im `script`-Schritt; dafür höhere Performance
 - Aufwand schlussendlich überschätzt
-
-TODO: muss lokal auch einfach getestet werden können
+- Erweiterung: soll auch lokal ausgeführt werden müssen
+- dazu Verschiebung der Build-Logik von gitlab-ci zu Skript
+- optionale envvars-Datei (unter .gitignore) für lokale Ausführung
+- Bash-Code vereinfacht
 
 ## 3: Login mit Zwei-Faktor-Authentifizierung
 
@@ -101,7 +103,8 @@ Akzeptanzkriterien:
 
 ### Testprotokoll
 
-TODO
+- beim Refactoring traten immer wieder Build-Fehler auf, die jedoch einfach zu beheben waren
+- Logik-Fehler traten keine auf
 
 ### Notizen
 
@@ -109,6 +112,7 @@ TODO
 - hierzu wurden verschiedene Teilaspekte (interaktive Abfrage fehlender Credentials, Erstellen des Requests und Parsen der Response) in eigene Funktionen ausgelagert
 - die `script`-Pipeline zahlte sich bereits aus, zumal die `login()`-Funktion direkt in `cmd/px.go` implementiert war und darum nicht durch einen Unit Test abgedeckt war
 - das Refactoring wurde schliesslich ausgedehnt; es enstanden neue Submodule `px/tokenstore` und `px/utils`
+- es wurden neue Datenstrukturen erstellt, etwa für die Credentials (mit und ohne 2FA), und für den Login-Payload mit 2FA
 
 ## 4: Sichere Verwahrung der Tokens
 
