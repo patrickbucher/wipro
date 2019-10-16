@@ -40,4 +40,5 @@ author: Patrick Bucher
 | Mo, 14.10.2019 |      0.5 | Testing       | Story 1: Login getestet (`dev`, `devpatch`, `test`, `testpatch`, `stage`) |
 | Di, 15.10.2019 |      0.5 | Umsetzung     | Story 2: lokale Ausführung der CI-Pipeline                                |
 | Di, 15.10.2019 |      1.0 | Umsetzung     | Story 3: Refactoring der Login-Funktion (neuer flow für 2FA)              |
-|                | **32.5** | **Total**     |                                                                           |
+| Mi, 16.10.2019 |      1.0 | Umsetzung     | Story 3: Request für 2FA erstellen und abschicken                         |
+|                | **33.5** | **Total**     |                                                                           |

@@ -84,7 +84,7 @@ Akzeptanzkriterien:
 ### Notizen
 
 - viel Zeit aufgrund mangelhafter Bash-Kenntnisse verloren (iterieren über Liste von Skriptdateien)
-- Akzeptanzkriterium 1 über den Haufen geworfen: das Artefakt aus dem `build`-Schritt kann nicht im `script`-Schritt verwendet werden, darum eigene Kompilierung im `script`-Schritt; dafür höhere Performance
+- TODO: erneut prüfen (Begründung wegen lokaler Ausführbarkeit sinnvoll)! Akzeptanzkriterium 1 über den Haufen geworfen: das Artefakt aus dem `build`-Schritt kann nicht im `script`-Schritt verwendet werden, darum eigene Kompilierung im `script`-Schritt; dafür höhere Performance
 - Aufwand schlussendlich überschätzt
 - Erweiterung: soll auch lokal ausgeführt werden müssen
 - dazu Verschiebung der Build-Logik von gitlab-ci zu Skript
@@ -99,12 +99,13 @@ Akzeptanzkriterien:
 
 1. Die Abfrage des zweiten Faktors soll interaktiv passieren.
 2. Es sollen die Authentifizierungsarten SMS und OTP (One-Time Password) unterstützt werden.
-3. Das Login soll auch weiterhin ohne Zwei-Faktor-Authentifizierung funktionieren.
+3. Das Login soll bei entsprechend konfigurierten Benutzerkonti auch weiterhin ohne Zwei-Faktor-Authentifizierung funktionieren.
 
 ### Testprotokoll
 
 - beim Refactoring traten immer wieder Build-Fehler auf, die jedoch einfach zu beheben waren
 - Logik-Fehler traten keine auf
+- HTTP Status 400 nach erstem Versuch
 
 ### Notizen
 
