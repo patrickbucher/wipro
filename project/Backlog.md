@@ -7,8 +7,8 @@ author: Patrick Bucher
 | # | User Story                                     | Status                  | Story Points |
 |--:|------------------------------------------------|-------------------------|--------------|
 | 1 | Konfiguration sämtlicher Umgebungen            | umgesetzt               | 1            |
-| 2 | Erweiterung der CI-Pipeline                    | eingeplant für Sprint 1 | 5            |
-| 3 | Login mit Zwei-Faktor-Authentifizierung        | eingeplant für Sprint 1 | 3            |
+| 2 | Erweiterung der CI-Pipeline                    | umgesetzt               | 5            |
+| 3 | Login mit Zwei-Faktor-Authentifizierung        | umgesetzt               | 3            |
 | 4 | Sichere Verwahrung der Tokens                  | eingeplant für Sprint 1 | 5            |
 | 5 | Handhabung mehrerer Umgebungen                 | eingeplant für Sprint 1 | 3            |
 | 6 | Generische `GET`-Schnittstelle                 | eingeplant für Sprint 1 | 3            |
@@ -32,6 +32,8 @@ author: Patrick Bucher
 ## Sprint 1
 
 Eingeplant: sechs Stories, 20 Story Points
+
+Bisher abgearbeitet: 8 Story Points (in 10 Stunden)
 
 # User Stories
 
@@ -105,7 +107,11 @@ Akzeptanzkriterien:
 
 - beim Refactoring traten immer wieder Build-Fehler auf, die jedoch einfach zu beheben waren
 - Logik-Fehler traten keine auf
-- HTTP Status 400 nach erstem Versuch
+- HTTP Status 400 nach erstem Versuch, lange am Fehler analysirt
+- gemerkt, dass hier kein JSON unterstützt wird, sondern nur form-urlencoded (unnötiges Debugging auf Server)
+- schliesslich Erfolgreich
+- Login mit SMS und TOTP erfolgreich manuell getestet (automatischer Test nicht praktikabel)
+- Login ohne 2FA wird weiterhin via Pipeline getestet
 
 ### Notizen
 
@@ -114,6 +120,7 @@ Akzeptanzkriterien:
 - die `script`-Pipeline zahlte sich bereits aus, zumal die `login()`-Funktion direkt in `cmd/px.go` implementiert war und darum nicht durch einen Unit Test abgedeckt war
 - das Refactoring wurde schliesslich ausgedehnt; es enstanden neue Submodule `px/tokenstore` und `px/utils`
 - es wurden neue Datenstrukturen erstellt, etwa für die Credentials (mit und ohne 2FA), und für den Login-Payload mit 2FA
+- Code neu organisieren war nötig und sinnvoll
 
 ## 4: Sichere Verwahrung der Tokens
 
