@@ -135,6 +135,14 @@ Akzeptanzkriterien:
 5. Die sichere Verwahrung der Tokens muss Windows, macOS und Linux funktionieren.
 6. Auf Systemen ohne GUI soll zumindest die unsichere Variante der Token-Verwahrung funktionieren.
 
+### Testprotokoll
+
+- der Unittest `env_test` wurde um das `Confidential`-Flag erweitert, wobei nur `prod` so konfiguriert ist
+
+### Notizen
+
+- die Umgebungskonfiguration wird um ein Flag (confidential) erweitert, dass besagt, ob für die jeweilige Umgebung die Tokens per default sicher oder unsicher verwahrt werden sollen
+
 ## 5: Handhabung mehrerer Umgebungen
 
 Als Benutzer möchte ich, dass `px` meine Befehle standardmässig gegen die Umgebung ausführt, auf der ich mich zuletzt eingeloggt habe, damit ich nicht immer eine Umgebung per Kommandozeilenparameter anwählen muss.
