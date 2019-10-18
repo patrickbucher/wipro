@@ -1,14 +1,28 @@
 FNR>8 && $4 !~ /Total/ {
-    domain = $4
     hours = $3
+    domain = $4
+    task = $5
+
     gsub(/[[:space:]]+/, "", domain)
+
     total += hours
     domains[domain] += hours
+
+    if (task ~ /^[[:space:]]*Story [0-9]+/) {
+        match(task, /(Story [0-9]+)/, matches)
+        story = matches[0]
+        stories[story] += hours
+    }
 }
 
 END {
-    printf "Total: %.1f Stunden\n", total
+    printf "Bereiche:\n"
     for (domain in domains) {
-        printf "%s: %.1f Stunden\n", domain, domains[domain]
+        printf "%20s: %10.1f Stunden\n", domain, domains[domain]
+    }
+    printf "%20s: %10.1f Stunden\n", "Total", total
+    printf "\nStories:\n"
+    for (story in stories) {
+        printf "%20s: %10.1f Stunden\n", story, stories[story]
     }
 }

@@ -37,9 +37,10 @@ author: Patrick Bucher
 | So, 13.10.2019 |      0.5 | Umsetzung     | Story 1: Konfiguration sämtlicher Umgebungen                              |
 | So, 13.10.2019 |      1.5 | Umsetzung     | Story 2: Einrichten einer GitLab-CI-Pipeline für geskriptete Testfälle    |
 | Mo, 14.10.2019 |      1.5 | Umsetzung     | Story 3: Refactoring der Login-Funktion (Aufteilung in Untermodule)       |
-| Mo, 14.10.2019 |      0.5 | Testing       | Story 1: Login getestet (`dev`, `devpatch`, `test`, `testpatch`, `stage`) |
+| Mo, 14.10.2019 |      0.5 | Umsetzung     | Story 1: Login getestet (`dev`, `devpatch`, `test`, `testpatch`, `stage`) |
 | Di, 15.10.2019 |      0.5 | Umsetzung     | Story 2: lokale Ausführung der CI-Pipeline                                |
 | Di, 15.10.2019 |      1.0 | Umsetzung     | Story 3: Refactoring der Login-Funktion (neuer flow für 2FA)              |
 | Mi, 16.10.2019 |      3.0 | Umsetzung     | Story 3: Request für 2FA erstellen und abschicken (erfolgreich)           |
 | Do, 17.10.2019 |      1.0 | Umsetzung     | Story 3: Refactoring des neu geschriebenen 2FA-Codes                      |
-|                | **36.5** | **Total**     |                                                                           |
+| Fr, 18.10.2019 |      0.5 | Projekt       | AWK-Skript zur Auswertung des Arbeitsjournals erweitert (Stories)         |
+|                | **37.0** | **Total**     |                                                                           |
