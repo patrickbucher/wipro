@@ -142,6 +142,8 @@ Akzeptanzkriterien:
 - der Skript-Test `ci-px-login.sh` wurde erweitert und in `ci-px-login-logout.sh` umbenannt, sodass nun auch das Logout getestet wird
 - nach dem Login wird mit `jq` geprüft, ob ein Feld `access_token` für die Umgebung `test` in `~/.px-tokens` vorhanden ist
 - nach dem Logout wird das Fehlen desselben geprüft
+- auf Windows sind die Tokens in der Anwendung _Credential Manager_ unter _Windows Credentials_ zu finden
+- auf macOS sind die Tokens in der Anwendung _Keychain Access_ unter _login_ zu finden
 
 ### Notizen
 
