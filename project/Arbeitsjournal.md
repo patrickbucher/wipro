@@ -50,4 +50,5 @@ author: Patrick Bucher
 | So, 20.10.2019 |      1.0 | Umsetzung     | Story 4: Test auf Windows (Credential Manager) und macOS (Keychain Access) |
 | So, 20.10.2019 |      1.0 | Umsetzung     | Story 4: Sicher verwahrten Token für weitere Requests (Upload) verwenden   |
 | So, 20.10.2019 |      0.5 | Umsetzung     | Erstellung Release v0.1.0                                                  |
-|                | **42.0** | **Total**     |                                                                            |
+| So, 20.10.2019 |      0.5 | Dokumentation | Sequenzdiagramm zur Zwei-Faktor-Authentifizierung erstellt                 |
+|                | **42.5** | **Total**     |                                                                            |
