@@ -9,7 +9,7 @@ author: Patrick Bucher
 | 1 | Konfiguration sämtlicher Umgebungen            | umgesetzt               | 1            |
 | 2 | Erweiterung der CI-Pipeline                    | umgesetzt               | 5            |
 | 3 | Login mit Zwei-Faktor-Authentifizierung        | umgesetzt               | 3            |
-| 4 | Sichere Verwahrung der Tokens                  | eingeplant für Sprint 1 | 5            |
+| 4 | Sichere Verwahrung der Tokens                  | umgesetzt               | 5            |
 | 5 | Handhabung mehrerer Umgebungen                 | eingeplant für Sprint 1 | 3            |
 | 6 | Generische `GET`-Schnittstelle                 | eingeplant für Sprint 1 | 3            |
 |   | Verbesserung der Hilfe-Funktion                | vorgesehen für Sprint 2 |
@@ -33,7 +33,9 @@ author: Patrick Bucher
 
 Eingeplant: sechs Stories, 20 Story Points
 
-Bisher abgearbeitet: 8 Story Points (in 10 Stunden)
+Bisher abgearbeitet: 14 Story Points (in 14.5 Stunden)
+
+Offen: 6 Story Points
 
 # User Stories
 
@@ -150,6 +152,7 @@ Akzeptanzkriterien:
 - die Umgebungskonfiguration wird um ein Flag (confidential) erweitert, dass besagt, ob für die jeweilige Umgebung die Tokens per default sicher oder unsicher verwahrt werden sollen
 - die Library `zalando/go-keyring` kann Schlüssel auf Linux, macOS und Windows sicher verwahren
 - die Konfiguration des nativen Key Stores ist für jede Plattform anders und wird im README des Projekts dokumentiert
+- bei einem Anwendungsfall wie dem Upload musste die Logik erweitert werden, sodass der sicher abgelegte Token für die Autorisierung verwendet wird
 
 ## 5: Handhabung mehrerer Umgebungen
 

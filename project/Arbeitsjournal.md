@@ -47,4 +47,5 @@ author: Patrick Bucher
 | So, 18.10.2019 |      1.0 | Umsetzung     | Story 4: Sicheres Abspeichern von Tokens; Tests auf Linux                  |
 | So, 18.10.2019 |      0.5 | Umsetzung     | Story 4: Erweiterung der CI-Pipeline um Logout-Test                        |
 | So, 18.10.2019 |      1.0 | Umsetzung     | Story 4: Test auf Windows (Credential Manager) und macOS (Keychain Access) |
-|                | **40.0** | **Total**     |                                                                            |
+| So, 18.10.2019 |      1.0 | Umsetzung     | Story 4: Sicher verwahrten Token für weitere Requests (Upload) verwenden   |
+|                | **41.0** | **Total**     |                                                                            |
