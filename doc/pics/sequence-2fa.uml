@@ -1,0 +1,20 @@
+@startuml
+
+skinparam monochrome true
+skinparam defaultFontName Lato
+skinparam dpi 150
+
+group 2FA
+    User -> px: Login
+    px -> User: Credentials?
+    User -> px: Username, Password
+    px -> IDP: Authentication Request
+    IDP -> px: HTTP 380
+    px -> User: SMS/TOTP?
+    User -> px: SMS/TOTP
+    px -> IDP: Authentication Request with SMS/TOTP
+    IDP -> px: HTTP 200, Token Pair (Access Token, Refresh Token)
+    px -> Keystore: Token Pair
+end
+
+@enduml
