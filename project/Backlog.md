@@ -138,10 +138,13 @@ Akzeptanzkriterien:
 ### Testprotokoll
 
 - der Unittest `env_test` wurde um das `Confidential`-Flag erweitert, wobei nur `prod` so konfiguriert ist
+- Tests auf `prod` mit Linux (Tokens schreiben) funktionierte nachdem Key Store korrekt konfiguriert wurde
 
 ### Notizen
 
 - die Umgebungskonfiguration wird um ein Flag (confidential) erweitert, dass besagt, ob für die jeweilige Umgebung die Tokens per default sicher oder unsicher verwahrt werden sollen
+- die Library `zalando/go-keyring` kann Schlüssel auf Linux, macOS und Windows sicher verwahren
+- die Konfiguration des nativen Key Stores ist für jede Plattform anders und wird im README des Projekts dokumentiert
 
 ## 5: Handhabung mehrerer Umgebungen
 
