@@ -44,8 +44,10 @@ author: Patrick Bucher
 | Do, 17.10.2019 |      1.0 | Umsetzung     | Story 3: Refactoring des neu geschriebenen 2FA-Codes                       |
 | Fr, 18.10.2019 |      0.5 | Projekt       | AWK-Skript zur Auswertung des Arbeitsjournals erweitert (Stories)          |
 | Fr, 18.10.2019 |      0.5 | Umsetzung     | Story 4: Erweiterung der Umgebungskonfiguration (Flag `Confidential`)      |
-| So, 18.10.2019 |      1.0 | Umsetzung     | Story 4: Sicheres Abspeichern von Tokens; Tests auf Linux                  |
-| So, 18.10.2019 |      0.5 | Umsetzung     | Story 4: Erweiterung der CI-Pipeline um Logout-Test                        |
-| So, 18.10.2019 |      1.0 | Umsetzung     | Story 4: Test auf Windows (Credential Manager) und macOS (Keychain Access) |
-| So, 18.10.2019 |      1.0 | Umsetzung     | Story 4: Sicher verwahrten Token für weitere Requests (Upload) verwenden   |
-|                | **41.0** | **Total**     |                                                                            |
+| So, 20.10.2019 |      1.0 | Umsetzung     | Story 4: Sicheres Abspeichern von Tokens; Tests auf Linux                  |
+| So, 20.10.2019 |      0.5 | Dokumentation | Neue Schriftarten: Vollkorn (Serif), Lato (Sans) und Inconsolata (Mono)    |
+| So, 20.10.2019 |      0.5 | Umsetzung     | Story 4: Erweiterung der CI-Pipeline um Logout-Test                        |
+| So, 20.10.2019 |      1.0 | Umsetzung     | Story 4: Test auf Windows (Credential Manager) und macOS (Keychain Access) |
+| So, 20.10.2019 |      1.0 | Umsetzung     | Story 4: Sicher verwahrten Token für weitere Requests (Upload) verwenden   |
+| So, 20.10.2019 |      0.5 | Umsetzung     | Erstellung Release v0.1.0                                                  |
+|                | **42.0** | **Total**     |                                                                            |

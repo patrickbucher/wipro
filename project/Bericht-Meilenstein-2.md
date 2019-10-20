@@ -14,7 +14,10 @@ konnte ich endlich mit der Umsetzung starten.
 Die beiden erste Stories konnte ich problemlos umsetzen. Die Pipeline (Story 2)
 hat sich schnell als lohnende Investition erwiesen. Bei Story 3 (2FA) verlor
 ich aufgrund falscher Annahmen viel Zeit. Ich investierte auch Zeit ins
-Refactoring.
+Refactoring. Story 4 (Keystore) funktionierte auf allen Plattformen überraschend gut.
+
+Aus Zeitmangel wurden Story 5 und 6 in den nächsten Sprint verschoben. Der
+Release `v0.1.0` wurde am Sonntag, 20. Oktober freigegeben.
 
 # Zwischenphase (Semesterwoche 6)
 
