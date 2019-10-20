@@ -45,4 +45,5 @@ author: Patrick Bucher
 | Fr, 18.10.2019 |      0.5 | Projekt       | AWK-Skript zur Auswertung des Arbeitsjournals erweitert (Stories)         |
 | Fr, 18.10.2019 |      0.5 | Umsetzung     | Story 4: Erweiterung der Umgebungskonfiguration (Flag `Confidential`)     |
 | So, 18.10.2019 |      1.0 | Umsetzung     | Story 4: Sicheres Abspeichern von Tokens; Tests auf Linux                 |
-|                | **38.5** | **Total**     |                                                                           |
+| So, 18.10.2019 |      0.5 | Umsetzung     | Story 4: Erweiterung der CI-Pipeline um Logout-Test                       |
+|                | **39.0** | **Total**     |                                                                           |
