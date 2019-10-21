@@ -51,4 +51,5 @@ author: Patrick Bucher
 | So, 20.10.2019 |      1.0 | Umsetzung     | Story 4: Sicher verwahrten Token für weitere Requests (Upload) verwenden   |
 | So, 20.10.2019 |      0.5 | Umsetzung     | Erstellung Release v0.1.0                                                  |
 | So, 20.10.2019 |      0.5 | Dokumentation | Sequenzdiagramm zur Zwei-Faktor-Authentifizierung erstellt                 |
-|                | **42.5** | **Total**     |                                                                            |
+| Mo, 21.10.2019 |      1.0 | Dokumentation | Abstract entworfen, Umgebungen beschrieben, offene Punkte vermerkt         |
+|                | **43.5** | **Total**     |                                                                            |
