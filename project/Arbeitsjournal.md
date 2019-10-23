@@ -52,4 +52,5 @@ author: Patrick Bucher
 | So, 20.10.2019 |      0.5 | Umsetzung     | Erstellung Release v0.1.0                                                  |
 | So, 20.10.2019 |      0.5 | Dokumentation | Sequenzdiagramm zur Zwei-Faktor-Authentifizierung erstellt                 |
 | Mo, 21.10.2019 |      1.0 | Dokumentation | Abstract entworfen, Umgebungen beschrieben, offene Punkte vermerkt         |
-|                | **43.5** | **Total**     |                                                                            |
+| Mi, 23.10.2019 |      1.0 | Dokumentation | Feedback zu Sprint 1 aufgenommen und kommentiert                           |
+|                | **44.5** | **Total**     |                                                                            |
