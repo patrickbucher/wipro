@@ -53,4 +53,5 @@ author: Patrick Bucher
 | So, 20.10.2019 |      0.5 | Dokumentation | Sequenzdiagramm zur Zwei-Faktor-Authentifizierung erstellt                 |
 | Mo, 21.10.2019 |      1.0 | Dokumentation | Abstract entworfen, Umgebungen beschrieben, offene Punkte vermerkt         |
 | Mi, 23.10.2019 |      1.0 | Dokumentation | Feedback zu Sprint 1 aufgenommen und kommentiert                           |
-|                | **44.5** | **Total**     |                                                                            |
+| Fr, 25.10.2019 |      1.0 | Dokumentation | Analyse des Projektauftrags ergänzt (Benutzer, Betriebssysteme, Shells)    |
+|                | **45.5** | **Total**     |                                                                            |

@@ -61,19 +61,38 @@ Bei PEAX gibt es verschiedene Umgebungen oder «Stufen», welche den ganzen PEAX
 
 \subsubsection{Arten von Parametern}
 
-TODO: Query-Parameter, Header-Parameter
+Ein HTTP-Request hat verschiedene Parameter: Dies sind einerseits Header-Parameter, wie z.B. \texttt{Content-Type}, womit der MIME-Type der Request-Bodys festgelegt wird, oder \texttt{Accept}, womit dem Server mitgeteilt wird, welcher MIME-Type der Response-Body haben soll \cite{RFC2616}.
+
+Auch in der Authentifizierung und Autorisierung spielen Request-Header eine wichtige Rolle, zumal Access Tokens über per \texttt{Authorization}-Header an den Server übermittelt werden \cite[Kapitel 7.1]{RFC6794}.
+
+Andererseits gibt es auch Query-Parameter, welche direkt an die URL angehängt werden. Letztere werden oft für die Navigation im Portal verwendet, zumal bei \texttt{GET}-Requests kein Request-Body übermittelt werden kann.
 
 \subsubsection{Benutzer}
+\label{sec:Benutzer}
 
-TODO Programmierer, andere?
+Es gibt verschiedene Gruppen von Benutzern, die \texttt{px} gewinnbringend einsetzen können:
+
+\begin{description}
+    \item[Backend-Entwickler] Diese entwickeln, erweitern und korrigieren die RESTful-API, die das Backend von PEAX ausmachen. Von ihnen kann \texttt{px} einerseits für schnelle Tests und das Erstellen von Testdaten verwendet werden, andererseits kann \texttt{px} auch dabei hilfreich sein, die API (gerade Datenstrukturen) explorativ kennenzulernen.
+    \item[Frontend-Entwickler] Ist die Spezifikation eines Endpoints unvollständig, unklar oder gar fehlerhaft, kann darauf kein funktionierendes Frontend aufsetzen. Hier kann \texttt{px} dabei hilfreich sein, das tatsächliche Verhalten des Backends zu überprüfen, und die Struktur der zurückgelieferten Payloads zu betrachten.
+    \item[Tester] Die manuellen Regressionstests finden direkt auf dem Portal bzw. auf der App statt. Oftmals wäre es hilfreich, Testdaten grösseren Umfangs für einen neu registrierten Benutzer zu erstellen. Mithilfe von \texttt{px} können hierzu einfache Skripts zur Verfügung gestellt werden. (Die Skripts werden tendenziell eher von Entwicklern zur Verfügung gestellt, aber die Tester können diese nach Instruktion selbständig ausführen.
+\end{description}
 
 \subsubsection{Betriebssysteme}
 
-TODO: macOS, Windows, Linux
+Zu Beginn des Projekts (September 2019) waren auf den persönlichen Computern der Entwickler macOS und Windows im Einsatz. Mittlerweile (Stand Oktober 2019) wurden alle Windows-Rechner durch Geräte mit macOS ausgetauscht. Mit den Testern gibt es dennoch einige potenzielle Benutzer (siehe \secref{sec:Benutzer}), die \texttt{px} immer noch auf Windows einsetzen würden.
+
+Auf zahlreichen virtuellen Maschinen der PEAX-Infrastruktur (etwa für Datenbanken) läuft Linux als Betriebssystem. Hier könnte \texttt{px} für verschiedene Service-Tasks (Monitoring, Alerting) eingesetzt werden.
+
+Es sind somit die Betriebssysteme macOS, Windows und Linux für die Ausführung von \texttt{px} relevant. Was die Architektur betrifft, kommen derzeit nur Intel-Prozessoren mit 64-Bit-Architektur (\texttt{x86\_64}) zum Einsatz.
 
 \subsubsection{Shells} 
 
-TODO: sh, zsh, dash, Bash, PowerShell, CMD.EXE
+Verschiedene Betriebssysteme haben verschiedene Shells. Im UNIX-Bereich gibt es auch zahlreiche Shells mit unterschiedlichen Merkmalen, die parallel zueinander installiert werden können.
+
+Bash ist nicht nur die Standard-Shell vieler Linux-Distributionen, sondern kommt bei Entwicklern auch auf Windows als \textit{git Bash} zum Einsatz. Auf macOS gehört Bash ebenfalls zum Lieferumfang, wobei die mächtigere \texttt{zsh} seit macOS Catalina standardmässig zum Einsatz kommt \cite{macos-zsh}. Andere populäre UNIX-Shells wie Fish, Ksh und Tcsh haben zwar unterschiedliche Merkmale, jedoch den POSIX-Standard als kleinsten gemeinsamen Nenner \cite{posix-shell}.
+
+Auf Windows spielen zudem die PowerShell sowie \texttt{cmd.exe} eine Rolle.
 
 \subsection{Ausgangslage und Vorleistungen}
 
