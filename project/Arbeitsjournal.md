@@ -54,4 +54,5 @@ author: Patrick Bucher
 | Mo, 21.10.2019 |      1.0 | Dokumentation | Abstract entworfen, Umgebungen beschrieben, offene Punkte vermerkt         |
 | Mi, 23.10.2019 |      1.0 | Dokumentation | Feedback zu Sprint 1 aufgenommen und kommentiert                           |
 | Fr, 25.10.2019 |      1.0 | Dokumentation | Analyse des Projektauftrags ergänzt (Benutzer, Betriebssysteme, Shells)    |
-|                | **45.5** | **Total**     |                                                                            |
+| Sa, 26.10.2019 |      1.5 | Dokumentation | Lücken in der Analyse geschlossen                                          |
+|                | **47.0** | **Total**     |                                                                            |
