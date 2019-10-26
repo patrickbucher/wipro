@@ -5,14 +5,14 @@
 \subsubsection{Sprint 1}
 
 \begin{itemize}
-    \item Michael Buholzer wünscht sich Erfolgs- und Vollzugsmeldungen nach dem Login oder dem Upload eines Dokuments.
+    \item \textsc{Michael Buholzer} wünscht sich Erfolgs- und Vollzugsmeldungen nach dem Login oder dem Upload eines Dokuments.
     \begin{itemize}
         \item \texttt{stdout} sollte grundsätzlich «sauber» bleiben, d.h. frei von unnötigen Ausgaben, die ein nachgelagertes Programm wieder herausfiltern müsste. Eine wichtige Maxime von UNIX-Programmen lautet: \textit{«Expect the output of every program to become the input to another, as yet unknown, program.»} \cite[p. 3]{unixtimesharing}. Siehe dazu auch \textit{Rule of Silence} \cite[p. 20]{unixart} und \textit{Silence is Golden} \cite[p. 111]{unixphil}.
         \item \texttt{stderr} wird nicht nur als Ausgabekanal für Fehlermeldungen verwendet, sondern für Meldungen allgemein. Für Vollzugsmeldungen wäre \texttt{stderr} vorzuziehen.
         \item Da \texttt{stderr} in \texttt{px} bisher grundsätzlich für Fehlermeldungen verwendet wird, sollen Erfolgsmeldungen über ein zusätzliches Flag \texttt{-verbose}/\texttt{-v} aktiviert werden müssen.
         \item Bei anderen Anwendungsfällen signalisiert die Ausgabe des Payloads auf \texttt{stdout} den Erfolg der Operation. Beim Dokument-Upload besteht dieser beispielsweise aus der generierten UUID des hochgeladenen Dokuments.
     \end{itemize}
-\item Patrick Roos sieht die Möglichkeit, \texttt{px} auch zur Handhabung der \textit{Vault Secrets}\footnote{\url{https://docs.ansible.com/ansible/latest/user_guide/vault.html}} (Verschlüsselung und Entschlüsselung von Benutzernamen, Passwörtern etc. zu verwenden.
+\item \textsc{Patrick Roos} sieht die Möglichkeit, \texttt{px} auch zur Handhabung der \textit{Vault Secrets}\footnote{\url{https://docs.ansible.com/ansible/latest/user_guide/vault.html}} (Verschlüsselung und Entschlüsselung von Benutzernamen, Passwörtern etc. zu verwenden.
     \begin{itemize}
         \item Im Arbeitsalltag von PEAX stellt die Handhabung von Vault Secrets tatsächlich eine teils mühsame und langwierige Aufgabe dar. Hier besteht durchaus Automatisierungsbedarf.
         \item \texttt{px} ist als «skriptbare» Anwendung für die PEAX API konzipiert und so potenziell für jeden PEAX-Anwender einsetzbar.

@@ -1,27 +1,33 @@
 \section{Problemstellung}
 
-TODO: einleitende Worte, Zweck dieses Kapitels
+Die Problemstellung setzt sich einerseits aus dem gestellten Projektauftrag (siehe Anhang) und andererseits aus der damit implizierten Umgebung (Systeme, Technologien, Benutze, etc.) zusammen (siehe dazu auch \secref{sec:Systemkontext}).
 
 \subsection{Analyse des Projektauftrags}
 
-TODO: hier wird die Umgebung von PEAX beschrieben
+Der Projektauftrag beschreibt einen Command Line Client für eine RESTful-API. In diesem Zusammenhang gibt es Aspekte aus folgenden Bereichen zu analsysieren:
+
+\begin{description}
+    \item[Technologie] das Protokoll HTTP und der Authentifizierungsmechanismus OAuth 2.0
+    \item[Server-Umgebung] die Umgebungen, die eine PEAX API anbieten
+    \item[Client-Umgebung] die Benutzer, ihr Betriebssystem und ihre Kommandozeile
+\end{description}
 
 \subsubsection{Endpoints}
 
-Eine RESTful-API besteht aus einer Reihe sogenannter \textit{Endpoints}, d.h Pfade zu Ressourcen, die abgefragt und/oder manipuliert werden können.
+Eine RESTful-API besteht aus einer Reihe sogenannter \textit{Endpoints}, d.h Pfade zu Ressourcen, die abgefragt und/oder manipuliert werden können. Aus Platzgründen soll hier nicht auf einzelne Endpoints eingegangen werden. Beispielhaft erwähnenswert sind aber etwa der Token-Endpoint, bei welchem der Benutzer im Austausch seiner Credentials (Benutzername, Passwort und optionaler zweiter Faktor) ein \textit{Token Pair} holen kann; und der Document-Endpoint, auf welchen Dokumente hochgeladen werden können.
 
 \subsubsection{HTTP-Methoden}
 
 Ein Endpoint kann über eine oder mehrere HTTP-Methoden angesprochen werden \cite[Abschnitt 4.3]{RFC7231}. Im Kontext der PEAX API sind folgende Methoden relevant:
 
 \begin{itemize}
-	\item \texttt{GET}
-	\item \texttt{HEAD}
-	\item \texttt{POST}
-	\item \texttt{PUT}
-	\item \texttt{DELETE}
-	\item \texttt{OPTIONS}
-	\item \texttt{PATCH} \cite{RFC5789}
+	\item \texttt{GET}: Erfragt eine Repräsentation einer bestimmten Ressource; greift nur schreibend auf diese zu.
+    \item \texttt{HEAD}: Analog zu \texttt{GET}, es wird jedoch nur der Header und nicht der Body der Ressource angefragt.
+	\item \texttt{POST}: Übermittelt eine Ressource zur Speicherung oder Manipulation einer bestehenden Ressource.
+	\item \texttt{PUT}: Ersetzt eine bestehende Ressource durch den mitgeschickten Payload.
+	\item \texttt{DELETE}: Löscht eine Ressource.
+    \item \texttt{OPTIONS}: Beschreibt die Kommunikationsoptionen für eine bestimmte Ressource, wird etwa für CORS Pre-Flight Requests eingesetzt \cite{mdn-cors}.
+    \item \texttt{PATCH} Führt eine partielle Modifikation auf eine bestimmte Ressource aus. \cite{RFC5789} Die Modifikation wird in der Form \textit{JavaScript Object Notation (JSON) Patch} durchgeführt \cite{RFC6902}.
 \end{itemize}
 
 \subsubsection{HTTP Status-Codes}
@@ -42,6 +48,16 @@ Eine Antwort auf eine HTTP-Anfrage enthält jeweils einen Status-Code \cite[Absc
 	\item \texttt{500 Internal Server Error}: Obwohl die Anfrage korrekt formuliert und angenommen worden ist, kam es bei der Verarbeitung derselben zu einem serverseitigem Fehler.\footnote{In der PEAX API kommt es gelegentlich zu solchen Fehlern, die stattdessen mit dem Status \texttt{400 Bad Request} und einer aussagekräftigen Fehlermeldung beantwortet werden müssten. Wird z.B. bei der Einlieferung von Dokument-Metadaten eine syntaktisch fehlerhafte IBAN mitgegeben, tritt der Fehler erst bei der internen Verarbeitung, und nicht schon bei der Validierung der Anfrage auf. Hier besteht Handlungsbedarf aufseiten der Backend-Entwicklung.}
 	\item \texttt{380 Unknown}: Dieser Status ist nicht Teil der HTTP-Spezifikation, wird aber nach einem Login-Versuch verwendet, wenn eine Zwei-Faktor-Authentifizierung (SMS, One Time Password) verlangt wird, und ist somit für die vorliegende Arbeit von hoher Relevanz.
 \end{itemize}
+
+\subsubsection{OAuth 2.0}
+
+Im Hinblick auf das Wirtschaftsprojekt hat sich der Autor dieser Arbeit bereits im Vorsemester im Rahmen des Moduls \textit{Computer Science Hot Topics} (INFKOL) mit dem Thema OAuth 2.0 befasst \cite{infkol-oauth}. Detaillierte Informationen zu OAuth 2.0 können diesem Paper und den dort zitierten Primärquellen entnommen werden.
+
+An dieser Stelle sollen nur die Grundlagen beschrieben werden, die dann im Umsetzungsteil (siehe \secref{sec:Realisierung}) bei Bedarf genauer eingegangen wird.
+
+Bei einem Login-Vorgang mit OAuth 2.0 sendet der Benutzer seine Credentials (Benutzername, Passwort, optionaler zweiter Faktor wie SMS-Code) an den Token-Endpoint eines \textit{Identity Providers} (IDP). Stimmen diese Angaben mit den Informationen auf dem IDP überein, erhält der Benutzer ein \textit{Token Pair} bestehend aus \textit{Access Token} und \textit{Refresh Token}. Der Access Token dient zum Zugriff auf eine geschützte Ressource und ist in der Regel kurzlebig. (Bei PEAX läuft er nach fünf Minuten ab.) Mithilfe des Refresh Tokens kann sich der Benutzer einen neuen Access Token vom IDP holen. Der Refresh Token ist darum langlebiger (30 Minuten bei PEAX).
+
+Es ist die Handhabung dieser Tokens (sehr lange, Base64-codierte Strings), die das Ansteuern der PEAX API mit Programmen wie \texttt{curl} und \textsc{Postman} so mühsam machen.\footnote{Eine beispielhafte Analyse ergab, dass ein Access Token 1604 Zeichen lang ist.}
 
 \subsubsection{Umgebungen}
 
