@@ -4,28 +4,29 @@ subtitle: 'Wirtschaftsprojekt «px: PEAX Command Line Client»'
 author: Patrick Bucher
 ---
 
-| # | User Story                                     | Status                  | Story Points |
-|--:|------------------------------------------------|-------------------------|--------------|
-| 1 | Konfiguration sämtlicher Umgebungen            | umgesetzt               | 1            |
-| 2 | Erweiterung der CI-Pipeline                    | umgesetzt               | 5            |
-| 3 | Login mit Zwei-Faktor-Authentifizierung        | umgesetzt               | 3            |
-| 4 | Sichere Verwahrung der Tokens                  | umgesetzt               | 5            |
-| 5 | Handhabung mehrerer Umgebungen                 | eingeplant für Sprint 1 | 3            |
-| 6 | Generische `GET`-Schnittstelle                 | eingeplant für Sprint 1 | 3            |
-|   | Verbesserung der Hilfe-Funktion                | vorgesehen für Sprint 2 |
-|   | Automatische Aktualisierung von Tokens         | vorgesehen für Sprint 2 |
-|   | Login für Agent API                            | vorgesehen für Sprint 2 |
-|   | Einliefern von Dokumenten per Delivey API      | offen                   |
-|   | Einliefern von Dokumenten per User API         | offen                   |
-|   | Einlieferung von Verzeichnissen mit Dokumenten | offen                   |
-|   | Auflisten von Dokumenten mit Suche/Filterung   | offen                   |
-|   | Generische `POST`-Schnittstelle                | offen                   |
-|   | Generische `PUT`-Schnittstelle                 | offen                   |
-|   | Generische `PATCH`-Schnittstelle               | offen                   |
-|   | Ausführung von Befehlen für mehrere Umgebungen | offen                   |
-|   | Fortschrittsanzeige bei längeren Vorgängen     | offen                   |
-|   | Ausgabe von Tokens                             | offen                   |
-|   | Inspektion von Tokens                          | offen                   |
+|  # | User Story                                     | Status                  | Story Points |
+|---:|------------------------------------------------|-------------------------|--------------|
+|  1 | Konfiguration sämtlicher Umgebungen            | umgesetzt               | 1            |
+|  2 | Erweiterung der CI-Pipeline                    | umgesetzt               | 5            |
+|  3 | Login mit Zwei-Faktor-Authentifizierung        | umgesetzt               | 3            |
+|  4 | Sichere Verwahrung der Tokens                  | umgesetzt               | 5            |
+|  5 | Handhabung mehrerer Umgebungen                 | eingeplant für Sprint 2 | 3            |
+|  6 | Generische `GET`-Schnittstelle                 | eingeplant für Sprint 2 | 3            |
+|  7 | Automatische Aktualisierung von Tokens         | eingeplant für Sprint 2 | 5            |
+|  8 | Login für Agent API                            | eingeplant für Sprint 2 | 3            |
+|  9 | Verbesserung der Hilfe-Funktion                | eingeplant für Sprint 2 | 3            |
+| 10 | Vollzugsmeldungen mit `-v`/`-verbose`-Flag     | eingeplant für Sprint 2 | 1            |
+|    | Einliefern von Dokumenten per Delivey API      | offen                   |
+|    | Einliefern von Dokumenten per User API         | offen                   |
+|    | Einlieferung von Verzeichnissen mit Dokumenten | offen                   |
+|    | Auflisten von Dokumenten mit Suche/Filterung   | offen                   |
+|    | Generische `POST`-Schnittstelle                | offen                   |
+|    | Generische `PUT`-Schnittstelle                 | offen                   |
+|    | Generische `PATCH`-Schnittstelle               | offen                   |
+|    | Ausführung von Befehlen für mehrere Umgebungen | offen                   |
+|    | Fortschrittsanzeige bei längeren Vorgängen     | offen                   |
+|    | Ausgabe von Tokens                             | offen                   |
+|    | Inspektion von Tokens                          | offen                   |
 
 # Sprints
 
@@ -35,7 +36,15 @@ Eingeplant: sechs Stories, 20 Story Points
 
 Bisher abgearbeitet: 14 Story Points (in 14.5 Stunden)
 
-Offen: 6 Story Points
+Offen: 2 Stories/6 Story Points
+
+## Sprint 2
+
+Eingeplant: sechs Stories, 18 Story Points
+
+Bisher abgearbeitet: 0 Story Points (in 0 Stunden)
+
+Offen:
 
 # User Stories
 
@@ -174,3 +183,40 @@ Akzeptanzkriterien:
 2. Die Base-URL der jeweiligen API und Umgebung wird dem Ressourcenpfad automatisch vorangestellt.
 3. Im Falle eines erfolgreichen Zugriffs (`200 OK`) soll der resultierende Payload auf die Standardausgabe (`stdout`) ausgegeben werden.
 4. Im Falle eines fehlerhaften Zugriffs soll der Status-Code auf die Standardfehlerausgage (`stdout`) ausgegeben werden.
+
+## 7: Automatische Aktualisierung von Tokens
+
+Als Benutzer möchte ich dass ein Request, der aufgrund eines abgelaufenen Access Tokens scheitert, mit einem neuen Access Token erneut versucht wird, damit ich mich nicht ständig neu einloggen muss.
+
+Akzeptanzkriterien:
+
+1. Der Retry-Mechanismus soll für den Benutzer transparent sein.
+2. Der neue Access Token soll anhand des Refresh Tokens ausgestellt werden.
+3. Kann aufgrund eines abgelaufenen Refresh Tokens kein neuer Access Token geholt werden, soll dies dem Benutzer gemeldet werden.
+
+## 8: Login für Agent API
+
+Als Benutzer möchte ich mich mit als Agent einloggen können, um anderen Benutzern Dokumente einliefern zu können.
+
+Akzeptanzkriterien:
+
+1. Das Login für Agents soll mit einem anderen Subcommand als `login` funktionieren.
+2. Die Tokens sollen nach der gleichen Logik sicher bzw. unsicher verwahrt werden wie diejenige für die User API.
+
+## 9: Verbesserung der Hilfe-Funktion
+
+Als Benutzer möchte ich eine ausführliche Hilfefunktion für `px` als Ganzes wie auch für die einzelnen Subcommands haben.
+
+Akzeptanzkriterien:
+
+1. Es muss eine generische Hilfefunktion `px help` geben.
+2. Es muss für jeden Subcommand eine Hilfefunktion `px help [subcommand` oder `px [subcommand] -h` geben.
+
+## 10: Vollzugsmeldungen mit `-v`/`-verbose`-Flag
+
+Als Benutzer möchte ich Vollzugsmeldungen aktivieren können, damit ich sehen kann, ob ein Vorgang erfolgreich war.
+
+Akzeptanzkriterien:
+
+1. Es sollen für alle bestehenden Befehle entsprechende Meldungen erstellt werden.
+2. Die Vollzugsmeldungen sollen mit dem Flag `-v` bzw. `-verbose` aktiviert werden.

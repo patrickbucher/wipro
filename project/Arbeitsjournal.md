@@ -56,4 +56,5 @@ author: Patrick Bucher
 | Fr, 25.10.2019 |      1.0 | Dokumentation | Analyse des Projektauftrags (Benutzer, Betriebssysteme, Shells)        |
 | Sa, 26.10.2019 |      1.5 | Dokumentation | Lücken in der Analyse geschlossen                                      |
 | So, 27.10.2019 |      2.0 | Dokumentation | Risikoanalyse, Stand der Praxis                                        |
-|                | **49.0** | **Total**     |                                                                        |
+| So, 27.10.2019 |      1.0 | Projekt       | Sprint 2 geplant, User Stories geschrieben                             |
+|                | **50.0** | **Total**     |                                                                        |
