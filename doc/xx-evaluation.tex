@@ -9,18 +9,18 @@ Anforderungen:
 \begin{description}
     \item[Installation] Die Software soll sich einfach installieren lassen.
     \item[Umgebung] Es dürfen keine besonderen Anforderungen an die Umgebung gestellt werdenm auf der \texttt{px} läuft.
-    \item[Plattformen] Die Software soll auf allen gängigen Betriebssystemen (Windows, mac OS, Linux) lauffähig sein.
+    \item[Plattformen] Die Software soll auf allen gängigen Betriebssystemen (\textsc{Windows}, \textsc{macOS}, \textsc{Linux}) lauffähig sein.
     \item[Einheitlichkeit] Der Client soll überall die gleiche Befehlssyntax haben.
     \item[Performance] Ein Command Line Client soll in Skripten verwendet werden können, wodurch das Programm sehr oft in kurzem Zeitraum aufgestartet werden muss.
 \end{description}
 
-Java erfordert die lokale Installation einer JRE in der richtigen Version. Ausserdem werden Wrapper-Skripts benötigt (\texttt{java -jar px.jar} ist nicht praktikabel).
+\textsc{Java} erfordert die lokale Installation einer Java Runtime Environment (JRE) in der richtigen Version. Ausserdem werden Wrapper-Skripts benötigt (\texttt{java -jar px.jar} ist nicht praktikabel).
 
-Python, Ruby, Perl und andere Skriptsprachen benötigen ebenfalls einen vorinstallierten Interpreter in der richtigen Version.
+\textsc{Python}, \textsc{Ruby}, \textsc{Perl} und andere Skriptsprachen benötigen ebenfalls einen vorinstallierten Interpreter in der richtigen Version.
 
-Zwar gibt es mit Mono eine Variante von .Net, die überall lauffähig ist, hier werden aber wiederum eine Laufzeitumgebung bzw. vorinstallierte Libraries benötigt.
+Zwar gibt es mit Mono eine Variante von \textsc{.Net}, die überall lauffähig ist, hier werden aber wiederum eine Laufzeitumgebung bzw. vorinstallierte Libraries benötigt.
 
-Am besten geeignet sind kompilierte Sprachen (C, C++, Go, Rust, Nim). Mit einer statischen Kompilierung lässt sich das ganze Programm in eine einzige Binärdatei überführen, welches denkbar einfach zu installieren ist (Kopieren nach einem der Verzeichnisse innerhalb von \texttt{\$PATH}).
+Am besten geeignet sind kompilierte Sprachen (C, C++, \textsc{Go}, \textsc{Rust}, \textsc{Nim}). Mit einer statischen Kompilierung lässt sich das ganze Programm in eine einzige Binärdatei überführen, welches denkbar einfach zu installieren ist (Kopieren nach einem der Verzeichnisse innerhalb von \texttt{\$PATH}).
 
 Für JavaScript gibt es mit QuickJS seit kurzem die Möglichkeit, JavaScript zu Binärdateien zu kompilieren. Dies funktioniert aber nicht auf allen Plattformen, ausserdem ist QuickJS noch experminentell und noch nicht für den produktiven Einsatz geeignet.
 
