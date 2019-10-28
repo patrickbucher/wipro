@@ -1,8 +1,20 @@
 \section{Methoden}
 
+Dieses Kapitel beschreibt nicht das \textsc{Was}, sondern das \textsc{Wie}: Hier soll es nicht um einzelne Features und deren Implementierun gehen, sondern um das Vorgehen beim Planen, Konzipieren, Umsetzen, Testen, Validieren. 
+
 \subsection{Vorgehen}
 
-TODO: agiles Entwicklungsprojekt, Ideation, Sprint-Evaluate-Sprint
+Bei PEAX hat sich die agile Softwareentwicklung nach \textsc{Scrum} durchgesetzt. Da es sich bei \texttt{px} um ein Einzelprojekt handelt, können hier nicht sämtliche Aspekte davon abgebildet werden. Die üblichen \textsc{Scrum}-Rollen wie \textsc{Product Owner} und \textsc{Scrum Master} fallen dabei weg, bzw. bestehen nur in Personalunion des einzigen Entwicklers.
+
+Mit dem Auftraggeber und den Anwendern (Beta-Tester) gibt es aber dennoch Stakeholder, denen der Fortschritt der Arbeit regelmässig berichtet und vorgeführt wird. Von diesen werden auc Rückmeldungen zum Prototyp und zur Projektdokumentation eingefordert, um im weiteren Verlauf des Projekts darauf reagieren zu können.
+
+Die Anwendung soll in mehreren zweiwöchigen Sprints entwickelt werden. Nach jedem Sprint wird der aktuelle Stand an das Entwicklungsteam ausgeliefert. Dabei erhält das Programm einen Versionstag entsprechend der Sprint-Nummer, wozu die Minor-Version erhöht wird (Beispiel: \texttt{v0.1.0} ist der Tag nach dem ersten Sprint, \texttt{v0.3.0} der Stand nach dem dritten Sprint). Bis zum darauffolgenden Sprint ist nun eine Woche Zeit zum Ausprobieren umd zum Erteilen von Rückmeldungen. Diese fliessen in die Planung zum nächsten Sprint ein, der eine Woche nach dem vorausgegangenen Sprint-Ende startet.
+
+Das Backlog wurde zu Beginn des Projekts nur grob skizziert, wird aber vor Beginn eines jeden Sprints dafür detailliert ausgearbeitet. Neben der der Story-Beschreibung nach der Form \textit{Als [Rolle] möchte ich [Funktion], damit [Nutzen]} werden zu jeder Story mehrere Akzeptanzkriterien festgehalten.
+
+Während dem Umsetzen und Testen werden dann zu jeder Story Umsetzungsnotizen und ein Testprotokoll festgehalten. Die Umsetzungsnotizen fliessen jeweils nach dem Sprint in die Dokumentation ein. Ein Story-übergreifender Test-Plan soll nicht erstellt werden. Die Teststrategie wird im folgenden Unterkapitel beschrieben.
+
+Das Projekt entstammt dem PEAX-Ideation-Prozess, und soll auch in diesem Rahmen validiert werden. Dieser Hintergrund ist im ersten Meilensteinbericht (TODO: verlinken) genauer beschrieben.
 
 \subsection{Teststrategie}
 
