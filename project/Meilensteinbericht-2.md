@@ -2,6 +2,7 @@
 title: Bericht Meilenstein 2
 subtitle: 'Wirtschaftsprojekt «px: PEAX Command Line Client»'
 author: Patrick Bucher
+date: 10.11.2019
 ---
 
 # Sprint 1 (Semesterwochen 4 und 5)

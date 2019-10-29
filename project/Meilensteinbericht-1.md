@@ -2,6 +2,7 @@
 title: Bericht Meilenstein 1
 subtitle: 'Wirtschaftsprojekt «px: PEAX Command Line Client»'
 author: Patrick Bucher
+date: 06.10.2019
 ---
 
 # Vorgeschichte 

@@ -1,6 +1,12 @@
 \section{Anhang}
 
+Im Anhang sind verschiedene Teile der Dokumentation gesammelt, die den Lesefluss im Hauptteil unnötig erschweren würden, und eher als Referenz denn zum Durchlesen gedacht sind.
+
+Weiter sind hier im Anhang Dokumente aufgelistet, die mit der Arbeit im Zusammenhang stehen, aber nicht physisch mit diesem Dokument verbunden sein sollen.
+
 \subsection{Systemspezifikation}
+
+Bei \texttt{px} handelt es sich um ein modular aufgebautes Kommandozeilenprogramm. Der Code ist in zwei Teile eingeteilt: das \texttt{px}-Modul (Library), das die Funktionalität anwendungsneutral zur Verfügung stellt, und das Kommandozeilenprogramm \texttt{cmd/px.go}, das die kommandozeilenspezifischen Operationen (Interpretation der Parameter, Ein- und Ausgabe) übernimmt, und Gebrauch vom \texttt{px}-Modul macht.
 
 \subsubsection{Systemkontext}
 \label{sec:Systemkontext}
@@ -126,3 +132,16 @@ Eine spätere Neuimplementierung von \texttt{px} in \textsc{Rust} wäre ein tech
 \subsection{Libraries}
 
 TODO: JWT, Keystore, Password Input
+
+\subsection{Weitere Dokumente}
+\label{apx:WeitereDokumente}
+
+\begin{description}
+    \item[Projektauftrag] Im Projektauftrag (\texttt{Anhang/Projektauftrag.pdf}) ist die Aufgabe beschrieben, wie sie zu Beginn des Projekts definiert worden ist.
+    \item[Projektplan] Der Projektplan (\texttt{Anhang/Projektplan.pdf}) besteht aus einem Rahmenplan, einem Meilensteinplan und einem Wochenplan.
+    \item[Backlog] Das Backlog (\texttt{Anhang/Backlog.pdf}) enthält die einzelnen User Stories, die Sprint-Planung, Umsetzungsnotizen zu einzelnen User Stories und Testprotokolle dazu. 
+    \item[Meilensteinbericht 1] Der erste Meilensteinbericht (\texttt{Anhang/Meilensteinbericht-1.pdf}) beschreibt die Vorgeschichte des Projekts und die Phase der Projektinitialisierung.
+    \item[Meilensteinbericht 2] Der zweiten Meilensteinbericht (\texttt{Anhang/Meilensteinbericht-2.pdf}) umfasst die ersten beiden Sprints.
+    \item[Meilensteinbericht 3] \texttt{Anhang/Meilensteinbericht-3.pdf}
+    \item[Arbeitsjournal] Im Arbeitsjournal (\texttt{Anhang/Arbeitsjournal.pdf}) sind die einzelnen Aufwände auf halbe Stunden gerundet nach Bereich ‒ Projekt(administration), Dokumentation, Umsetzung ‒ rapportiert. Mithilfe eines AWK-Skripts können die Aufwände nach Bereich und User Story ausgewertet werden.
+\end{description}

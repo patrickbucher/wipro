@@ -57,5 +57,6 @@ author: Patrick Bucher
 | Sa, 26.10.2019 |      1.5 | Dokumentation | Lücken in der Analyse geschlossen                                      |
 | So, 27.10.2019 |      2.0 | Dokumentation | Risikoanalyse, Stand der Praxis                                        |
 | So, 27.10.2019 |      1.0 | Projekt       | Sprint 2 geplant, User Stories geschrieben                             |
-| Mo, 28.10.2019 |      1.0 | Dokumentation | Dokumentation: Stand der Praxis und Vorgehen weiter beschrieben        |
-|                | **51.0** | **Total**     |                                                                        |
+| Mo, 28.10.2019 |      1.0 | Dokumentation | Stand der Praxis und Vorgehen weiter beschrieben                       |
+| Di, 29.10.2019 |      1.0 | Dokumentation | Referenzen nachgetragen, Anhänge erwähnt, Angefangenes auformuliert    |
+|                | **52.0** | **Total**     |                                                                        |
