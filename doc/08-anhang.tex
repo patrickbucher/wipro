@@ -60,7 +60,7 @@ Zwar gibt es mit Mono eine Variante von .Net, die überall lauffähig ist, hier 
 
 Für die Problemstellung am besten geeignet sind kompilierte Sprachen (C, C++, \textsc{Go}, \textsc{Rust}, \textsc{Nim}). Mit einer statischen Kompilierung lässt sich das ganze Programm in eine einzige Binärdatei überführen, welches denkbar einfach zu installieren ist (Kopieren nach einem der Verzeichnisse innerhalb von \texttt{\$PATH}).
 
-Für \textsc{JavaScript}, das bei PEAX im Frontend zum Einsatz kommt, gibt es mit QuickJS\footnote{\url{https://bellard.org/quickjs/}} seit kurzem die Möglichkeit, \textsc{JavaScript} zu Binärdateien zu kompilieren. Dies funktioniert aber nicht auf allen Plattformen, ausserdem ist QuickJS noch experminentell und noch nicht für den produktiven Einsatz geeignet.
+Für \textsc{JavaScript}, das bei PEAX im Frontend zum Einsatz kommt, gibt es mit \textsc{QuickJS}\footnote{\url{https://bellard.org/quickjs/}} seit kurzem die Möglichkeit, \textsc{JavaScript} zu Binärdateien zu kompilieren. Dies funktioniert aber nicht auf allen Plattformen, ausserdem ist \textsc{QuickJS} noch experminentell und noch nicht für den produktiven Einsatz geeignet.
 
 Um ein Projekt vom gegebenen Umfang innerhalb eines Semesters umsetzen zu können, sind Vorkenntnisse in der einzusetzenden Programmiersprache zwar nicht zwingend, können das Risiko des Scheiterns aber erheblich senken. Gerade bei der Abschätzung von Aufwänden ist Vertrautheit mit den einzusetzenden Werkzeugen sehr hilfreich.
 
@@ -83,12 +83,12 @@ Mit \textsc{Go} konnte der Autor dieser Arbeit bereits einges an Erfahrung samme
 			\item persönlich bereits viel (positive) Erfahrungen damit gesammelt
 			\item wird bereits für andere bei PEAX gebräuchliche CLI-Tools eingesetzt (\texttt{oc}, \texttt{docker})
 			\item fügt sich sehr gut in die UNIX-Philosophie ein (Tooling, Libraries)
-			\item Einfaches Interface für nebenläufige Programmierung (\textsc{Go}routines und Channels)
+			\item Einfaches Interface für nebenläufige Programmierung (Goroutines und Channels)
 			\item geringer Memory-Verbrach bei relativ hoher Performance\footnote{\url{https://benchmarksgame-team.pages.debian.net/benchmarksgame/fastest/go.html}}
 		\end{itemize}
 	\item Nachteile
 		\begin{itemize}
-			\item fehlende Features wie Generics und \texttt{filter}/\texttt{map}/\texttt{reduce}
+			\item keine Features wie Generics, Exceptions und \texttt{filter}/\texttt{map}/\texttt{reduce}
 			\item Binaries fallen relativ gross aus\footnote{\url{https://golang.org/doc/faq\#Why\_is\_my\_trivial\_program\_such\_a\_large\_binary}}
 			\item Error-Handling aufwändig und teils repetitiv
 		\end{itemize}
@@ -121,9 +121,9 @@ Der Autor dieser Arbeit konnte sich bereits letztes Jahr im Rahmen des Moduls \t
 
 \subsubsection{Entscheidung}
 
-\textsc{Rust} hat gegenüber \textsc{Go} einige unbestreitbare Vorzüge (Memory Management, Typsystem, Ausdrucksstärke, Eliminierung ganzer Fehlerklassen, Performance, schlankere Binärdateien). Bezogen auf das umzusetzende Projekt fallen jedoch einige davon kaum ins Gewicht (etwa Performance und Zero-Cost Abstractions). Hier fallen die Vorzüge von \textsc{Go} (umfassende Standard Library, Cross-Compilation) wesentlich stärker ins Gewicht.
+\textsc{Rust} hat gegenüber \textsc{Go} einige unbestreitbare Vorzüge (Memory Management, Typsystem, Ausdrucksstärke, Eliminierung ganzer Fehlerklassen, Performance, schlankere Binärdateien). Bezogen auf das umzusetzende Projekt haben jedoch einige davon kaum einen wichtigen Stellenwert (etwa Performance und Zero-Cost Abstractions). Hier fallen die Vorzüge von \textsc{Go} (umfassende Standard Library, Cross-Compilation) wesentlich stärker ins Gewicht.
 
-Gerade die absichtlich schlank gehaltene Standard Library von \textsc{Rust}, die etwa zur Generierung von Zufallszahlen bereits externe Abhängigkeiten erfordert\footnote{\url{https://doc.rust-lang.org/book/ch02-00-guessing-game-tutorial.html\#using-a-crate-to-get-more-functionality}}, dürfte sich im vorliegenden Projektrahmen negativ auswirken, zumal die Evaluation verschiedener Libraries einen sehr hohen Zusatzaufwand zur Folge haben.
+Gerade die absichtlich schlank gehaltene Standard Library von \textsc{Rust}, die etwa zur Generierung von Zufallszahlen bereits externe Abhängigkeiten erfordert\footnote{\url{https://doc.rust-lang.org/book/ch02-00-guessing-game-tutorial.html\#using-a-crate-to-get-more-functionality}}, dürfte sich im vorliegenden Projektrahmen negativ auswirken, zumal die Evaluation verschiedener Libraries einen sehr hohen Zusatzaufwand erfordert.
 
 Da \textsc{Go} bereits bei der Entwicklung des Prototypen von \texttt{px} erfolgreich zum Einsatz kam, und einige Projektaspekte (grundlegende CI-Pipeline, \texttt{Makefile} für Cross-Compilation und Packaging) bereits damit implementiert werden konnten, soll \textsc{Go} für das vorliegende Projekt den Vorzug erhalten.
 
