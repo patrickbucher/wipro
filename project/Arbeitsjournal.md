@@ -59,4 +59,5 @@ author: Patrick Bucher
 | So, 27.10.2019 |      1.0 | Projekt       | Sprint 2 geplant, User Stories geschrieben                             |
 | Mo, 28.10.2019 |      1.0 | Dokumentation | Stand der Praxis und Vorgehen weiter beschrieben                       |
 | Di, 29.10.2019 |      1.0 | Dokumentation | Referenzen nachgetragen, Anhänge erwähnt, Angefangenes auformuliert    |
-|                | **52.0** | **Total**     |                                                                        |
+| Fr, 01.11.2019 |      2.0 | Umsetzung     | Story 5: Handhabung mehrerer Umgebungen                                |
+|                | **54.0** | **Total**     |                                                                        |

@@ -10,7 +10,7 @@ author: Patrick Bucher
 |  2 | Erweiterung der CI-Pipeline                    | umgesetzt               | 5            |
 |  3 | Login mit Zwei-Faktor-Authentifizierung        | umgesetzt               | 3            |
 |  4 | Sichere Verwahrung der Tokens                  | umgesetzt               | 5            |
-|  5 | Handhabung mehrerer Umgebungen                 | eingeplant für Sprint 2 | 3            |
+|  5 | Handhabung mehrerer Umgebungen                 | umgesetzt               | 3            |
 |  6 | Generische `GET`-Schnittstelle                 | eingeplant für Sprint 2 | 3            |
 |  7 | Automatische Aktualisierung von Tokens         | eingeplant für Sprint 2 | 5            |
 |  8 | Login für Agent API                            | eingeplant für Sprint 2 | 3            |
@@ -42,9 +42,9 @@ Offen: 2 Stories/6 Story Points
 
 Eingeplant: sechs Stories, 18 Story Points
 
-Bisher abgearbeitet: 0 Story Points (in 0 Stunden)
+Bisher abgearbeitet: 3 Story Points (in 2 Stunden)
 
-Offen:
+Offen: TODO
 
 # User Stories
 
@@ -172,6 +172,20 @@ Akzeptanzkriterien:
 1. Es muss einen Unterbefehl geben, der mir die aktuelle Umgebung (d.h. die Umgebung, auf der sich der Benutzer zuletzt eingeloggt hat) anzeigt.
 2. Es muss einen Unterbefehl geben, womit eine Umgebung mit bereits aktivem Logging als die Standardumgebung gesetzt werden kann.
 3. Bei allen Befehlen, die gegen die API operieren, soll die Umgebung mit einem Kommandozeilenparameter `-e` bzw. `-env` spezifiziert werden können.
+4. Fehlt der Parameter `-e` bzw. `-env`, ist die Standardumgebung zu verwenden (zuletzt eingeloggt bzw. manuell als Standard gesetzt via `px env`).
+
+### Notizen
+
+- Inspiriert durch `oc project` soll `px` einen Unterbefehl namens `env` enthalten. Wird er ohne Parameter aufgerufen, zeigt er die aktuelle Arbeitsumgebung an. Wird er mit Parameter aufgerufen, wird die aktuelle Arbeitsumgebung entsprechend gesetzt, sofern ein Login (Token Pair) dazu existiert.
+- Die Datenstruktur `TokenStore` wird dazu um ein Feld `DefaultEnvironment` erweitert, um die Umgebung über mehrere Aufrufe von `px` hinweg abzuspeichern.
+- Das Wechseln auf eine unbekannte Umgebung oder auf eine Umgebung ohne Tokens ist nicht zulässig.
+
+### Testprotokoll
+
+- Das Testskript `ci-px-env-test.sh` führt zunächst ein Login auf `test` aus und prüft dann direkt in `~/.px-tokens`, ob `test` die Standardumgebung ist.
+- Es wird zudem geprüft, ob `px env` die gleiche Umgebung ausgibt, die in `~/.px-tokens` als Standard abgelegt ist.
+- Um den Wechsel der Umgebung zu testen, musste ein weiteres Login eingerichtet werden.
+- Das Testskript `ci-px-env-test.sh` verwendet dieses zusätzliche Login, um zwischen den Umgebungen `test` und `dev` hin- und herzuspringen.
 
 ## 6: Generische `GET`-Schnittstelle
 
