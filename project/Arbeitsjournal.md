@@ -60,4 +60,5 @@ author: Patrick Bucher
 | Mo, 28.10.2019 |      1.0 | Dokumentation | Stand der Praxis und Vorgehen weiter beschrieben                       |
 | Di, 29.10.2019 |      1.0 | Dokumentation | Referenzen nachgetragen, Anhänge erwähnt, Angefangenes auformuliert    |
 | Fr, 01.11.2019 |      2.0 | Umsetzung     | Story 5: Handhabung mehrerer Umgebungen                                |
-|                | **54.0** | **Total**     |                                                                        |
+| Mo, 04.11.2019 |      1.5 | Umsetzung     | Story 6: Generischer GET-Request mit Testskript                        |
+|                | **55.5** | **Total**     |                                                                        |
