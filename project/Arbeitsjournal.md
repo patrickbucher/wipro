@@ -61,4 +61,5 @@ author: Patrick Bucher
 | Di, 29.10.2019 |      1.0 | Dokumentation | Referenzen nachgetragen, Anhänge erwähnt, Angefangenes auformuliert    |
 | Fr, 01.11.2019 |      2.0 | Umsetzung     | Story 5: Handhabung mehrerer Umgebungen                                |
 | Mo, 04.11.2019 |      1.5 | Umsetzung     | Story 6: Generischer GET-Request mit Testskript                        |
-|                | **55.5** | **Total**     |                                                                        |
+| Di, 05.11.2019 |      2.0 | Umsetzung     | Story 7: Refactoring Token Store                                       |
+|                | **57.5** | **Total**     |                                                                        |

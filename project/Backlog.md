@@ -11,7 +11,7 @@ author: Patrick Bucher
 |  3 | Login mit Zwei-Faktor-Authentifizierung        | umgesetzt               | 3            |
 |  4 | Sichere Verwahrung der Tokens                  | umgesetzt               | 5            |
 |  5 | Handhabung mehrerer Umgebungen                 | umgesetzt               | 3            |
-|  6 | Generische `GET`-Schnittstelle                 | eingeplant für Sprint 2 | 3            |
+|  6 | Generische `GET`-Schnittstelle                 | umgesetzt               | 3            |
 |  7 | Automatische Aktualisierung von Tokens         | eingeplant für Sprint 2 | 5            |
 |  8 | Login für Agent API                            | eingeplant für Sprint 2 | 3            |
 |  9 | Verbesserung der Hilfe-Funktion                | eingeplant für Sprint 2 | 3            |
@@ -27,6 +27,7 @@ author: Patrick Bucher
 |    | Fortschrittsanzeige bei längeren Vorgängen     | offen                   |
 |    | Ausgabe von Tokens                             | offen                   |
 |    | Inspektion von Tokens                          | offen                   |
+|    | Variablen in der Ressourcenangabe              | offen                   |
 
 # Sprints
 
@@ -42,7 +43,7 @@ Offen: 2 Stories/6 Story Points
 
 Eingeplant: sechs Stories, 18 Story Points
 
-Bisher abgearbeitet: 3 Story Points (in 2 Stunden)
+Bisher abgearbeitet: 6 Story Points (in 3.5 Stunden)
 
 Offen: TODO
 
@@ -200,7 +201,7 @@ Akzeptanzkriterien:
 
 ### Notizen
 
-- Eine komortable Zusatzfunktion wäre, dass man Pfade nicht komplett mit der PEAX ID ausschreiben müsste (`document/api/v3/account/455.5462.5012.69/collection`), sondern einen Platzhalter wie {paexId} verwenden könnte (`document/api/v3/account/{peaxId}/collection`).
+- Eine komortable Zusatzfunktion wäre, dass man Pfade nicht komplett mit der PEAX ID ausschreiben müsste (`document/api/v3/account/455.5462.5012.69/collection`), sondern einen Platzhalter wie {paexId} verwenden könnte (`document/api/v3/account/{peaxId}/collection`). Dies soll jedoch nicht Bestandteil dieser Story sein.
 
 ### Testprotokoll
 
@@ -215,6 +216,13 @@ Akzeptanzkriterien:
 1. Der Retry-Mechanismus soll für den Benutzer transparent sein.
 2. Der neue Access Token soll anhand des Refresh Tokens ausgestellt werden.
 3. Kann aufgrund eines abgelaufenen Refresh Tokens kein neuer Access Token geholt werden, soll dies dem Benutzer gemeldet werden.
+
+### Notizen
+
+- Der Token Store wird im Hauptprogramm (`cmd/px.go`) derzeit wie eine Map (Key: Umgebung, Value: Token Pair) angesprochen. Auf die sicher verwahrten Tokens muss separat zugegriffen werden. Dieser Zugriff soll vereinheitlicht werden, was ein Refactoring erfordert.
+- Das Usage Log, das die Anzahl Aufrufe und das Datum des letzten Aufrufs von `px` trackte, wurde entfernt.
+
+### Testprotokoll
 
 ## 8: Login für Agent API
 
