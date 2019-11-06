@@ -12,7 +12,7 @@ author: Patrick Bucher
 |  4 | Sichere Verwahrung der Tokens                  | umgesetzt               | 5            |
 |  5 | Handhabung mehrerer Umgebungen                 | umgesetzt               | 3            |
 |  6 | Generische `GET`-Schnittstelle                 | umgesetzt               | 3            |
-|  7 | Automatische Aktualisierung von Tokens         | eingeplant für Sprint 2 | 5            |
+|  7 | Automatische Aktualisierung von Tokens         | in Umsetzung            | 5            |
 |  8 | Login für Agent API                            | eingeplant für Sprint 2 | 3            |
 |  9 | Verbesserung der Hilfe-Funktion                | eingeplant für Sprint 2 | 3            |
 | 10 | Vollzugsmeldungen mit `-v`/`-verbose`-Flag     | eingeplant für Sprint 2 | 1            |
@@ -221,8 +221,13 @@ Akzeptanzkriterien:
 
 - Der Token Store wird im Hauptprogramm (`cmd/px.go`) derzeit wie eine Map (Key: Umgebung, Value: Token Pair) angesprochen. Auf die sicher verwahrten Tokens muss separat zugegriffen werden. Dieser Zugriff soll vereinheitlicht werden, was ein Refactoring erfordert.
 - Das Usage Log, das die Anzahl Aufrufe und das Datum des letzten Aufrufs von `px` trackte, wurde entfernt.
+- Sicher verwahrte Schlüssel werden neu in `./px-tokens` als Dummy-Eintrag abgelegt, sodass der Token Store ohne Zugriffe auf den Keystore über die Information verfügt, ob zu einer Umgebung überhaupt ein sicher verwahrter Schlüssel vorhanden ist.
+- Bei den Dummy-Einträgen für sicher verwahrte Tokens wurde zunächst ein eigenartiger Datumswert abgelegt. Hierbei handelte es sich um den Zero-Wert der Struktur `time.Time`. Das Problem konnte behoben werden, indem `time.Time` als Pointer statt als Wert verwendet wird.
+- Um den automatischen Retry-Mechanismus umzusetzen, musste zuerst herausgefunden werden, wie man anhand des Refresh Tokens einen neuen Access Token erhalten kann. Dies passiert über den gleichen Endpoint wie das Login, nur dass die Credentials mit dem `grant_type=refresh_token` (statt `grant_type=password`) und dem Refresh Token als Payload (statt Benutzername/Passwort) mitgegeben werden. Dieser Mechanismus wurde per Reverse Engineering ermittelt. Hierzu kann man sich auf dem Portal einloggen, für über fünf Minuten warten, eine Aktion auslösen, die mit dem Server kommuniziert -- und schon sieht man den entsprechenden Request ablaufen.
 
 ### Testprotokoll
+
+- Verschiedenste Skripts schlugen zunächst fehl. Der `env`-Befehl funktionierte zunächst nicht mehr. Dies konnte aber mit der neuen Token-Store-Schnittstelle schnell korrigiert werden. Die Skript-Pipeline hat sich dabei als sehr hilfreich erwiesen.
 
 ## 8: Login für Agent API
 

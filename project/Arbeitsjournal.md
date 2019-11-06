@@ -62,4 +62,5 @@ author: Patrick Bucher
 | Fr, 01.11.2019 |      2.0 | Umsetzung     | Story 5: Handhabung mehrerer Umgebungen                                |
 | Mo, 04.11.2019 |      1.5 | Umsetzung     | Story 6: Generischer GET-Request mit Testskript                        |
 | Di, 05.11.2019 |      2.0 | Umsetzung     | Story 7: Refactoring Token Store                                       |
-|                | **57.5** | **Total**     |                                                                        |
+| Mi, 06.11.2019 |      1.5 | Umsetzung     | Story 7: Erneuerung Access Token anhand Request Token; Refactoring     |
+|                | **59.0** | **Total**     |                                                                        |
