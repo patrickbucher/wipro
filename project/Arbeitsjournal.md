@@ -63,5 +63,6 @@ author: Patrick Bucher
 | Mo, 04.11.2019 |      1.5 | Umsetzung     | Story 6: Generischer GET-Request mit Testskript                        |
 | Di, 05.11.2019 |      2.0 | Umsetzung     | Story 7: Refactoring Token Store                                       |
 | Mi, 06.11.2019 |      1.5 | Umsetzung     | Story 7: Erneuerung Access Token anhand Request Token; Refactoring     |
-| Do, 07.11.2019 |      2.0 | Umsetzung     | Story 7: Erneuerung Access Token anhand Request Token; Refactoring     |
-|                | **61.0** | **Total**     |                                                                        |
+| Do, 07.11.2019 |      2.0 | Umsetzung     | Story 7: Verschieben des HTTP-Codes in das `requests`-Modul            |
+| Fr, 08.11.2019 |      1.5 | Umsetzung     | Story 7: Umsetzung/Test Retry-Mechanismus für Dokument-Upload          |
+|                | **62.5** | **Total**     |                                                                        |
