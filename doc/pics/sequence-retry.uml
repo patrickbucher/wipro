@@ -1,0 +1,41 @@
+@startuml
+
+skinparam monochrome true
+skinparam defaultFontName Lato
+skinparam dpi 150
+
+group TokenRefresh
+    User -> px: GET MyResource
+    note right: The user just fetched a token pair as described in the login process.
+    px -> Keystore: Fetch Token Pair for Environment
+    Keystore -> px: Token Pair
+    px -> Proxy: GET -H "Authorization: Bearer [Access Token]" /my/resource
+    Proxy -> Backend: GET -H "Authorization: Bearer [Access Token]" /my/resource
+    Backend -> Proxy: Resource
+    Proxy -> px: Resource
+    px -> User: Resource Representation
+
+    User -> px: GET OtherResource
+    note right: This request takes place more than 5 minutes (access token lifetime) after the login process.
+    px -> Keystore: Fetch Token Pair for Environment
+    Keystore -> px: Token Pair
+    px -> Proxy: GET -H "Authorization: Bearer [Access Token]" /other/resource
+    Proxy -> px: 401 Unauthorized
+    px -> IDP: Request Access Token using Refresh Token
+    IDP -> px: Token Pair
+    px -> Proxy: GET -H "Authorization: Bearer [New Access Token]" /other/resource
+    Backend -> Proxy: Resource
+    Proxy -> px: Resource
+    px -> User: Resource Representation
+
+    User -> px: GET YetAnotherResource
+    note right: This request takes place more than 30 minutes (refresh token lifetime) after the login process.
+    px -> Keystore: Fetch Token Pair for Environment
+    Keystore -> px: Token Pair
+    px -> Proxy: GET -H "Authorization: Bearer [Access Token]" /other/resource
+    Proxy -> px: 401 Unauthorized
+    px -> IDP: Request Access Token using Refresh Token
+    IDP -> px: 401 Unauthorized
+end
+
+@enduml
