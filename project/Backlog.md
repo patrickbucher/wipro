@@ -4,31 +4,33 @@ subtitle: 'Wirtschaftsprojekt «px: PEAX Command Line Client»'
 author: Patrick Bucher
 ---
 
-|  # | User Story                                     | Status                  | Story Points |
-|---:|------------------------------------------------|-------------------------|--------------|
-|  1 | Konfiguration sämtlicher Umgebungen            | umgesetzt in Sprint 1   | 1            |
-|  2 | Erweiterung der CI-Pipeline                    | umgesetzt in Sprint 1   | 5            |
-|  3 | Login mit Zwei-Faktor-Authentifizierung        | umgesetzt in Sprint 1   | 3            |
-|  4 | Sichere Verwahrung der Tokens                  | umgesetzt in Sprint 1   | 5            |
-|  5 | Handhabung mehrerer Umgebungen                 | umgesetzt in Sprint 2   | 3            |
-|  6 | Generische `GET`-Schnittstelle                 | umgesetzt in Sprint 2   | 3            |
-|  7 | Automatische Aktualisierung von Tokens         | umgesetzt in Sprint 2   | 5            |
-|  8 | Login für Agent API                            | umgesetzt in Sprint 2   | 3            |
-|  9 | Verbesserung der Hilfe-Funktion                | eingeplant für Sprint 2 | 3            |
-| 10 | Vollzugsmeldungen mit `-v`/`-verbose`-Flag     | eingeplant für Sprint 2 | 1            |
-|    | Einliefern von Dokumenten per Agent API        | offen                   |
-|    | Einliefern von Dokumenten per User API         | offen                   |
-|    | Einlieferung von Verzeichnissen mit Dokumenten | offen                   |
-|    | Auflisten von Dokumenten mit Suche/Filterung   | offen                   |
-|    | Generische `POST`-Schnittstelle                | offen                   |
-|    | Generische `PUT`-Schnittstelle                 | offen                   |
-|    | Generische `PATCH`-Schnittstelle               | offen                   |
-|    | Ausführung von Befehlen für mehrere Umgebungen | offen                   |
-|    | Fortschrittsanzeige bei längeren Vorgängen     | offen                   |
-|    | Ausgabe von Tokens                             | offen                   |
-|    | Inspektion von Tokens                          | offen                   |
-|    | Variablen in der Ressourcenangabe              | offen                   |
-|    | Anzeigen der aktiven Logins                    | offen                   |
+|  # | User Story                                        | Status                  | Story Points |
+|---:|---------------------------------------------------|-------------------------|--------------|
+|  1 | Konfiguration sämtlicher Umgebungen               | umgesetzt in Sprint 1   | 1            |
+|  2 | Erweiterung der CI-Pipeline                       | umgesetzt in Sprint 1   | 5            |
+|  3 | Login mit Zwei-Faktor-Authentifizierung           | umgesetzt in Sprint 1   | 3            |
+|  4 | Sichere Verwahrung der Tokens                     | umgesetzt in Sprint 1   | 5            |
+|  5 | Handhabung mehrerer Umgebungen                    | umgesetzt in Sprint 2   | 3            |
+|  6 | Generische `GET`-Schnittstelle                    | umgesetzt in Sprint 2   | 3            |
+|  7 | Automatische Aktualisierung von Tokens            | umgesetzt in Sprint 2   | 5            |
+|  8 | Login für Agent API                               | umgesetzt in Sprint 2   | 3            |
+|  9 | Verbesserung der Hilfe-Funktion                   | eingeplant für Sprint 2 | 3            |
+| 10 | Vollzugsmeldungen mit `-v`/`-verbose`-Flag        | eingeplant für Sprint 2 | 1            |
+|    | Verbesserung der Testabdeckung                    | offen                   |
+|    | Verbesserung der Quellcodedokumentation           | offen                   |
+|    | Einliefern von Dokumenten per Agent API           | offen                   |
+|    | Generische `POST`-Schnittstelle                   | offen                   |
+|    | Generische `PUT`-Schnittstelle                    | offen                   |
+|    | Generische `PATCH`-Schnittstelle                  | offen                   |
+|    | Erweiterte Einliefern von Dokumenten per User API | offen                   |
+|    | Variablen in der Ressourcenangabe                 | offen                   |
+|    | Anzeigen der aktiven Logins                       | offen                   |
+|    | Einlieferung von Verzeichnissen mit Dokumenten    | offen                   |
+|    | Auflisten von Dokumenten mit Suche/Filterung      | offen                   |
+|    | Ausführung von Befehlen für mehrere Umgebungen    | offen                   |
+|    | Fortschrittsanzeige bei längeren Vorgängen        | offen                   |
+|    | Ausgabe von Tokens                                | offen                   |
+|    | Inspektion von Tokens                             | offen                   |
 
 # Sprints
 

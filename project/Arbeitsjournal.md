@@ -66,7 +66,7 @@ author: Patrick Bucher
 | Do, 07.11.2019 |      2.0 | Umsetzung     | Story 7: Verschieben des HTTP-Codes in das `requests`-Modul            |
 | Fr, 08.11.2019 |      1.5 | Umsetzung     | Story 7: Umsetzung/Test Retry-Mechanismus für Dokument-Upload          |
 | Fr, 08.11.2019 |      1.0 | Dokumentation | Sequenzdiagramm zum Retry-Mechanismus erstellt                         |
-| Fr, 08.11.2019 |      0.5 | Projekt       | Besprechung mit Betreuer: aktueller Stand Dokumentation                |
+| Fr, 08.11.2019 |      0.5 | Projekt       | Besprechung mit Betreuer: Stand Dokumentation und Prototyp             |
 | Sa, 09.11.2019 |      2.0 | Umsetzung     | Story 7: Erweiterung Token Refresh; Verwendung für GET-Befehl          |
 | Sa, 09.11.2019 |      0.5 | Projekt       | AWK-Skript zur Auswertung der Arbeitsjournals verbessert               |
 | Sa, 09.11.2019 |      3.5 | Umsetzung     | Story 8: Refactoring Token Handling; Agent Login und Logout            |
