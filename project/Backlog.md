@@ -13,10 +13,10 @@ author: Patrick Bucher
 |  5 | Handhabung mehrerer Umgebungen                 | umgesetzt in Sprint 2   | 3            |
 |  6 | Generische `GET`-Schnittstelle                 | umgesetzt in Sprint 2   | 3            |
 |  7 | Automatische Aktualisierung von Tokens         | umgesetzt in Sprint 2   | 5            |
-|  8 | Login für Agent API                            | eingeplant für Sprint 2 | 3            |
+|  8 | Login für Agent API                            | umgesetzt in Sprint 2   | 3            |
 |  9 | Verbesserung der Hilfe-Funktion                | eingeplant für Sprint 2 | 3            |
 | 10 | Vollzugsmeldungen mit `-v`/`-verbose`-Flag     | eingeplant für Sprint 2 | 1            |
-|    | Einliefern von Dokumenten per Delivey API      | offen                   |
+|    | Einliefern von Dokumenten per Agent API        | offen                   |
 |    | Einliefern von Dokumenten per User API         | offen                   |
 |    | Einlieferung von Verzeichnissen mit Dokumenten | offen                   |
 |    | Auflisten von Dokumenten mit Suche/Filterung   | offen                   |
@@ -51,12 +51,12 @@ author: Patrick Bucher
     - 18 Story Points
     - 6 Stories (5-10)
 - Umgesetzt
-    - 11 Story Points
-    - 3 Stories (5-7)
-    - 12.5 Stunden Arbeitsaufwand
+    - 14 Story Points
+    - 4 Stories (5-8)
+    - 16 Stunden Arbeitsaufwand
 - Offen
-    - 7 Story Points
-    - 3 Stories (8-10)
+    - 4 Story Points
+    - 2 Stories (9-10)
 
 # User Stories
 
@@ -254,8 +254,23 @@ Als Benutzer möchte ich mich mit als Agent einloggen können, um anderen Benutz
 
 Akzeptanzkriterien:
 
-1. Das Login für Agents soll mit einem anderen Subcommand als `login` funktionieren.
+1. Das Login für Agents soll mit einem anderen Subcommand als `login` funktionieren (Vorschlag: `agent-login`).
 2. Die Tokens sollen nach der gleichen Logik sicher bzw. unsicher verwahrt werden wie diejenige für die User API.
+3. Die Agent Tokens sollen unabhängig von den User Tokens gespeichert werden, d.h. auf einer Umgebung kann gleichzeitig ein User Token und ein Agent Token abgespeichert werden.
+4. Der `env`-Befehl soll keine Agent Tokens berücksichtigen: Ein `agent-login` ändert die Standardumgebung nicht.
+
+### Notizen
+
+- Da `login` und `agent-login` die gleichen Flags verwenden, wurde das Parsen der Befehlszeile refactored. Beide Funktionen (`login` und `agentLogin`) können nun die gleiche Logik für das Ermitteln der Kommandozeilenoptionen verwenden.
+- Beim Login für die Agent API werden eine Client ID und ein Client Secret verwendet, bei User Login eine Client ID, ein Benutzername und ein Passwort. Beim Login-Request unterscheiden sich nur die beiden Payloads, welche mit den Strukturen `Credentials` und `AgentCredentials` umgesetzt werden. Die gemeinsame Methode `ToFormDataURLEncoded` ist in einem Interface definiert, womit der Payload für die beiden Logins abstrahiert werden kann.
+- Da neu pro Umgebung mehrere Tokens (Agent und User) abgelegt werden können, muss die Datenstruktur hinter dem Token Store angepasst werden. Bestand der Key vormals nur aus dem Namen der Umgebung, ist es neu eine Kombination aus dem Typ des Tokens (`"user"`, `"agent"`) und der Umgebung. Diese Anpassung erfordert ein Refactoring. Gerade die der `logout`-Befehl manipulierte die zugrundeliegende Map noch selber. Neu wird dies über eine Methode `RemoveToken` gemacht. Ein ergänzender `agent-logout`-Befehl wird zudem benötigt.
+- Die Keys im Secret Token Store müssen ebenfalls um den `TokenType` erweitert werden, um zwischen `user`- und `agent`-Tokens unterscheiden zu können.
+
+### Testprotokoll
+
+- Zunächst mussten die entsprechenden Credentials (Client ID und Client Secret) auf GitLab hinterlegt werden, um das Login damit testen zu können.
+- Aufgrund des Refactorings sind zunächst Unit Tests und Skrittests fehlgeschlagen. Das Zeichen `:` als Key-Separator zwischen Token Type (`agent`, `user`) und Umgebung funktioniert nicht mit dem Utility `jq` zusammen, das zur Extraktion der JSON-Datenstrukturen in der Test-Pipeline dient. Darum wurde es durch einen Underscore `_` ersetzt.
+- Der Skrittests `ci-px-agent-login-logout-test.sh` funktioniert analog zum Testfall `ci-px-login-logout-test.sh`, nur dass er die Befehle `agent-login` und `agent-logout` statt `login` bzw. `logout` verwendet.
 
 ## 9: Verbesserung der Hilfe-Funktion
 
@@ -265,6 +280,8 @@ Akzeptanzkriterien:
 
 1. Es muss eine generische Hilfefunktion `px help` geben.
 2. Es muss für jeden Subcommand eine Hilfefunktion `px help [subcommand` oder `px [subcommand] -h` geben.
+
+Für zukünftige User Stories ist die Hilfefunktion entsprechend nachzuführen.
 
 ## 10: Vollzugsmeldungen mit `-v`/`-verbose`-Flag
 
