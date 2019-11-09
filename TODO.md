@@ -1,6 +1,3 @@
-- Backlog erstellen und priorisieren
-- Analyse
-- Grobkonzept
 - SysSpec (Anhang)
 	- Systemübersicht (Komponentendiagramm)
 	- Begriffe, Abkürzungen und Referenzen
@@ -12,3 +9,9 @@
 		- externe
 		- interne
 	- Environment-Anforderungen
+- Testprotokoll/Manuelle Tests
+    - manuelle Tests als Skript (mit interaktiven Eingaben, darum "manuell")
+    - Login mit SMS
+    - Login mit TOTP
+    - sichere Token-Verwahrung
+    - Tests auf Windows, macOS und Linux
