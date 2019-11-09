@@ -6,13 +6,13 @@ author: Patrick Bucher
 
 |  # | User Story                                     | Status                  | Story Points |
 |---:|------------------------------------------------|-------------------------|--------------|
-|  1 | Konfiguration sämtlicher Umgebungen            | umgesetzt               | 1            |
-|  2 | Erweiterung der CI-Pipeline                    | umgesetzt               | 5            |
-|  3 | Login mit Zwei-Faktor-Authentifizierung        | umgesetzt               | 3            |
-|  4 | Sichere Verwahrung der Tokens                  | umgesetzt               | 5            |
-|  5 | Handhabung mehrerer Umgebungen                 | umgesetzt               | 3            |
-|  6 | Generische `GET`-Schnittstelle                 | umgesetzt               | 3            |
-|  7 | Automatische Aktualisierung von Tokens         | in Umsetzung            | 5            |
+|  1 | Konfiguration sämtlicher Umgebungen            | umgesetzt in Sprint 1   | 1            |
+|  2 | Erweiterung der CI-Pipeline                    | umgesetzt in Sprint 1   | 5            |
+|  3 | Login mit Zwei-Faktor-Authentifizierung        | umgesetzt in Sprint 1   | 3            |
+|  4 | Sichere Verwahrung der Tokens                  | umgesetzt in Sprint 1   | 5            |
+|  5 | Handhabung mehrerer Umgebungen                 | umgesetzt in Sprint 2   | 3            |
+|  6 | Generische `GET`-Schnittstelle                 | umgesetzt in Sprint 2   | 3            |
+|  7 | Automatische Aktualisierung von Tokens         | umgesetzt in Sprint 2   | 5            |
 |  8 | Login für Agent API                            | eingeplant für Sprint 2 | 3            |
 |  9 | Verbesserung der Hilfe-Funktion                | eingeplant für Sprint 2 | 3            |
 | 10 | Vollzugsmeldungen mit `-v`/`-verbose`-Flag     | eingeplant für Sprint 2 | 1            |
@@ -34,19 +34,29 @@ author: Patrick Bucher
 
 ## Sprint 1
 
-Eingeplant: sechs Stories, 20 Story Points
-
-Bisher abgearbeitet: 14 Story Points (in 14.5 Stunden)
-
-Offen: 2 Stories/6 Story Points
+- Eingeplant
+    - 20 Story Points
+    - 6 Stories (1-6)
+- Umgesetzt
+    - 14 Story Points
+    - 4 Stories (1-4)
+    - 14.5 Stunden Arbeitsaufwand
+- Offen
+    - 6 Story Points
+    - 2 Stories (5-6)
 
 ## Sprint 2
 
-Eingeplant: sechs Stories, 18 Story Points
-
-Bisher abgearbeitet: 6 Story Points (in 3.5 Stunden)
-
-Offen: TODO
+- Eingeplant
+    - 18 Story Points
+    - 6 Stories (5-10)
+- Umgesetzt
+    - 11 Story Points
+    - 3 Stories (5-7)
+    - 12.5 Stunden Arbeitsaufwand
+- Offen
+    - 7 Story Points
+    - 3 Stories (8-10)
 
 # User Stories
 
@@ -228,7 +238,7 @@ Akzeptanzkriterien:
 - Die Zwei-Faktor-Authentifizierung läuft ab als Folge von Request, Response, Request, wobei vor dem zweiten Request eine interaktive Eingabe des Benutzers (SMS- oder TOTP-Code) erforderlich ist. Um die Konsoleneingabe vom Request-Mechanismus zu entkoppeln, wurde die Funktion `requestTokenPair` um einen Funktionsparameter namens `secondFactorPrompt` erweitert. Eine entsprechende Funktion `promptSecondFactor` erwartet einen String als Prompt (z.B. `"SMS Code"` oder `"OTP Code"`, fragt die entsprechende Information vom Benutzer ab und gibt sie zurück -- oder einen Fehler, falls die Eingabe abgebrochen wurde. Dank dieser Entkopplung konnte der Request-Code grösstenteils aus dem Hauptprogramm entfernt werden.
 - Nachdem aller Code, der HTTP-Requests verwendet, von `cmd/px.go` in das `requests`-Modul verschoben werden konnte, hatte das Hauptprogramm keine Referenz mehr auf das HTTP-Package.
 - Der urpsrüngliche Ansatz, einen Request (mit aktualisiertem `Authorization`-Header) erneut abzuschicken, funktioniert leider nicht bei Requests mit einem Body. Grund dafür ist, dass der Request Body bei diesem Vorgang konsumiert wird. Der Request muss also für den erneuten Versuch neu aufgebaut werden. Im neuen Lösungsansatz erwartet zentrale Funktion `doWithTokenRefresh` nicht mehr einen blossen Request zur Ausführung, sondern eine Funktion, die einen entsprechenden Request generiert. So können die Implementierungsdetails vom Retry-Mechanismus entkoppelt werden.
-- TODO: Wird der Refresh Token auch aktualisiert, wenn man damit einen neuen Access Token anfordert?
+- Beim Anfordern eines neuen Token Pairs anhand des Refresh Tokens wird nicht ein neuer Access Token ausgestellt, es wird auch der Refresh Token aktualisiert. Somit kann ein Benutzer nach einem Login so lange mit `px` arbeiten, wie er will, solange zwischen zwei Requests nicht mehr als 30 Minuten vergehen. Wichtig ist, dass auch der aktualisierte Refresh Token im Token Store abgelegt wird.
 
 ### Testprotokoll
 
@@ -236,6 +246,7 @@ Akzeptanzkriterien:
 - Das Testskript `standalone-px-upload-test.sh` führt einen Login aus, lädt ein Dokument hoch, wartet etwas länger als fünf Minuten (Gültigkeitsdauer eines Access Tokens) und lädt das Dokument erneut hoch. Da dieser Testfall naturgemäss sehr lange dauert, wird er nicht in die automatische Pipeline integriert, sondern kann bei Bedarf manuell ausgeführt werden.
 - Tatsächlich wurde mithilfe dieses Testskripts ein Fehler erkannt: Bei erneuten Versuch eines Requests wurde zwar ein neuer Access Token vom IDP geholt, der neue Request wurde jedoch noch mit dem alten Access Token erstellt, was naturgemäss fehlschlägt. Nach der entsprechenden Korrektur lief der Test dann erfolgreich durch.
 - Das Skript `standalone.sh` bietet Hilfestellungen für solche Standalone-Testskripts, indem etwa der Kompilierungsschritt und das Aufräumen nach dem Test vorgegeben wird.
+- Für den `get`-Befehl wurde ein testgetriebenes Vorgehen gewählt: `standalone-px-get-test.sh` wurde zuerst als Skript erstellt, das wie geplant scheiterte. Nachdem der `get`-Befehl auch mit Token Refresh arbeitete, funktionierte das Skript anschliessend.
 
 ## 8: Login für Agent API
 
