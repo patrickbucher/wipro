@@ -68,4 +68,5 @@ author: Patrick Bucher
 | Fr, 08.11.2019 |      1.0 | Dokumentation | Sequenzdiagramm zum Retry-Mechanismus erstellt                         |
 | Fr, 08.11.2019 |      0.5 | Projekt       | Besprechung mit Betreuer: aktueller Stand Dokumentation                |
 | Sa, 09.11.2019 |      2.0 | Umsetzung     | Story 7: Erweiterung Token Refresh; Verwendung für GET-Befehl          |
-|                | **66.0** | **Total**     |                                                                        |
+| Sa, 09.11.2019 |      0.5 | Projekt       | AWK-Skript zur Auswertung der Arbeitsjournals verbessert               |
+|                | **66.5** | **Total**     |                                                                        |

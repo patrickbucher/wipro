@@ -22,7 +22,8 @@ END {
     }
     printf "%20s: %10.1f Stunden\n", "Total", total
     printf "\nStories:\n"
-    for (story in stories) {
-        printf "%20s: %10.1f Stunden\n", story, stories[story]
+    n = asorti(stories, storiesSorted)
+    for (i = 1; i <= n; i++) {
+        printf "%20s: %10.1f Stunden\n", storiesSorted[i], stories[storiesSorted[i]]
     }
 }
