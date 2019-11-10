@@ -17,7 +17,7 @@ freigegeben.
 Zwischen den beiden Sprints wurde die Dokumentation weitergeführt. Die Kapitel
 1 (Analyse der Problemstellung), 2 (Stand der Praxis) und 4 (Methoden) sind
 abgeschlossen. Zu Kapitel 3 (Ideen und Konzepte) gibt es Notizen, die noch
-nicht in die Dokumentation eingepflegt worden sind. Zur Realisierung gibt zu
+nicht in die Dokumentation eingepflegt worden sind. Zur Realisierung gibt es zu
 jeder Story Umsetzungsnotizen und Testprotokolle; in der Dokumentation sind
 erst einzelne Diagramme zu finden. Auf Basis der Rückmeldungen der
 Arbeitskollegen und des bestehenden Backlogs wurde der zweite Sprint geplant.
