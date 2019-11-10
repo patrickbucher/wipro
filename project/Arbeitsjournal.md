@@ -71,4 +71,5 @@ author: Patrick Bucher
 | Sa, 09.11.2019 |      0.5 | Projekt       | AWK-Skript zur Auswertung der Arbeitsjournals verbessert               |
 | Sa, 09.11.2019 |      3.5 | Umsetzung     | Story 8: Refactoring Token Handling; Agent Login und Logout            |
 | So, 10.11.2019 |      3.5 | Umsetzung     | Story 9: Hilfefunktion und Refactoring Command-Auswahl                 |
-|                | **73.5** | **Total**     |                                                                        |
+| So, 10.11.2019 |      1.5 | Umsetzung     | Story 10: Vollzugsmeldungen mit `-v`/`-verbose`-Flag                   |
+|                | **75.0** | **Total**     |                                                                        |

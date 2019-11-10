@@ -4,33 +4,33 @@ subtitle: 'Wirtschaftsprojekt «px: PEAX Command Line Client»'
 author: Patrick Bucher
 ---
 
-|  # | User Story                                        | Status                  | Story Points |
-|---:|---------------------------------------------------|-------------------------|--------------|
-|  1 | Konfiguration sämtlicher Umgebungen               | umgesetzt in Sprint 1   | 1            |
-|  2 | Erweiterung der CI-Pipeline                       | umgesetzt in Sprint 1   | 5            |
-|  3 | Login mit Zwei-Faktor-Authentifizierung           | umgesetzt in Sprint 1   | 3            |
-|  4 | Sichere Verwahrung der Tokens                     | umgesetzt in Sprint 1   | 5            |
-|  5 | Handhabung mehrerer Umgebungen                    | umgesetzt in Sprint 2   | 3            |
-|  6 | Generische `GET`-Schnittstelle                    | umgesetzt in Sprint 2   | 3            |
-|  7 | Automatische Aktualisierung von Tokens            | umgesetzt in Sprint 2   | 5            |
-|  8 | Login für Agent API                               | umgesetzt in Sprint 2   | 3            |
-|  9 | Verbesserung der Hilfe-Funktion                   | umgesetzt i Sprint 3    | 3            |
-| 10 | Vollzugsmeldungen mit `-v`/`-verbose`-Flag        | eingeplant für Sprint 2 | 1            |
-|    | Verbesserung der Testabdeckung                    | offen                   |
-|    | Verbesserung der Quellcodedokumentation           | offen                   |
-|    | Einliefern von Dokumenten per Agent API           | offen                   |
-|    | Generische `POST`-Schnittstelle                   | offen                   |
-|    | Generische `PUT`-Schnittstelle                    | offen                   |
-|    | Generische `PATCH`-Schnittstelle                  | offen                   |
-|    | Erweiterte Einliefern von Dokumenten per User API | offen                   |
-|    | Variablen in der Ressourcenangabe                 | offen                   |
-|    | Anzeigen der aktiven Logins                       | offen                   |
-|    | Einlieferung von Verzeichnissen mit Dokumenten    | offen                   |
-|    | Auflisten von Dokumenten mit Suche/Filterung      | offen                   |
-|    | Ausführung von Befehlen für mehrere Umgebungen    | offen                   |
-|    | Fortschrittsanzeige bei längeren Vorgängen        | offen                   |
-|    | Ausgabe von Tokens                                | offen                   |
-|    | Inspektion von Tokens                             | offen                   |
+|  # | User Story                                        | Status                | Story Points |
+|---:|---------------------------------------------------|-----------------------|--------------|
+|  1 | Konfiguration sämtlicher Umgebungen               | umgesetzt in Sprint 1 | 1            |
+|  2 | Erweiterung der CI-Pipeline                       | umgesetzt in Sprint 1 | 5            |
+|  3 | Login mit Zwei-Faktor-Authentifizierung           | umgesetzt in Sprint 1 | 3            |
+|  4 | Sichere Verwahrung der Tokens                     | umgesetzt in Sprint 1 | 5            |
+|  5 | Handhabung mehrerer Umgebungen                    | umgesetzt in Sprint 2 | 3            |
+|  6 | Generische `GET`-Schnittstelle                    | umgesetzt in Sprint 2 | 3            |
+|  7 | Automatische Aktualisierung von Tokens            | umgesetzt in Sprint 2 | 5            |
+|  8 | Login für Agent API                               | umgesetzt in Sprint 2 | 3            |
+|  9 | Verbesserung der Hilfe-Funktion                   | umgesetzt in Sprint 2 | 3            |
+| 10 | Vollzugsmeldungen mit `-v`/`-verbose`-Flag        | umgesetzt in Sprint 2 | 1            |
+|    | Verbesserung der Testabdeckung                    | offen                 |
+|    | Verbesserung der Quellcodedokumentation           | offen                 |
+|    | Einliefern von Dokumenten per Agent API           | offen                 |
+|    | Generische `POST`-Schnittstelle                   | offen                 |
+|    | Generische `PUT`-Schnittstelle                    | offen                 |
+|    | Generische `PATCH`-Schnittstelle                  | offen                 |
+|    | Erweiterte Einliefern von Dokumenten per User API | offen                 |
+|    | Variablen in der Ressourcenangabe                 | offen                 |
+|    | Anzeigen der aktiven Logins                       | offen                 |
+|    | Einlieferung von Verzeichnissen mit Dokumenten    | offen                 |
+|    | Auflisten von Dokumenten mit Suche/Filterung      | offen                 |
+|    | Ausführung von Befehlen für mehrere Umgebungen    | offen                 |
+|    | Fortschrittsanzeige bei längeren Vorgängen        | offen                 |
+|    | Ausgabe von Tokens                                | offen                 |
+|    | Inspektion von Tokens                             | offen                 |
 
 # Sprints
 
@@ -53,12 +53,12 @@ author: Patrick Bucher
     - 18 Story Points
     - 6 Stories (5-10)
 - Umgesetzt
-    - 17 Story Points
-    - 5 Stories (5-9)
-    - 19.5 Stunden Arbeitsaufwand
+    - 18 Story Points
+    - 6 Stories (5-10)
+    - 20.5 Stunden Arbeitsaufwand
 - Offen
-    - 1 Story Point
-    - 1 Story (10)
+    - 0 Story Points
+    - 0 Stories
 
 # User Stories
 
@@ -305,5 +305,27 @@ Als Benutzer möchte ich Vollzugsmeldungen aktivieren können, damit ich sehen k
 
 Akzeptanzkriterien:
 
-1. Es sollen für alle bestehenden Befehle entsprechende Meldungen erstellt werden.
+1. Es sollen für alle bestehenden Befehle entsprechende Meldungen erstellt werden, wo ein Erfolg nicht schon anderweitig dem Benutzer gemeldet wird.
 2. Die Vollzugsmeldungen sollen mit dem Flag `-v` bzw. `-verbose` aktiviert werden.
+
+### Notizen
+
+- Von den bestehenden Befehlen produzieren folgende bereits eine Ausgabe im Erfolgsfall:
+    - `px help`: Es wird die gewünschte Hilfefunktion angezeigt.
+    - `px upload`: Es wird das serverseitig generierte Metadaten-Objekt in seiner JSON-Repräsentation ausgegeben.
+    - `px get`: Es wird die geladene Ressource in ihrer JSON-Representation angezeigt.
+    - `px env` (ohne Angabe der Umgebung): Es wird die Standardumgebung angezeigt
+- Bei den folgenden Befehlen wird im Erfolgsfall keine Ausgabe erzeugt:
+    - `px login`
+    - `px logout`
+    - `px agent-login`
+    - `px agent-logout`
+    - `px env` (mit Angabe einer Umgebung)
+- Die letztgenannten Befehle wurden jeweils mit den Flags `-v` und `-verbose` ausgestattet, die eine kurze Vollzugsmeldung mit relevanten Kontextinformatioen (Benutzername und Umgebung beim Login, Umgebung bei Setzen der Umgebung mit `px env`).
+
+### Testprotokoll
+
+- Folgende Testskripts wurden erweitert, indem jeweils ein Aufruf mit dem `-v/-verbose`-Flag vollzogen und auf eine entsprechende Ausgabe überprüft wird:
+    - `ci-px-env-test.sh`: für `env`
+    - `ci-px-login-logout-test.sh`: für `login` und `logout`
+- Für den Negativtest wurde jeweils das Flag `-v`/`-verbose` beim Aufruf im Testskript weggelassen. Nachdem das Flag hinzugefügt wurde, liefen die Tests durch.
