@@ -5,21 +5,33 @@ author: Patrick Bucher
 date: 10.11.2019
 ---
 
-# Sprint 1 (Semesterwochen 4 und 5)
+# Sprint 1, Zwischenphase und Sprint 2
 
-Nach der Projektinitialisierung lag das Wirtschaftsprojekt für die ganze
-Arbeitswoche brach. Am Wochenende dokumentierte ich die Ausgangslage, die nach
-ca. 20 Stunde Vorleistung vielversprechend aussah. Nach einigen Setup-Arbeiten
-konnte ich endlich mit der Umsetzung starten.
+Die Stories 1 und 2 konnten problemlos umgesetzt werden. Die Pipeline (Story 2)
+erwies sich schnell als lohnende Investition. Bei Story 3 (2FA) ging aufgrund
+falscher Annahmen viel Zeit verloren. Der Keystore (Story 4) funktionierte auf
+allen Plattformen auf Anhieb. Aus Zeitmangel wurden Story 5 und 6 in den
+nächsten Sprint verschoben. Der Release `v0.1.0` wurde am Sonntag, 20. Oktober
+freigegeben.
 
-Die beiden erste Stories konnte ich problemlos umsetzen. Die Pipeline (Story 2)
-hat sich schnell als lohnende Investition erwiesen. Bei Story 3 (2FA) verlor
-ich aufgrund falscher Annahmen viel Zeit. Ich investierte auch Zeit ins
-Refactoring. Story 4 (Keystore) funktionierte auf allen Plattformen überraschend gut.
+Zwischen den beiden Sprints wurde die Dokumentation weitergeführt. Die Kapitel
+1 (Analyse der Problemstellung), 2 (Stand der Praxis) und 4 (Methoden) sind
+abgeschlossen. Zu Kapitel 3 (Ideen und Konzepte) gibt es Notizen, die noch
+nicht in die Dokumentation eingepflegt worden sind. Zur Realisierung gibt zu
+jeder Story Umsetzungsnotizen und Testprotokolle; in der Dokumentation sind
+erst einzelne Diagramme zu finden. Auf Basis der Rückmeldungen der
+Arbeitskollegen und des bestehenden Backlogs wurde der zweite Sprint geplant.
 
-Aus Zeitmangel wurden Story 5 und 6 in den nächsten Sprint verschoben. Der
-Release `v0.1.0` wurde am Sonntag, 20. Oktober freigegeben.
+Im zweiten Sprint wurde die Handhabung mehrerer Umgebungen (Story 5), eine
+generische `GET`-Schnittstelle (Story 6), die automatische und transparente
+Aktualisierung von Tokens (Story 7), das Login für die Agent API (Story 8), die
+Verbesserung der Hilfefunktion (Story 9) und Vollzugsmeldungen (Story 10)
+umgesetzt. Aufgrund eines Hotfixes für die Windows-Passworteingabe wurde nicht
+`v.0.2.0`, sondern `v0.2.1` mit der betreffenden Fehlerkorrektur am Sonntag,
+10. November freigegeben.
 
-# Zwischenphase (Semesterwoche 6)
+# Fazit
 
-# Sprint 2 (Semesterwochen 7 und 8)
+Das Meilensteinziel «Login und Token-Handling funktionieren» wurde erreicht.
+Die Dokumentation dazu (Kapitel 3 und 5) erfolgt gemäss Wochenplan in der Woche
+vom 11.-17. November.

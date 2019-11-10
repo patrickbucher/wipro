@@ -62,7 +62,7 @@ author: Patrick Bucher
 
 ### Bekannte Fehler
 
-- Tests auf Windows ergaben, dass es derzeit nicht möglich ist, ein Password sicher (ohne Echo) über die Kommandozeile einzugeben. Recherchen haben ergeben, dass es in diesem Bereich derzeit einen [offenen Bug](https://github.com/golang/go/issues/34461) gibt. Als Workaround könnte bis zur Fehlerkorrektur auf die sichere Passworteingabe verzichtet werden. Mithilfe eines [Build Tags](https://golang.org/pkg/go/build/#hdr-Build_Constraints) könnte der Workaround auf Windows eingeschränkt werden.
+- Tests auf Windows ergaben, dass es derzeit nicht möglich ist, ein Password sicher (ohne Echo) über die Kommandozeile einzugeben. Recherchen haben ergeben, dass es in diesem Bereich derzeit einen [offenen Bug](https://github.com/golang/go/issues/34461) gibt. Als Workaround wird bis zur Fehlerkorrektur auf die sichere Passworteingabe verzichtet. Mithilfe eines [Build Tags](https://golang.org/pkg/go/build/#hdr-Build_Constraints) konnte dieser Workaround auf Windows eingeschränkt werden, sodass auf macOS und Linux weiterhin die sichere Passworteingabe zum Einsatz kommt.
 
 # User Stories
 

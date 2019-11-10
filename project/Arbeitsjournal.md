@@ -73,4 +73,7 @@ author: Patrick Bucher
 | So, 10.11.2019 |      3.5 | Umsetzung     | Story 9: Hilfefunktion und Refactoring Command-Auswahl                 |
 | So, 10.11.2019 |      1.5 | Umsetzung     | Story 10: Vollzugsmeldungen mit `-v`/`-verbose`-Flag                   |
 | So, 10.11.2019 |      2.0 | Umsetzung     | Ausgiebiges Testen auf Linux, macOS und Windows                        |
-|                | **77.0** | **Total**     |                                                                        |
+| So, 10.11.2019 |      0.5 | Recherche     | Möglichkeiten zur Unterscheidung von Betriebssystemen recherchiert     |
+| So, 10.11.2019 |      1.0 | Umsetzung     | Hotfix: Passworteingabe auf Windows korrigiert; erneute Tests          |
+| So, 10.11.2019 |      1.0 | Projekt       | Freigabe Release, Schreiben von Release Notes und Meilensteinbericht   |
+|                | **79.5** | **Total**     |                                                                        |
