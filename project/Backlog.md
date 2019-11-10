@@ -14,7 +14,7 @@ author: Patrick Bucher
 |  6 | Generische `GET`-Schnittstelle                    | umgesetzt in Sprint 2   | 3            |
 |  7 | Automatische Aktualisierung von Tokens            | umgesetzt in Sprint 2   | 5            |
 |  8 | Login für Agent API                               | umgesetzt in Sprint 2   | 3            |
-|  9 | Verbesserung der Hilfe-Funktion                   | eingeplant für Sprint 2 | 3            |
+|  9 | Verbesserung der Hilfe-Funktion                   | umgesetzt i Sprint 3    | 3            |
 | 10 | Vollzugsmeldungen mit `-v`/`-verbose`-Flag        | eingeplant für Sprint 2 | 1            |
 |    | Verbesserung der Testabdeckung                    | offen                   |
 |    | Verbesserung der Quellcodedokumentation           | offen                   |
@@ -53,12 +53,12 @@ author: Patrick Bucher
     - 18 Story Points
     - 6 Stories (5-10)
 - Umgesetzt
-    - 14 Story Points
-    - 4 Stories (5-8)
-    - 16 Stunden Arbeitsaufwand
+    - 17 Story Points
+    - 5 Stories (5-9)
+    - 19.5 Stunden Arbeitsaufwand
 - Offen
-    - 4 Story Points
-    - 2 Stories (9-10)
+    - 1 Story Point
+    - 1 Story (10)
 
 # User Stories
 
@@ -281,9 +281,23 @@ Als Benutzer möchte ich eine ausführliche Hilfefunktion für `px` als Ganzes w
 Akzeptanzkriterien:
 
 1. Es muss eine generische Hilfefunktion `px help` geben.
-2. Es muss für jeden Subcommand eine Hilfefunktion `px help [subcommand` oder `px [subcommand] -h` geben.
+2. Es muss für jeden Subcommand eine Hilfefunktion `px help [subcommand]` oder `px [subcommand] -h` geben.
 
 Für zukünftige User Stories ist die Hilfefunktion entsprechend nachzuführen.
+
+### Notizen
+
+- Das von der Go Standard Library zur Verfügung gestellte `flag`-Modul stellt mit dem Flag `-h` eine Hilfefunktion zur Verfügung, die mit der Syntax `px [subcommand] -h aufgerufen werden kann. Diese Funktion ist sinnvoll zum Verständnis der Flags, jedoch ungenügend.
+- Der bereits existierende Befehl `px help` (ohne Parameter) zeigt einen Überblick über alle Subcommands an. Diese Funktion ist sinnvoll und soll beibehalten werden. Zusätzlich soll es für jeden Subcommand einen eine ausführliche Hilfestellung geben, die mittels `px help [subcommand]` aufgerufen wird. `px [subcommand] -h` ist weiterhin für die Erläuterung der Flags zuständig.
+- Die derzeitige `main()`-Funktion prüft den eingegebenen Subcommand mittels `switch`/`case`-Kontrollstruktur. Da die meisten Subcommand-Funktionen der gleichen Signatur folgen ‒ den `TokenStore` erwarten und nichts als einen `error` zurückgeben, können die Beziehungen zwischen eingegebenem Befehl (`"agent-login"`) und der aufzurufenden Funktion (`"agentLogin"`) mit einer Map modelliert werden. Als Key wird der Befehlsname verwendet, als Value eine Struktur bestehend aus der auszuführenden Funktion ‒ und einer Funktion, die einen Hilfestring zurückgibt.
+- Die wenigen Befehle, deren Funktion eine andere Signatur haben, werden weiterhin per `switch`/`case` abgehandelt. Sie sind trotzdem in der Map abgelegt, wobei die Funktion den Wert `nil` hat. Einen Hilfestring-Funktion enthalten die Einträge in der Map dennoch für jeden Befehl.
+- Die Hilfetexte werden als öffentliche Funktionen im Untermodul `help` abgelegt. Für statische Hilfetexte werden [mehrzeilige Strings](https://golang.org/ref/spec#String_literals) verwendet. Die Hilfe zur Login-Funktion ist etwa per `help.Login()` abrufbar. Andere Texte werden dynamisch generiert, z.B. um alle verfügbaren Umgebugen aufzulisten.
+- Jeder Hilfetext enthält neben einer Erklärung des Befehls auch beispielhafte Aufrufe und Verweise auf die Hilfsfunktion zu den jeweiligen Flags, sowie Hinweise auf andere Befehle.
+
+### Testprotokoll
+
+- Das Testskript `ci-px-help.sh` ruft die Hilfefunktion auf und prüft, ob dies fehlerfrei abläuft. Das Skript wurde erweitert, sodass es über alle verfügbaren Befehle iteriert, und für jeden dieser Befehle die Hilfefunktion aufruft. Es wird geprüft, ob dies erstens fehlerfrei passiert, und ob der dabei zurückgelieferte Text zweitens kein leerer String ist.
+- Nach zahlreichen manuellen Tests wurden die Hilfetexte verbessert.
 
 ## 10: Vollzugsmeldungen mit `-v`/`-verbose`-Flag
 
