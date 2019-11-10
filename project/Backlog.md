@@ -60,6 +60,10 @@ author: Patrick Bucher
     - 0 Story Points
     - 0 Stories
 
+### Bekannte Fehler
+
+- Tests auf Windows ergaben, dass es derzeit nicht möglich ist, ein Password sicher (ohne Echo) über die Kommandozeile einzugeben. Recherchen haben ergeben, dass es in diesem Bereich derzeit einen [offenen Bug](https://github.com/golang/go/issues/34461) gibt. Als Workaround könnte bis zur Fehlerkorrektur auf die sichere Passworteingabe verzichtet werden. Mithilfe eines [Build Tags](https://golang.org/pkg/go/build/#hdr-Build_Constraints) könnte der Workaround auf Windows eingeschränkt werden.
+
 # User Stories
 
 Die User Stories haben drei Grössen: S (small: 1 Story Point), M (medium: 3 Story Points) und L (large: 5 Story Points). Diese Grössen dienen zur relativen Einschätzung der Story-Grössen zueinander, und sollen nicht in eine Stundenplanung heruntergerechnet werden. Vielmehr sollen sie dazu dienen, übergrosse Stories als solche zu erkennen, um diese herunterbrechen zu können. Am Ende eines jeden Sprints soll eingeschätzt werden, wie viele Story Points ungefähr machbar sind.
