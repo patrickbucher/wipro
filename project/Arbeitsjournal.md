@@ -76,4 +76,6 @@ author: Patrick Bucher
 | So, 10.11.2019 |      0.5 | Recherche     | Möglichkeiten zur Unterscheidung von Betriebssystemen recherchiert     |
 | So, 10.11.2019 |      1.0 | Umsetzung     | Hotfix: Passworteingabe auf Windows korrigiert; erneute Tests          |
 | So, 10.11.2019 |      1.0 | Projekt       | Freigabe Release, Schreiben von Release Notes und Meilensteinbericht   |
-|                | **79.5** | **Total**     |                                                                        |
+| So, 10.11.2019 |      1.0 | Recherche     | Lektüre zur Geschichte von UNIX (Design von Kommandozeilenprogrammen)  |
+| Mo, 11.11.2019 |      0.5 | Dokumentation | Konzept von `stderr`/`stdout` erläutert                                |
+|                | **81.0** | **Total**     |                                                                        |
