@@ -1,0 +1,2 @@
+- SPE: GET funktioniert nicht mit Agent Login
+- Idee: default-Umgebung für Agent und User separat verwalten
