@@ -24,3 +24,13 @@ Nach jedem Sprint wird ein Inkrement an die Entwickler ausgeliefert (siehe \secr
         \item Eine der obersten Maximen von UNIX lautet: \textit{«Make each program do one thing well. To do a new job, build afresh rather than complicate old programs by adding new ‹features.›} \cite[p. 3]{unixtimesharing} Die Verwaltung von Vault Secrets und das Ansprechen der PEAX API sind klar zwei verschiedene Sachen und somit nicht «one thing». Die genannte Idee muss also anderweitig weiterverfolgt werden.
     \end{itemize}
 \end{itemize}
+
+\begin{itemize}
+    \item \textsc{Stefano Pellegrini} fände einen Befehl \texttt{px version} sinnvoll, der die aktuelle Versionsnummer ausgibt. Damit könne man sicherstellen, dass man nicht etwa eine veraltete Version verwendet und (hinfällige) Rückmeldungen auf diese gibt.
+        \begin{itemize}
+            \item Tatsächlich stellen die meisten Kommandozeilentools eine solche Möglichkeit zur Verfügung, wie z.B. \textsc{Go} oder \textsc{Docker} mit den Befehlen \texttt{go version} und \texttt{docker version}. Andere Werkzeuge, wie etwa der Command Line Client von \textsc{Heroku} oder das Tool \textsc{Ripgrep} stellen ein entsprechendes Flag zur Verfügung (\texttt{heroku -v} bzw. \texttt{rg --version}).
+            \item Ein Versionstag ist bereits über das Git-Repository verfügbar. Die jeweils aktuelle Version kann mittels \texttt{git describe --tags} abgerufen werden.
+            \item Der Linker von \textsc{Go}\footnote{\url{https://golang.org/cmd/link/}} erlaubt es mit dem Parameter \texttt{-ldflags} uninitialisierte Strings im Programmcode mit einem Wert zu belegen.
+            \item Heisst die Variable im \texttt{main}-Modul \texttt{Version}, kann die aktuelle Versionsnummer folgendermassen in die Binärdatei hineinkompiliert werden: \texttt{go build -ldflags="{}-X main.Version=\$(git describe --tags)"{} cmd/px.go}
+        \end{itemize} 
+\end{itemize}
