@@ -78,4 +78,7 @@ author: Patrick Bucher
 | So, 10.11.2019 |      1.0 | Projekt       | Freigabe Release, Schreiben von Release Notes und Meilensteinbericht   |
 | So, 10.11.2019 |      1.0 | Recherche     | Lektüre zur Geschichte von UNIX (Design von Kommandozeilenprogrammen)  |
 | Mo, 11.11.2019 |      0.5 | Dokumentation | Konzept von `stderr`/`stdout` erläutert                                |
-|                | **81.0** | **Total**     |                                                                        |
+| Mo, 11.11.2019 |      1.0 | Projekt       | Arbeitskollegen instruiert und deren Rückmeldungen aufgenommen         |
+| Di, 12.11.2019 |      1.0 | Recherche     | Versionsinformationen in Binärdateien hineinkompilieren                |
+| Di, 12.11.2019 |      0.5 | Umsetzung     | Experiment: Version von Git-Repository ins Programm hineinkompilieren  |
+|                | **83.5** | **Total**     |                                                                        |
