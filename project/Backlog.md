@@ -23,14 +23,15 @@ author: Patrick Bucher
 |    | Generische `PUT`-Schnittstelle                    | offen                 |
 |    | Generische `PATCH`-Schnittstelle                  | offen                 |
 |    | Erweiterte Einliefern von Dokumenten per User API | offen                 |
+|    | Einlieferung von Verzeichnissen mit Dokumenten    | offen                 |
 |    | Variablen in der Ressourcenangabe                 | offen                 |
 |    | Anzeigen der aktiven Logins                       | offen                 |
-|    | Einlieferung von Verzeichnissen mit Dokumenten    | offen                 |
 |    | Auflisten von Dokumenten mit Suche/Filterung      | offen                 |
 |    | Ausführung von Befehlen für mehrere Umgebungen    | offen                 |
 |    | Fortschrittsanzeige bei längeren Vorgängen        | offen                 |
 |    | Ausgabe von Tokens                                | offen                 |
 |    | Inspektion von Tokens                             | offen                 |
+|    | Automatische Formatierung von JSON-Ausgaben       | offen                 |
 
 # Sprints
 

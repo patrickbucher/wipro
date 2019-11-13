@@ -81,4 +81,5 @@ author: Patrick Bucher
 | Mo, 11.11.2019 |      1.0 | Projekt       | Arbeitskollegen instruiert und deren Rückmeldungen aufgenommen         |
 | Di, 12.11.2019 |      1.0 | Recherche     | Versionsinformationen in Binärdateien hineinkompilieren                |
 | Di, 12.11.2019 |      0.5 | Umsetzung     | Experiment: Version von Git-Repository ins Programm hineinkompilieren  |
-|                | **83.5** | **Total**     |                                                                        |
+| Mi, 13.11.2019 |      1.0 | Dokumentation | Rückmeldungen von Arbeitskollegen geprüft und kommentiert              |
+|                | **84.5** | **Total**     |                                                                        |

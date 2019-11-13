@@ -33,4 +33,20 @@ Nach jedem Sprint wird ein Inkrement an die Entwickler ausgeliefert (siehe \secr
             \item Der Linker von \textsc{Go}\footnote{\url{https://golang.org/cmd/link/}} erlaubt es mit dem Parameter \texttt{-ldflags} uninitialisierte Strings im Programmcode mit einem Wert zu belegen.
             \item Heisst die Variable im \texttt{main}-Modul \texttt{Version}, kann die aktuelle Versionsnummer folgendermassen in die Binärdatei hineinkompiliert werden: \texttt{go build -ldflags="{}-X main.Version=\$(git describe --tags)"{} cmd/px.go}
         \end{itemize} 
+    \item Weiter hat \textsc{Stefano Pellegrini} vorgeschlagen, dass \texttt{logout} sich auf die jeweils aktuelle Standardumgebung beziehen soll, damit man nicht immer eine Umgebung mit dem \texttt{-env}-Parameter angeben muss.
+    \begin{itemize}
+        \item Der Vorschlag ist sinnvoll und soll entsprechend umgesetzt werden.
+    \end{itemize}
+\item \textsc{Michael Buholzer} wünscht sich, dass die Ausgabe von JSON-Datenstrukturen automatisch formatiert wird (\textit{pretty print}).
+    \begin{itemize}
+        \item Grundsätzlich lässt sich die JSON-Ausgabe sehr einfach formatieren, indem sie mittels Pipe durch ein Programm wie \texttt{jq} gesendet wird\footnote{Siehe \url{https://stedolan.github.io/jq/}, das auch die Möglichkeit bietet, Teile mittels einer DSL aus der Datenstruktur zu extrahieren.}.
+        \item \textsc{Go} bietet jedoch mit \texttt{json.Indent} eine sehr komfortable Funktion, womit ein beliebiger JSON-Payload\footnote{D.h. nicht nur ein JSON-Payload, dessen Struktur mittels einer \texttt{struct} und den entsprechenden Annotations beschrieben ist, was zu einem unverhältnismässigen Mehraufwand führen würde, zumal dann jeder mögliche Payload statisch beschrieben sein müsste.} einfach formatiert werden kann.
+        \item Der Vorschlag soll umgesetzt werden. Weitere Features im Zusammenhang mit generischer JSON-Verarbeitung sollen jedoch der UNIX-Philosophie entsprechend an \texttt{jq} oder ähnliche Programme mittels Pipe delegiert werden.
+    \end{itemize}
+\item Zudem schlägt \textsc{Michael Buholzer} im Zusammenhang mit dem \texttt{get}-Befehl vor, dass die PEAX ID automatisch anhand des eingeloggten Benutzers ergänzt werden soll, und man so nicht beispielsweise \texttt{profile/api/v3/profile/785.2120.8339.75} sondern bloss \texttt{profile/api/v3/profile} eingeben muss. Die PEAX ID sei für den Benutzer von \texttt{px} nirgends ersichtlich.
+    \begin{itemize}
+        \item Eine generische \texttt{GET}-Schnittstelle kann nur angeboten werden, wenn die Ressourcenpfade für den Client transparent sind. So ist es nicht möglich, die PEAX ID automatisch zu ergänzen, zumal sie nicht zwingend am Ende, sondern auch mitten im Ressourcenpfad auftreten kann.
+        \item Eine bereits angedachte Lösung sind Variablen im Ressourcenpfad, die dann vom Client automatisch ergänzt werden, z.B. \texttt{profile/api/v3/profile/\{peaxid\}}. Hiermit kann eine generische Schnittstelle gewährleistet werden, und für den Benutzer wird die Handhabung einfacher.
+        \item Evtl. wäre es sinnvoll, zu jeder Umgebung, die ein Login repräsentiert, ergänzende Token-Informationen ausgeben zu können, z.B. die PEAX ID.
+    \end{itemize}
 \end{itemize}
