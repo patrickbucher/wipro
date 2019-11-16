@@ -84,4 +84,5 @@ author: Patrick Bucher
 | Mi, 13.11.2019 |      1.0 | Dokumentation | Rückmeldungen von Arbeitskollegen geprüft und kommentiert              |
 | Sa, 16.11.2019 |      2.5 | Dokumentation | Komponentendiagramm erstellt, Sequenzdiagramme verbessert              |
 | Sa, 16.11.2019 |      1.5 | Dokumentation | Struktur der Dokumentation überarbeitet, Notizen eingefügt             |
-|                | **88.5** | **Total**     |                                                                        |
+| Sa, 16.11.2019 |      0.5 | Dokumentation | Deckblatt ausgefüllt und optisch an Dokumentation angeglichen          |
+|                | **89.0** | **Total**     |                                                                        |
