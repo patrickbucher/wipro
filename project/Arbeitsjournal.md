@@ -82,4 +82,6 @@ author: Patrick Bucher
 | Di, 12.11.2019 |      1.0 | Recherche     | Versionsinformationen in Binärdateien hineinkompilieren                |
 | Di, 12.11.2019 |      0.5 | Umsetzung     | Experiment: Version von Git-Repository ins Programm hineinkompilieren  |
 | Mi, 13.11.2019 |      1.0 | Dokumentation | Rückmeldungen von Arbeitskollegen geprüft und kommentiert              |
-|                | **84.5** | **Total**     |                                                                        |
+| Sa, 16.11.2019 |      2.5 | Dokumentation | Komponentendiagramm erstellt, Sequenzdiagramme verbessert              |
+| Sa, 16.11.2019 |      1.5 | Dokumentation | Struktur der Dokumentation überarbeitet, Notizen eingefügt             |
+|                | **88.5** | **Total**     |                                                                        |
