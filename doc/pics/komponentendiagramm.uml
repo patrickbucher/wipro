@@ -1,0 +1,53 @@
+@startuml
+
+skinparam monochrome true
+skinparam defaultFontName Lato
+skinparam dpi 150
+
+package "Operating System" {
+    database Keystore
+    database "$HOME/.px-tokens" as pxtokens
+}
+
+interface HTTP
+
+package px {
+    component "cmd/px.go" as cmd
+    component tokenstore
+    component requests
+    component env
+    component help
+    component utils
+
+    cmd --> tokenstore
+    cmd --> requests
+    cmd --> env
+    cmd ---> help
+    cmd --> utils
+
+    help -> env
+
+    requests -> env
+    requests -> tokenstore
+
+    tokenstore --> utils
+    tokenstore -> pxtokens
+
+    requests -down-> HTTP
+}
+
+package zalando {
+    component "go-keyring" as keyring
+    keyring <-- tokenstore
+    keyring --> Keystore
+}
+
+cloud PEAX {
+    component Proxy
+    component IDP
+
+    Proxy - HTTP
+    IDP - HTTP
+}
+
+@enduml
