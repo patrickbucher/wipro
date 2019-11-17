@@ -89,4 +89,6 @@ author: Patrick Bucher
 | So, 17.11.2019 |      0.5 | Dokumentation | Glossar aufgesetzt und erste Einträge verfasst                         |
 | So, 17.11.2019 |      0.5 | Dokumentation | Titelgrafik (vereinfachtes Komponentendiagramm) erstellt               |
 | So, 17.11.2019 |      2.5 | Projekt       | Backlog für Sprint 3 vorbereitet, User Stories spezifiziert            |
-|                | **95.0** | **Total**     |                                                                        |
+| So, 17.11.2019 |      1.0 | Recherche     | Lektüre und Internetrecherche zur Unix-Philosophie                     |
+| So, 17.11.2019 |      2.0 | Dokumentation | Unix-Philosophie und ihre Anwendung auf `px` beschrieben               |
+|                | **98.0** | **Total**     |                                                                        |
