@@ -4,34 +4,35 @@ subtitle: 'Wirtschaftsprojekt «px: PEAX Command Line Client»'
 author: Patrick Bucher
 ---
 
-|  # | User Story                                        | Status                | Story Points |
-|---:|---------------------------------------------------|-----------------------|--------------|
-|  1 | Konfiguration sämtlicher Umgebungen               | umgesetzt in Sprint 1 | 1            |
-|  2 | Erweiterung der CI-Pipeline                       | umgesetzt in Sprint 1 | 5            |
-|  3 | Login mit Zwei-Faktor-Authentifizierung           | umgesetzt in Sprint 1 | 3            |
-|  4 | Sichere Verwahrung der Tokens                     | umgesetzt in Sprint 1 | 5            |
-|  5 | Handhabung mehrerer Umgebungen                    | umgesetzt in Sprint 2 | 3            |
-|  6 | Generische `GET`-Schnittstelle                    | umgesetzt in Sprint 2 | 3            |
-|  7 | Automatische Aktualisierung von Tokens            | umgesetzt in Sprint 2 | 5            |
-|  8 | Login für Agent API                               | umgesetzt in Sprint 2 | 3            |
-|  9 | Verbesserung der Hilfe-Funktion                   | umgesetzt in Sprint 2 | 3            |
-| 10 | Vollzugsmeldungen mit `-v`/`-verbose`-Flag        | umgesetzt in Sprint 2 | 1            |
-|    | Verbesserung der Testabdeckung                    | offen                 |
-|    | Verbesserung der Quellcodedokumentation           | offen                 |
-|    | Einliefern von Dokumenten per Agent API           | offen                 |
-|    | Generische `POST`-Schnittstelle                   | offen                 |
-|    | Generische `PUT`-Schnittstelle                    | offen                 |
-|    | Generische `PATCH`-Schnittstelle                  | offen                 |
-|    | Erweiterte Einliefern von Dokumenten per User API | offen                 |
-|    | Einlieferung von Verzeichnissen mit Dokumenten    | offen                 |
-|    | Variablen in der Ressourcenangabe                 | offen                 |
-|    | Anzeigen der aktiven Logins                       | offen                 |
-|    | Auflisten von Dokumenten mit Suche/Filterung      | offen                 |
-|    | Ausführung von Befehlen für mehrere Umgebungen    | offen                 |
-|    | Fortschrittsanzeige bei längeren Vorgängen        | offen                 |
-|    | Ausgabe von Tokens                                | offen                 |
-|    | Inspektion von Tokens                             | offen                 |
-|    | Automatische Formatierung von JSON-Ausgaben       | offen                 |
+|  # | User Story                                     | Status                | Story Points |
+|---:|------------------------------------------------|-----------------------|--------------|
+|  1 | Konfiguration sämtlicher Umgebungen            | umgesetzt in Sprint 1 | 1            |
+|  2 | Erweiterung der CI-Pipeline                    | umgesetzt in Sprint 1 | 5            |
+|  3 | Login mit Zwei-Faktor-Authentifizierung        | umgesetzt in Sprint 1 | 3            |
+|  4 | Sichere Verwahrung der Tokens                  | umgesetzt in Sprint 1 | 5            |
+|  5 | Handhabung mehrerer Umgebungen                 | umgesetzt in Sprint 2 | 3            |
+|  6 | Generische `GET`-Schnittstelle                 | umgesetzt in Sprint 2 | 3            |
+|  7 | Automatische Aktualisierung von Tokens         | umgesetzt in Sprint 2 | 5            |
+|  8 | Login für Agent API                            | umgesetzt in Sprint 2 | 3            |
+|  9 | Verbesserung der Hilfe-Funktion                | umgesetzt in Sprint 2 | 3            |
+| 10 | Vollzugsmeldungen mit `-v`/`-verbose`-Flag     | umgesetzt in Sprint 2 | 1            |
+| 11 | Verbesserung der Quellcodedokumentation        | geplant für Sprint 3  | 1            |
+| 12 | Einliefern von Dokumenten per Agent API        | geplant für Sprint 3  | 3            |
+| 13 | Generische `POST`-Schnittstelle                | geplant für Sprint 3  | 3            |
+| 14 | Generische `PUT`-Schnittstelle                 | geplant für Sprint 3  | 3            |
+| 15 | Generische `PATCH`-Schnittstelle               | geplant für Sprint 3  | 3            |
+| 16 | Generische `DELETE`-Schnittstelle              | geplant für Sprint 3  | 1            |
+| 17 | Rekursives Hochladen von Dokument-Ordnern      | geplant für Sprint 3  | 5            |
+|    | Verbesserung der Testabdeckung                 | zu spezifizieren      | 3            |
+|    | Variablen in der Ressourcenangabe              | zu spezifizieren      | 3            |
+|    | Automatische Formatierung von JSON-Ausgaben    | zu spezifizieren      | 1            |
+|    | Automatische Tags von hochgeladenen Ordnern    | zu spezifizieren      | 5            |
+|    | Anzeigen der aktiven Logins                    | offen                 |
+|    | Auflisten von Dokumenten mit Suche/Filterung   | offen                 |
+|    | Ausführung von Befehlen für mehrere Umgebungen | offen                 |
+|    | Fortschrittsanzeige bei längeren Vorgängen     | offen                 |
+|    | Ausgabe von Tokens                             | offen                 |
+|    | Inspektion von Tokens                          | offen                 |
 
 # Sprints
 
@@ -61,9 +62,18 @@ author: Patrick Bucher
     - 0 Story Points
     - 0 Stories
 
-### Bekannte Fehler
+## Sprint 3
 
-- Tests auf Windows ergaben, dass es derzeit nicht möglich ist, ein Password sicher (ohne Echo) über die Kommandozeile einzugeben. Recherchen haben ergeben, dass es in diesem Bereich derzeit einen [offenen Bug](https://github.com/golang/go/issues/34461) gibt. Als Workaround wird bis zur Fehlerkorrektur auf die sichere Passworteingabe verzichtet. Mithilfe eines [Build Tags](https://golang.org/pkg/go/build/#hdr-Build_Constraints) konnte dieser Workaround auf Windows eingeschränkt werden, sodass auf macOS und Linux weiterhin die sichere Passworteingabe zum Einsatz kommt.
+- Eingeplant
+    - 19 Story Points
+    - 7 Stories (11-17)
+- Umgesetzt
+    - 0 Story Points
+    - 0 Stories
+    - 0 Stunden Arbeitsaufwand
+- Offen
+    - 19 Story Points
+    - 7 Stories
 
 # User Stories
 
@@ -334,3 +344,17 @@ Akzeptanzkriterien:
     - `ci-px-env-test.sh`: für `env`
     - `ci-px-login-logout-test.sh`: für `login` und `logout`
 - Für den Negativtest wurde jeweils das Flag `-v`/`-verbose` beim Aufruf im Testskript weggelassen. Nachdem das Flag hinzugefügt wurde, liefen die Tests durch.
+
+# Bugs
+
+## Bug 1: Interaktive Eingabe auf Windows funktioniert nicht
+
+- Tests auf Windows ergaben, dass es derzeit nicht möglich ist, ein Password sicher (ohne Echo) über die Kommandozeile einzugeben. Recherchen haben ergeben, dass es in diesem Bereich derzeit einen [offenen Bug](https://github.com/golang/go/issues/34461) gibt. Als Workaround wird bis zur Fehlerkorrektur auf die sichere Passworteingabe verzichtet. Mithilfe eines [Build Tags](https://golang.org/pkg/go/build/#hdr-Build_Constraints) konnte dieser Workaround auf Windows eingeschränkt werden, sodass auf macOS und Linux weiterhin die sichere Passworteingabe zum Einsatz kommt.
+
+### Notizen
+
+- TODO
+
+### Testprotokoll
+
+- TODO

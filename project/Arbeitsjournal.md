@@ -88,4 +88,5 @@ author: Patrick Bucher
 | So, 17.11.2019 |      2.5 | Dokumentation | Kapitel 1 und 2 überarbeitet                                           |
 | So, 17.11.2019 |      0.5 | Dokumentation | Glossar aufgesetzt und erste Einträge verfasst                         |
 | So, 17.11.2019 |      0.5 | Dokumentation | Titelgrafik (vereinfachtes Komponentendiagramm) erstellt               |
-|                | **92.5** | **Total**     |                                                                        |
+| So, 17.11.2019 |      1.0 | Projekt       | Backlog für Sprint 3 vorbereitet                                       |
+|                | **93.5** | **Total**     |                                                                        |
