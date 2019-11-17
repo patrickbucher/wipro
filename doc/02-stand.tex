@@ -4,7 +4,7 @@ Dieses Kapitel beschreibt die Ausgangslage vor dem Projektstart. Diese Situation
 
 \subsection{Ansprechen der PEAX API}
 
-Für das direkte (d.h. nicht durch ein Web-Frontend vermittelte) Ansprechen einer RESTful-API haben sich verschiedene Werkzeuge etabliert. Im Folgenden werden verschiedene Werkzeuge besprochen, die sich bei PEAX etabliert haben.
+Für das direkte (d.h. nicht durch ein Web-Frontend vermittelte) Ansprechen einer RESTful API haben sich verschiedene Werkzeuge etabliert. Im Folgenden werden verschiedene Werkzeuge besprochen, die sich bei PEAX etabliert haben.
 
 \subsubsection{Postman}
 
@@ -12,23 +12,23 @@ Die Anwendung \textsc{Postman}\footnote{\url{https://www.getpostman.com/product/
 
 Requests können mit URL, Parametern und Body definiert und manuell in Collections gruppiert werden. Diese Gruppierungen werden beispielsweise nach Umgebung (\texttt{dev}, \texttt{test}) oder nach API-Bereich (Profile, Document) vorgenommen.
 
-Es besteht auch die Möglichkeit, Variablen zu definieren. So kann beispielsweise nach einer erfolgreichen Authentifizierung der zurückgelieferte Access Token in eine Variable \texttt{token} abgespeichert werden. Diese Variable kann dann im einen weiteren Request im \textit{Authentication}-Header mitgegeben werden.
+Es besteht auch die Möglichkeit, Variablen zu definieren. So kann beispielsweise nach einer erfolgreichen Authentifizierung der zurückgelieferte Access Token abgespeichert werden. Diese Token-Variable kann dann im einen weiteren Request zwecks Autentifikation im \textit{Authentication}-Header mitgegeben werden.
 
 Obwohl \textsc{Postman} einen hohen Komfort bietet und als generischer HTTP-Client eine Abdeckung der gesamten API ermöglicht, gibt es einige Probleme in dessen Handhabung:
 
 \begin{description}
     \item[Austausch von Collections] \textsc{Postman}-Collections können als JSON-Dateien abgespeichert werden. Dieses Format eignet sich zur Speicherung in einem \textsc{Git}-Repository. Im Gegensatz zu Programmcode oder Konfigurationsdateien sind die einzelnen Änderungen jedoch schwer nachzuvollziehen. Da die Entwickler verschiedene Bedürfnisse haben (API-Abdeckung, Organisation, verwendete Daten), gibt es kein zentrales Repository für \textsc{Postman}-Collections. Stattdessen werden diese Collections als Dateien herumgereicht, was zu einem Wildwuchs führt.
     \item[Speicherung von Credentials] Die Zugangsdaten werden zumeist im Klartext abgespeichert und mit den Collections herumgereicht. Hier könnten Variablen Abhilfe schaffen. Fehlendes Wissen über deren Handhabung und Bequemlichkeit führen aber immer wieder dazu, dass wieder Passwörter im Klartext in \textsc{Postman}-Collections auftauchen.
-    \item[Fehlende Automatisierung] Obwohl sich \textsc{Postman} mithilfe einer \textsc{JavaScript}-Runtime\footnote{\url{https://learning.getpostman.com/docs/postman/scripts/intro_to_scripts}} automatisieren liesse, werden Abläufe damit in der Praxis als Klick-Sequenzen durchgeführt. Der Aufwand, sich in das Scripting-Framework von \textsc{Postman} einzuarbeiten, scheint sich für viele Entwickler offensichtlich nicht zu lohnen. Ein möglicher Grund dafür ist das Lock-In: Skripts können nur innerhalb von \textsc{Postman} ohne Zusatzaufwand ausgeführt werden. Von Servern oder Containern aus, wo kein GUI zur Verfügung steht, sind die Skripts also nicht ausführbar.
+    \item[Fehlende Automatisierung] Obwohl sich \textsc{Postman} mithilfe einer \textsc{JavaScript}-Runtime\footnote{\url{https://learning.getpostman.com/docs/postman/scripts/intro_to_scripts}} automatisieren liesse, werden Abläufe damit in der Praxis meistens als manuelle Klick-Sequenzen durchgeführt. Der Aufwand, sich in das Scripting-Framework von \textsc{Postman} einzuarbeiten, scheint sich für viele Entwickler offensichtlich nicht zu lohnen. Ein möglicher Grund dafür ist das Lock-In: Skripts können nur innerhalb von \textsc{Postman} ohne Zusatzaufwand ausgeführt werden. Von einem Server oder Container aus, wo kein GUI zur Verfügung steht, sind die Skripts also nicht ohne grossen Zusatzaufwand ausführbar.
 \end{description}
 
 \subsubsection{cUrl}
 
-Bei \texttt{curl} handelt es sich um ein Kommandozeilenprogramm zum Ansprechen verschiedenster Protokolle\footnote{\url{https://curl.haxx.se/}}, wobei im Kontext von PEAX nur HTTP relevant ist. Verglichen mit \textsc{Postman} wird \texttt{curl} von weniger Entwicklern eingesetzt, es kommt aber immer dann zum Einsatz, wenn ein grösserer Ablauf automatisiert werden soll\footnote{Beispiel: Einem bestimmten Benutzer für Testzwecke 2000 Dokumente per Delivery-API ins Portal stellen}.
+Bei \texttt{curl} handelt es sich um ein Kommandozeilenprogramm zum Ansprechen verschiedenster Protokolle\footnote{\url{https://curl.haxx.se/}}, wobei im Kontext von PEAX nur HTTP relevant ist. Verglichen mit \textsc{Postman} wird \texttt{curl} von weniger Entwicklern eingesetzt, es kommt aber immer dann zum Einsatz, wenn ein grösserer Ablauf automatisiert werden soll\footnote{Beispiel: Einem bestimmten Benutzer für Testzwecke 2000 Dokumente per Delivery-API ins Portal stellen, was aufgrund der langen Laufzeit periodische Token-Aktualisierung erfordert.}.
 
 \texttt{curl} wird oft in Skripts verwendet. Hierzu wird ein High-Level-Skript geschrieben, das die eigentliche Aufgabe übernimmt (Dokument einliefern, Daten abrufen), welches ein Low-Level-Skript für die jeweilige Umgebung aufruft, das sich um das Token-Handling kümmert. Diese Skripts rufen meistens \texttt{jq}\footnote{\url{https://stedolan.github.io/jq/}} auf, um relevante Informationen aus den JSON-Payloads zu extrahieren.
 
-Im Gegensatz zu den \textsc{Postman}-Collections sind diese Skripts und deren Änderungen in einem \textsc{Git}-Kontext einfach zu verstehen. Die Automatisierung ist nicht nur eine ungenutzte Möglichkeit, sondern wird auch tatsächlich genutzt.
+Im Gegensatz zu den \textsc{Postman}-Collections sind diese Skripts und deren Änderungen in einem \textsc{Git}-Kontext einfach zu verstehen. Die Automatisierung ist nicht nur wie bei \textsc{Postman} eine ungenutzte Möglichkeit, sondern wird auch tatsächlich genutzt.
 
 Die Problematik der Credentials, die im Klartext herumgereicht werden, besteht aber dennoch. Ausserdem werden Ansammlungen solcher Skripts oftmals unübersichtlich und sind nur noch vom ursprünglichen Entwickler versteh- und wartbar.
 
@@ -36,31 +36,29 @@ Die Problematik der Credentials, die im Klartext herumgereicht werden, besteht a
 
 \subsubsection{httpie}
 
-\textsc{HTTPie} ist eine sehr einstiegsfreundliche Alternative zu \texttt{curl}, das sich im Gegensatz dazu auf das Protokoll HTTP konzentriert. Das Absetzen von Multipart-Payloads ist damit wesentlich komfortabler als mit \texttt{curl}.
+\textsc{HTTPie} ist eine sehr einstiegsfreundliche Alternative zu \texttt{curl}, das sich im Gegensatz dazu auf das Protokoll HTTP konzentriert. Das Absetzen von Multipart-Payloads ist damit wesentlich komfortabler als mit \texttt{curl}, was etwa beim Testen der Thumbnailer-Komponente sehr hilfreich war.
 
-Da es sich bei \texttt{http} ‒ dem Executable von \textsc{HTTPie} ‒ um ein \textsc{Python}-Skript handelt, ist die Installation einer entsprechenden Laufzeitumgebung vorausgesetzt.
-
-Ansonsten hat \textsc{HTTPie} in der Anwendung die gleichen Vor- und Nachteile wie \texttt{curl}.
+Da es sich bei \texttt{http} ‒ dem Executable von \textsc{HTTPie} ‒ um ein \textsc{Python}-Skript handelt, ist die Installation einer entsprechenden Laufzeitumgebung vorausgesetzt. Ansonsten hat \textsc{HTTPie} in der Anwendung die gleichen Vor- und Nachteile wie \texttt{curl}.
 
 \subsection{Kommandozeilenprogramme}
 
 Bei Kommandozeilenprogrammen grösseren Umfangs hat sich ein Bedienungsmuster etabliert, bei dem der Programmname als der Hauptbefehl und der erste Parameter als Unterbefehl angegeben wird. Hierzu einige Beispiele:
 
 \begin{lstlisting}[language=bash,caption={Einie Kommandozeilenbeispiele mit Haupt- und Unterbefehl}]
-$ git add *.c
-$ git commit -m 'added C files'
-$ git push
+git add *.c
+git commit -m 'added C files'
+git push
 
-$ docker rm -f my-container
-$ docker rmi -f my-image
-$ docker run redis
+docker rm -f my-container
+docker rmi -f my-image
+docker run redis
 
-$ go run cmd/px.go
-$ go build cmd/px.go -o builds/linux/px
-$ go vet
+go run cmd/px.go
+go build cmd/px.go -o builds/linux/px
+go vet
 \end{lstlisting}
 
-Ähnliche Bedienungsmuster findet man auch in \texttt{oc} (\textsc{OpenShift} Command Line Client), \texttt{pacman} und \texttt{brew} (Paketmanager für \textsc{Arch Linux} bzw. \textsc{macOS}), \texttt{npm} und \texttt{pip} (Paketmanager für \textsc{Node} und \textsc{Python}). Obwohl sich für dieses Bedienungsmuster noch kein Name etabliert hat\footnote{\url{https://superuser.com/q/1020583}}, soll es im Rahmen der vorliegenden Arbeit als \textit{Swiss Army Knife}-Ansatz bezeichnet werden, zumal diese Bezeichnung im Standardwerk zu \textsc{Go} für das \texttt{go}-Tool verwendet wird \cite{gopl}.
+Ähnliche Bedienungsmuster findet man auch in \texttt{oc} (\textsc{OpenShift} Command Line Client), \texttt{pacman} und \texttt{brew} (Paketmanager für \textsc{Arch Linux} bzw. \textsc{macOS}), \texttt{npm} und \texttt{pip} (Paketmanager für \textsc{Node} und \textsc{Python}). Obwohl sich für dieses Bedienungsmuster noch kein allgemein gebräuchlicher Name etabliert hat\footnote{\url{https://superuser.com/q/1020583}}, soll es im Rahmen der vorliegenden Arbeit als \textit{Swiss Army Knife}-Ansatz bezeichnet werden, zumal diese Bezeichnung im Standardwerk zu \textsc{Go} für das \texttt{go}-Tool verwendet wird \cite{gopl}.
 
 Ein etwas anderer Ansatz wird in \textsc{Rust} für das sehr umfassende Werkzeug \texttt{cargo} (u.a. für die Kompilierung und das Ausführen von Tests) verwendet. Hier gibt es zwar auch Unterbefehle (\texttt{cargo build}, \texttt{cargo test}), diese sind aber nicht zwingend Teil des \texttt{cargo}-Binaries, sondern separate Binaries, die im Verzeichnis \texttt{~/.cargo/bin/} abgelegt sind, und der Namenskonvention \texttt{cargo-[subcommand]} folgen \cite[Kapitel 14.5]{rust-book}.
 
@@ -68,23 +66,23 @@ Der Ansatz von \textsc{Rust} passt zwar deutlich besser zur \textsc{Unix}-Philos
 
 \subsection{Ausgangslage und Vorleistungen}
 
-Das Projekt \texttt{px} wurde bereits am 11. Juni 2019 auf dem GitLab von PEAX erstellt\footnote{\url{https://gitlab.peax.ch/peax3/px}}. Als erstes wurde eine CI-Pipeline bestehend aus den Schritten `build` und `test` erstellt. Die Pipeline wurde mittels eines Dummy-Tests überprüft, der einmal erfolgreich durchlaufen und einmal scheitern sollte, um einen Positiv- und einen Negativtest durchführen zu können.
+Das Projekt \texttt{px} wurde bereits am 11. Juni 2019 auf dem \textsc{GitLab} von PEAX erstellt\footnote{\url{https://gitlab.peax.ch/peax3/px}}. Als erstes wurde eine CI-Pipeline bestehend aus den Schritten \texttt{build} und \texttt{test} eingerichtet. Die Pipeline wurde mittels eines Dummy-Tests überprüft, der einmal erfolgreich durchlaufen und einmal scheitern sollte, um einen Positiv- und einen Negativtest durchführen zu können.
 
-Es wurde eine Hallo-Welt-Programm im \texttt{cmd}-Unterverzeichnis \cite[p. 293]{gopl} erstellt, welches dazu diente, die Kompilierung für verschiedene Plattformen zu testen. Obwohl Go-Programme mittels `go build` kompiliert werden können und keine weitere Build-Konfiguration benötigen, wurde ein \texttt{Makefile} erstellt, das ausführbare Programme für verschiedene Plattformen im \texttt{build}-Unterverzeichnis erstellt, also z.B. \texttt{build/windows/px.exe} für \textsc{Windows} oder \texttt{build/linux/px} für \textsc{Linux}.
+Es wurde eine Hallo-Welt-Programm im \texttt{cmd}-Unterverzeichnis \cite[p. 293]{gopl} erstellt, welches dazu diente, die Kompilierung für verschiedene Plattformen zu testen. Obwohl auch umfassende Go-Programme mittels \texttt{go build} kompiliert werden können und keine weitere Build-Konfiguration benötigen, wurde ein \texttt{Makefile} erstellt, das ausführbare Programme für verschiedene Plattformen im \texttt{build}-Unter\-ver\-zeich\-nis erstellt, also z.B. \texttt{build/windows/px.exe} für \textsc{Windows} oder \texttt{build/linux/px} für \textsc{Linux}.
 
 Das \texttt{Makefile} wurde später um ein \texttt{release}-Target erweitert, womit die kompilierten Artefakte jeweils in eine Zip-Datei verpackt werden, die den aktuellen Versionstag (z.B. \texttt{v0.0.3}\footnote{\url{https://semver.org/}}) im Dateinamen enthält.
 
-Das Target \texttt{coverage} führt die Testfälle durch, misst die Testabdeckung und generiert eine HTML-Ausgabe des getesteten Codes. Rote Zeilen sind nicht durch einen Testfall abgedeckt, grüne Zeilen hingegen schon. \cite[Kapitel 11.3]{gopl}
+Das Target \texttt{coverage} führt die Testfälle durch, misst die Testabdeckung und generiert eine HTML-Ausgabe des getesteten Codes. Rote Zeilen sind nicht durch einen Testfall abgedeckt, grüne Zeilen hingegen schon \cite[Kapitel 11.3]{gopl}.
 
 Weiter sind bis am 31. Juli 2019 folgende Features implementiert worden:
 
 \begin{description}
 	\item[\texttt{px help}] zeigt eine einfache Hilfeseite auf der Kommandozeile an.
-    \item[\texttt{px login}] führt einen Loginversuch mit den angegebenen Credentials durch. Benutzername und Passwort können entweder als Kommandozeilenparameter oder mittels interaktiver Eingabe (\texttt{stdin}) entgegengenommen werden. Im letzteren Fall wird das eingegebene Passwort nicht angezeigt, was mit einem externen SSH-Ter\-mi\-nal-Modul\footnote{\url{https://godoc.org/golang.org/x/crypto/ssh/terminal\#Terminal.ReadPassword}} erreicht wird. Bei einem erfolgreichen Login-Versuch werden \texttt{access\_token} und \texttt{refresh\_token} aus dem Response-Payload gelesen und im \texttt{\$HOME}-Verzeichnis des jeweiligen Betriebssystem-Benutzers in eine JSON-Datei namens \texttt{.px-tokens} abgespeichert.
-	\item[\texttt{px logout}] löscht ein Token-Paar für eine bestimmte Umgebung. Pro Umgebung kann es zu jedem Zeitpunkt nur ein aktives «Login», d.h. Token-Paar geben. Es besteht auch die Möglichkeit, sämtliche Tokens auf einmal zu löschen. Hierbei wird \texttt{\$HOME/.px-tokens} nicht gelöscht, sondern nur das Property \texttt{tokens} geleert. (Die Datei enthält ein Initialisierungsdatum, das nicht verlorengehen soll.)
-	\item[\texttt{px upload}] lädt eine Datei (z.B. PDF) auf das PEAX-Portal hoch. Diese Funktionalität wurde eingebaut, um die Funktionsweise von \texttt{px} vor dem Ideation-Gremium zu demonstrieren\footnote{Die hochgeladene Datei erschien Sekunden später im Web-Portal, was die Anwesenden von der Funktionsweise überzeugte}.
+    \item[\texttt{px login}] führt einen Loginversuch mit den angegebenen Credentials durch. Benutzername und Passwort können entweder als Kommandozeilenparameter oder mittels interaktiver Eingabe (\texttt{stdin}) entgegengenommen werden. Im letzteren Fall wird das eingegebene Passwort nicht angezeigt, was mit einem externen SSH-Ter\-mi\-nal-Modul\footnote{\url{https://godoc.org/golang.org/x/crypto/ssh/terminal\#Terminal.ReadPassword}} erreicht wird. Bei einem erfolgreichen Login-Versuch werden \texttt{access\_token} und \texttt{refresh\_token} aus dem Response-Payload gelesen und im \texttt{\$HOME}-Ver\-zeich\-nis des jeweiligen Benutzers in eine JSON-Datei namens \texttt{.px-tokens} abgespeichert.
+	\item[\texttt{px logout}] löscht ein Token Pair für eine bestimmte Umgebung. Pro Umgebung kann es zu jedem Zeitpunkt nur ein aktives «Login», d.h. Token Pair geben. Es besteht auch die Möglichkeit, sämtliche Tokens auf einmal zu löschen. Hierbei wird \texttt{\$HOME/.px-tokens} nicht gelöscht, sondern nur das Property \texttt{tokens} geleert. (Die Datei enthält ein Initialisierungsdatum, das nicht verlorengehen soll.)
+	\item[\texttt{px upload}] lädt eine Datei (z.B. PDF) auf das PEAX-Portal hoch. Diese Funktionalität wurde eingebaut, um die Funktionsweise von \texttt{px} vor dem Ideation-Gremium zu demonstrieren.\footnote{Die hochgeladene Datei erschien Sekunden später im Web-Portal, was die Anwesenden von der Funktionsweise überzeugte.}
 \end{description}
 
 Für die Evaluierung des Prototypen werden zudem die Anzahl Aufrufe und das Datum des letzten Aufrufs von \texttt{px} in eine JSON-Datei \texttt{\$HOME/.px-usage} geschrieben.
 
-Insgesamt wurden ca. 20 Arbeitsstunden in den Prototyp investiert. Ein grosser Teil des Codes kann für die Weiterentwicklung übernommen werden, muss jedoch umstrukturiert werden. So ist zuviel Logik im Hauptmodul \texttt{cmd/px.go}, die zwecks Wiederverwendbarkeit in das Library-Modul \texttt{px} überführt werden soll.
+Insgesamt wurden ca. 20 Arbeitsstunden in den Prototyp investiert. Ein grosser Teil des Codes kann für die Weiterentwicklung übernommen werden, muss jedoch umstrukturiert werden. So ist zuviel Logik im Hauptmodul \texttt{cmd/px.go}, die zwecks Wiederverwendbarkeit in das Library-Modul \texttt{px} überführt werden soll. Am Prototypen mangelhaft sind Testabdeckung und Dokumentation auf Quellcodeebene.
