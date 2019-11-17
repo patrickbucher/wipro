@@ -85,4 +85,5 @@ author: Patrick Bucher
 | Sa, 16.11.2019 |      2.5 | Dokumentation | Komponentendiagramm erstellt, Sequenzdiagramme verbessert              |
 | Sa, 16.11.2019 |      1.5 | Dokumentation | Struktur der Dokumentation überarbeitet, Notizen eingefügt             |
 | Sa, 16.11.2019 |      0.5 | Dokumentation | Deckblatt ausgefüllt und optisch an Dokumentation angeglichen          |
-|                | **89.0** | **Total**     |                                                                        |
+| So, 17.11.2019 |      2.5 | Dokumentation | Kapitel 1 und 2 überarbeitet; Glossar aufgesetzt                       |
+|                | **91.5** | **Total**     |                                                                        |
