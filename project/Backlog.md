@@ -17,12 +17,13 @@ author: Patrick Bucher
 |  9 | Verbesserung der Hilfe-Funktion                | umgesetzt in Sprint 2 | 3            |
 | 10 | Vollzugsmeldungen mit `-v`/`-verbose`-Flag     | umgesetzt in Sprint 2 | 1            |
 | 11 | Verbesserung der Quellcodedokumentation        | geplant für Sprint 3  | 1            |
-| 12 | Einliefern von Dokumenten per Agent API        | geplant für Sprint 3  | 3            |
-| 13 | Generische `POST`-Schnittstelle                | geplant für Sprint 3  | 3            |
-| 14 | Generische `PUT`-Schnittstelle                 | geplant für Sprint 3  | 3            |
-| 15 | Generische `PATCH`-Schnittstelle               | geplant für Sprint 3  | 3            |
-| 16 | Generische `DELETE`-Schnittstelle              | geplant für Sprint 3  | 1            |
-| 17 | Rekursives Hochladen von Dokument-Ordnern      | geplant für Sprint 3  | 5            |
+| 12 | Aktuelle Version ausgeben                      | geplant für Sprint 3  | 1            |
+| 13 | Einliefern von Dokumenten per Agent API        | geplant für Sprint 3  | 3            |
+| 14 | Generische `POST`-Schnittstelle                | geplant für Sprint 3  | 3            |
+| 15 | Generische `PUT`-Schnittstelle                 | geplant für Sprint 3  | 3            |
+| 16 | Generische `PATCH`-Schnittstelle               | geplant für Sprint 3  | 3            |
+| 17 | Generische `DELETE`-Schnittstelle              | geplant für Sprint 3  | 1            |
+| 18 | Rekursives Hochladen von Dokument-Ordnern      | geplant für Sprint 3  | 5            |
 |    | Verbesserung der Testabdeckung                 | zu spezifizieren      | 3            |
 |    | Variablen in der Ressourcenangabe              | zu spezifizieren      | 3            |
 |    | Automatische Formatierung von JSON-Ausgaben    | zu spezifizieren      | 1            |
@@ -65,15 +66,15 @@ author: Patrick Bucher
 ## Sprint 3
 
 - Eingeplant
-    - 19 Story Points
-    - 7 Stories (11-17)
+    - 20 Story Points
+    - 8 Stories (11-18)
 - Umgesetzt
     - 0 Story Points
     - 0 Stories
     - 0 Stunden Arbeitsaufwand
 - Offen
-    - 19 Story Points
-    - 7 Stories
+    - 20 Story Points
+    - 8 Stories
 
 # User Stories
 
@@ -355,7 +356,17 @@ Akzeptanzkriterien:
 2. Das Werkzeug `go lint` soll über die ganze Codebasis von `px` keine Beanstandungen im Bezug auf undokumentierte, exporte Elemente mehr machen.
 3. Dieser Zustand ist auch in Zukunft am Ende eines jeden Sprints herzustellen. Die Aufwände für das Erstellen der entsprechenden Kommentare fliesst jeweils in die User Story ein, die neue exportierte (d.h. zu kommentierende) Elemente zur Folge hat.
 
-# 12: Einliefern von Dokumenten per Agent API
+# 12: Aktuelle Version ausgeben
+
+Als Anwender möchte ich einen Befehl zur Verfügung haben, der die Version von `px` ausgibt, damit ich sehen kann, ob ich die aktuelle Version der Software verwende, und diese bei Rückmeldungen verwenden kann.
+
+Akzeptanzkriterien:
+
+1. Die Versionierung soll gemäss [_Semantic Versioning_](https://semver.org) erfolgen.
+2. Die Version soll beim Kompilieren von Release-Artefakten automatisch aus dem SCM (`git`) verwendet werden.
+3. Die Versionsangabe soll über den Befehl `px version` in der Form `v0.3.1` ausgegeben werden.
+
+# 13: Einliefern von Dokumenten per Agent API
 
 Als Benutzer der Agent API möchte ich ein einzelnes Dokument mitsamt Metadaten einliefern können, um so Testdaten für verschiedene Benutzer erstellen zu können.
 
@@ -365,7 +376,7 @@ Akzeptanzkriterien:
 2. Die Metadaten werden als JSON-Datenstruktur aus einer separaten Datei mitgegeben.
 3. Der Befehl zur Einlieferung von Dokumenten soll `px deliver` heissen.
 
-# 13: Generische `POST`-Schnittstelle
+# 14: Generische `POST`-Schnittstelle
 
 Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels `POST`-Methode ansprechen können, damit ich Ressourcen auf dem PEAX-Portal erstellen kann.
 
@@ -379,7 +390,7 @@ Akzeptanzkriterien:
 6. Antworten, die einen Fehler signalisieren, sollen immer auf `stderr` ausgegeben werden.
 7. Der Befehl soll `px post` heissen.
 
-# 14: Generische `PUT`-Schnittstelle
+# 15: Generische `PUT`-Schnittstelle
 
 Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels `PUT`-Methode ansprechen können, damit ich bestehende Ressourcen auf dem PEAX-Portal ersetzen kann.
 
@@ -393,7 +404,7 @@ Akzeptanzkriterien:
 6. Antworten, die einen Fehler signalisieren, sollen immer auf `stderr` ausgegeben werden.
 7. Der Befehl soll `px put` heissen.
 
-# 15: Generische `PATCH`-Schnittstelle
+# 16: Generische `PATCH`-Schnittstelle
 
 Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels `PATCH`-Methode ansprechen können, damit ich Ressourcen auf dem PEAX-Portal partiell/feingranular aktualisieren kann.
 
@@ -406,7 +417,7 @@ Akzeptanzkriterien:
 5. Antworten, die einen Fehler signalisieren, sollen immer auf `stderr` ausgegeben werden.
 6. Der Befehl soll `px patch` heissen.
 
-# 16: Generische `DELETE`-Schnittstelle
+# 17: Generische `DELETE`-Schnittstelle
 
 Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels `DELETE`-Methode ansprechen können, damit ich Ressourcen auf dem PEAX-Portal entfernen kann.
 
@@ -418,7 +429,7 @@ Akzeptanzkriterien:
 4. Antworten, die einen Fehler signalisieren, sollen immer auf `stderr` ausgegeben werden.
 5. Der Befehl soll `px delete` heissen.
 
-# 17: Rekursives Hochladen von Dokument-Ordnern
+# 18: Rekursives Hochladen von Dokument-Ordnern
 
 Als Benutzer der User API möchte ich einen lokale Ordnstruktur, die Dokumente beinhaltet, mit einem Befehl hochladen können, sodass alle in dieser Ordnerstruktur enthaltenen Dokumente im Upload-Bereich des PEAX-Portals auftauchen.
 
