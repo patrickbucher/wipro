@@ -72,18 +72,18 @@ Bei PEAX gibt es verschiedene Umgebungen oder «Stufen», welche den ganzen PEAX
     \item[dev] Dies ist das Entwicklungssystem, worauf die Entwickler ihre Änderungen deployen, sobald diese vom jeweiligen Feature-Branch in den \texttt{develop}-Branch gemerged wurden. Diese Umgebung ist tendenziell sehr aktuell, aber dafür auch instabil.
     \item[test] Auf diese Stufe werden Änderungen übertragen, die auf Stufe \texttt{dev} erfolgreich getestet werden konnten. Diese Umgebung wird vom Product Owner zur Abnahme von User Stories verwendet, ist in der Regel eher stabil und repräsentiert nach jedem Sprint einen potenziell releasefähigen Stand.
     \item[stage] Diese Stufe dient für die Regressionstests. Hier wird nach jedem Sprint der letzte Stand von \texttt{test} übertragen. Bei einem Release wird der Stand von hier verwendet. Diese Umgebung ist stabil und jeweils maximal zwei Wochen alt.
-    \item[prod] Von \texttt{stage} werden die Änderungen mehrmals pro Jahr (Ziel: einmal pro Monat) auf die Produktivumgebung übertragen. Dies ist die einzige Umgebung, auf der produktive Kundendaten abgelegt werden. Datenschutz und Sicherheit spielen auf dieser Umgebung eine besonders hohe Rolle.
+    \item[prod] Von \texttt{stage} werden die Änderungen mehrmals pro Jahr (mittelfristiges Ziel: nach jedem Sprint) auf die Produktivumgebung übertragen. Dies ist die einzige Umgebung, auf der produktive Kundendaten abgelegt werden. Datenschutz und Sicherheit spielen auf dieser Umgebung eine besonders hohe Rolle. (Die Konsequenzen daraus sind in \secref{sec:konzept-token-store} und \secref{sec:realisierung-token-store} beschrieben.)
     \item[devpatch] Dies ist die Entwicklungsumgebung für den Hotfix-Pfad. Nach einem Release wird der aktuelle Stand von \texttt{prod} auf diese Stufe deployed. Bis zum nächsten Release können hier dringende Fehlerkorrekturen vorgenommen werden.
     \item[testpatch] Dies ist die Testumgebung für den Hotfix-Pfad. Dringende Fehlerkorrekturen werden von \texttt{devpatch} auf diese Stufe übernommen und hier abgenommen. Die Änderungen werden von hier aus direkt auf \texttt{prod} deployed.
     \item[prototype] Hierbei handelt es sich um eine Umgebung, die sporadisch für Prototypen und Demos verwendet wird.
-    \item[perf] Diese Umgebung wurde vor dem grossen v3-Release im Frühling für Performance-Tests verwendet und ist seither nur sporadisch in Betrieb.
+    \item[perf] Diese Umgebung wurde vor dem grossen v3-Release im Frühling 2019 für Performance-Tests verwendet und ist seither nur sporadisch in Betrieb, etwa zum Ausprobieren neuer Konfigurationen oder Technologien.
 \end{description}
 
 \subsubsection{Arten von Parametern}
 
-Ein HTTP-Request hat verschiedene Parameter: Dies sind einerseits Header-Parameter, wie z.B. \texttt{Content-Type}, womit der MIME-Type der Request-Bodys festgelegt wird, oder \texttt{Accept}, womit dem Server mitgeteilt wird, welcher MIME-Type der Response-Body haben soll \cite{RFC2616}.
+Ein HTTP-Request hat verschiedene Parameter: Dies sind einerseits Header-Parameter, wie z.B. \texttt{Content-Type}, womit der MIME-Type für den Request-Body festgelegt wird, oder \texttt{Accept}, womit dem Server mitgeteilt wird, welcher MIME-Type der Response-Body haben soll \cite{RFC2616}.
 
-Auch in der Authentifizierung und Autorisierung spielen Request-Header eine wichtige Rolle, zumal Access Tokens über per \texttt{Authorization}-Header an den Server übermittelt werden \cite[Kapitel 7.1]{RFC6794}.
+Auch in der Authentifizierung und Autorisierung spielen Request-Header eine wichtige Rolle, zumal Access Tokens per \texttt{Authorization}-Header an den Server übermittelt werden \cite[Kapitel 7.1]{RFC6794}.
 
 Andererseits gibt es auch Query-Parameter, welche direkt an die URL angehängt werden. Letztere werden oft für die Navigation im Portal verwendet, zumal bei \texttt{GET}-Requests kein Request-Body übermittelt werden kann.
 
@@ -93,14 +93,15 @@ Andererseits gibt es auch Query-Parameter, welche direkt an die URL angehängt w
 Es gibt verschiedene Gruppen von Benutzern, die \texttt{px} gewinnbringend einsetzen können:
 
 \begin{description}
-    \item[Backend-Entwickler] Diese entwickeln, erweitern und korrigieren die RESTful-API, die das Backend von PEAX ausmachen. Von ihnen kann \texttt{px} einerseits für schnelle Tests und das Erstellen von Testdaten verwendet werden, andererseits kann \texttt{px} auch dabei hilfreich sein, die API (gerade Datenstrukturen) explorativ kennenzulernen.
+    \item[Backend-Entwickler] Diese entwickeln, erweitern und korrigieren die RESTful APIs, die das Backend von PEAX ausmachen. Von ihnen kann \texttt{px} einerseits für schnelle Tests und das Erstellen von Testdaten verwendet werden, andererseits kann \texttt{px} auch dabei hilfreich sein, die API (gerade Datenstrukturen) explorativ kennenzulernen.
     \item[Frontend-Entwickler] Ist die Spezifikation eines Endpoints unvollständig, unklar oder gar fehlerhaft, kann darauf kein funktionierendes Frontend aufsetzen. Hier kann \texttt{px} dabei hilfreich sein, das tatsächliche Verhalten des Backends zu überprüfen, und die Struktur der zurückgelieferten Payloads zu betrachten.
-    \item[Tester] Die manuellen Regressionstests finden direkt auf dem Portal bzw. auf der App statt. Oftmals wäre es hilfreich, Testdaten grösseren Umfangs für einen neu registrierten Benutzer zu erstellen. Mithilfe von \texttt{px} können hierzu einfache Skripts zur Verfügung gestellt werden. (Die Skripts werden tendenziell eher von Entwicklern zur Verfügung gestellt, aber die Tester können diese nach Instruktion selbständig ausführen.
+    \item[Tester] Die manuellen Regressionstests finden direkt auf dem Portal bzw. auf der App statt. Oftmals wäre es hilfreich, Testdaten grösseren Umfangs für einen neu registrierten Benutzer zu erstellen. Mithilfe von \texttt{px} können hierzu einfache Skripts zur Verfügung gestellt werden. (Die Skripts werden tendenziell eher von Entwicklern zur Verfügung gestellt, aber die Tester können diese nach Instruktion selbständig ausführen.)
+    \item[Projektleiter] Soll ein grosser Dokumentbestand eines Firmenkunden auf das PEAX-Portal übertragen werden, ist dies per Web-Interface sehr aufwändig. Hier könnte \texttt{px} zur Automatisierung herangezogen werden.
 \end{description}
 
 \subsubsection{Betriebssysteme}
 
-Zu Beginn des Projekts (September 2019) waren auf den persönlichen Computern der Entwickler \textsc{macOS} und \textsc{Windows} im Einsatz. Mittlerweile (Stand Oktober 2019) wurden alle \textsc{Windows}-Rechner durch Geräte mit macOS ausgetauscht. Mit den Testern gibt es dennoch einige potenzielle Benutzer (siehe \secref{sec:Benutzer}), die \texttt{px} immer noch auf \textsc{Windows} einsetzen würden.
+Zu Beginn des Projekts (September 2019) waren auf den persönlichen Computern der Entwickler \textsc{macOS} und \textsc{Windows} im Einsatz. Mittlerweile (Stand Oktober 2019) wurden alle \textsc{Windows}-Rechner durch Geräte mit macOS ausgetauscht. Mit den Testern und Projektleitern gibt es dennoch einige potenzielle Benutzer (siehe \secref{sec:Benutzer}), die \texttt{px} immer noch auf \textsc{Windows} einsetzen würden.
 
 Auf zahlreichen virtuellen Maschinen der PEAX-Infrastruktur (etwa für Datenbanken) läuft \textsc{Linux} als Betriebssystem. Hier könnte \texttt{px} für verschiedene Service-Tasks (Monitoring, Alerting) eingesetzt werden.
 
@@ -110,13 +111,13 @@ Es sind somit die Betriebssysteme macOS, Windows und Linux für die Ausführung 
 
 Verschiedene Betriebssysteme haben verschiedene Shells. Im \textsc{Unix}-Bereich gibt es auch zahlreiche Shells mit unterschiedlichen Merkmalen, die parallel zueinander installiert werden können.
 
-Bash ist nicht nur die Standard-Shell vieler \textsc{Linux}-Distributionen, sondern kommt bei Entwicklern auch auf \textsc{Windows} als \textsc{Git Bash} zum Einsatz. Auf \textsc{macOS} gehört \textsc{Bash} ebenfalls zum Lieferumfang, wobei die mächtigere \textsc{Zsh} seit \textsc{macOS Catalina} standardmässig zum Einsatz kommt \cite{macos-zsh}. Andere populäre \textsc{Unix}-Shells wie \textsc{Fish}, \textsc{Ksh} und \textsc{Tcsh} haben zwar unterschiedliche Merkmale, jedoch den \textsc{POSIX}-Standard als kleinsten gemeinsamen Nenner \cite{posix-shell}.
+\textsc{Bash} ist nicht nur die Standard-Shell vieler \textsc{Linux}-Distributionen, sondern kommt bei Entwicklern auch auf \textsc{Windows} als \textsc{Git Bash} zum Einsatz. Auf \textsc{macOS} gehört \textsc{Bash} ebenfalls zum Lieferumfang, wobei die mächtigere \textsc{Zsh} seit \textsc{macOS Catalina} standardmässig zum Einsatz kommt. \footnote{\url{https://support.apple.com/en-us/HT208050}} Andere populäre \textsc{Unix}-Shells wie \textsc{Fish}, \textsc{Ksh} und \textsc{Tcsh} haben zwar unterschiedliche Merkmale, jedoch den \textsc{POSIX}-Standard als kleinsten gemeinsamen Nenner \cite{posix-shell}.
 
 Auf \textsc{Windows} spielen zudem die \textsc{PowerShell} sowie \texttt{cmd.exe} eine Rolle.
 
 \subsection{Risikoanalyse}
 
-Auf den ersten Blick scheint \texttt{px} ein risikoarmes Unterfangen zu sein, handelt es sich doch hierbei um ein Zusatztool, das den Entwickleralltag erleichtern soll. Sämtliche Abläufe können bereits mit den bestehenden Werkzeugen durchgeführt werden, wenn auch vielleicht weniger effizient und weniger komfortabel.
+Auf den ersten Blick scheint \texttt{px} ein risikoarmes Unterfangen zu sein, handelt es sich doch hierbei um ein Zusatztool für eine bestehende Softwarelandschaft, die Abläufe erleichtern soll. Sämtliche Abläufe können bereits mit den bestehenden Werkzeugen durchgeführt werden, wenn auch vielleicht weniger effizient und weniger komfortabel.
 
 Ein Projekt bringt aber immer das Risiko des Scheiterns mit sich. Solche Risiken beziehen sich auf die Ziele des Projekts, bzw. darauf, dass diese Ziele nicht erreicht werden können, oder das Projekt trotz formal erreichter Ziele das gestellte Problem nicht löst.
 
@@ -125,13 +126,13 @@ Für das vorliegende Projekt könne folgende Risiken identifiziert werden:
 \begin{description}
     \item[Projektrisiken] Diese Risiken beziehen sich auf den Erfolg des Projekts als Ganzes:
         \begin{itemize}
-            \item \textbf{Fehlende Adaption}: Auch wenn alle Anforderungen formell erfüllt sind, kann es dennoch sein, dass die Entwickler \texttt{px} nicht verwenden wollen. Eine Kombination aus mangelndem Mehrwert, Gewohnheit und Bequemlichkeit könnte der Grund dafür sein. Es gilt also nicht nur ein gutes Werkzeug zu erstellen, es muss auch dessen Mehrwert überzeugend demonstriert werden.
-            \item \textbf{Mangelnde Abdeckung der API}: Werden signifikante Teile der API nicht durch \texttt{px} abgedeckt, ist man wiederum zur Verwendung der herkömmlichen Werkzeuge gezwungen. Diese Situation gilt es zu vermeiden.
+            \item \textbf{Fehlende Adaption}: Auch wenn alle Anforderungen formell erfüllt sind, kann es dennoch sein, dass Entwickler und andere potenzielle Benutzer \texttt{px} nicht verwenden wollen. Eine Kombination aus mangelndem Mehrwert, Gewohnheit und Bequemlichkeit könnte der Grund dafür sein. Es gilt also nicht nur ein gutes Werkzeug zu erstellen, es muss auch dessen Mehrwert überzeugend demonstriert werden.
+            \item \textbf{Mangelnde Abdeckung der API}: Werden signifikante Teile der API nicht durch \texttt{px} abgedeckt, ist man wiederum zur Verwendung der herkömmlichen Werkzeuge gezwungen. Diese Situation gilt es zu vermeiden, indem eine weite Abdeckung der API erreicht werden soll.
         \end{itemize}
     \item[Sicherheitsrisiken] Gegenüber \texttt{cUrl}, \textsc{Postman} und dergleichen soll \texttt{px} eine höhere Sicherheit schaffen. Die folgenden Sicherheitsrisiken können diesem Ziel abträglich sein:
         \begin{itemize}
             \item \textbf{Token-Verwahrung}: Werden die Tokens von \texttt{px} nicht angemessen sicher verwahrt, könnten diese von einem Angreifer verwendet werden.
-            \item \textbf{Payment-Schnittstelle}: Über die PEAX API können ‒ ein hinterlegtes Bankkonto vorausgesetzt ‒ Zahlungen durchgeführt werden.
+            \item \textbf{Payment-Schnittstelle}: Über die PEAX API können ‒ ein hinterlegtes Bankkonto vorausgesetzt ‒ Zahlungen durchgeführt werden. In Kombination mit unsicher verwahrten Tokens könnte diese API für betrügerische Überweisungen verwendet werden.
         \end{itemize}
     \item[technische Risiken] Diese Risiken beziehen sich auf die Implementierung der einzelnen Features von \texttt{px}. Sie werden im Rahmen der einzelnen \texttt{User Stories} besprochen und behandelt.
 \end{description}
