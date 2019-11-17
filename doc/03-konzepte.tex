@@ -1,5 +1,61 @@
 \section{Ideen und Konzepte}
 
+Der PEAX Command Line Client \texttt{px} soll zwei grundlegenden Design-Prinzipien folgen:
+
+\begin{enumerate}
+    \item der Unix-Philosophie, und
+    \item dem \textit{Swiss Army Knive}-Ansatz, der bereits in \secref{sec:command-line-tools} beschrieben wurde.
+\end{enumerate}
+
+\subsection{Unix-Philosophie}
+
+Die Unix-Philosophie wird oftmals mit den folgenden beiden Grundsätzen wiedergegeben \cite[12:51]{the-code-linux}:
+
+\begin{enumerate}
+    \item \textit{Everything is a file.}\footnote{Alles ist eine Datei.}
+    \item \textit{When you build something, you write things that are for a single purpose, but that do that purpose well.}\footnote{Wenn man etwas erstellt, macht man es zu einem einzigen Zweck, den es gut erfüllen soll.}
+\end{enumerate}
+
+Für den ersten Grundsatz lassen sich schwer Quellen finden. Die Unix-Pioniere \textsc{Doug McIlroy} und \textsc{Brain Kernighan} beschreiben aber den bei der Entwicklung von Unix eingeschlagenen Weg mit einem hierarchischen Dateisystem als revolutionär und als Grund für den Erfolg von Unix und dessen Nachfolger \cite[Kapitel 4.1, S. 62-62, und Kapitel 9.1, S. 166]{unix-history-memoir}. Das experimentelle Betriebssystem Plan 9 verfolgte diesen Grundsatz noch konsequenter \cite[Kapitel 8.4, S. 161]{unix-history-memoir}.
+
+Der zweite Grundsatz geht auf \textsc{Doug McIlroys} erste Stil-Maxime \cite[S. 3]{unixtimesharing} \textit{«Make each program do one thing well.»}\footnote{Jedes Programm soll eine Sache gut erfüllen.} zurück. Die zweite Maxime \textit{«Expect the output of every program to become the input to another, as yet unknown, program. Don't clutter output with extraneous information. [...]»} ist im Zusammenhang mit Kommandozeilenprogrammen ebenfalls zu beachten. \textsc{Doug McIlroys} \textit{Pipe}-Idee von 1964 und Ken Thompsons Implementierung davon 1972 haben dazu geführt, dass in Unix praktisch jedes Programm mit jedem anderen Programm zusammenarbeiten kann, sofern diese zweite Maxime eingehalten wird.\footnote{Ken Thompson soll den Pipe-Mechanismus nach der ersten Verwendung als «mind-blowing» bezeichnet haben \cite[Kapitel 4.4, S. 68-69]{unix-history-memoir}.} Auf die weiteren Maximen soll an dieser Stelle nicht eingegangen werden.\footnote{\textsc{McIlroys} dritte Maxime, man solle Software idealerweise innert Wochen gestalten und erstellen, um sie früh ausprobieren zu können, wird diese Arbeit bereits aufgrund ihres Rahmens und des vorangegangenen Prototypen gerecht.}
+
+Jahre später ‒ und um etliche Erfahrung mit Unix reicher ‒ sammelte \textsc{Mike Gancarz} neun Grundsätze (\textit{tenets}) zur Unix-Philosophie, die hier zusammenfassend wiedergegeben werden \cite{unixphil}:
+
+TODO: auf Deutsch zusammenfassen und Beispiele machen
+
+\begin{enumerate}
+    \item \textit{Small is beautiful.}
+    \item \textit{Make each program do one thing well.}
+    \item \textit{Build a prototype as soon as possible.}
+    \item \textit{Choose portability over efficiency.}
+    \item \textit{Store numerical data in flat ASCII files.}
+    \item \textit{Use software leverage to your advantage.}
+    \item \textit{Use shell scripts to increase leverage and portability.}
+    \item \textit{Avoid captive user interfaces.}
+    \item \textit{Make every program a filter.}
+\end{enumerate}
+
+Für \texttt{px} werden diese Grundsätze folgendermassen angewendet:
+
+\begin{enumerate}
+    \item \textit{Small is beautiful.} \texttt{px} soll nicht jeden Anwendungsfall mit einem einfachen, benutzerfreundlichen Befehl abdecken, sondern mit folgender Doppelstrategie mit möglichst wenig Aufwand zu einem möglichst für alle Benutzergruppen befriedigenden Ergebnis kommen:
+    \begin{itemize}
+        \item Entwickler sollen eine möglichst weite hohe und feingranulare Abdeckung der API bekommen, indem \texttt{px} die HTTP-Methoden \texttt{GET}, \texttt{PUT}, \texttt{POST}, \texttt{PATCH} und \texttt{DELETE} anbietet, und quasi als PEAX-spezifisches \texttt{curl} mit transparentem Token-Handling fungiert.
+        \item Andere Benutzergruppen sollen Befehle bekommen, die sie häufig benötigen und ihnen einen hohen Nutzen bringen, wie z.B. das rekursive Hochladen von Verzeichnissen mit Dokumenten.
+    \end{itemize}
+    \item \textit{Make each program do one thing well.} \texttt{px} soll sich nicht um die Inhalte der Payloads (Dokumente, Metadaten) kümmern und diese validieren oder auswerten, sondern nur sicherstellen, dass die Payloads an den richtigen Ort mit den richtigen Optionen übertragen werden. Beispielsweise soll das Durchsuchen und Auswerten von JSON-Payloads \textit{nicht} in \texttt{px} eingebaut werden, da es hierfür mit \texttt{jq} bereits ein sehr mächtiges Tool gibt.
+    \item \textit{Build a prototype as soon as possible.} Ein minimaler Prototyp wurde bereits im Sommer entwickelt. Auf Basis dieses Prototypen wird nun \texttt{px} im Rahmen dieser Arbeit weiterentwickelt.
+    \item \textit{Choose portability over efficiency.} Mit \textsc{Go} wurde eine Programmiersprache gewählt, die das Kompilieren für andere Betriebssysteme und Architekturen \textit{out of the box} unterstützt.\footnote{Mit \textsc{Ken Thompson} und \textsc{Rob Pike} sind zwei der drei Schöpfer dieser Programmiersprache Unix-Pioniere erster und zweiter Stunde, was man ihr an verschiedensten Stellen anmerkt.}
+    \item \textit{Store numerical data in flat ASCII files.} Die unsicher verwahrten Tokens sollen in einer JSON-Datei namens \texttt{.px-tokens} im \texttt{HOME}-Verzeichnis des Benutzers abgelegt werden. JWT-Tokens sind numerische Daten im weitesten Sinn, sprich Base64-codiertes JSON. Zwar lässt sich JSON nicht wie eine «flache» ASCII-Datei komfortabel mit Tools wie \texttt{grep} und Konsorten bearbeiten, dafür bietet \textsc{Go} sehr komfortable \textit{Marshaling}-Mechanismen um Datenstrukturen aus und zu JSON zu serialisieren \cite[Kapitel 4.5]{gopl}. Wichtig ist, dass zur Speicherung der Tokens keine Binärdateien, sondern Textdateien \textit{im weitesten Sinn} (JSON) zum Einsatz kommen.
+    \item \textit{Use software leverage to your advantage.} Die Hebelwirkung von \textit{bestehender} Software soll für \texttt{px} auf verschiedenen Stufen genutzt werden. Die sehr umfassende und hochwertige Standard Library von \textsc{Go}, gerade das sehr mächtige Package \texttt{net/http} unterstützt das Ansprechen einer RESTful HTTP-API. Eine Fremdkomponente von Zalando (\texttt{go-keyring}) bietet plattformübergreifende Unterstützung für den nativen Keystore des Betriebssystems. Das sehr mächtige \texttt{go}-Tool kommt u.a. zur statischen Quellcodeanalyse (\texttt{go vet}), zum Testen (\texttt{go test}), Verwalten von Abhängigkeiten (\texttt{go mod}) und kompilieren (\texttt{go build}) zum Einsatz. In der Entwicklung werden Hilfstools wie \texttt{golint} (Quellcodeanalyse), \texttt{goimports} (Formatierung von Code und Importieren von Packages) und \texttt{gopls} (automatische, Texteditor-unabhängige Code-Vervollständigung).
+    \item \textit{Use shell scripts to increase leverage and portability.} Die Teststrategie (siehe \secref{sec:testing-q2}) setzt stark auf Shell-Skripts zum Erreichen einer hohen Testabdeckung mit aussagekräftigen Tests. Die Skripts könnten auch dann noch verwendet werden, sollte \texttt{px} dereinst mit einer anderen Programmiersprache neu implementiert werden (siehe auch \secref{sec:decision-programming-language}).
+    \item \textit{Avoid captive user interfaces.} Grundsätzlich soll \texttt{px} interaktiv bedienbar und in Skripten verwendet werden können. So können Benutzername und Passwort per Kommandozeilenparameter mitgegeben werden, und werden nur interaktiv erfragt, falls ersteres unterlassen wird. Bei der Zwei-Faktor-Authentifizierung ist jedoch eine interaktive Eingabe vonnöten, da der SMS-Code zum Zeitpunkt der initialen Login-Anfrage noch nicht bekannt ist.\footnote{Mit einem One-Time Password würde dies theoretisch funktionieren, da die Codes jeweils vorweg für eine bestimmte Zeitspanne gültig sind. Der Nutzen hiervon ist jedoch äusserst gering, da der Benutzer ja doch am Terminal sitzen muss, um den Code \textit{vor} der Ausführung von \texttt{px} einzugeben.}
+    \item \textit{Make every program a filter.} \texttt{px} soll keine unnötigen Ausgaben machen und nur Nutzdaten auf \texttt{stdout} ausgeben. Werden Vollzugs- und Erfolgsmeldungen benötigt, sollen diese per speziellem Parameter verlangt und nach \texttt{stderr} ausgegeben werden (siehe auch die Diskussion bei \secref{sec:feedback-sprint1}).
+\end{enumerate}
+
+\subsection{Swiss Army Knive}
+
 \subsection{Befehlsstruktur von \texttt{px}}
 
 TODO: swiss army knive \cite[p. 290]{gopl} für CLI
