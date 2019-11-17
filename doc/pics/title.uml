@@ -1,0 +1,27 @@
+@startuml
+
+skinparam monochrome true
+skinparam defaultFontName Lato
+skinparam dpi 150
+
+component "cmd/px.go" as cmd
+component tokenstore
+component requests
+component env
+component help
+component utils
+
+cmd --> tokenstore
+cmd --> requests
+cmd --> env
+cmd ---> help
+cmd --> utils
+
+help -> env
+
+requests -> env
+requests -> tokenstore
+
+tokenstore --> utils
+
+@enduml
