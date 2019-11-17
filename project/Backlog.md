@@ -345,16 +345,93 @@ Akzeptanzkriterien:
     - `ci-px-login-logout-test.sh`: für `login` und `logout`
 - Für den Negativtest wurde jeweils das Flag `-v`/`-verbose` beim Aufruf im Testskript weggelassen. Nachdem das Flag hinzugefügt wurde, liefen die Tests durch.
 
+# 11: Verbesserung der Quellcodedokumentation
+
+Als Entwickler möchte ich Dokumentationskommentare zu allen exportierten Elementen (Datentypen, Funktionen/Methoden usw.) haben, damit die Schnittstellen besser verständlich und anderen Entwicklern einfacher zu erläutern sind.
+
+Akzeptanzkriterien:
+
+1. Die Kommentare sollen den den [Best Practices](https://blog.golang.org/godoc-documenting-go-code) entsprechen.
+2. Das Werkzeug `go lint` soll über die ganze Codebasis von `px` keine Beanstandungen im Bezug auf undokumentierte, exporte Elemente mehr machen.
+3. Dieser Zustand ist auch in Zukunft am Ende eines jeden Sprints herzustellen. Die Aufwände für das Erstellen der entsprechenden Kommentare fliesst jeweils in die User Story ein, die neue exportierte (d.h. zu kommentierende) Elemente zur Folge hat.
+
+# 12: Einliefern von Dokumenten per Agent API
+
+Als Benutzer der Agent API möchte ich ein einzelnes Dokument mitsamt Metadaten einliefern können, um so Testdaten für verschiedene Benutzer erstellen zu können.
+
+Akzeptanzkriterien:
+
+1. Es sollen alle Dateiformate unterstützt werden, welche von der Delivery-Schnittstelle zugelassen sind.
+2. Die Metadaten werden als JSON-Datenstruktur aus einer separaten Datei mitgegeben.
+3. Der Befehl zur Einlieferung von Dokumenten soll `px deliver` heissen.
+
+# 13: Generische `POST`-Schnittstelle
+
+Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels `POST`-Methode ansprechen können, damit ich Ressourcen auf dem PEAX-Portal erstellen kann.
+
+Akzeptanzkriterien:
+
+1. Der angegebene Ressourcenpfad wird automatisch anhand der Umgebungsinformationen zu einer URL ergänzt.
+2. Es können Payloads verschiedener Formate mitgegeben werden (`JSON`, `PDF`, usw.).
+3. Der Payload soll als separate Datei angegeben werden können.
+4. Es muss möglich sein Multipart-Requests mit mehreren Payloads abzusetzen.
+5. Antworten, die einen Erfolg signalisieren, sollen auf `stderr` ausgegeben werden, wenn das Flag `-v`/`-verbose` spezifiziert worden ist.
+6. Antworten, die einen Fehler signalisieren, sollen immer auf `stderr` ausgegeben werden.
+7. Der Befehl soll `px post` heissen.
+
+# 14: Generische `PUT`-Schnittstelle
+
+Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels `PUT`-Methode ansprechen können, damit ich bestehende Ressourcen auf dem PEAX-Portal ersetzen kann.
+
+Akzeptanzkriterien:
+
+1. Der angegebene Ressourcenpfad wird automatisch anhand der Umgebungsinformationen zu einer URL ergänzt.
+2. Es können Payloads verschiedener Formate mitgegeben werden (`JSON`, `PDF`, usw.).
+3. Der Payload soll als separate Datei angegeben werden können.
+4. Es muss möglich sein Multipart-Requests mit mehreren Payloads abzusetzen.
+5. Antworten, die einen Erfolg signalisieren, sollen auf `stderr` ausgegeben werden, wenn das Flag `-v`/`-verbose` spezifiziert worden ist.
+6. Antworten, die einen Fehler signalisieren, sollen immer auf `stderr` ausgegeben werden.
+7. Der Befehl soll `px put` heissen.
+
+# 15: Generische `PATCH`-Schnittstelle
+
+Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels `PATCH`-Methode ansprechen können, damit ich Ressourcen auf dem PEAX-Portal partiell/feingranular aktualisieren kann.
+
+Akzeptanzkriterien:
+
+1. Der angegebene Ressourcenpfad wird automatisch anhand der Umgebungsinformationen zu einer URL ergänzt.
+2. Es können `JSON`-Payloads gemäss RFC6902 mitgegeben werden, wobei der Payload lokal nicht überprüft werden muss.
+3. Der Payload soll als separate Datei angegeben werden können.
+4. Antworten, die einen Erfolg signalisieren, sollen auf `stderr` ausgegeben werden, wenn das Flag `-v`/`-verbose` spezifiziert worden ist.
+5. Antworten, die einen Fehler signalisieren, sollen immer auf `stderr` ausgegeben werden.
+6. Der Befehl soll `px patch` heissen.
+
+# 16: Generische `DELETE`-Schnittstelle
+
+Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels `DELETE`-Methode ansprechen können, damit ich Ressourcen auf dem PEAX-Portal entfernen kann.
+
+Akzeptanzkriterien:
+
+1. Der angegebene Ressourcenpfad wird automatisch anhand der Umgebungsinformationen zu einer URL ergänzt.
+2. Es soll _kein_ Payload mitgegeben werden können.
+3. Antworten, die einen Erfolg signalisieren, sollen auf `stderr` ausgegeben werden, wenn das Flag `-v`/`-verbose` spezifiziert worden ist.
+4. Antworten, die einen Fehler signalisieren, sollen immer auf `stderr` ausgegeben werden.
+5. Der Befehl soll `px delete` heissen.
+
+# 17: Rekursives Hochladen von Dokument-Ordnern
+
+Als Benutzer der User API möchte ich einen lokale Ordnstruktur, die Dokumente beinhaltet, mit einem Befehl hochladen können, sodass alle in dieser Ordnerstruktur enthaltenen Dokumente im Upload-Bereich des PEAX-Portals auftauchen.
+
+Akzeptanzkriterien:
+
+1. Es soll der bereits bestehende Befehl `px upload` um ein `-r`/`-recursive`-Flag ergänzt werden, der als Parameter ein Verzeichnis erwartet.
+2. Es sollen sämtliche in diesem Ordner (und dessen Unterordner beliebiger Tiefe) enthaltenen Dateien hochgeladen werden.
+3. Scheitert das Hochladen einer Datei, soll dies entsprechend auf `stderr` inkl. relativem Dateipfad gemeldet werden.
+4. Die generierten UUIDs der erfolgreich erstellten Dateien sollen auf `stdout` ausgegeben werden.
+5. Optional: Mit dem Parameter `-l`/`-log`, der ein Dateiname erwartet, wird ein Protokoll im `JSON`-Format geschrieben, das den Erfolg/Misserfolg für jede Datei (mit absolutem Pfad) angibt. Im Erfolgsfall enthält der Eintrag die generierte UUID des Dokuments, im Fehlerfall eine entsprechende Fehlermeldung.
+
 # Bugs
 
-## Bug 1: Interaktive Eingabe auf Windows funktioniert nicht
+## 1: Interaktive Eingabe auf Windows funktioniert nicht
 
 - Tests auf Windows ergaben, dass es derzeit nicht möglich ist, ein Password sicher (ohne Echo) über die Kommandozeile einzugeben. Recherchen haben ergeben, dass es in diesem Bereich derzeit einen [offenen Bug](https://github.com/golang/go/issues/34461) gibt. Als Workaround wird bis zur Fehlerkorrektur auf die sichere Passworteingabe verzichtet. Mithilfe eines [Build Tags](https://golang.org/pkg/go/build/#hdr-Build_Constraints) konnte dieser Workaround auf Windows eingeschränkt werden, sodass auf macOS und Linux weiterhin die sichere Passworteingabe zum Einsatz kommt.
-
-### Notizen
-
-- TODO
-
-### Testprotokoll
-
-- TODO
