@@ -346,7 +346,7 @@ Akzeptanzkriterien:
     - `ci-px-login-logout-test.sh`: für `login` und `logout`
 - Für den Negativtest wurde jeweils das Flag `-v`/`-verbose` beim Aufruf im Testskript weggelassen. Nachdem das Flag hinzugefügt wurde, liefen die Tests durch.
 
-# 11: Verbesserung der Quellcodedokumentation
+## 11: Verbesserung der Quellcodedokumentation
 
 Als Entwickler möchte ich Dokumentationskommentare zu allen exportierten Elementen (Datentypen, Funktionen/Methoden usw.) haben, damit die Schnittstellen besser verständlich und anderen Entwicklern einfacher zu erläutern sind.
 
@@ -356,7 +356,7 @@ Akzeptanzkriterien:
 2. Das Werkzeug `go lint` soll über die ganze Codebasis von `px` keine Beanstandungen im Bezug auf undokumentierte, exporte Elemente mehr machen.
 3. Dieser Zustand ist auch in Zukunft am Ende eines jeden Sprints herzustellen. Die Aufwände für das Erstellen der entsprechenden Kommentare fliesst jeweils in die User Story ein, die neue exportierte (d.h. zu kommentierende) Elemente zur Folge hat.
 
-# 12: Aktuelle Version ausgeben
+## 12: Aktuelle Version ausgeben
 
 Als Anwender möchte ich einen Befehl zur Verfügung haben, der die Version von `px` ausgibt, damit ich sehen kann, ob ich die aktuelle Version der Software verwende, und diese bei Rückmeldungen verwenden kann.
 
@@ -369,18 +369,18 @@ Akzeptanzkriterien:
 ### Notizen
 
 - Die jeweils aktulle Versionsangabe wird aus dem SCM mittels `git describe --tags` ermittelt.
-- Die unititialisierte, exportierte String-Variable `Version` in `cmd/px.go` wird mit dem Parameter `-ldflags="-X main.Version=$(git describe --tags --abbrev=0)` mit der jeweils aktuellen Versionsangabe initialisiert.
+- Die unititialisierte, exportierte String-Variable `Version` in `cmd/px.go` wird mit dem Parameter `-ldflags="-X main.Version=$(git describe --tags)` mit der jeweils aktuellen Versionsangabe initialisiert.
 - Die bestehenden Targets `build/mac/px`, `build/linux/px` und `build/windows/px.exe` werden im `Makefile` mit dem entsprechenden Parameter (als Variable `LDFLAGS`) ausgestattet.
 - Das Makefile wurde um ein zusätzliches Target `px` ergänzt, das eine ausführbare Version im aktuellen Arbeitszeichnis (für die jeweilige Plattform) mitsamt Versionsangaben erstellt. Andernfalls müsste zum Testen von `px version` jeweils `go run` mitsamt `-ldflags` aufgerufen werden.
 
 ### Testprotokoll
 
-- In einem Branch wird die Tag-Nummer jeweils um die Anzahl der Commits und die ersten Stellen des letzten Commit-Hashes ergänzt. Der Tag `v0.2.1.4-9-gdc83825` sagt etwa aus, dass es sich um Version 0.2.1 mit zusätzlichen neun Commits handelt, und nach dem Präfix `g` die ersten Stellen des letzten Commit-Hashes (`dc83825`, hexadezimal) stehen. Das ist nützlich für ad-hoc erstellte Zwischenreleases.
+- In einem Branch wird die Tag-Nummer jeweils um die Anzahl der Commits und die ersten sieben Stellen des letzten Commit-Hashes ergänzt. Der Tag `v0.2.4-9-gdc83825` sagt etwa aus, dass es sich um Version 0.2.4 mit zusätzlichen neun Commits handelt, und nach dem Präfix `g` die ersten sieben Stellen des letzten Commit-Hashes (`dc83825`, hexadezimal) stehen. Das ist nützlich für ad-hoc erstellte Zwischenreleases.
 - Im master-Branch wird nur die Tag-Nummer verwendet.
-- Das Testskript `ci-px-version.sh` überprüft, ob `px version` einen String zurückgibt, welcher dem regulären Ausdruck `^v[0-9]+\.[0-9]+\.[0-9]+(-[0-9]+-g[0-9a-fA-F]{8})?$` entspricht.
+- Das Testskript `ci-px-version.sh` überprüft, ob `px version` einen String zurückgibt, welcher dem regulären Ausdruck `^v[0-9]+\.[0-9]+\.[0-9]+(-[0-9]+-g[0-9a-fA-F]{7})?$` entspricht.
 - Der Build-Step der CI-Pipeline muss sicherstellen, dass die Versionsangaben ebenfalls mitkompiliert werden.
 
-# 13: Einliefern von Dokumenten per Agent API
+## 13: Einliefern von Dokumenten per Agent API
 
 Als Benutzer der Agent API möchte ich ein einzelnes Dokument mitsamt Metadaten einliefern können, um so Testdaten für verschiedene Benutzer erstellen zu können.
 
@@ -390,7 +390,7 @@ Akzeptanzkriterien:
 2. Die Metadaten werden als JSON-Datenstruktur aus einer separaten Datei mitgegeben.
 3. Der Befehl zur Einlieferung von Dokumenten soll `px deliver` heissen.
 
-# 14: Generische `POST`-Schnittstelle
+## 14: Generische `POST`-Schnittstelle
 
 Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels `POST`-Methode ansprechen können, damit ich Ressourcen auf dem PEAX-Portal erstellen kann.
 
@@ -404,7 +404,7 @@ Akzeptanzkriterien:
 6. Antworten, die einen Fehler signalisieren, sollen immer auf `stderr` ausgegeben werden.
 7. Der Befehl soll `px post` heissen.
 
-# 15: Generische `PUT`-Schnittstelle
+## 15: Generische `PUT`-Schnittstelle
 
 Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels `PUT`-Methode ansprechen können, damit ich bestehende Ressourcen auf dem PEAX-Portal ersetzen kann.
 
@@ -418,7 +418,7 @@ Akzeptanzkriterien:
 6. Antworten, die einen Fehler signalisieren, sollen immer auf `stderr` ausgegeben werden.
 7. Der Befehl soll `px put` heissen.
 
-# 16: Generische `PATCH`-Schnittstelle
+## 16: Generische `PATCH`-Schnittstelle
 
 Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels `PATCH`-Methode ansprechen können, damit ich Ressourcen auf dem PEAX-Portal partiell/feingranular aktualisieren kann.
 
@@ -431,7 +431,7 @@ Akzeptanzkriterien:
 5. Antworten, die einen Fehler signalisieren, sollen immer auf `stderr` ausgegeben werden.
 6. Der Befehl soll `px patch` heissen.
 
-# 17: Generische `DELETE`-Schnittstelle
+## 17: Generische `DELETE`-Schnittstelle
 
 Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels `DELETE`-Methode ansprechen können, damit ich Ressourcen auf dem PEAX-Portal entfernen kann.
 
@@ -443,7 +443,7 @@ Akzeptanzkriterien:
 4. Antworten, die einen Fehler signalisieren, sollen immer auf `stderr` ausgegeben werden.
 5. Der Befehl soll `px delete` heissen.
 
-# 18: Rekursives Hochladen von Dokument-Ordnern
+## 18: Rekursives Hochladen von Dokument-Ordnern
 
 Als Benutzer der User API möchte ich einen lokale Ordnstruktur, die Dokumente beinhaltet, mit einem Befehl hochladen können, sodass alle in dieser Ordnerstruktur enthaltenen Dokumente im Upload-Bereich des PEAX-Portals auftauchen.
 
