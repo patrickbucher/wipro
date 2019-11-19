@@ -91,4 +91,5 @@ author: Patrick Bucher
 | So, 17.11.2019 |      2.5 | Projekt       | Backlog für Sprint 3 vorbereitet, User Stories spezifiziert            |
 | So, 17.11.2019 |      1.0 | Recherche     | Lektüre und Internetrecherche zur Unix-Philosophie                     |
 | So, 17.11.2019 |      2.0 | Dokumentation | Unix-Philosophie und ihre Anwendung auf `px` beschrieben               |
-|                | **98.0** | **Total**     |                                                                        |
+| Di, 19.11.2019 |      1.5 | Umsetzung     | Story 12: `px version`-Befehl mit Test umgesetzt                       |
+|                | **99.5** | **Total**     |                                                                        |

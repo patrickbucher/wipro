@@ -17,7 +17,7 @@ author: Patrick Bucher
 |  9 | Verbesserung der Hilfe-Funktion                | umgesetzt in Sprint 2 | 3            |
 | 10 | Vollzugsmeldungen mit `-v`/`-verbose`-Flag     | umgesetzt in Sprint 2 | 1            |
 | 11 | Verbesserung der Quellcodedokumentation        | geplant für Sprint 3  | 1            |
-| 12 | Aktuelle Version ausgeben                      | geplant für Sprint 3  | 1            |
+| 12 | Aktuelle Version ausgeben                      | umgesetzt             | 1            |
 | 13 | Einliefern von Dokumenten per Agent API        | geplant für Sprint 3  | 3            |
 | 14 | Generische `POST`-Schnittstelle                | geplant für Sprint 3  | 3            |
 | 15 | Generische `PUT`-Schnittstelle                 | geplant für Sprint 3  | 3            |
@@ -69,12 +69,12 @@ author: Patrick Bucher
     - 20 Story Points
     - 8 Stories (11-18)
 - Umgesetzt
-    - 0 Story Points
-    - 0 Stories
-    - 0 Stunden Arbeitsaufwand
+    - 1 Story Points
+    - 1 Story (12)
+    - 1.5 Stunden Arbeitsaufwand
 - Offen
-    - 20 Story Points
-    - 8 Stories
+    - 19 Story Points
+    - 7 Stories
 
 # User Stories
 
@@ -365,6 +365,20 @@ Akzeptanzkriterien:
 1. Die Versionierung soll gemäss [_Semantic Versioning_](https://semver.org) erfolgen.
 2. Die Version soll beim Kompilieren von Release-Artefakten automatisch aus dem SCM (`git`) verwendet werden.
 3. Die Versionsangabe soll über den Befehl `px version` in der Form `v0.3.1` ausgegeben werden.
+
+### Notizen
+
+- Die jeweils aktulle Versionsangabe wird aus dem SCM mittels `git describe --tags` ermittelt.
+- Die unititialisierte, exportierte String-Variable `Version` in `cmd/px.go` wird mit dem Parameter `-ldflags="-X main.Version=$(git describe --tags --abbrev=0)` mit der jeweils aktuellen Versionsangabe initialisiert.
+- Die bestehenden Targets `build/mac/px`, `build/linux/px` und `build/windows/px.exe` werden im `Makefile` mit dem entsprechenden Parameter (als Variable `LDFLAGS`) ausgestattet.
+- Das Makefile wurde um ein zusätzliches Target `px` ergänzt, das eine ausführbare Version im aktuellen Arbeitszeichnis (für die jeweilige Plattform) mitsamt Versionsangaben erstellt. Andernfalls müsste zum Testen von `px version` jeweils `go run` mitsamt `-ldflags` aufgerufen werden.
+
+### Testprotokoll
+
+- In einem Branch wird die Tag-Nummer jeweils um die Anzahl der Commits und die ersten Stellen des letzten Commit-Hashes ergänzt. Der Tag `v0.2.1.4-9-gdc83825` sagt etwa aus, dass es sich um Version 0.2.1 mit zusätzlichen neun Commits handelt, und nach dem Präfix `g` die ersten Stellen des letzten Commit-Hashes (`dc83825`, hexadezimal) stehen. Das ist nützlich für ad-hoc erstellte Zwischenreleases.
+- Im master-Branch wird nur die Tag-Nummer verwendet.
+- Das Testskript `ci-px-version.sh` überprüft, ob `px version` einen String zurückgibt, welcher dem regulären Ausdruck `^v[0-9]+\.[0-9]+\.[0-9]+(-[0-9]+-g[0-9a-fA-F]{8})?$` entspricht.
+- Der Build-Step der CI-Pipeline muss sicherstellen, dass die Versionsangaben ebenfalls mitkompiliert werden.
 
 # 13: Einliefern von Dokumenten per Agent API
 
