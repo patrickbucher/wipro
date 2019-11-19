@@ -411,13 +411,30 @@ Akzeptanzkriterien:
 
 ## Story 11: Verbesserung der Quellcodedokumentation
 
-Als Entwickler möchte ich Dokumentationskommentare zu allen exportierten Elementen (Datentypen, Funktionen/Methoden usw.) haben, damit die Schnittstellen besser verständlich und anderen Entwicklern einfacher zu erläutern sind.
+Als Entwickler möchte ich Dokumentationskommentare zu allen exportierten
+Elementen (Datentypen, Funktionen/Methoden usw.) haben, damit die
+Schnittstellen besser verständlich und anderen Entwicklern einfacher zu
+erläutern sind.
 
 Akzeptanzkriterien:
 
-1. Die Kommentare sollen den den [Best Practices](https://blog.golang.org/godoc-documenting-go-code) entsprechen.
-2. Das Werkzeug `go lint` soll über die ganze Codebasis von `px` keine Beanstandungen im Bezug auf undokumentierte, exporte Elemente mehr machen.
-3. Dieser Zustand ist auch in Zukunft am Ende eines jeden Sprints herzustellen. Die Aufwände für das Erstellen der entsprechenden Kommentare fliesst jeweils in die User Story ein, die neue exportierte (d.h. zu kommentierende) Elemente zur Folge hat.
+1. Die Kommentare sollen den den [Best
+   Practices](https://blog.golang.org/godoc-documenting-go-code) entsprechen.
+2. Das Werkzeug `go lint` soll über die ganze Codebasis von `px` keine
+   Beanstandungen im Bezug auf undokumentierte, exporte Elemente mehr machen.
+3. Dieser Zustand ist auch in Zukunft am Ende eines jeden Sprints herzustellen.
+   Die Aufwände für das Erstellen der entsprechenden Kommentare fliesst jeweils
+   in die User Story ein, die neue exportierte (d.h. zu kommentierende)
+   Elemente zur Folge hat.
+
+### Notizen
+
+- Das `Makefile` wurde um das Target `lint` erweitert, das den Go-Linter für
+  das ganze Projekt aufruft.
+
+### Testprotokoll
+
+- Der Go-Linter beanstandete zunächst 71 fehlende Kommentare.
 
 ## Story 12: Aktuelle Version ausgeben
 

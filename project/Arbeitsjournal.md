@@ -94,4 +94,5 @@ author: Patrick Bucher
 | Di, 19.11.2019 |       1.5 | Umsetzung     | Story 12: `px version`-Befehl mit Test umgesetzt                       |
 | Di, 19.11.2019 |       0.5 | Dokumentation | Weitere Rückmeldungen von Arbeitskollegen verarbeitet/kommentiert      |
 | Di, 19.11.2019 |       1.5 | Dokumentation | Umsetzungsnotizen ausformuliert; Sprintübersicht aufgearbeitet         |
-|                | **101.5** | **Total**     |                                                                        |
+| Di, 19.11.2019 |       0.5 | Umsetzung     | Story 11: Erste Analyse der fehlenden Quellcodedokumentation           |
+|                | **102.0** | **Total**     |                                                                        |
