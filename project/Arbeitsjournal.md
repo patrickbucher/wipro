@@ -93,4 +93,5 @@ author: Patrick Bucher
 | So, 17.11.2019 |       2.0 | Dokumentation | Unix-Philosophie und ihre Anwendung auf `px` beschrieben               |
 | Di, 19.11.2019 |       1.5 | Umsetzung     | Story 12: `px version`-Befehl mit Test umgesetzt                       |
 | Di, 19.11.2019 |       0.5 | Dokumentation | Weitere Rückmeldungen von Arbeitskollegen verarbeitet/kommentiert      |
-|                | **100.0** | **Total**     |                                                                        |
+| Di, 19.11.2019 |       1.5 | Dokumentation | Umsetzungsnotizen ausformuliert; Sprintübersicht aufgearbeitet         |
+|                | **101.5** | **Total**     |                                                                        |
