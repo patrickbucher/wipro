@@ -17,7 +17,7 @@ author: Patrick Bucher
 |  9 | Verbesserung der Hilfe-Funktion                | umgesetzt in Sprint 2 | 3            |
 | 10 | Vollzugsmeldungen mit `-v`/`-verbose`-Flag     | umgesetzt in Sprint 2 | 1            |
 | 11 | Verbesserung der Quellcodedokumentation        | geplant für Sprint 3  | 1            |
-| 12 | Aktuelle Version ausgeben                      | umgesetzt             | 1            |
+| 12 | Aktuelle Version ausgeben                      | umgesetzt in Sprint 3 | 1            |
 | 13 | Einliefern von Dokumenten per Agent API        | geplant für Sprint 3  | 3            |
 | 14 | Generische `POST`-Schnittstelle                | geplant für Sprint 3  | 3            |
 | 15 | Generische `PUT`-Schnittstelle                 | geplant für Sprint 3  | 3            |
@@ -37,187 +37,250 @@ author: Patrick Bucher
 
 # Sprints
 
-## Sprint 1
-
-- Eingeplant
-    - 20 Story Points
-    - 6 Stories (1-6)
-- Umgesetzt
-    - 14 Story Points
-    - 4 Stories (1-4)
-    - 14.5 Stunden Arbeitsaufwand
-- Offen
-    - 6 Story Points
-    - 2 Stories (5-6)
-
-## Sprint 2
-
-- Eingeplant
-    - 18 Story Points
-    - 6 Stories (5-10)
-- Umgesetzt
-    - 18 Story Points
-    - 6 Stories (5-10)
-    - 20.5 Stunden Arbeitsaufwand
-- Offen
-    - 0 Story Points
-    - 0 Stories
-
-## Sprint 3
-
-- Eingeplant
-    - 20 Story Points
-    - 8 Stories (11-18)
-- Umgesetzt
-    - 1 Story Points
-    - 1 Story (12)
-    - 1.5 Stunden Arbeitsaufwand
-- Offen
-    - 19 Story Points
-    - 7 Stories
+| Sprint | Stories geplant  | Stories umgesetzt | Aufwand | Stories offen        | h/SP |
+|-------:|------------------|-------------------|--------:|----------------------|-----:|
+|      1 | 6 (1-6), 20 SP   | 4 (1-4), 14 SP    |   14.5h | 2 (5-6), 6 SP        | 1.05 |
+|      2 | 6 (5-10), 18 SP  | 6 (5-10), 18 SP   |   20.5h | 0                    | 1.15 |
+|      3 | 8 (11.18), 20 SP | 1 (12), 1 SP      |    1.5h | 7 (11, 13-18), 19 SP | 1.50 |
 
 # User Stories
 
-Die User Stories haben drei Grössen: S (small: 1 Story Point), M (medium: 3 Story Points) und L (large: 5 Story Points). Diese Grössen dienen zur relativen Einschätzung der Story-Grössen zueinander, und sollen nicht in eine Stundenplanung heruntergerechnet werden. Vielmehr sollen sie dazu dienen, übergrosse Stories als solche zu erkennen, um diese herunterbrechen zu können. Am Ende eines jeden Sprints soll eingeschätzt werden, wie viele Story Points ungefähr machbar sind.
+Die User Stories haben drei Grössen: S (small: 1 Story Point), M (medium: 3
+Story Points) und L (large: 5 Story Points). Diese Grössen dienen zur relativen
+Einschätzung der Story-Grössen zueinander, und sollen nicht in eine
+Stundenplanung heruntergerechnet werden. Vielmehr sollen sie dazu dienen,
+übergrosse Stories als solche zu erkennen, um diese herunterbrechen zu können.
+Am Ende eines jeden Sprints soll eingeschätzt werden, wie viele Story Points
+ungefähr machbar sind.
 
-## 1: Konfiguration sämtlicher Umgebungen
+## Story 1: Konfiguration sämtlicher Umgebungen
 
-Als Entwickler möchte ich sämtliche relevanten PEAX-Umgebungen vorkonfiguriert haben, damit diese dem Nutzer zur Verfügung gestellt werden können.
-
-Akzeptanzkriterien:
-
-1. Es sollen die Umgebungen `dev`, `test`, `devpatch`, `testpatch`, `stage`, `prod`, `perf` und `prototype` zur Verfügung stehen.
-2. Für jede Umgebung muss eine erreichbare URL zum jeweiligen Identity Provider und zu den relevanten APIs (User API, Admin API, Agent API) automatisch generiert werden können.
-
-### Testprotokoll
-
-1. automatisiert: `env_test.go`
-2. manuell: Login auf verschiedenen Umgebungen (nicht alle, perf/prototype sind heruntergefahren, prod benötigt 2FA) erfolgreich
-    1. login vor Registrierung: 401
-    2. login nach Registrierung/vor Verifizierung: 403
-    3. login nach Verifizierung: 200
-
-### Notizen
-
-- table-driven test design (gopl p. 306)
-- Ausnahme: `prod`-Umgebung (via PEAX-Subdomains, issuer bei OAuth-Tokens relevant, siehe Mobile App)
-- Aufwand: ca. 1 Stunde
-
-## 2: Erweiterung der CI-Pipeline
-
-Als Entwickler möchte ich `px` in Skripts einbauen können, welche anschliessend in der CI-Pipeline berücksichtigt, d.h. ausgeführt werden.
+Als Entwickler möchte ich sämtliche relevanten PEAX-Umgebungen vorkonfiguriert
+haben, damit diese dem Nutzer zur Verfügung gestellt werden können.
 
 Akzeptanzkriterien:
 
-1. Der Ausführungsschritt `script` soll nur dann ausgeführt werden, wenn die vorherigen Schritte `build` und `test` erfolgreich waren.
-2. Um der Pipeline ein weiteres Skript hinzufügen zu können, soll die neu erstellte Skriptdatei nur an einer einzigen Stelle (Konfigurationsdatei) hinzugefügt werden müssen.
-
-### Testprotokoll
-
-- zunächst Skript erstellt, das die anderen Skripts ausführt
-- ein scheiterndes und ein durchlaufendes Skript erstellt und in ersterem referenziert
-- Pipeline für GitLab konfiguriert, Test erfolgreich gescheitert, d.h. scheiterndes Skript hat die Pipeline wie gewünscht zum Abbruch gebracht
-- scheiterndes Skript aus der Liste entfernt, Pipelien lief nun durch
-- Artefakt kompilieren und dem Skript zur Verfügung stellen
-- Minimaltest mit `px help` durchführen
-- Login-Testfall (mit Variablen via GitLab) erstellt
-- gescheiterte Versuche mit `px login` gaben Status 0 zurück, musste korrigiert werden
-- Login-Skript hat schliesslich wie gewünscht funktioniert
+1. Es sollen die Umgebungen `dev`, `test`, `devpatch`, `testpatch`, `stage`,
+   `prod`, `perf` und `prototype` zur Verfügung stehen.
+2. Für jede Umgebung muss eine erreichbare URL zum jeweiligen Identity Provider
+   und zu den relevanten APIs (User API, Admin API, Agent API) automatisch
+   generiert werden können.
 
 ### Notizen
 
-- viel Zeit aufgrund mangelhafter Bash-Kenntnisse verloren (iterieren über Liste von Skriptdateien)
-- TODO: erneut prüfen (Begründung wegen lokaler Ausführbarkeit sinnvoll)! Akzeptanzkriterium 1 über den Haufen geworfen: das Artefakt aus dem `build`-Schritt kann nicht im `script`-Schritt verwendet werden, darum eigene Kompilierung im `script`-Schritt; dafür höhere Performance
-- Aufwand schlussendlich überschätzt
-- Erweiterung: soll auch lokal ausgeführt werden müssen
-- dazu Verschiebung der Build-Logik von gitlab-ci zu Skript
-- optionale envvars-Datei (unter .gitignore) für lokale Ausführung
-- Bash-Code vereinfacht
+- Die verschiedenen Umgebungen sind in einer statischen Liste aufgezählt.
+- Die `init()`-Funktion des `env`-Moduls iteriert über diese Liste und
+  generiert die URLs und Realm-Bezeichnungen anhand des Umgebungsnamen.
+- Da bei `prod` benutzerfreundliche, kurze URLs verwendet werden, wird diese
+  Umgebung separat gehandhabt.
 
-## 3: Login mit Zwei-Faktor-Authentifizierung
+### Testprotokoll
 
-Als Benutzer möchte ich mich per Zwei-Faktor-Authentifizierung einloggen können, damit ich `px` auch mit entsprechend konfigurierten Zugängen verwenden kann.
+- Der Unit Test `env_test.go` ist gemäss _Table Driven Test Design_ (Donovan &
+  Kernighan, 2015) entwickelt worden.
+- Es wurde manuell mit Logins auf verschiedenen Umgebungen getestet.
+- Die Umgebungen `perf` und `prototype waren heruntergefahren und konnten so
+  nicht getestet werden.
+- Auf der Umgebung `prod` stehen derzeit nur Benutzer mit
+  Zwei-Faktor-Authentifizierung zur Verfügung. Da dies noch nicht umgesetzt
+- Die Antworten wiesen wie erwartet die folgenden HTTP-Stati auf:
+    1. Login vor der Registrierung: `401` (nicht möglich)
+    2. Login nach derRegistrierung bzw. vor der Verifizierung: `403` (nicht möglich)
+    3. Login nach der Verifizierung: `200` (erfolgreich)
+
+## Story 2: Erweiterung der CI-Pipeline
+
+Als Entwickler möchte ich `px` in Skripts einbauen können, welche anschliessend
+in der CI-Pipeline berücksichtigt, d.h. ausgeführt werden.
+
+Akzeptanzkriterien:
+
+1. Der Ausführungsschritt `script` soll nur dann ausgeführt werden, wenn die
+   vorherigen Schritte `build` und `test` erfolgreich waren.
+2. Um der Pipeline ein weiteres Skript hinzufügen zu können, soll die neu
+   erstellte Skriptdatei nur an einer einzigen Stelle (Konfigurationsdatei)
+   hinzugefügt werden müssen.
+
+### Notizen
+
+- Es wurde zunächst viel Zeit aufgrund mangelhafter Bash-Kenntnisse verloren,
+  v.a. beim Iterieren über Liste von Skriptdateinamen.
+- Das erste Akzeptanzkriterium wurde nur teilweise eingehalten. Zwar wird vor
+  den Testskripts immer ein Build ausgeführt, um ein entsprechendes
+  ausführbares Artefakt zur Verfügung zu haben, dies geschieht jedoch nicht
+  über den `build`-Schritt, der ein Artefakt für Windows, Linux und macOS
+  erstellt.
+- Nach Überwindung der Anfangsschwierigkeiten konnte die Pipeline sehr schnell
+  umgesetzt werden; der Aufwand wurde letztlich überschätzt.
+- Zusätzlich wurde die Pipeline lokal ausführbar gemacht, indem die
+  Umgebungsvariablen nicht zwingend von GitLab, sondern aus einem optionalen,
+  lokalen Skript namens `envvars.sh` geladen werden.
+- Der Shell-Code wurde zum Schluss überarbeitet und dabei vereinfacht.
+
+### Testprotokoll
+
+- Zunächst wurde ein Skript erstellt, das die anderen Skripts ausführt.
+- Es wurde je ein scheiterndes und ein durchlaufendes Skript erstellt und in
+  die Testliste des vorher genannten Skript eingetragen.
+- Die Pipeline wurde für GitLab (`.gitlab-ci`) konfiguriert. Der erste Test ist
+  erfolgreich gescheitert, d.h. das scheiternde Skript hat die Pipeline wie
+  gewünscht zum Abbruch gebracht.
+- Das scheiternde Skript wurde nun aus der Liste der auszuführenden Tests
+  entfernt, sodass die Pipelien nun durchlief.
+- Es wurde ein minimales, jedoch produktives Testskript für `px help` erstellt
+  und integriert.
+- Es wurde ein Login-Testfall erstellt, der die Credentials als
+  Umgebungsvariablen von der GitLab-Konfiguration bezieht.
+- Die gescheiterten Loginversuche mit `px login` gaben zunächst den Status 0
+  zurück, was korrigiert werden musste.
+- Das Login-Skript hat schliesslich wie gewünscht funktioniert.
+
+## Story 3: Login mit Zwei-Faktor-Authentifizierung
+
+Als Benutzer möchte ich mich per Zwei-Faktor-Authentifizierung einloggen
+können, damit ich `px` auch mit entsprechend konfigurierten Zugängen verwenden
+kann.
 
 Akzeptanzkriterien:
 
 1. Die Abfrage des zweiten Faktors soll interaktiv passieren.
-2. Es sollen die Authentifizierungsarten SMS und OTP (One-Time Password) unterstützt werden.
-3. Das Login soll bei entsprechend konfigurierten Benutzerkonti auch weiterhin ohne Zwei-Faktor-Authentifizierung funktionieren.
-
-### Testprotokoll
-
-- beim Refactoring traten immer wieder Build-Fehler auf, die jedoch einfach zu beheben waren
-- Logik-Fehler traten keine auf
-- HTTP Status 400 nach erstem Versuch, lange am Fehler analysirt
-- gemerkt, dass hier kein JSON unterstützt wird, sondern nur form-urlencoded (unnötiges Debugging auf Server)
-- schliesslich Erfolgreich
-- Login mit SMS und TOTP erfolgreich manuell getestet (automatischer Test nicht praktikabel)
-- Login ohne 2FA wird weiterhin via Pipeline getestet
+2. Es sollen die Authentifizierungsarten SMS und OTP (One-Time Password)
+   unterstützt werden.
+3. Das Login soll bei entsprechend konfigurierten Benutzerkonti auch weiterhin
+   ohne Zwei-Faktor-Authentifizierung funktionieren.
 
 ### Notizen
 
-- bevor die bestehende `login`-Funktion erweitert werden konnte, musste sie zunächst etwas aufgeräumt werden
-- hierzu wurden verschiedene Teilaspekte (interaktive Abfrage fehlender Credentials, Erstellen des Requests und Parsen der Response) in eigene Funktionen ausgelagert
-- die `script`-Pipeline zahlte sich bereits aus, zumal die `login()`-Funktion direkt in `cmd/px.go` implementiert war und darum nicht durch einen Unit Test abgedeckt war
-- das Refactoring wurde schliesslich ausgedehnt; es enstanden neue Submodule `px/tokenstore` und `px/utils`
-- es wurden neue Datenstrukturen erstellt, etwa für die Credentials (mit und ohne 2FA), und für den Login-Payload mit 2FA
-- Code neu organisieren war nötig und sinnvoll
+- Bevor die bestehende `login`-Funktion erweitert werden konnte, musste sie
+  zunächst etwas aufgeräumt werden.
+- Hierzu wurden verschiedene Teilaspekte (interaktive Abfrage fehlender
+  Credentials, Erstellen des Requests und Parsen der Response) in eigene
+  Funktionen ausgelagert.
+- Die `script`-Pipeline zahlte sich bereits aus, zumal die `login`-Funktion
+  direkt in `cmd/px.go` implementiert war und darum nicht durch einen Unit Test
+  abgedeckt werden konnte.
+- Das Refactoring wurde schliesslich ausgedehnt; es enstanden die neuen
+  Untermodule `px/tokenstore` und `px/utils`.
+- Es wurden neue Datenstrukturen erstellt, etwa für die Credentials (mit und
+  ohne 2FA), und für den Login-Payload mit 2FA
+- Der Code wurde neu organisieren, was  nötig und sinnvoll war.
 
-## 4: Sichere Verwahrung der Tokens
+### Testprotokoll
 
-Als Benutzer möchte ich, dass beim Login geholte Tokens sicher lokal verwahrt werden, damit ein Angreifer diese nicht auslesen kann.
+- Beim Refactoring traten immer wieder Build-Fehler auf, die jedoch einfach zu
+  beheben waren.
+- Logik-Fehler traten jedoch keine auf.
+- Login-Versuche führten zunächst zu einem HTTP-Fehlerstatus `400` (Bad
+  Request). Dieser Fehler wurde lange untersucht, einschliesslich einer
+  Debugging-Session auf dem IDP-Server.
+- Es stellte sich heraus, dass beim Login kein JSON-Payload unterstützt wird,
+  sondern nur `form-urlencoded`; die serverseitige Fehlersuche stellte sich als
+  sinnlos heraus.
+- Nach der Umstellung von `application/json` auf `form-urlencoded`
+  funktionierte die 2FA schliesslich problemlos.
+- Das Login wurde mit SMS und TOTP erfolgreich manuell getestet. Automatisierte
+  Tests sind aufgrund der interaktiven Eingabe inmitten des Prozesses nicht
+  möglich.
+- Das Login ohne 2FA wird weiterhin via Skript-Pipeline getestet.
+
+## Story 4: Sichere Verwahrung der Tokens
+
+Als Benutzer möchte ich, dass beim Login geholte Tokens sicher lokal verwahrt
+werden, damit ein Angreifer diese nicht auslesen kann.
 
 Akzeptanzkriterien:
 
-1. Die Credentials (Benutzername und Password) werden zu keinem Zeitpunkt lokal persistent abgespeichert.
-2. Refresh Tokens, die von der Produktivumgebung (`prod`) geholt werden, dürfen standardmässig nicht im Klartext abgespeichert werden.
-3. Access und Refresh Tokens von nicht-produktiven Umgebungen, sowie Access Tokens der Produktivumgebung, können lokal im Klartext abgespeichert werden, sofern dies der einfacheren Bedienbarkeit zuträglich ist (weniger Passwortabfragen durch den Keystore).
-4. Der Benutzer soll das Standardverhalten für die jeweiligen Umgebungen (produktiv: nur sichere Verwahrung; nicht-produktiv: Verwahrung im Klartext) mit den Kommandozeilenparametern `-safe` bzw. `-unsafe` übersteuern können.
-5. Die sichere Verwahrung der Tokens muss Windows, macOS und Linux funktionieren.
-6. Auf Systemen ohne GUI soll zumindest die unsichere Variante der Token-Verwahrung funktionieren.
-
-### Testprotokoll
-
-- der Unittest `env_test` wurde um das `Confidential`-Flag erweitert, wobei nur `prod` so konfiguriert ist
-- Tests auf `prod` mit Linux (Tokens schreiben) funktionierte nachdem Key Store korrekt konfiguriert wurde
-- der Skript-Test `ci-px-login.sh` wurde erweitert und in `ci-px-login-logout.sh` umbenannt, sodass nun auch das Logout getestet wird
-- nach dem Login wird mit `jq` geprüft, ob ein Feld `access_token` für die Umgebung `test` in `~/.px-tokens` vorhanden ist
-- nach dem Logout wird das Fehlen desselben geprüft
-- auf Windows sind die Tokens in der Anwendung _Credential Manager_ unter _Windows Credentials_ zu finden
-- auf macOS sind die Tokens in der Anwendung _Keychain Access_ unter _login_ zu finden
+1. Die Credentials (Benutzername und Password) werden zu keinem Zeitpunkt lokal
+   persistent abgespeichert.
+2. Refresh Tokens, die von der Produktivumgebung (`prod`) geholt werden, dürfen
+   standardmässig nicht im Klartext abgespeichert werden.
+3. Access und Refresh Tokens von nicht-produktiven Umgebungen, sowie Access
+   Tokens der Produktivumgebung, können lokal im Klartext abgespeichert werden,
+   sofern dies der einfacheren Bedienbarkeit zuträglich ist (weniger
+   Passwortabfragen durch den Keystore).
+4. Der Benutzer soll das Standardverhalten für die jeweiligen Umgebungen
+   (produktiv: nur sichere Verwahrung; nicht-produktiv: Verwahrung im Klartext)
+   mit den Kommandozeilenparametern `-safe` bzw. `-unsafe` übersteuern können.
+5. Die sichere Verwahrung der Tokens muss Windows, macOS und Linux
+   funktionieren.
+6. Auf Systemen ohne GUI soll zumindest die unsichere Variante der
+   Token-Verwahrung funktionieren.
 
 ### Notizen
 
-- die Umgebungskonfiguration wird um ein Flag (confidential) erweitert, dass besagt, ob für die jeweilige Umgebung die Tokens per default sicher oder unsicher verwahrt werden sollen
-- die Library `zalando/go-keyring` kann Schlüssel auf Linux, macOS und Windows sicher verwahren
-- die Konfiguration des nativen Key Stores ist für jede Plattform anders und wird im README des Projekts dokumentiert
-- bei einem Anwendungsfall wie dem Upload musste die Logik erweitert werden, sodass der sicher abgelegte Token für die Autorisierung verwendet wird
+- Die Umgebungskonfiguration wurde um ein Flag (`Confidential`) erweitert, das
+  besagt, ob für die jeweilige Umgebung die Tokens per default sicher oder
+  unsicher verwahrt werden sollen.
+- Die Library `zalando/go-keyring` kann Schlüssel auf Linux, macOS und Windows
+  sicher im nativen Keystore verwahren.
+- Die Konfiguration des nativen Keystores ist für jede Plattform anders und ist
+  im README des Projekts dokumentiert.
+- Bei einem Anwendungsfall wie dem Upload musste die Logik erweitert werden,
+  sodass der sicher abgelegte Token für die Autorisierung verwendet werden
+  kann.
+- Die Tokens sind jeweils mit einem Schlüssel der Form `px:Umgebung:TokenTyp`
+  abgelegt, z.B. `px:prod:accessToken` oder `px:test:refreshToken`.
 
-## 5: Handhabung mehrerer Umgebungen
+### Testprotokoll
 
-Als Benutzer möchte ich, dass `px` meine Befehle standardmässig gegen die Umgebung ausführt, auf der ich mich zuletzt eingeloggt habe, damit ich nicht immer eine Umgebung per Kommandozeilenparameter anwählen muss.
+- Der Unit Test `env_test.go` wurde um das `Confidential`-Flag erweitert, wobei
+  nur `prod` entsprechend konfiguriert ist.
+- Tests auf `prod` mit Linux (Tokens schreiben) funktionierten nachdem der
+  Keystore mithilfe von [Seahorse](https://wiki.gnome.org/Apps/Seahorse)
+  korrekt konfiguriert worden war.
+- Der Skript-Test `ci-px-login-test.sh` wurde erweitert und in
+  `ci-px-login-logout-test.sh` umbenannt, sodass fortan auch das Logout
+  getestet wird.
+- Darin wird nach dem Login mit `jq` geprüft, ob das Feld `access_token` für
+  die Umgebung `test` in `~/.px-tokens` vorhanden ist.
+- Nach dem Logout wird das Fehlen desselben geprüft
+- Auf Windows sind die Tokens in der Anwendung _Credential Manager_ unter
+  _Windows Credentials_ zu finden.
+- Auf macOS sind die Tokens in der Anwendung _Keychain Access_ unter _login_ zu
+  finden.
+
+## Story 5: Handhabung mehrerer Umgebungen
+
+Als Benutzer möchte ich, dass `px` meine Befehle standardmässig gegen die
+Umgebung ausführt, auf der ich mich zuletzt eingeloggt habe, damit ich nicht
+immer eine Umgebung per Kommandozeilenparameter anwählen muss.
 
 Akzeptanzkriterien:
 
-1. Es muss einen Unterbefehl geben, der mir die aktuelle Umgebung (d.h. die Umgebung, auf der sich der Benutzer zuletzt eingeloggt hat) anzeigt.
-2. Es muss einen Unterbefehl geben, womit eine Umgebung mit bereits aktivem Logging als die Standardumgebung gesetzt werden kann.
-3. Bei allen Befehlen, die gegen die API operieren, soll die Umgebung mit einem Kommandozeilenparameter `-e` bzw. `-env` spezifiziert werden können.
-4. Fehlt der Parameter `-e` bzw. `-env`, ist die Standardumgebung zu verwenden (zuletzt eingeloggt bzw. manuell als Standard gesetzt via `px env`).
+1. Es muss einen Unterbefehl geben, der mir die aktuelle Umgebung (d.h. die
+   Umgebung, auf der sich der Benutzer zuletzt eingeloggt hat) anzeigt.
+2. Es muss einen Unterbefehl geben, womit eine Umgebung mit bereits aktivem
+   Logging als die Standardumgebung gesetzt werden kann.
+3. Bei allen Befehlen, die gegen die API operieren, soll die Umgebung mit einem
+   Kommandozeilenparameter `-e` bzw. `-env` spezifiziert werden können.
+4. Fehlt der Parameter `-e` bzw. `-env`, ist die Standardumgebung zu verwenden
+   (zuletzt eingeloggt bzw. manuell als Standard gesetzt via `px env`).
 
 ### Notizen
 
-- Inspiriert durch `oc project` soll `px` einen Unterbefehl namens `env` enthalten. Wird er ohne Parameter aufgerufen, zeigt er die aktuelle Arbeitsumgebung an. Wird er mit Parameter aufgerufen, wird die aktuelle Arbeitsumgebung entsprechend gesetzt, sofern ein Login (Token Pair) dazu existiert.
-- Die Datenstruktur `TokenStore` wird dazu um ein Feld `DefaultEnvironment` erweitert, um die Umgebung über mehrere Aufrufe von `px` hinweg abzuspeichern.
-- Das Wechseln auf eine unbekannte Umgebung oder auf eine Umgebung ohne Tokens ist nicht zulässig.
+- Inspiriert durch `oc project` soll `px` einen Unterbefehl namens `env`
+  enthalten. Wird er ohne Parameter aufgerufen, zeigt er die aktuelle
+  Arbeitsumgebung an. Wird er mit Parameter aufgerufen, wird die aktuelle
+  Arbeitsumgebung entsprechend gesetzt, sofern ein Login (Token Pair) dazu
+  existiert.
+- Die Datenstruktur `TokenStore` wird dazu um ein Feld `DefaultEnvironment`
+  erweitert, um die Umgebung über mehrere Aufrufe von `px` hinweg
+  abzuspeichern.
+- Das Wechseln auf eine unbekannte Umgebung oder auf eine Umgebung ohne Tokens
+  ist nicht zulässig.
 
 ### Testprotokoll
 
-- Das Testskript `ci-px-env-test.sh` führt zunächst ein Login auf `test` aus und prüft dann direkt in `~/.px-tokens`, ob `test` die Standardumgebung ist.
-- Es wird zudem geprüft, ob `px env` die gleiche Umgebung ausgibt, die in `~/.px-tokens` als Standard abgelegt ist.
-- Um den Wechsel der Umgebung zu testen, musste ein weiteres Login eingerichtet werden.
-- Das Testskript `ci-px-env-test.sh` verwendet dieses zusätzliche Login, um zwischen den Umgebungen `test` und `dev` hin- und herzuspringen.
+- Das Testskript `ci-px-env-test.sh` führt zunächst ein Login auf `test` aus
+  und prüft dann direkt in `~/.px-tokens`, ob `test` die Standardumgebung ist.
+- Es wird zudem geprüft, ob `px env` die gleiche Umgebung ausgibt, die in
+  `~/.px-tokens` als Standard abgelegt ist.
+- Um den Wechsel der Umgebung zu testen, musste ein weiteres Login eingerichtet
+  werden.
+- Das Testskript `ci-px-env-test.sh` verwendet dieses zusätzliche Login, um
+  zwischen den Umgebungen `test` und `dev` hin- und herzuspringen.
 
-## 6: Generische `GET`-Schnittstelle
+## Story 6: Generische `GET`-Schnittstelle
 
 Als Benutzer möchte ich einen `get`-Befehl zur Verfügung haben, damit ich lesend auf meine Ressourcen zugreifen kann.
 
@@ -236,7 +299,7 @@ Akzeptanzkriterien:
 
 - Das Testskript `ci-px-get-test.sh` führt ein Login auf `test` aus und lädt sich die Ressource `document/api/v3/account/455.5462.5012.69/collection`. Das Ergebnis wird mittels Pipe an `jq` weitergeleitet, das scheitern würde, wäre der Payload kein korrektes JSON.
 
-## 7: Automatische Aktualisierung von Tokens
+## Story 7: Automatische Aktualisierung von Tokens
 
 Als Benutzer möchte ich dass ein Request, der aufgrund eines abgelaufenen Access Tokens scheitert, mit einem neuen Access Token erneut versucht wird, damit ich mich nicht ständig neu einloggen muss.
 
@@ -266,7 +329,7 @@ Akzeptanzkriterien:
 - Das Skript `standalone.sh` bietet Hilfestellungen für solche Standalone-Testskripts, indem etwa der Kompilierungsschritt und das Aufräumen nach dem Test vorgegeben wird.
 - Für den `get`-Befehl wurde ein testgetriebenes Vorgehen gewählt: `standalone-px-get-test.sh` wurde zuerst als Skript erstellt, das wie geplant scheiterte. Nachdem der `get`-Befehl auch mit Token Refresh arbeitete, funktionierte das Skript anschliessend.
 
-## 8: Login für Agent API
+## Story 8: Login für Agent API
 
 Als Benutzer möchte ich mich mit als Agent einloggen können, um anderen Benutzern Dokumente einliefern zu können.
 
@@ -290,7 +353,7 @@ Akzeptanzkriterien:
 - Aufgrund des Refactorings sind zunächst Unit Tests und Skrittests fehlgeschlagen. Das Zeichen `:` als Key-Separator zwischen Token Type (`agent`, `user`) und Umgebung funktioniert nicht mit dem Utility `jq` zusammen, das zur Extraktion der JSON-Datenstrukturen in der Test-Pipeline dient. Darum wurde es durch einen Underscore `_` ersetzt.
 - Der Skrittests `ci-px-agent-login-logout-test.sh` funktioniert analog zum Testfall `ci-px-login-logout-test.sh`, nur dass er die Befehle `agent-login` und `agent-logout` statt `login` bzw. `logout` verwendet.
 
-## 9: Verbesserung der Hilfe-Funktion
+## Story 9: Verbesserung der Hilfe-Funktion
 
 Als Benutzer möchte ich eine ausführliche Hilfefunktion für `px` als Ganzes wie auch für die einzelnen Subcommands haben.
 
@@ -315,7 +378,7 @@ Für zukünftige User Stories ist die Hilfefunktion entsprechend nachzuführen.
 - Das Testskript `ci-px-help.sh` ruft die Hilfefunktion auf und prüft, ob dies fehlerfrei abläuft. Das Skript wurde erweitert, sodass es über alle verfügbaren Befehle iteriert, und für jeden dieser Befehle die Hilfefunktion aufruft. Es wird geprüft, ob dies erstens fehlerfrei passiert, und ob der dabei zurückgelieferte Text zweitens kein leerer String ist.
 - Nach zahlreichen manuellen Tests wurden die Hilfetexte verbessert.
 
-## 10: Vollzugsmeldungen mit `-v`/`-verbose`-Flag
+## Story 10: Vollzugsmeldungen mit `-v`/`-verbose`-Flag
 
 Als Benutzer möchte ich Vollzugsmeldungen aktivieren können, damit ich sehen kann, ob ein Vorgang erfolgreich war.
 
@@ -346,17 +409,45 @@ Akzeptanzkriterien:
     - `ci-px-login-logout-test.sh`: für `login` und `logout`
 - Für den Negativtest wurde jeweils das Flag `-v`/`-verbose` beim Aufruf im Testskript weggelassen. Nachdem das Flag hinzugefügt wurde, liefen die Tests durch.
 
-## 11: Verbesserung der Quellcodedokumentation
+## Story 11: Verbesserung der Quellcodedokumentation
 
-Als Entwickler möchte ich Dokumentationskommentare zu allen exportierten Elementen (Datentypen, Funktionen/Methoden usw.) haben, damit die Schnittstellen besser verständlich und anderen Entwicklern einfacher zu erläutern sind.
+Als Entwickler möchte ich Dokumentationskommentare zu allen exportierten
+Elementen (Datentypen, Funktionen/Methoden usw.) haben, damit die
+Schnittstellen besser verständlich und anderen Entwicklern einfacher zu
+erläutern sind.
 
 Akzeptanzkriterien:
 
-1. Die Kommentare sollen den den [Best Practices](https://blog.golang.org/godoc-documenting-go-code) entsprechen.
-2. Das Werkzeug `go lint` soll über die ganze Codebasis von `px` keine Beanstandungen im Bezug auf undokumentierte, exporte Elemente mehr machen.
-3. Dieser Zustand ist auch in Zukunft am Ende eines jeden Sprints herzustellen. Die Aufwände für das Erstellen der entsprechenden Kommentare fliesst jeweils in die User Story ein, die neue exportierte (d.h. zu kommentierende) Elemente zur Folge hat.
+1. Die Kommentare sollen den den [Best
+   Practices](https://blog.golang.org/godoc-documenting-go-code) entsprechen.
+2. Das Werkzeug `go lint` soll über die ganze Codebasis von `px` keine
+   Beanstandungen im Bezug auf undokumentierte, exporte Elemente mehr machen.
+3. Dieser Zustand ist auch in Zukunft am Ende eines jeden Sprints herzustellen.
+   Die Aufwände für das Erstellen der entsprechenden Kommentare fliesst jeweils
+   in die User Story ein, die neue exportierte (d.h. zu kommentierende)
+   Elemente zur Folge hat.
 
-## 12: Aktuelle Version ausgeben
+### Notizen
+
+- Das `Makefile` wurde um das Target `lint` erweitert, das den Go-Linter für
+  das ganze Projekt aufruft.
+- Um das Package `px` zu dokumentieren, wurde eine neue Datei `px.go` im
+  Root-Verzeichnis des Projekts erstellt, die nur eine kommentierte
+  `package`-Deklaration enthält.
+- Bei Go wird jedes gross geschriebene Symbol exportiert, d.h. anderen Packages
+  zur Verfügung gestellt, was einen Dokumentationskommentar erfordert. Für jede
+  Beanstandung vom Go-Linter soll nicht einfach blind ein solcher Kommentar
+  erstellt, sondern geprüft werden, ob das Feld wirklich exportiert werden
+  muss. Eine kleinere externe Schnittstelle erfordert weniger Dokumentation.
+- Die `Command`-Datenstruktur und ihre Eigenschaften im `main`-Package werden
+  mittels Kleinschreibung nicht länger exportiert.
+
+### Testprotokoll
+
+- Der Go-Linter beanstandete zunächst 71 fehlende Kommentare.
+- Nach der ersten Session konnten die Beanstandungen auf 36 reduziert werden.
+
+## Story 12: Aktuelle Version ausgeben
 
 Als Anwender möchte ich einen Befehl zur Verfügung haben, der die Version von `px` ausgibt, damit ich sehen kann, ob ich die aktuelle Version der Software verwende, und diese bei Rückmeldungen verwenden kann.
 
@@ -380,7 +471,7 @@ Akzeptanzkriterien:
 - Das Testskript `ci-px-version.sh` überprüft, ob `px version` einen String zurückgibt, welcher dem regulären Ausdruck `^v[0-9]+\.[0-9]+\.[0-9]+(-[0-9]+-g[0-9a-fA-F]{7})?$` entspricht.
 - Der Build-Step der CI-Pipeline muss sicherstellen, dass die Versionsangaben ebenfalls mitkompiliert werden.
 
-## 13: Einliefern von Dokumenten per Agent API
+## Story 13: Einliefern von Dokumenten per Agent API
 
 Als Benutzer der Agent API möchte ich ein einzelnes Dokument mitsamt Metadaten einliefern können, um so Testdaten für verschiedene Benutzer erstellen zu können.
 
@@ -390,7 +481,7 @@ Akzeptanzkriterien:
 2. Die Metadaten werden als JSON-Datenstruktur aus einer separaten Datei mitgegeben.
 3. Der Befehl zur Einlieferung von Dokumenten soll `px deliver` heissen.
 
-## 14: Generische `POST`-Schnittstelle
+## Story 14: Generische `POST`-Schnittstelle
 
 Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels `POST`-Methode ansprechen können, damit ich Ressourcen auf dem PEAX-Portal erstellen kann.
 
@@ -404,7 +495,7 @@ Akzeptanzkriterien:
 6. Antworten, die einen Fehler signalisieren, sollen immer auf `stderr` ausgegeben werden.
 7. Der Befehl soll `px post` heissen.
 
-## 15: Generische `PUT`-Schnittstelle
+## Story 15: Generische `PUT`-Schnittstelle
 
 Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels `PUT`-Methode ansprechen können, damit ich bestehende Ressourcen auf dem PEAX-Portal ersetzen kann.
 
@@ -418,7 +509,7 @@ Akzeptanzkriterien:
 6. Antworten, die einen Fehler signalisieren, sollen immer auf `stderr` ausgegeben werden.
 7. Der Befehl soll `px put` heissen.
 
-## 16: Generische `PATCH`-Schnittstelle
+## Story 16: Generische `PATCH`-Schnittstelle
 
 Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels `PATCH`-Methode ansprechen können, damit ich Ressourcen auf dem PEAX-Portal partiell/feingranular aktualisieren kann.
 
@@ -431,7 +522,7 @@ Akzeptanzkriterien:
 5. Antworten, die einen Fehler signalisieren, sollen immer auf `stderr` ausgegeben werden.
 6. Der Befehl soll `px patch` heissen.
 
-## 17: Generische `DELETE`-Schnittstelle
+## Story 17: Generische `DELETE`-Schnittstelle
 
 Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels `DELETE`-Methode ansprechen können, damit ich Ressourcen auf dem PEAX-Portal entfernen kann.
 
@@ -443,7 +534,7 @@ Akzeptanzkriterien:
 4. Antworten, die einen Fehler signalisieren, sollen immer auf `stderr` ausgegeben werden.
 5. Der Befehl soll `px delete` heissen.
 
-## 18: Rekursives Hochladen von Dokument-Ordnern
+## Story 18: Rekursives Hochladen von Dokument-Ordnern
 
 Als Benutzer der User API möchte ich einen lokale Ordnstruktur, die Dokumente beinhaltet, mit einem Befehl hochladen können, sodass alle in dieser Ordnerstruktur enthaltenen Dokumente im Upload-Bereich des PEAX-Portals auftauchen.
 
