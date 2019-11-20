@@ -431,10 +431,21 @@ Akzeptanzkriterien:
 
 - Das `Makefile` wurde um das Target `lint` erweitert, das den Go-Linter für
   das ganze Projekt aufruft.
+- Um das Package `px` zu dokumentieren, wurde eine neue Datei `px.go` im
+  Root-Verzeichnis des Projekts erstellt, die nur eine kommentierte
+  `package`-Deklaration enthält.
+- Bei Go wird jedes gross geschriebene Symbol exportiert, d.h. anderen Packages
+  zur Verfügung gestellt, was einen Dokumentationskommentar erfordert. Für jede
+  Beanstandung vom Go-Linter soll nicht einfach blind ein solcher Kommentar
+  erstellt, sondern geprüft werden, ob das Feld wirklich exportiert werden
+  muss. Eine kleinere externe Schnittstelle erfordert weniger Dokumentation.
+- Die `Command`-Datenstruktur und ihre Eigenschaften im `main`-Package werden
+  mittels Kleinschreibung nicht länger exportiert.
 
 ### Testprotokoll
 
 - Der Go-Linter beanstandete zunächst 71 fehlende Kommentare.
+- Nach der ersten Session konnten die Beanstandungen auf 36 reduziert werden.
 
 ## Story 12: Aktuelle Version ausgeben
 
