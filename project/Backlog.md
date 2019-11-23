@@ -16,7 +16,7 @@ author: Patrick Bucher
 |  8 | Login für Agent API                            | umgesetzt in Sprint 2 | 3            |
 |  9 | Verbesserung der Hilfe-Funktion                | umgesetzt in Sprint 2 | 3            |
 | 10 | Vollzugsmeldungen mit `-v`/`-verbose`-Flag     | umgesetzt in Sprint 2 | 1            |
-| 11 | Verbesserung der Quellcodedokumentation        | geplant für Sprint 3  | 1            |
+| 11 | Verbesserung der Quellcodedokumentation        | umgesetzt in Sprint 3 | 1            |
 | 12 | Aktuelle Version ausgeben                      | umgesetzt in Sprint 3 | 1            |
 | 13 | Einliefern von Dokumenten per Agent API        | geplant für Sprint 3  | 3            |
 | 14 | Generische `POST`-Schnittstelle                | geplant für Sprint 3  | 3            |
@@ -34,14 +34,15 @@ author: Patrick Bucher
 |    | Fortschrittsanzeige bei längeren Vorgängen     | offen                 |
 |    | Ausgabe von Tokens                             | offen                 |
 |    | Inspektion von Tokens                          | offen                 |
+|    | Code für Login-Funktion vereinheitlichen       |                       |
 
 # Sprints
 
-| Sprint | Stories geplant  | Stories umgesetzt | Aufwand | Stories offen        | h/SP |
-|-------:|------------------|-------------------|--------:|----------------------|-----:|
-|      1 | 6 (1-6), 20 SP   | 4 (1-4), 14 SP    |   14.5h | 2 (5-6), 6 SP        | 1.05 |
-|      2 | 6 (5-10), 18 SP  | 6 (5-10), 18 SP   |   20.5h | 0                    | 1.15 |
-|      3 | 8 (11.18), 20 SP | 1 (12), 1 SP      |    1.5h | 7 (11, 13-18), 19 SP | 1.50 |
+| Sprint | Stories geplant  | Stories umgesetzt | Aufwand | Stories offen    | h/SP |
+|-------:|------------------|-------------------|--------:|------------------|-----:|
+|      1 | 6 (1-6), 20 SP   | 4 (1-4), 14 SP    |   14.5h | 2 (5-6), 6 SP    | 1.05 |
+|      2 | 6 (5-10), 18 SP  | 6 (5-10), 18 SP   |   20.5h | 0                | 1.15 |
+|      3 | 8 (11.18), 20 SP | 2 (11-12), 2 SP   |    4.5h | 6 (13-18), 19 SP | 2.25 |
 
 # User Stories
 
@@ -446,6 +447,8 @@ Akzeptanzkriterien:
 
 - Der Go-Linter beanstandete zunächst 71 fehlende Kommentare.
 - Nach der ersten Session konnten die Beanstandungen auf 36 reduziert werden.
+- Nach einer zweiten Session von ungefähr gleicher Länge hab es keine
+  Beanstandungen von `golint` mehr.
 
 ## Story 12: Aktuelle Version ausgeben
 

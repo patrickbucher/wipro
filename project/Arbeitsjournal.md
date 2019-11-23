@@ -96,4 +96,6 @@ author: Patrick Bucher
 | Di, 19.11.2019 |       1.5 | Dokumentation | Umsetzungsnotizen ausformuliert; Sprintübersicht aufgearbeitet         |
 | Di, 19.11.2019 |       0.5 | Umsetzung     | Story 11: Erste Analyse der fehlenden Quellcodedokumentation           |
 | Mi, 19.11.2019 |       1.0 | Umsetzung     | Story 11: Dokumentationskommentare verfasst (Probleme halbiert)        |
-|                | **103.0** | **Total**     |                                                                        |
+| Mi, 19.11.2019 |       1.0 | Projekt       | Demo und Diskussion in der Firma                                       |
+| Sa, 23.11.2019 |       1.5 | Umsetzung     | Story 11: Dokumentationskommentare verfasst (keine Probleme mehr)      |
+|                | **105.5** | **Total**     |                                                                        |
