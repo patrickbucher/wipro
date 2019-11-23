@@ -18,7 +18,7 @@ author: Patrick Bucher
 | 10 | Vollzugsmeldungen mit `-v`/`-verbose`-Flag     | umgesetzt in Sprint 2 | 1            |
 | 11 | Verbesserung der Quellcodedokumentation        | umgesetzt in Sprint 3 | 1            |
 | 12 | Aktuelle Version ausgeben                      | umgesetzt in Sprint 3 | 1            |
-| 13 | Einliefern von Dokumenten per Agent API        | geplant für Sprint 3  | 3            |
+| 13 | Einliefern von Dokumenten per Agent API        | umgesetzt in Sprint 3 | 3            |
 | 14 | Generische `POST`-Schnittstelle                | geplant für Sprint 3  | 3            |
 | 15 | Generische `PUT`-Schnittstelle                 | geplant für Sprint 3  | 3            |
 | 16 | Generische `PATCH`-Schnittstelle               | geplant für Sprint 3  | 3            |
@@ -42,7 +42,7 @@ author: Patrick Bucher
 |-------:|------------------|-------------------|--------:|------------------|-----:|
 |      1 | 6 (1-6), 20 SP   | 4 (1-4), 14 SP    |   14.5h | 2 (5-6), 6 SP    | 1.05 |
 |      2 | 6 (5-10), 18 SP  | 6 (5-10), 18 SP   |   20.5h | 0                | 1.15 |
-|      3 | 8 (11.18), 20 SP | 2 (11-12), 2 SP   |    4.5h | 6 (13-18), 19 SP | 2.25 |
+|      3 | 8 (11.18), 20 SP | 3 (11-12), 5 SP   |      9h | 5 (14-18), 16 SP | 1.80 |
 
 # User Stories
 
@@ -488,15 +488,36 @@ Akzeptanzkriterien:
 
 - Zunächst wurden die Hilfetexte verfasst, womit auch die Flags für den Befehl
   festgelegt wurden (`-m`/`-meta` für die JSON-Metadaten).
-- Der Token-Refresh-Mechanismus für die Agent-API war noch nicht implementiert.
+- Der Token-Refresh-Mechanismus für die Agent API war noch nicht implementiert.
   Dies nachzuholen erforderte verschiedene Erweiterungen am Token Store, etwa
   das Extrahieren/Abspeichern der `clientID`, da diese bei der Agent API im
   Gegensatz zur User API, wo sie immer `peax.portal` lautet, sich bei jedem
   Agent unterscheidet.
+- Verschiedene manuelle Tests mit einem gültigen Refresh Token ergaben, dass
+  die Aktualisierung eines Token Pairs für die Agent API mit dem
+  `grant_type=refresh_token` (derzeit?) nicht funktioniert. Da die automatische
+  Token-Aktualisierung kein Akzeptanzkriterium ist, und das Problem
+  serverseitig geprüft werden muss, soll diese Funktionalität vorerst offen
+  bleiben.
 
 ### Testprotokoll
 
-- 
+- Der automatische Token Refresh funktionierte zunächst nicht für die Agent API.
+- Der `delivery`-Endpoint gibt nach einer erfolgreichen Einlieferung nicht etwa
+  den HTTP-Status-Code `201 Created` sondern `200 OK` zurück, wodurch der erste
+  erfolgreiche Test als fehlerhaft interpretiert worden ist.
+- Beim Einliefern eines Dokuments kommt ein JSON-Payload mit einem `id`-Feld
+  zurück, das eine UUID ist. Eine UUID ist eine Sequenz von hexadezimalen
+  Ziffern, die in Gruppen der Grössen acht, vier, vier, vier und zwölf
+  auftreten; dazwischen steht ein Bindestrich. Das Testskript
+  `ci-px-deliver-test.sh` prüft, ob nach dem Einliefern eines Dokuments mit
+  Metadaten eine UUID dieser Form zurückkommt.
+- Beim ersten Ausführen der Testpipeline ist es passiert, dass der
+  Backend-Service `portal-document` nicht mehr verfügbar war, und die Tests
+  somit wohl fälschlicherweise gescheitert sind.
+- Der Token-Refresh-Mechanismus für die Agent API wurde mithilfe des
+  Testskripts `standalone-px-deliver-retry-test.sh` getestet, wobei zwischen
+  dem ersten und zweiten Versuch etwas mehr als fünf Minuten gewartet wird.
 
 ## Story 14: Generische `POST`-Schnittstelle
 
@@ -567,4 +588,17 @@ Akzeptanzkriterien:
 
 ## 1: Interaktive Eingabe auf Windows funktioniert nicht
 
-- Tests auf Windows ergaben, dass es derzeit nicht möglich ist, ein Password sicher (ohne Echo) über die Kommandozeile einzugeben. Recherchen haben ergeben, dass es in diesem Bereich derzeit einen [offenen Bug](https://github.com/golang/go/issues/34461) gibt. Als Workaround wird bis zur Fehlerkorrektur auf die sichere Passworteingabe verzichtet. Mithilfe eines [Build Tags](https://golang.org/pkg/go/build/#hdr-Build_Constraints) konnte dieser Workaround auf Windows eingeschränkt werden, sodass auf macOS und Linux weiterhin die sichere Passworteingabe zum Einsatz kommt.
+Tests auf Windows ergaben, dass es derzeit nicht möglich ist, ein Password
+sicher (ohne Echo) über die Kommandozeile einzugeben. Recherchen haben ergeben,
+dass es in diesem Bereich derzeit einen [offenen
+Bug](https://github.com/golang/go/issues/34461) gibt. Als Workaround wird bis
+zur Fehlerkorrektur auf die sichere Passworteingabe verzichtet. Mithilfe eines
+[Build Tags](https://golang.org/pkg/go/build/#hdr-Build_Constraints) konnte
+dieser Workaround auf Windows eingeschränkt werden, sodass auf macOS und Linux
+weiterhin die sichere Passworteingabe zum Einsatz kommt.
+
+## 2: Refresh-Mechanismus funktioniert nicht für Agent API
+
+Es ist derzeit nicht möglich, mit einem Refresh Token eines Agents einen neuen
+Access Token zu holen. Dieses Problem muss auf dem PEAX Identity Provider näher
+analysiert werden.
