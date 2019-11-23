@@ -484,6 +484,20 @@ Akzeptanzkriterien:
 2. Die Metadaten werden als JSON-Datenstruktur aus einer separaten Datei mitgegeben.
 3. Der Befehl zur Einlieferung von Dokumenten soll `px deliver` heissen.
 
+### Notizen
+
+- Zunächst wurden die Hilfetexte verfasst, womit auch die Flags für den Befehl
+  festgelegt wurden (`-m`/`-meta` für die JSON-Metadaten).
+- Der Token-Refresh-Mechanismus für die Agent-API war noch nicht implementiert.
+  Dies nachzuholen erforderte verschiedene Erweiterungen am Token Store, etwa
+  das Extrahieren/Abspeichern der `clientID`, da diese bei der Agent API im
+  Gegensatz zur User API, wo sie immer `peax.portal` lautet, sich bei jedem
+  Agent unterscheidet.
+
+### Testprotokoll
+
+- 
+
 ## Story 14: Generische `POST`-Schnittstelle
 
 Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels `POST`-Methode ansprechen können, damit ich Ressourcen auf dem PEAX-Portal erstellen kann.

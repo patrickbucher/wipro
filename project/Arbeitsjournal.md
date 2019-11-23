@@ -98,4 +98,5 @@ author: Patrick Bucher
 | Mi, 19.11.2019 |       1.0 | Umsetzung     | Story 11: Dokumentationskommentare verfasst (Probleme halbiert)        |
 | Mi, 19.11.2019 |       1.0 | Projekt       | Demo und Diskussion in der Firma                                       |
 | Sa, 23.11.2019 |       1.5 | Umsetzung     | Story 11: Dokumentationskommentare verfasst (keine Probleme mehr)      |
-|                | **105.5** | **Total**     |                                                                        |
+| Sa, 23.11.2019 |       2.5 | Umsetzung     | Story 13: Deliver-Schnittstelle implementiert                          |
+|                | **108.0** | **Total**     |                                                                        |
