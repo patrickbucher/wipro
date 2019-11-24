@@ -9,8 +9,8 @@ FNR>8 && $4 !~ /Total/ {
     domains[domain] += hours
 
     if (task ~ /^[[:space:]]*Story [0-9]+/) {
-        match(task, /(Story [0-9]+)/, matches)
-        story = matches[0]
+        match(task, /(Story ([0-9]+))/, matches)
+        story = int(matches[2])
         stories[story] += hours
     }
 }
@@ -22,8 +22,8 @@ END {
     }
     printf "%20s: %10.1f Stunden\n", "Total", total
     printf "\nStories:\n"
-    n = asorti(stories, storiesSorted)
+    n = asorti(stories, storiesSorted, "@ind_num_asc")
     for (i = 1; i <= n; i++) {
-        printf "%20s: %10.1f Stunden\n", storiesSorted[i], stories[storiesSorted[i]]
+        printf "%17s %2d: %10.1f Stunden\n", "Story", storiesSorted[i], stories[storiesSorted[i]]
     }
 }
