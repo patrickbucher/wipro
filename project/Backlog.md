@@ -19,7 +19,7 @@ author: Patrick Bucher
 | 11 | Verbesserung der Quellcodedokumentation        | umgesetzt in Sprint 3 | 1            |
 | 12 | Aktuelle Version ausgeben                      | umgesetzt in Sprint 3 | 1            |
 | 13 | Einliefern von Dokumenten per Agent API        | umgesetzt in Sprint 3 | 3            |
-| 14 | Generische `POST`-Schnittstelle                | geplant für Sprint 3  | 3            |
+| 14 | Generische `POST`-Schnittstelle                | umgesetzt in Sprint 3 | 3            |
 | 15 | Generische `PUT`-Schnittstelle                 | geplant für Sprint 3  | 3            |
 | 16 | Generische `PATCH`-Schnittstelle               | geplant für Sprint 3  | 3            |
 | 17 | Generische `DELETE`-Schnittstelle              | geplant für Sprint 3  | 1            |
@@ -35,6 +35,7 @@ author: Patrick Bucher
 |    | Ausgabe von Tokens                             | offen                 |
 |    | Inspektion von Tokens                          | offen                 |
 |    | Code für Login-Funktion vereinheitlichen       |                       |
+|    | Dokumente mit Metadaten hochladen              | offen                 |
 
 # Sprints
 
@@ -42,7 +43,7 @@ author: Patrick Bucher
 |-------:|------------------|-------------------|--------:|------------------|-----:|
 |      1 | 6 (1-6), 20 SP   | 4 (1-4), 14 SP    |   14.5h | 2 (5-6), 6 SP    | 1.05 |
 |      2 | 6 (5-10), 18 SP  | 6 (5-10), 18 SP   |   20.5h | 0                | 1.15 |
-|      3 | 8 (11.18), 20 SP | 3 (11-12), 5 SP   |      9h | 5 (14-18), 16 SP | 1.80 |
+|      3 | 8 (11.18), 20 SP | 4 (11-14), 8 SP   |   11.0h | 4 (15-18), 13 SP | 1.38 |
 
 # User Stories
 
@@ -518,20 +519,45 @@ Akzeptanzkriterien:
 - Der Token-Refresh-Mechanismus für die Agent API wurde mithilfe des
   Testskripts `standalone-px-deliver-retry-test.sh` getestet, wobei zwischen
   dem ersten und zweiten Versuch etwas mehr als fünf Minuten gewartet wird.
+- Das Testskript `ci-px-help-test.sh` wurde um den Aufruf `px help deliver`
+  erweitert.
 
 ## Story 14: Generische `POST`-Schnittstelle
 
-Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels `POST`-Methode ansprechen können, damit ich Ressourcen auf dem PEAX-Portal erstellen kann.
+Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels
+`POST`-Methode ansprechen können, damit ich Ressourcen auf dem PEAX-Portal
+erstellen kann.
 
 Akzeptanzkriterien:
 
-1. Der angegebene Ressourcenpfad wird automatisch anhand der Umgebungsinformationen zu einer URL ergänzt.
-2. Es können Payloads verschiedener Formate mitgegeben werden (`JSON`, `PDF`, usw.).
+1. Der angegebene Ressourcenpfad wird automatisch anhand der
+   Umgebungsinformationen zu einer URL ergänzt.
+2. Es können beliebige Payloads im JSON-Format angegeben werden.
 3. Der Payload soll als separate Datei angegeben werden können.
-4. Es muss möglich sein Multipart-Requests mit mehreren Payloads abzusetzen.
-5. Antworten, die einen Erfolg signalisieren, sollen auf `stderr` ausgegeben werden, wenn das Flag `-v`/`-verbose` spezifiziert worden ist.
-6. Antworten, die einen Fehler signalisieren, sollen immer auf `stderr` ausgegeben werden.
-7. Der Befehl soll `px post` heissen.
+4. Falls die Anfrage einen Payload zurückliefert, soll dieser auf `stdout`
+   ausgegeben werden.
+5. Der Befehl soll `px post` heissen.
+
+### Notizen
+
+- Wiederum wurde mit dem Erstellen der Hilfetexte begonnen.
+- Der Befehl wurde analog zu `px get` mit automatischem Erneuern der Tokens
+  umgesetzt.
+- Bei der Implementierung war kein Refactoring nötig. Die Codebasis scheint
+  somit in einem gut erweiterbaren Zustand zu sein.
+
+### Testprotokoll
+
+- Es wurde das Testskript `ci-px-post-test.sh` erstellt, das sich auf der
+  Umgebung `test` einloggt, dort eine neue Organisation erstellt, und sich
+  wieder ausloggt. Es wird mit `jq` geprüft, ob der Response-Payload valides
+  JSON ist.
+- Andere Endpoints, z.B. das Erstellen von Tags, wurden manuell getestet.
+  (Ressourcen wie Tags haben eindeutige Namen, d.h. mit dem gleichen Payload
+  kann die Ressource nur einmal erstellt werden, was für wiederholte,
+  automatisierte Test schlecht geeignet ist.)
+- Das Testskript `ci-px-help-test.sh` wurde um den Aufruf `px help post`
+  erweitert.
 
 ## Story 15: Generische `PUT`-Schnittstelle
 
