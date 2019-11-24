@@ -99,5 +99,6 @@ author: Patrick Bucher
 | Mi, 19.11.2019 |       1.0 | Projekt       | Demo und Diskussion in der Firma                                       |
 | Sa, 23.11.2019 |       1.5 | Umsetzung     | Story 11: Dokumentationskommentare verfasst (keine Probleme mehr)      |
 | Sa, 23.11.2019 |       4.5 | Umsetzung     | Story 13: `px deliver`-Befehl umgesetzt                                |
-| So, 24.11.2019 |       2.0 | Umsetzung     | Story 14: `px post`-Befehl umgesetzt
-|                | **112.0** | **Total**     |                                                                        |
+| So, 24.11.2019 |       2.0 | Umsetzung     | Story 14: `px post`-Befehl umgesetzt                                   |
+| So, 24.11.2019 |       1.0 | Recherche     | Endpoints und Payloads für `PUT`, `PATCH` und `DELETE` ermittelt       |
+|                | **113.0** | **Total**     |                                                                        |
