@@ -20,7 +20,7 @@ author: Patrick Bucher
 | 12 | Aktuelle Version ausgeben                      | umgesetzt in Sprint 3 | 1            |
 | 13 | Einliefern von Dokumenten per Agent API        | umgesetzt in Sprint 3 | 3            |
 | 14 | Generische `POST`-Schnittstelle                | umgesetzt in Sprint 3 | 3            |
-| 15 | Generische `PUT`-Schnittstelle                 | geplant für Sprint 3  | 3            |
+| 15 | Generische `PUT`-Schnittstelle                 | umgesetzt in Sprint 3 | 3            |
 | 16 | Generische `PATCH`-Schnittstelle               | geplant für Sprint 3  | 3            |
 | 17 | Generische `DELETE`-Schnittstelle              | geplant für Sprint 3  | 1            |
 | 18 | Rekursives Hochladen von Dokument-Ordnern      | geplant für Sprint 3  | 5            |
@@ -39,11 +39,11 @@ author: Patrick Bucher
 
 # Sprints
 
-| Sprint | Stories geplant  | Stories umgesetzt | Aufwand | Stories offen    | h/SP |
-|-------:|------------------|-------------------|--------:|------------------|-----:|
-|      1 | 6 (1-6), 20 SP   | 4 (1-4), 14 SP    |   14.5h | 2 (5-6), 6 SP    | 1.05 |
-|      2 | 6 (5-10), 18 SP  | 6 (5-10), 18 SP   |   20.5h | 0                | 1.15 |
-|      3 | 8 (11.18), 20 SP | 4 (11-14), 8 SP   |   11.0h | 4 (15-18), 13 SP | 1.38 |
+| Sprint | Stories geplant  | Stories umgesetzt | Aufwand | Stories offen   | h/SP |
+|-------:|------------------|-------------------|--------:|-----------------|-----:|
+|      1 | 6 (1-6), 20 SP   | 4 (1-4), 14 SP    |   14.5h | 2 (5-6), 6 SP   | 1.05 |
+|      2 | 6 (5-10), 18 SP  | 6 (5-10), 18 SP   |   20.5h | 0               | 1.15 |
+|      3 | 8 (11.18), 20 SP | 5 (11-15), 11 SP  |   12.0h | 3 (16-18), 9 SP | 1.09 |
 
 # User Stories
 
@@ -561,17 +561,49 @@ Akzeptanzkriterien:
 
 ## Story 15: Generische `PUT`-Schnittstelle
 
-Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels `PUT`-Methode ansprechen können, damit ich bestehende Ressourcen auf dem PEAX-Portal ersetzen kann.
+Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels
+`PUT`-Methode ansprechen können, damit ich bestehende Ressourcen auf dem
+PEAX-Portal ersetzen kann.
 
 Akzeptanzkriterien:
 
-1. Der angegebene Ressourcenpfad wird automatisch anhand der Umgebungsinformationen zu einer URL ergänzt.
-2. Es können Payloads verschiedener Formate mitgegeben werden (`JSON`, `PDF`, usw.).
+1. Der angegebene Ressourcenpfad wird automatisch anhand der
+   Umgebungsinformationen zu einer URL ergänzt.
+2. Es können Payloads verschiedener Formate mitgegeben werden (JSON, PNG usw.).
 3. Der Payload soll als separate Datei angegeben werden können.
-4. Es muss möglich sein Multipart-Requests mit mehreren Payloads abzusetzen.
-5. Antworten, die einen Erfolg signalisieren, sollen auf `stderr` ausgegeben werden, wenn das Flag `-v`/`-verbose` spezifiziert worden ist.
-6. Antworten, die einen Fehler signalisieren, sollen immer auf `stderr` ausgegeben werden.
-7. Der Befehl soll `px put` heissen.
+4. Der Befehl soll `px put` heissen.
+
+### Notizen
+
+- Die API von PEAX bietet nur sehr wenige Endpoints an, die `PUT` unterstützen.
+  Das einzige Beispiel, das auf Anhieb ermittelt werden konnte, ist die
+  Aktualisierung des Profilbildes. Da es sich hierbei nicht um JSON-Daten
+  handelt, sondern um ein Bild beliebigen Formats, muss der MIME-Type des
+  Payloads automatisch ermittelt werden. Hierzu wurde im Package `utils` eine
+  Funktion `utils.DetectContentType` entwickelt.
+- Zunächst wurde wieder der Hilfetext verfasst.
+- Der Befehl ist wie `get` und `post` mit automatischer Token-Erneuerung
+  umgesetzt worden.
+- Zusätzlich wurde eine Utility-Funktion `ReadFile` entwickelt, die einen
+  `io.ReadCloser` auf die angegebene Datei sowie den Content-Type zurückgibt.
+  Der `ReadCloser` hat den Vorteil, dass nicht die ganze Datei in den
+  Arbeitsspeicher gelesen werden muss.
+
+### Testprotokoll
+
+- Die Funktion `utils.DetectContentType` wird durch einen Unit Test abgedeckt.
+  Hierzu wurde zunächst mit GraphViz ein kleiner Graph erstellt (`graph.dot`),
+  woraus mithilfe von `dot` verschiedenste Formate generiert werden konnten:
+  GIF, JPEG, PDF, PNG und PostScript.
+- Der Testfall `TestDetectContentType` arbeitet eine Map ab, welche die
+  Dateipfade der generierten Grafiken zu ihrem manuell ermittelten Mime-Type
+  zuordnet. Für jede Iteration wird geprüft, ob für die jeweilige Datei der
+  passende Mime-Type ermittelt werden kann. Für GIF, JPG, PDF, PNG und
+  PostScript hat das auf Anhieb funktioniert.
+- Das Testskript `ci-px-put-test.sh` aktualisiert das Profilbild dreimal: im
+  PNG, im JPEG und schliesslich im GIF-Format.
+- Das Testskript `ci-px-help-test.sh` wurde um den Aufruf `px help put`
+  erweitert.
 
 ## Story 16: Generische `PATCH`-Schnittstelle
 

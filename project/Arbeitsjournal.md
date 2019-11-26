@@ -102,4 +102,6 @@ author: Patrick Bucher
 | So, 24.11.2019 |       2.0 | Umsetzung     | Story 14: `px post`-Befehl umgesetzt                                   |
 | So, 24.11.2019 |       1.0 | Recherche     | Endpoints und Payloads für `PUT`, `PATCH` und `DELETE` ermittelt       |
 | So, 24.11.2019 |       0.5 | Projekt       | AWK-Skript zur Auswertung von Aufwänden verbessert                     |
-|                | **113.5** | **Total**     |                                                                        |
+| Mo, 25.11.2019 |       1.0 | Umsetzung     | Story 15: Erkennung von Mime-Type                                      |
+| Di, 25.11.2019 |       1.0 | Umsetzung     | Story 15: `px put`-Befehl umgesetzt                                    |
+|                | **115.5** | **Total**     |                                                                        |
