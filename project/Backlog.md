@@ -21,7 +21,7 @@ author: Patrick Bucher
 | 13 | Einliefern von Dokumenten per Agent API        | umgesetzt in Sprint 3 | 3            |
 | 14 | Generische `POST`-Schnittstelle                | umgesetzt in Sprint 3 | 3            |
 | 15 | Generische `PUT`-Schnittstelle                 | umgesetzt in Sprint 3 | 3            |
-| 16 | Generische `PATCH`-Schnittstelle               | geplant für Sprint 3  | 3            |
+| 16 | Generische `PATCH`-Schnittstelle               | umgesetzt in Sprint 3 | 3            |
 | 17 | Generische `DELETE`-Schnittstelle              | geplant für Sprint 3  | 1            |
 | 18 | Rekursives Hochladen von Dokument-Ordnern      | geplant für Sprint 3  | 5            |
 |    | Verbesserung der Testabdeckung                 | zu spezifizieren      | 3            |
@@ -34,7 +34,7 @@ author: Patrick Bucher
 |    | Fortschrittsanzeige bei längeren Vorgängen     | offen                 |
 |    | Ausgabe von Tokens                             | offen                 |
 |    | Inspektion von Tokens                          | offen                 |
-|    | Code für Login-Funktion vereinheitlichen       |                       |
+|    | Code für Login-Funktion vereinheitlichen       | offen                 |
 |    | Dokumente mit Metadaten hochladen              | offen                 |
 
 # Sprints
@@ -43,7 +43,7 @@ author: Patrick Bucher
 |-------:|------------------|-------------------|--------:|-----------------|-----:|
 |      1 | 6 (1-6), 20 SP   | 4 (1-4), 14 SP    |   14.5h | 2 (5-6), 6 SP   | 1.05 |
 |      2 | 6 (5-10), 18 SP  | 6 (5-10), 18 SP   |   20.5h | 0               | 1.15 |
-|      3 | 8 (11.18), 20 SP | 5 (11-15), 11 SP  |   12.0h | 3 (16-18), 9 SP | 1.09 |
+|      3 | 8 (11.18), 20 SP | 6 (11-16), 14 SP  |   14.0h | 2 (17-18), 6 SP | 1.00 |
 
 # User Stories
 
@@ -607,16 +607,52 @@ Akzeptanzkriterien:
 
 ## Story 16: Generische `PATCH`-Schnittstelle
 
-Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels `PATCH`-Methode ansprechen können, damit ich Ressourcen auf dem PEAX-Portal partiell/feingranular aktualisieren kann.
+Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels
+`PATCH`-Methode ansprechen können, damit ich Ressourcen auf dem PEAX-Portal
+partiell/feingranular aktualisieren kann.
 
 Akzeptanzkriterien:
 
-1. Der angegebene Ressourcenpfad wird automatisch anhand der Umgebungsinformationen zu einer URL ergänzt.
-2. Es können `JSON`-Payloads gemäss RFC6902 mitgegeben werden, wobei der Payload lokal nicht überprüft werden muss.
+1. Der angegebene Ressourcenpfad wird automatisch anhand der
+   Umgebungsinformationen zu einer URL ergänzt.
+2. Es können JSON-Payloads gemäss RFC6902 mitgegeben werden, wobei der Payload
+   lokal nicht überprüft werden muss.
 3. Der Payload soll als separate Datei angegeben werden können.
-4. Antworten, die einen Erfolg signalisieren, sollen auf `stderr` ausgegeben werden, wenn das Flag `-v`/`-verbose` spezifiziert worden ist.
-5. Antworten, die einen Fehler signalisieren, sollen immer auf `stderr` ausgegeben werden.
+4. Falls die Anfrage einen Payload zurückliefert, soll dieser auf `stdout`
+   ausgegeben werden.
 6. Der Befehl soll `px patch` heissen.
+
+### Notizen
+
+- Es wurden wiederum zuerst die Hilfetexte verfasst.
+- Da die Command-Funktionen für die generischen HTTP-Funktionen `POST`, `PUT`
+  und `PATCH` die gleichen Flags verwenden (Environment und Payload, inkl.
+  Kurzformen, konnten deren Verarbeitung mit einer Funktion vereinheitlicht
+  werden.
+- Weitere Vereinheitlichungen gab es im `requests`-Package; so unterscheiden
+  sich bei `POST`, `PUT` und `PATCH` nur die HTTP-Methoden; bei `PUT` wird
+  jedoch kein Payload zurückgeliefert.
+- Der Rest der Implementierung ist analog zu `POST`, ausser dass der Header
+  `Content-Type` nicht einfach `application/json`, sondern
+  `application/json-patch+json` lautet (siehe RFC6902).
+
+### Testprotokoll
+
+- Das Testskript `ci-px-patch-test.sh` lädt zuerst ein PDF-Dokument per `px
+  upload` hoch. Die UUID des hochgeladenen Dokuments wird ausgelesen.
+  Anschliessend werden die Metadaten dieses Dokuments mittels `px patch`
+  verändert. Für den Ressourcenzugriff wird die zurückgegebene UUID vom ersten
+  Schritt (`px upload`) verwendet. Die `PATCH`-Operation liefert wiederum
+  Metadaten zurück. Die UUID des modifizierten Dokuments wird wiederum
+  extrahiert und gegen die ursprüngliche UUID auf Gleichheit geprüft.
+  (Natürlich ändert sich die UUID im Fehlerfall nicht; es geht nur darum, den
+  Erfolg der Operation mittels korrekt zurückgeliefertert Metadaten zu
+  überprüfen).
+- Der Test schlug zunächst fehl, weil fälschlicherweise der `application/json`
+  statt `application/json-patch+json` als `Content-Type`-Header verwendet
+  worden ist. Nach dieser Korrektur lief er durch.
+- Das Testskript `ci-px-help-test.sh` wurde um den Aufruf `px help patch`
+  erweitert.
 
 ## Story 17: Generische `DELETE`-Schnittstelle
 
