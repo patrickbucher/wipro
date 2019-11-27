@@ -96,4 +96,13 @@ author: Patrick Bucher
 | Di, 19.11.2019 |       1.5 | Dokumentation | Umsetzungsnotizen ausformuliert; Sprintübersicht aufgearbeitet         |
 | Di, 19.11.2019 |       0.5 | Umsetzung     | Story 11: Erste Analyse der fehlenden Quellcodedokumentation           |
 | Mi, 19.11.2019 |       1.0 | Umsetzung     | Story 11: Dokumentationskommentare verfasst (Probleme halbiert)        |
-|                | **103.0** | **Total**     |                                                                        |
+| Mi, 19.11.2019 |       1.0 | Projekt       | Demo und Diskussion in der Firma                                       |
+| Sa, 23.11.2019 |       1.5 | Umsetzung     | Story 11: Dokumentationskommentare verfasst (keine Probleme mehr)      |
+| Sa, 23.11.2019 |       4.5 | Umsetzung     | Story 13: `px deliver`-Befehl umgesetzt                                |
+| So, 24.11.2019 |       2.0 | Umsetzung     | Story 14: `px post`-Befehl umgesetzt                                   |
+| So, 24.11.2019 |       1.0 | Recherche     | Endpoints und Payloads für `PUT`, `PATCH` und `DELETE` ermittelt       |
+| So, 24.11.2019 |       0.5 | Projekt       | AWK-Skript zur Auswertung von Aufwänden verbessert                     |
+| Mo, 25.11.2019 |       1.0 | Umsetzung     | Story 15: Erkennung von Mime-Type                                      |
+| Di, 26.11.2019 |       1.0 | Umsetzung     | Story 15: `px put`-Befehl umgesetzt                                    |
+| Mi, 27.11.2019 |       2.0 | Umsetzung     | Story 16: `px patch`-Befehl umgesetzt                                  |
+|                | **117.5** | **Total**     |                                                                        |

@@ -16,12 +16,12 @@ author: Patrick Bucher
 |  8 | Login für Agent API                            | umgesetzt in Sprint 2 | 3            |
 |  9 | Verbesserung der Hilfe-Funktion                | umgesetzt in Sprint 2 | 3            |
 | 10 | Vollzugsmeldungen mit `-v`/`-verbose`-Flag     | umgesetzt in Sprint 2 | 1            |
-| 11 | Verbesserung der Quellcodedokumentation        | geplant für Sprint 3  | 1            |
+| 11 | Verbesserung der Quellcodedokumentation        | umgesetzt in Sprint 3 | 1            |
 | 12 | Aktuelle Version ausgeben                      | umgesetzt in Sprint 3 | 1            |
-| 13 | Einliefern von Dokumenten per Agent API        | geplant für Sprint 3  | 3            |
-| 14 | Generische `POST`-Schnittstelle                | geplant für Sprint 3  | 3            |
-| 15 | Generische `PUT`-Schnittstelle                 | geplant für Sprint 3  | 3            |
-| 16 | Generische `PATCH`-Schnittstelle               | geplant für Sprint 3  | 3            |
+| 13 | Einliefern von Dokumenten per Agent API        | umgesetzt in Sprint 3 | 3            |
+| 14 | Generische `POST`-Schnittstelle                | umgesetzt in Sprint 3 | 3            |
+| 15 | Generische `PUT`-Schnittstelle                 | umgesetzt in Sprint 3 | 3            |
+| 16 | Generische `PATCH`-Schnittstelle               | umgesetzt in Sprint 3 | 3            |
 | 17 | Generische `DELETE`-Schnittstelle              | geplant für Sprint 3  | 1            |
 | 18 | Rekursives Hochladen von Dokument-Ordnern      | geplant für Sprint 3  | 5            |
 |    | Verbesserung der Testabdeckung                 | zu spezifizieren      | 3            |
@@ -34,14 +34,16 @@ author: Patrick Bucher
 |    | Fortschrittsanzeige bei längeren Vorgängen     | offen                 |
 |    | Ausgabe von Tokens                             | offen                 |
 |    | Inspektion von Tokens                          | offen                 |
+|    | Code für Login-Funktion vereinheitlichen       | offen                 |
+|    | Dokumente mit Metadaten hochladen              | offen                 |
 
 # Sprints
 
-| Sprint | Stories geplant  | Stories umgesetzt | Aufwand | Stories offen        | h/SP |
-|-------:|------------------|-------------------|--------:|----------------------|-----:|
-|      1 | 6 (1-6), 20 SP   | 4 (1-4), 14 SP    |   14.5h | 2 (5-6), 6 SP        | 1.05 |
-|      2 | 6 (5-10), 18 SP  | 6 (5-10), 18 SP   |   20.5h | 0                    | 1.15 |
-|      3 | 8 (11.18), 20 SP | 1 (12), 1 SP      |    1.5h | 7 (11, 13-18), 19 SP | 1.50 |
+| Sprint | Stories geplant  | Stories umgesetzt | Aufwand | Stories offen   | h/SP |
+|-------:|------------------|-------------------|--------:|-----------------|-----:|
+|      1 | 6 (1-6), 20 SP   | 4 (1-4), 14 SP    |   14.5h | 2 (5-6), 6 SP   | 1.05 |
+|      2 | 6 (5-10), 18 SP  | 6 (5-10), 18 SP   |   20.5h | 0               | 1.15 |
+|      3 | 8 (11.18), 20 SP | 6 (11-16), 14 SP  |   14.0h | 2 (17-18), 6 SP | 1.00 |
 
 # User Stories
 
@@ -446,6 +448,8 @@ Akzeptanzkriterien:
 
 - Der Go-Linter beanstandete zunächst 71 fehlende Kommentare.
 - Nach der ersten Session konnten die Beanstandungen auf 36 reduziert werden.
+- Nach einer zweiten Session von ungefähr gleicher Länge hab es keine
+  Beanstandungen von `golint` mehr.
 
 ## Story 12: Aktuelle Version ausgeben
 
@@ -481,46 +485,174 @@ Akzeptanzkriterien:
 2. Die Metadaten werden als JSON-Datenstruktur aus einer separaten Datei mitgegeben.
 3. Der Befehl zur Einlieferung von Dokumenten soll `px deliver` heissen.
 
+### Notizen
+
+- Zunächst wurden die Hilfetexte verfasst, womit auch die Flags für den Befehl
+  festgelegt wurden (`-m`/`-meta` für die JSON-Metadaten).
+- Der Token-Refresh-Mechanismus für die Agent API war noch nicht implementiert.
+  Dies nachzuholen erforderte verschiedene Erweiterungen am Token Store, etwa
+  das Extrahieren/Abspeichern der `clientID`, da diese bei der Agent API im
+  Gegensatz zur User API, wo sie immer `peax.portal` lautet, sich bei jedem
+  Agent unterscheidet.
+- Verschiedene manuelle Tests mit einem gültigen Refresh Token ergaben, dass
+  die Aktualisierung eines Token Pairs für die Agent API mit dem
+  `grant_type=refresh_token` (derzeit?) nicht funktioniert. Da die automatische
+  Token-Aktualisierung kein Akzeptanzkriterium ist, und das Problem
+  serverseitig geprüft werden muss, soll diese Funktionalität vorerst offen
+  bleiben.
+
+### Testprotokoll
+
+- Der automatische Token Refresh funktionierte zunächst nicht für die Agent API.
+- Der `delivery`-Endpoint gibt nach einer erfolgreichen Einlieferung nicht etwa
+  den HTTP-Status-Code `201 Created` sondern `200 OK` zurück, wodurch der erste
+  erfolgreiche Test als fehlerhaft interpretiert worden ist.
+- Beim Einliefern eines Dokuments kommt ein JSON-Payload mit einem `id`-Feld
+  zurück, das eine UUID ist. Eine UUID ist eine Sequenz von hexadezimalen
+  Ziffern, die in Gruppen der Grössen acht, vier, vier, vier und zwölf
+  auftreten; dazwischen steht ein Bindestrich. Das Testskript
+  `ci-px-deliver-test.sh` prüft, ob nach dem Einliefern eines Dokuments mit
+  Metadaten eine UUID dieser Form zurückkommt.
+- Beim ersten Ausführen der Testpipeline ist es passiert, dass der
+  Backend-Service `portal-document` nicht mehr verfügbar war, und die Tests
+  somit wohl fälschlicherweise gescheitert sind.
+- Der Token-Refresh-Mechanismus für die Agent API wurde mithilfe des
+  Testskripts `standalone-px-deliver-retry-test.sh` getestet, wobei zwischen
+  dem ersten und zweiten Versuch etwas mehr als fünf Minuten gewartet wird.
+- Das Testskript `ci-px-help-test.sh` wurde um den Aufruf `px help deliver`
+  erweitert.
+
 ## Story 14: Generische `POST`-Schnittstelle
 
-Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels `POST`-Methode ansprechen können, damit ich Ressourcen auf dem PEAX-Portal erstellen kann.
+Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels
+`POST`-Methode ansprechen können, damit ich Ressourcen auf dem PEAX-Portal
+erstellen kann.
 
 Akzeptanzkriterien:
 
-1. Der angegebene Ressourcenpfad wird automatisch anhand der Umgebungsinformationen zu einer URL ergänzt.
-2. Es können Payloads verschiedener Formate mitgegeben werden (`JSON`, `PDF`, usw.).
+1. Der angegebene Ressourcenpfad wird automatisch anhand der
+   Umgebungsinformationen zu einer URL ergänzt.
+2. Es können beliebige Payloads im JSON-Format angegeben werden.
 3. Der Payload soll als separate Datei angegeben werden können.
-4. Es muss möglich sein Multipart-Requests mit mehreren Payloads abzusetzen.
-5. Antworten, die einen Erfolg signalisieren, sollen auf `stderr` ausgegeben werden, wenn das Flag `-v`/`-verbose` spezifiziert worden ist.
-6. Antworten, die einen Fehler signalisieren, sollen immer auf `stderr` ausgegeben werden.
-7. Der Befehl soll `px post` heissen.
+4. Falls die Anfrage einen Payload zurückliefert, soll dieser auf `stdout`
+   ausgegeben werden.
+5. Der Befehl soll `px post` heissen.
+
+### Notizen
+
+- Wiederum wurde mit dem Erstellen der Hilfetexte begonnen.
+- Der Befehl wurde analog zu `px get` mit automatischem Erneuern der Tokens
+  umgesetzt.
+- Bei der Implementierung war kein Refactoring nötig. Die Codebasis scheint
+  somit in einem gut erweiterbaren Zustand zu sein.
+
+### Testprotokoll
+
+- Es wurde das Testskript `ci-px-post-test.sh` erstellt, das sich auf der
+  Umgebung `test` einloggt, dort eine neue Organisation erstellt, und sich
+  wieder ausloggt. Es wird mit `jq` geprüft, ob der Response-Payload valides
+  JSON ist.
+- Andere Endpoints, z.B. das Erstellen von Tags, wurden manuell getestet.
+  (Ressourcen wie Tags haben eindeutige Namen, d.h. mit dem gleichen Payload
+  kann die Ressource nur einmal erstellt werden, was für wiederholte,
+  automatisierte Test schlecht geeignet ist.)
+- Das Testskript `ci-px-help-test.sh` wurde um den Aufruf `px help post`
+  erweitert.
 
 ## Story 15: Generische `PUT`-Schnittstelle
 
-Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels `PUT`-Methode ansprechen können, damit ich bestehende Ressourcen auf dem PEAX-Portal ersetzen kann.
+Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels
+`PUT`-Methode ansprechen können, damit ich bestehende Ressourcen auf dem
+PEAX-Portal ersetzen kann.
 
 Akzeptanzkriterien:
 
-1. Der angegebene Ressourcenpfad wird automatisch anhand der Umgebungsinformationen zu einer URL ergänzt.
-2. Es können Payloads verschiedener Formate mitgegeben werden (`JSON`, `PDF`, usw.).
+1. Der angegebene Ressourcenpfad wird automatisch anhand der
+   Umgebungsinformationen zu einer URL ergänzt.
+2. Es können Payloads verschiedener Formate mitgegeben werden (JSON, PNG usw.).
 3. Der Payload soll als separate Datei angegeben werden können.
-4. Es muss möglich sein Multipart-Requests mit mehreren Payloads abzusetzen.
-5. Antworten, die einen Erfolg signalisieren, sollen auf `stderr` ausgegeben werden, wenn das Flag `-v`/`-verbose` spezifiziert worden ist.
-6. Antworten, die einen Fehler signalisieren, sollen immer auf `stderr` ausgegeben werden.
-7. Der Befehl soll `px put` heissen.
+4. Der Befehl soll `px put` heissen.
+
+### Notizen
+
+- Die API von PEAX bietet nur sehr wenige Endpoints an, die `PUT` unterstützen.
+  Das einzige Beispiel, das auf Anhieb ermittelt werden konnte, ist die
+  Aktualisierung des Profilbildes. Da es sich hierbei nicht um JSON-Daten
+  handelt, sondern um ein Bild beliebigen Formats, muss der MIME-Type des
+  Payloads automatisch ermittelt werden. Hierzu wurde im Package `utils` eine
+  Funktion `utils.DetectContentType` entwickelt.
+- Zunächst wurde wieder der Hilfetext verfasst.
+- Der Befehl ist wie `get` und `post` mit automatischer Token-Erneuerung
+  umgesetzt worden.
+- Zusätzlich wurde eine Utility-Funktion `ReadFile` entwickelt, die einen
+  `io.ReadCloser` auf die angegebene Datei sowie den Content-Type zurückgibt.
+  Der `ReadCloser` hat den Vorteil, dass nicht die ganze Datei in den
+  Arbeitsspeicher gelesen werden muss.
+
+### Testprotokoll
+
+- Die Funktion `utils.DetectContentType` wird durch einen Unit Test abgedeckt.
+  Hierzu wurde zunächst mit GraphViz ein kleiner Graph erstellt (`graph.dot`),
+  woraus mithilfe von `dot` verschiedenste Formate generiert werden konnten:
+  GIF, JPEG, PDF, PNG und PostScript.
+- Der Testfall `TestDetectContentType` arbeitet eine Map ab, welche die
+  Dateipfade der generierten Grafiken zu ihrem manuell ermittelten Mime-Type
+  zuordnet. Für jede Iteration wird geprüft, ob für die jeweilige Datei der
+  passende Mime-Type ermittelt werden kann. Für GIF, JPG, PDF, PNG und
+  PostScript hat das auf Anhieb funktioniert.
+- Das Testskript `ci-px-put-test.sh` aktualisiert das Profilbild dreimal: im
+  PNG, im JPEG und schliesslich im GIF-Format.
+- Das Testskript `ci-px-help-test.sh` wurde um den Aufruf `px help put`
+  erweitert.
 
 ## Story 16: Generische `PATCH`-Schnittstelle
 
-Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels `PATCH`-Methode ansprechen können, damit ich Ressourcen auf dem PEAX-Portal partiell/feingranular aktualisieren kann.
+Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels
+`PATCH`-Methode ansprechen können, damit ich Ressourcen auf dem PEAX-Portal
+partiell/feingranular aktualisieren kann.
 
 Akzeptanzkriterien:
 
-1. Der angegebene Ressourcenpfad wird automatisch anhand der Umgebungsinformationen zu einer URL ergänzt.
-2. Es können `JSON`-Payloads gemäss RFC6902 mitgegeben werden, wobei der Payload lokal nicht überprüft werden muss.
+1. Der angegebene Ressourcenpfad wird automatisch anhand der
+   Umgebungsinformationen zu einer URL ergänzt.
+2. Es können JSON-Payloads gemäss RFC6902 mitgegeben werden, wobei der Payload
+   lokal nicht überprüft werden muss.
 3. Der Payload soll als separate Datei angegeben werden können.
-4. Antworten, die einen Erfolg signalisieren, sollen auf `stderr` ausgegeben werden, wenn das Flag `-v`/`-verbose` spezifiziert worden ist.
-5. Antworten, die einen Fehler signalisieren, sollen immer auf `stderr` ausgegeben werden.
+4. Falls die Anfrage einen Payload zurückliefert, soll dieser auf `stdout`
+   ausgegeben werden.
 6. Der Befehl soll `px patch` heissen.
+
+### Notizen
+
+- Es wurden wiederum zuerst die Hilfetexte verfasst.
+- Da die Command-Funktionen für die generischen HTTP-Funktionen `POST`, `PUT`
+  und `PATCH` die gleichen Flags verwenden (Environment und Payload, inkl.
+  Kurzformen, konnten deren Verarbeitung mit einer Funktion vereinheitlicht
+  werden.
+- Weitere Vereinheitlichungen gab es im `requests`-Package; so unterscheiden
+  sich bei `POST`, `PUT` und `PATCH` nur die HTTP-Methoden; bei `PUT` wird
+  jedoch kein Payload zurückgeliefert.
+- Der Rest der Implementierung ist analog zu `POST`, ausser dass der Header
+  `Content-Type` nicht einfach `application/json`, sondern
+  `application/json-patch+json` lautet (siehe RFC6902).
+
+### Testprotokoll
+
+- Das Testskript `ci-px-patch-test.sh` lädt zuerst ein PDF-Dokument per `px
+  upload` hoch. Die UUID des hochgeladenen Dokuments wird ausgelesen.
+  Anschliessend werden die Metadaten dieses Dokuments mittels `px patch`
+  verändert. Für den Ressourcenzugriff wird die zurückgegebene UUID vom ersten
+  Schritt (`px upload`) verwendet. Die `PATCH`-Operation liefert wiederum
+  Metadaten zurück. Die UUID des modifizierten Dokuments wird wiederum
+  extrahiert und gegen die ursprüngliche UUID auf Gleichheit geprüft.
+  (Natürlich ändert sich die UUID im Fehlerfall nicht; es geht nur darum, den
+  Erfolg der Operation mittels korrekt zurückgeliefertert Metadaten zu
+  überprüfen).
+- Der Test schlug zunächst fehl, weil fälschlicherweise der `application/json`
+  statt `application/json-patch+json` als `Content-Type`-Header verwendet
+  worden ist. Nach dieser Korrektur lief er durch.
+- Das Testskript `ci-px-help-test.sh` wurde um den Aufruf `px help patch`
+  erweitert.
 
 ## Story 17: Generische `DELETE`-Schnittstelle
 
@@ -550,4 +682,17 @@ Akzeptanzkriterien:
 
 ## 1: Interaktive Eingabe auf Windows funktioniert nicht
 
-- Tests auf Windows ergaben, dass es derzeit nicht möglich ist, ein Password sicher (ohne Echo) über die Kommandozeile einzugeben. Recherchen haben ergeben, dass es in diesem Bereich derzeit einen [offenen Bug](https://github.com/golang/go/issues/34461) gibt. Als Workaround wird bis zur Fehlerkorrektur auf die sichere Passworteingabe verzichtet. Mithilfe eines [Build Tags](https://golang.org/pkg/go/build/#hdr-Build_Constraints) konnte dieser Workaround auf Windows eingeschränkt werden, sodass auf macOS und Linux weiterhin die sichere Passworteingabe zum Einsatz kommt.
+Tests auf Windows ergaben, dass es derzeit nicht möglich ist, ein Password
+sicher (ohne Echo) über die Kommandozeile einzugeben. Recherchen haben ergeben,
+dass es in diesem Bereich derzeit einen [offenen
+Bug](https://github.com/golang/go/issues/34461) gibt. Als Workaround wird bis
+zur Fehlerkorrektur auf die sichere Passworteingabe verzichtet. Mithilfe eines
+[Build Tags](https://golang.org/pkg/go/build/#hdr-Build_Constraints) konnte
+dieser Workaround auf Windows eingeschränkt werden, sodass auf macOS und Linux
+weiterhin die sichere Passworteingabe zum Einsatz kommt.
+
+## 2: Refresh-Mechanismus funktioniert nicht für Agent API
+
+Es ist derzeit nicht möglich, mit einem Refresh Token eines Agents einen neuen
+Access Token zu holen. Dieses Problem muss auf dem PEAX Identity Provider näher
+analysiert werden.
