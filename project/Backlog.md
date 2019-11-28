@@ -24,10 +24,10 @@ author: Patrick Bucher
 | 16 | Generische `PATCH`-Schnittstelle               | umgesetzt in Sprint 3 | 3            |
 | 17 | Generische `DELETE`-Schnittstelle              | umgesetzt in Sprint 3 | 1            |
 | 18 | Rekursives Hochladen von Dokument-Ordnern      | geplant für Sprint 3  | 5            |
-|    | Verbesserung der Testabdeckung                 | zu spezifizieren      | 3            |
-|    | Variablen in der Ressourcenangabe              | zu spezifizieren      | 3            |
-|    | Automatische Formatierung von JSON-Ausgaben    | zu spezifizieren      | 1            |
-|    | Automatische Tags von hochgeladenen Ordnern    | zu spezifizieren      | 5            |
+|    | Verbesserung der Testabdeckung                 | offen                 |
+|    | Variablen in der Ressourcenangabe              | offen                 |
+|    | Automatische Formatierung von JSON-Ausgaben    | offen                 |
+|    | Automatische Tags von hochgeladenen Ordnern    | offen                 |
 |    | Anzeigen der aktiven Logins                    | offen                 |
 |    | Auflisten von Dokumenten mit Suche/Filterung   | offen                 |
 |    | Ausführung von Befehlen für mehrere Umgebungen | offen                 |
@@ -36,6 +36,7 @@ author: Patrick Bucher
 |    | Inspektion von Tokens                          | offen                 |
 |    | Code für Login-Funktion vereinheitlichen       | offen                 |
 |    | Dokumente mit Metadaten hochladen              | offen                 |
+|    | Überarbeitung der README                       | offen                 |
 
 # Sprints
 
