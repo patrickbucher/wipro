@@ -105,4 +105,5 @@ author: Patrick Bucher
 | Mo, 25.11.2019 |       1.0 | Umsetzung     | Story 15: Erkennung von Mime-Type                                  |
 | Di, 26.11.2019 |       1.0 | Umsetzung     | Story 15: `px put`-Befehl umgesetzt                                |
 | Mi, 27.11.2019 |       2.0 | Umsetzung     | Story 16: `px patch`-Befehl umgesetzt                              |
-|                | **117.5** | **Total**     |                                                                    |
+| Do, 28.11.2019 |       1.0 | Umsetzung     | Story 17: `px delete`-Befehl umgesetzt                             |
+|                | **118.5** | **Total**     |                                                                    |

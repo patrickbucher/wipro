@@ -22,7 +22,7 @@ author: Patrick Bucher
 | 14 | Generische `POST`-Schnittstelle                | umgesetzt in Sprint 3 | 3            |
 | 15 | Generische `PUT`-Schnittstelle                 | umgesetzt in Sprint 3 | 3            |
 | 16 | Generische `PATCH`-Schnittstelle               | umgesetzt in Sprint 3 | 3            |
-| 17 | Generische `DELETE`-Schnittstelle              | geplant für Sprint 3  | 1            |
+| 17 | Generische `DELETE`-Schnittstelle              | umgesetzt in Sprint 3 | 1            |
 | 18 | Rekursives Hochladen von Dokument-Ordnern      | geplant für Sprint 3  | 5            |
 |    | Verbesserung der Testabdeckung                 | zu spezifizieren      | 3            |
 |    | Variablen in der Ressourcenangabe              | zu spezifizieren      | 3            |
@@ -39,11 +39,11 @@ author: Patrick Bucher
 
 # Sprints
 
-| Sprint | Stories geplant  | Stories umgesetzt | Aufwand | Stories offen   | h/SP |
-|-------:|------------------|-------------------|--------:|-----------------|-----:|
-|      1 | 6 (1-6), 20 SP   | 4 (1-4), 14 SP    |   14.5h | 2 (5-6), 6 SP   | 1.05 |
-|      2 | 6 (5-10), 18 SP  | 6 (5-10), 18 SP   |   20.5h | 0               | 1.15 |
-|      3 | 8 (11.18), 20 SP | 6 (11-16), 14 SP  |   14.0h | 2 (17-18), 6 SP | 1.00 |
+| Sprint | Stories geplant  | Stories umgesetzt | Aufwand | Stories offen | h/SP |
+|-------:|------------------|-------------------|--------:|---------------|-----:|
+|      1 | 6 (1-6), 20 SP   | 4 (1-4), 14 SP    |   14.5h | 2 (5-6), 6 SP | 1.05 |
+|      2 | 6 (5-10), 18 SP  | 6 (5-10), 18 SP   |   20.5h | 0             | 1.15 |
+|      3 | 8 (11.18), 20 SP | 7 (11-17), 15 SP  |   15.0h | 1 (18), 5 SP  | 1.00 |
 
 # User Stories
 
@@ -656,15 +656,41 @@ Akzeptanzkriterien:
 
 ## Story 17: Generische `DELETE`-Schnittstelle
 
-Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels `DELETE`-Methode ansprechen können, damit ich Ressourcen auf dem PEAX-Portal entfernen kann.
+Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels
+`DELETE`-Methode ansprechen können, damit ich Ressourcen auf dem PEAX-Portal
+entfernen kann.
 
 Akzeptanzkriterien:
 
-1. Der angegebene Ressourcenpfad wird automatisch anhand der Umgebungsinformationen zu einer URL ergänzt.
+1. Der angegebene Ressourcenpfad wird automatisch anhand der
+   Umgebungsinformationen zu einer URL ergänzt.
 2. Es soll _kein_ Payload mitgegeben werden können.
-3. Antworten, die einen Erfolg signalisieren, sollen auf `stderr` ausgegeben werden, wenn das Flag `-v`/`-verbose` spezifiziert worden ist.
-4. Antworten, die einen Fehler signalisieren, sollen immer auf `stderr` ausgegeben werden.
-5. Der Befehl soll `px delete` heissen.
+3. Der Befehl soll `px delete` heissen.
+
+### Notizen
+
+- Da `delete` in Go ein reserviertes Keyword ist, musste auf einen anderen
+  Funktionsnamen für den Befehl (`dlete`) ausgewichen werden.
+- Es wurden wiederum zunächst die Hilfetexte verfasst.
+- Die Request-Logik konnte mit wenig Aufwand analog zu `px get` umgesetzt
+  werden, wobei hier kein Payload zurück- und ausgegeben wird.
+
+### Testprotokoll
+
+- Da Testfälle wiederholbar ausführbar sein müssen, wurde für `DELETE` kein
+  neues Testskript erstellt. Stattdessen werden bestehende Testskripts, die
+  Ressourcen erzeugen, um eine Löschung derselben erweitert.
+- Es stellte sich heraus, dass das Profilbild (siehe Testprotokoll zu `px put`)
+  die einzige in den Testskripts erstellte Ressource ist, die auch gelöscht
+  werden kann. Dementsprechend wurde das Testskript `ci-px-put-test.sh` um die
+  Löschung des Profilbildes erweitert und zu `ci-px-put-delete-test.sh`
+  umbenannt.
+- Ein erster Aufruf schlug fehl, da beim Authorization-Header der Abstand
+  zwischen `Bearer` und dem Access Token vergessen worden war. Nach dieser
+  Korrektur lief das Skript durch. Das Profilbild verschwand damit aus dem
+  Portal.
+- Das Testskript `ci-px-help-test.sh` wurde um den Aufruf `px help delete`
+  erweitert.
 
 ## Story 18: Rekursives Hochladen von Dokument-Ordnern
 
