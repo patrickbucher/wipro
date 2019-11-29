@@ -106,4 +106,5 @@ author: Patrick Bucher
 | Di, 26.11.2019 |       1.0 | Umsetzung     | Story 15: `px put`-Befehl umgesetzt                                |
 | Mi, 27.11.2019 |       2.0 | Umsetzung     | Story 16: `px patch`-Befehl umgesetzt                              |
 | Do, 28.11.2019 |       1.0 | Umsetzung     | Story 17: `px delete`-Befehl umgesetzt                             |
-|                | **118.5** | **Total**     |                                                                    |
+| Fr, 29.11.2019 |       1.5 | Umsetzung     | Story 18: Rekursiver Upload                                        |
+|                | **120.0** | **Total**     |                                                                    |

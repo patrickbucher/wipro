@@ -23,7 +23,7 @@ author: Patrick Bucher
 | 15 | Generische `PUT`-Schnittstelle                 | umgesetzt in Sprint 3 | 3            |
 | 16 | Generische `PATCH`-Schnittstelle               | umgesetzt in Sprint 3 | 3            |
 | 17 | Generische `DELETE`-Schnittstelle              | umgesetzt in Sprint 3 | 1            |
-| 18 | Rekursives Hochladen von Dokument-Ordnern      | geplant für Sprint 3  | 5            |
+| 18 | Rekursives Hochladen von Dokument-Ordnern      | in Umsetzung          | 5            |
 |    | Verbesserung der Testabdeckung                 | offen                 |
 |    | Variablen in der Ressourcenangabe              | offen                 |
 |    | Automatische Formatierung von JSON-Ausgaben    | offen                 |
@@ -695,15 +695,48 @@ Akzeptanzkriterien:
 
 ## Story 18: Rekursives Hochladen von Dokument-Ordnern
 
-Als Benutzer der User API möchte ich einen lokale Ordnstruktur, die Dokumente beinhaltet, mit einem Befehl hochladen können, sodass alle in dieser Ordnerstruktur enthaltenen Dokumente im Upload-Bereich des PEAX-Portals auftauchen.
+Als Benutzer der User API möchte ich einen lokale Ordnstruktur, die Dokumente
+beinhaltet, mit einem Befehl hochladen können, sodass alle in dieser
+Ordnerstruktur enthaltenen Dokumente im Upload-Bereich des PEAX-Portals
+erscheinen.
 
 Akzeptanzkriterien:
 
-1. Es soll der bereits bestehende Befehl `px upload` um ein `-r`/`-recursive`-Flag ergänzt werden, der als Parameter ein Verzeichnis erwartet.
-2. Es sollen sämtliche in diesem Ordner (und dessen Unterordner beliebiger Tiefe) enthaltenen Dateien hochgeladen werden.
-3. Scheitert das Hochladen einer Datei, soll dies entsprechend auf `stderr` inkl. relativem Dateipfad gemeldet werden.
-4. Die generierten UUIDs der erfolgreich erstellten Dateien sollen auf `stdout` ausgegeben werden.
-5. Optional: Mit dem Parameter `-l`/`-log`, der ein Dateiname erwartet, wird ein Protokoll im `JSON`-Format geschrieben, das den Erfolg/Misserfolg für jede Datei (mit absolutem Pfad) angibt. Im Erfolgsfall enthält der Eintrag die generierte UUID des Dokuments, im Fehlerfall eine entsprechende Fehlermeldung.
+1. Es soll der bereits bestehende Befehl `px upload` um ein
+   `-r`/`-recursive`-Flag ergänzt werden, der als Parameter ein Verzeichnis
+   erwartet.
+2. Es sollen sämtliche in diesem Ordner (und dessen Unterordner beliebiger
+   Tiefe) enthaltenen Dateien hochgeladen werden.
+3. Scheitert das Hochladen einer Datei, soll dies entsprechend auf `stderr`
+   inkl. Dateipfad gemeldet werden.
+4. Die generierten UUIDs der erfolgreich hochgeladenen Dateien sollen zusammen
+   mit lokalen Pfad in einer JSON-Struktur auf `stdout` ausgegeben werden.
+
+### Notizen
+
+- Zunächst wurde eine Utility-Funktion `ListRecursively` entwickelt, die
+  rekursiv über die Einträge eines Verzeichnisses iteriert. Diese ist mithilfe
+  der Library-Funktion `filepath.Walk` umgesetzt, welche sich um die rekursive
+  Iteration durch das Verzeichnis kümmert. Diese Funktion erwartet eine
+  Funktion als Argument, welche auf jeden gefundenen Eintrag angewendet wird.
+  Die Funktion `isReadable`, die hierfür entwickelt worden ist, prüft für jeden
+  Eintrag, ob er lesbar ist, und fügt ihn in diesem Fall in eine Liste ein
+  (`isReadable` ist als Closure implementiert). Für unlesbare Fehler wird ein
+  Fehler zurückgegeben. Tritt im ganzen zu prüfenden Verzeichnisbaum auch nur
+  ein Fehler auf, gibt `ListRecursively` einen Fehler und keine Einträge
+  zurück. Dies, weil der Benutzer gleich zu Beginn einer grösseren Operation
+  über mögliche Fehler informiert werden soll, und nicht nach einem längeren
+  Upload-Vorgang über einzelne fehlende Dateien enttäuscht ist.
+
+### Testprotokoll
+
+- Mithilfe des Unit Tests `filesystem_test.TestListDirectory` wird eine
+  rekursive Dateistruktur im Temp-Verzeichnis mit einer gegebenen Tiefe
+  (`depth`), Anzahl Unterordner pro Stufe (`subFolders`) und Anzahl Dateien pro
+  Unterordner (`filesPerFolder`) angelegt. Dies sollte insgesamt
+  `depth^subFolders*filesPerFolder` Einträge ergeben. Beispiel: Mit `depth =
+  3`, `subFolders = 4` und `filesPerFolder = 5` sollen `3^4*5 = 405` Dateien
+  angelegt werden.
 
 # Bugs
 
