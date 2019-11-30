@@ -23,11 +23,12 @@ author: Patrick Bucher
 | 15 | Generische `PUT`-Schnittstelle                 | umgesetzt in Sprint 3 | 3            |
 | 16 | Generische `PATCH`-Schnittstelle               | umgesetzt in Sprint 3 | 3            |
 | 17 | Generische `DELETE`-Schnittstelle              | umgesetzt in Sprint 3 | 1            |
-| 18 | Rekursives Hochladen von Dokument-Ordnern      | in Umsetzung          | 5            |
-|    | Verbesserung der Testabdeckung                 | offen                 |
-|    | Variablen in der Ressourcenangabe              | offen                 |
-|    | Automatische Formatierung von JSON-Ausgaben    | offen                 |
-|    | Automatische Tags von hochgeladenen Ordnern    | offen                 |
+| 18 | Rekursives Hochladen von Dokument-Ordnern      | umgesetzt in Sprint 3 | 5            |
+|    | Nebenläufiger Upload von Dokument-Ordnern      | offen                 | 1            |
+|    | Automatische Tags von hochgeladenen Ordnern    | offen                 | 3            |
+|    | Variablen in der Ressourcenangabe              | offen                 | 3            |
+|    | Verbesserung der Testabdeckung                 | offen                 | 3            |
+|    | Automatische Formatierung von JSON-Ausgaben    | offen                 | 1            |
 |    | Anzeigen der aktiven Logins                    | offen                 |
 |    | Auflisten von Dokumenten mit Suche/Filterung   | offen                 |
 |    | Ausführung von Befehlen für mehrere Umgebungen | offen                 |
@@ -44,7 +45,7 @@ author: Patrick Bucher
 |-------:|------------------|-------------------|--------:|---------------|-----:|
 |      1 | 6 (1-6), 20 SP   | 4 (1-4), 14 SP    |   14.5h | 2 (5-6), 6 SP | 1.05 |
 |      2 | 6 (5-10), 18 SP  | 6 (5-10), 18 SP   |   20.5h | 0             | 1.15 |
-|      3 | 8 (11.18), 20 SP | 7 (11-17), 15 SP  |   15.0h | 1 (18), 5 SP  | 1.00 |
+|      3 | 8 (11-18), 20 SP | 8 (11-18), 20  SP |   19.5h | 0             | 0.98 |
 
 # User Stories
 
@@ -757,6 +758,9 @@ Akzeptanzkriterien:
   grossgeschriebene Felder für die Serialisierung berücksichtigt werden, musste
   das Feld weiter in `DocumentID` umbenannt werden. Die UUIDs erschienen
   schliesslich in der Antwort.
+- Zum Schluss wurde noch der Hilfetext für den `upload`-Befehl ergänzt, indem
+  die Option mit dem rekursiven Upload erwähnt und die zurückgelieferte
+  Datenstruktur beschrieben wurde.
 
 ### Testprotokoll
 

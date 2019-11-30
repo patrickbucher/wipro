@@ -109,5 +109,5 @@ author: Patrick Bucher
 | Fr, 29.11.2019 |       1.5 | Umsetzung     | Story 18: Dateien für rekursiven Upload auflisten                  |
 | Fr, 29.11.2019 |       1.0 | Projekt       | Besprechung mit Betreuer                                           |
 | Sa, 30.11.2019 |       0.5 | Projekt       | Besprechungsnotizen verarbeitet                                    |
-| Sa, 30.11.2019 |       2.5 | Umsetzung     | Story 18: Rekursiven Verzeichnis-Upload umgesetzt                  |
-|                | **124.0** | **Total**     |                                                                    |
+| Sa, 30.11.2019 |       3.0 | Umsetzung     | Story 18: Rekursiven Verzeichnis-Upload umgesetzt                  |
+|                | **124.5** | **Total**     |                                                                    |
