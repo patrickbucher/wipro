@@ -15,3 +15,4 @@
     - Login mit TOTP
     - sichere Token-Verwahrung
     - Tests auf Windows, macOS und Linux
+- Liste manueller Tests (Abnahmetests) erstellen und jeweils Ende Sprint durchführen
