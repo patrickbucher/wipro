@@ -707,10 +707,13 @@ Akzeptanzkriterien:
    erwartet.
 2. Es sollen sämtliche in diesem Ordner (und dessen Unterordner beliebiger
    Tiefe) enthaltenen Dateien hochgeladen werden.
-3. Scheitert das Hochladen einer Datei, soll dies entsprechend auf `stderr`
-   inkl. Dateipfad gemeldet werden.
-4. Die generierten UUIDs der erfolgreich hochgeladenen Dateien sollen zusammen
-   mit lokalen Pfad in einer JSON-Struktur auf `stdout` ausgegeben werden.
+3. Als Ergebnis soll eine Datenstruktur ausgegeben werden, die über Erfolg und
+   Misserfolg jedes versuchten Uploads informiert. Zu jedem Eintrag soll der
+   Pfad der Datei stehen, für die ein Upload versucht worden ist.
+4. Scheitert das Hochladen einer Datei, soll der Eintrag eine entsprechende
+   Fehlermeldung enthalten.
+5. Ist das Hochladen einer Datei erfolgreich, soll der Eintrag die dabei
+   generierte UUID enthalten.
 
 ### Notizen
 
@@ -727,6 +730,33 @@ Akzeptanzkriterien:
   zurück. Dies, weil der Benutzer gleich zu Beginn einer grösseren Operation
   über mögliche Fehler informiert werden soll, und nicht nach einem längeren
   Upload-Vorgang über einzelne fehlende Dateien enttäuscht ist.
+- Der `upload`-Befehl erhält ein neues Flag `-r`/`-recursively`. Ist dieses
+  Flag gesetzt, wird nicht wie für ein einzelnes Dokument
+  `requests.UploadDocument`, sondern eine neue Funktion
+  `requests.UploadRecursively` aufgerufen.
+- Es wurden zwei neue Datenstrukturen erstllt: `DocumentUploadResult`, das den
+  Erfolg/Misserfolg für einen einzelnen Upload signalisiert; im Erfolgsfall die
+  erstelle UUID des Dokuments, im Fehlerfall eine Fehlermeldung enthält.
+  `FolderUploadResult` enthält eine Liste von `DocumentUploadResult` (ein
+  Eintrag pro Dokument) und statistische Angaben (Anzahl Versuche, Erfolge,
+  Fehler).
+- Die bestehende Upload-Funktion (`requests.UploadDocument`) wurde dahingehend
+  refactored, dass der HTTP-Code in eine Funktion ausgelagert wurde, welche
+  eine HTTP-Response zurückgibt. Für ein einzelnes Dokument kann der Payload
+  dann weiter an den Aufrufer zurückgegeben werden, für eine Reihe von
+  Dokumenten wird der Payload für jedes einzelne Dokument ausgewertet, und
+  schliesslich in einem aggregierten Object (`FolderUploadResult`) an den
+  Aufrufer zurückgegeben.
+- Die Funktion `utils.ListRecursively` wurde dahingehend angepasst, dass sie
+  Verzeichniseinträge ignoriert, d.h. nur noch Dateieinträge zurückgibt.
+- Die Struktur zum Parsen der Upload-Response enthält das Feld `documentID`
+  (Go-Namenskonvention: `ID`), die Response selber jedoch das Feld `documentId`
+  (`Id` mit kleinem `d`). Aus diesem Grund scheiterte das Mapping der
+  resultierenden UUID. Mithilfe eines entsprechenden Tags `json:"documentId"`
+  konnte dieses Mappng korrigiert werden. Da in Go nur exportierte, d.h.
+  grossgeschriebene Felder für die Serialisierung berücksichtigt werden, musste
+  das Feld weiter in `DocumentID` umbenannt werden. Die UUIDs erschienen
+  schliesslich in der Antwort.
 
 ### Testprotokoll
 
@@ -734,9 +764,27 @@ Akzeptanzkriterien:
   rekursive Dateistruktur im Temp-Verzeichnis mit einer gegebenen Tiefe
   (`depth`), Anzahl Unterordner pro Stufe (`subFolders`) und Anzahl Dateien pro
   Unterordner (`filesPerFolder`) angelegt. Dies sollte insgesamt
-  `depth^subFolders*filesPerFolder` Einträge ergeben. Beispiel: Mit `depth =
-  3`, `subFolders = 4` und `filesPerFolder = 5` sollen `3^4*5 = 405` Dateien
+  `subFolders^depth*filesPerFolder` Einträge ergeben. Beispiel: Mit `depth =
+  3`, `subFolders = 4` und `filesPerFolder = 5` sollen `4^3*5 = 320` Dateien
   angelegt werden.
+- Die Upload-Funktion für ein einzelnes Dokument funktionierte nach dem
+  Refactoring noch einwandfrei.
+- Zum Testen des rekursiven Uploads wurde ein Testordner `docfolder` erstellt,
+  der jeweils Unterordner der Struktur
+  `Taxes/[2015..2019]/[Assets,Deductions,Donations,Insurance,Wage-Slips]/`
+  enthält. Jeder dieser Unterordner enthält wiederum ein Testdokument.
+- Beim ersten Test fiel auf, dass für erfolgreich hochgeladenen Dokumente in
+  der erstellten Datenstruktur keine `documentId` vorhanden ist. Ausserdem
+  wurde versucht, Verzeichnisse hochzuladen. Nach den entsprechenden
+  Korrekturen (siehe Notizen) funktionierte alles wie gewünscth.
+- Das Testskript `ci-px-login-upload-test.sh` wurde umbenannt zu
+  `ci-px-upload-test.sh`, also ohne das `login`, da die meisten Testskripts ein
+  Login ausführen, ohne dies im Namen zu tragen.
+- Auf Basis des Testskripts `ci-px-upload-test.sh` wurde das neue Testskript
+  `ci-px-upload-recursively-test.sh` entwickelt. Dieses lädt die Ordnestruktur
+  `docfolder` (siehe Beschreibung oben) hoch. Aus der resultierenden
+  JSON-Datenstruktur wird das Feld `uploaded` extrahiert, und mit der Anzahl
+  Dateien in `docfolder` verglichen.
 
 # Bugs
 
