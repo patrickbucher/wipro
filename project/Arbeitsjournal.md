@@ -49,7 +49,7 @@ author: Patrick Bucher
 | So, 20.10.2019 |       0.5 | Umsetzung     | Story 4: Erweiterung der CI-Pipeline um Logout-Test                |
 | So, 20.10.2019 |       1.0 | Umsetzung     | Story 4: Test auf Windows und macOS                                |
 | So, 20.10.2019 |       1.0 | Umsetzung     | Story 4: Sicher verwahrten Token für weitere Requests verwenden    |
-| So, 20.10.2019 |       0.5 | Umsetzung     | Erstellung Release v0.1.0                                          |
+| So, 20.10.2019 |       0.5 | Projekt       | Erstellung Release v0.1.0                                          |
 | So, 20.10.2019 |       0.5 | Dokumentation | Sequenzdiagramm zur Zwei-Faktor-Authentifizierung erstellt         |
 | Mo, 21.10.2019 |       1.0 | Dokumentation | Abstract entworfen, Umgebungen beschrieben, offene Punkte vermerkt |
 | Mi, 23.10.2019 |       1.0 | Dokumentation | Feedback zu Sprint 1 aufgenommen und kommentiert                   |
@@ -75,7 +75,7 @@ author: Patrick Bucher
 | So, 10.11.2019 |       2.0 | Umsetzung     | Ausgiebiges Testen auf Linux, macOS und Windows                    |
 | So, 10.11.2019 |       0.5 | Recherche     | Unterscheidung von Betriebssystemen (Build Tags)                   |
 | So, 10.11.2019 |       1.0 | Umsetzung     | Hotfix: Passworteingabe auf Windows korrigiert; erneute Tests      |
-| So, 10.11.2019 |       1.0 | Projekt       | Freigabe Release, Release Notes und Meilensteinbericht             |
+| So, 10.11.2019 |       1.0 | Projekt       | Freigabe Release v0.2.1, Release Notes und Meilensteinbericht      |
 | So, 10.11.2019 |       1.0 | Recherche     | Geschichte von UNIX (Design von Kommandozeilenprogrammen)          |
 | Mo, 11.11.2019 |       0.5 | Dokumentation | Konzept von `stderr`/`stdout` erläutert                            |
 | Mo, 11.11.2019 |       1.0 | Projekt       | Arbeitskollegen instruiert und deren Rückmeldungen aufgenommen     |
@@ -110,4 +110,8 @@ author: Patrick Bucher
 | Fr, 29.11.2019 |       1.0 | Projekt       | Besprechung mit Betreuer                                           |
 | Sa, 30.11.2019 |       0.5 | Projekt       | Besprechungsnotizen verarbeitet                                    |
 | Sa, 30.11.2019 |       3.0 | Umsetzung     | Story 18: Rekursiven Verzeichnis-Upload umgesetzt                  |
-|                | **124.5** | **Total**     |                                                                    |
+| So, 01.12.2019 |       1.0 | Dokumentation | Manuelle Tests beschrieben und Zugänge dafür erstellt              |
+| So, 01.12.2019 |       1.0 | Umsetzung     | Testing auf allen unterstützten Plattformen                        |
+| So, 01.12.2019 |       0.5 | Dokumentation | Testergebnisse/Bugs beschrieben                                    |
+| So, 01.12.2019 |       1.0 | Projekt       | Freigabe Release v0.3.0, Release Notes, Team informiert            |
+|                | **128.0** | **Total**     |                                                                    |

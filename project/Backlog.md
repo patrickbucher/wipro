@@ -24,11 +24,13 @@ author: Patrick Bucher
 | 16 | Generische `PATCH`-Schnittstelle               | umgesetzt in Sprint 3 | 3            |
 | 17 | Generische `DELETE`-Schnittstelle              | umgesetzt in Sprint 3 | 1            |
 | 18 | Rekursives Hochladen von Dokument-Ordnern      | umgesetzt in Sprint 3 | 5            |
+|    | Fehlerkorrekturen: Bugs 3, 4 und 5             | offen                 | 3            |
 |    | Nebenläufiger Upload von Dokument-Ordnern      | offen                 | 1            |
-|    | Automatische Tags von hochgeladenen Ordnern    | offen                 | 3            |
+|    | Statusangabe bei Upload von Dokument-Ordnern   | offen                 | 1            |
+|    | Automatisches Tagging hochgeladener Ordner     | offen                 | 3            |
 |    | Variablen in der Ressourcenangabe              | offen                 | 3            |
-|    | Verbesserung der Testabdeckung                 | offen                 | 3            |
-|    | Automatische Formatierung von JSON-Ausgaben    | offen                 | 1            |
+|    | Verbesserung der Testabdeckung                 | offen                 |
+|    | Automatische Formatierung von JSON-Ausgaben    | offen                 |
 |    | Anzeigen der aktiven Logins                    | offen                 |
 |    | Auflisten von Dokumenten mit Suche/Filterung   | offen                 |
 |    | Ausführung von Befehlen für mehrere Umgebungen | offen                 |
@@ -790,7 +792,69 @@ Akzeptanzkriterien:
   JSON-Datenstruktur wird das Feld `uploaded` extrahiert, und mit der Anzahl
   Dateien in `docfolder` verglichen.
 
+# Manuelle Tests
+
+Da nicht alle Funktionen automatisiert getestet werden können, sollen am Ende
+eines Sprints manuelle Tests auf allen Plattformen durchgeführt. Es handelt
+sich um folgende Liste von Testfällen, die laufend erweitert wird:
+
+|  # | Beschreibung                                     | seit     |
+|---:|--------------------------------------------------|----------|
+|  1 | Login mit Zwei-Faktor-Authentifizierung          | Sprint 1 |
+| 1a | Login mit TOTP-Code                              | Sprint 1 |
+| 1b | Login mit SMS-Code                               | Sprint 1 |
+|  2 | Sichere Verwahrung der Tokens unter Windows      | Sprint 1 |
+| 2a | Login: Eintrag in Windows _Credential Manager_   | Sprint 1 |
+| 2b | Logout: Löschen aus Windows _Credential Manager_ | Sprint 1 |
+|  3 | Sichere Verwahrung der Tokens unter macOS        | Sprint 1 |
+| 3a | Login: Eintrag in macOS _Keychain Access_        | Sprint 1 |
+| 3b | Logout: Löschen aus macOS _Keychain Access_      | Sprint 1 |
+|  4 | Sichere Verwahrung der Tokens unter Linux        | Sprint 1 |
+| 4a | Login: Eintrag in Linux _Seahorse_               | Sprint 1 |
+| 4b | Logout: Löschen aus Linux _Seahorse_             | Sprint 1 |
+
+Scheitert einer dieser Tests am Ende eines Sprints, wird dies im folgenden
+Abschnitt «Bugs» entsprechend behandelt.
+
+## Zugänge
+
+Für die Tests (2FA und Token Store) werden folgende (produktive) Zugänge
+verwendet:
+
+- Produktivsystem [app.peax.ch](https://app.peax.ch):
+    - 2FA/TOTP: `patrick.bucher@peax.ch`
+    - 2FA/SMS: `patrick.bucher@stud.hslu.ch`
+- Testsytem [peax-v3-frontend-test.osapps.peax.ch](https://peax-v3-frontend-test.osapps.peax.ch/login)
+    - 2FA/TOTP: `paedupeax+totp@gmail.com`
+    - 2FA/SMS: `paedupeax+sms@gmail.com`
+
+## Testprotokolle
+
+Die manuellen Tests wurden erst seit Ende von Sprint 3 systematisch ausgeführt.
+Hierbei werden nur gefundene Probleme aufgezeichnet, nicht erfolgreich
+verlaufene Tests. Letztere werden am Ende des Testdurchlaufs als «durchgeführt»
+erwähnt.
+
+### Sprint 3
+
+1. 2b, 3b und 4b:
+    1. Beim Logout werden die sicher verwahrten Tokens nicht aus dem nativen Keystore gelöscht.
+    2. Beim Login wird der `token_type` nicht korrekt gesetzt in `~/.px-tokens`.
+    3. Beim Logout wird die `default_environment` nicht zurückgesetzt.
+
+Dieses Verhalten konnte auf allen drei Plattformen (Windows, macOS, Linux) nachvollzogen werden.
+
+Alle andere Testfälle konnten erfolgreich durchgeführt werden.
+
 # Bugs
+
+| # | Beschreibung                                    | Status               |
+|--:|-------------------------------------------------|----------------------|
+| 1 | Interaktive Eingabe auf Windows                 | behoben/workaround   |
+| 2 | Refresh-Mechanismus für Agent                   | offen (serverseitig) |
+| 3 | Fehlende Löschung von Tokens aus Keystore       | offen                |
+| 4 | Login setzt `token_type` nicht                  | offen                |
+| 5 | Logout setzt `default_environment` nicht zurück | offen                |
 
 ## 1: Interaktive Eingabe auf Windows funktioniert nicht
 
@@ -808,3 +872,24 @@ weiterhin die sichere Passworteingabe zum Einsatz kommt.
 Es ist derzeit nicht möglich, mit einem Refresh Token eines Agents einen neuen
 Access Token zu holen. Dieses Problem muss auf dem PEAX Identity Provider näher
 analysiert werden.
+
+## 3: Fehlende Löschung von Tokens aus Keystore
+
+Beim Logout werden die sicher verwahrten Tokens nicht aus dem nativen Keystore
+gelöscht. Zwar verschwindet die Referenz auf die Tokens in `~/.px-tokens`,
+könnte aber einfach wieder manuell erstellt werden. Dieser Fehler muss somit
+korrigiert werden. (Falls die Fehlerursache in der Fremdkomponente `go-keyring`
+ist, könnten die Tokens stattdessen mit einem ungültigen  Wert überschrieben
+werden.)
+
+## 4: Login setzt `token_type` nicht
+
+Beim Login wird der `token_type` nicht korrekt gesetzt in `~/.px-tokens`.
+Hierbei handelt es sich eher um ein kosmetisches Problem, da der `token_type`
+bereits Teil des Keys ist, der auf den jeweiligen Eintrag verweist.
+
+## 5: Logout setzt `default_environment` nicht zurück
+
+Beim Logout wird die `default_environment` nicht zurückgesetzt. Dies ist ein
+potenzielles Usability-Problem, da beim nächsten Aufruf eine Standardumgebung
+angenommen wird, für die es keine Tokens mehr gibt.
