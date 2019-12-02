@@ -22,12 +22,15 @@ author: Patrick Bucher
 | 14 | Generische `POST`-Schnittstelle                | umgesetzt in Sprint 3 | 3            |
 | 15 | Generische `PUT`-Schnittstelle                 | umgesetzt in Sprint 3 | 3            |
 | 16 | Generische `PATCH`-Schnittstelle               | umgesetzt in Sprint 3 | 3            |
-| 17 | Generische `DELETE`-Schnittstelle              | geplant für Sprint 3  | 1            |
-| 18 | Rekursives Hochladen von Dokument-Ordnern      | geplant für Sprint 3  | 5            |
-|    | Verbesserung der Testabdeckung                 | zu spezifizieren      | 3            |
-|    | Variablen in der Ressourcenangabe              | zu spezifizieren      | 3            |
-|    | Automatische Formatierung von JSON-Ausgaben    | zu spezifizieren      | 1            |
-|    | Automatische Tags von hochgeladenen Ordnern    | zu spezifizieren      | 5            |
+| 17 | Generische `DELETE`-Schnittstelle              | umgesetzt in Sprint 3 | 1            |
+| 18 | Rekursives Hochladen von Dokument-Ordnern      | umgesetzt in Sprint 3 | 5            |
+|    | Fehlerkorrekturen: Bugs 3, 4 und 5             | offen                 | 3            |
+|    | Nebenläufiger Upload von Dokument-Ordnern      | offen                 | 1            |
+|    | Statusangabe bei Upload von Dokument-Ordnern   | offen                 | 1            |
+|    | Automatisches Tagging hochgeladener Ordner     | offen                 | 3            |
+|    | Variablen in der Ressourcenangabe              | offen                 | 3            |
+|    | Verbesserung der Testabdeckung                 | offen                 |
+|    | Automatische Formatierung von JSON-Ausgaben    | offen                 |
 |    | Anzeigen der aktiven Logins                    | offen                 |
 |    | Auflisten von Dokumenten mit Suche/Filterung   | offen                 |
 |    | Ausführung von Befehlen für mehrere Umgebungen | offen                 |
@@ -36,14 +39,15 @@ author: Patrick Bucher
 |    | Inspektion von Tokens                          | offen                 |
 |    | Code für Login-Funktion vereinheitlichen       | offen                 |
 |    | Dokumente mit Metadaten hochladen              | offen                 |
+|    | Überarbeitung der README                       | offen                 |
 
 # Sprints
 
-| Sprint | Stories geplant  | Stories umgesetzt | Aufwand | Stories offen   | h/SP |
-|-------:|------------------|-------------------|--------:|-----------------|-----:|
-|      1 | 6 (1-6), 20 SP   | 4 (1-4), 14 SP    |   14.5h | 2 (5-6), 6 SP   | 1.05 |
-|      2 | 6 (5-10), 18 SP  | 6 (5-10), 18 SP   |   20.5h | 0               | 1.15 |
-|      3 | 8 (11.18), 20 SP | 6 (11-16), 14 SP  |   14.0h | 2 (17-18), 6 SP | 1.00 |
+| Sprint | Stories geplant  | Stories umgesetzt | Aufwand | Stories offen | h/SP |
+|-------:|------------------|-------------------|--------:|---------------|-----:|
+|      1 | 6 (1-6), 20 SP   | 4 (1-4), 14 SP    |   14.5h | 2 (5-6), 6 SP | 1.05 |
+|      2 | 6 (5-10), 18 SP  | 6 (5-10), 18 SP   |   20.5h | 0             | 1.15 |
+|      3 | 8 (11-18), 20 SP | 8 (11-18), 20  SP |   19.5h | 0             | 0.98 |
 
 # User Stories
 
@@ -656,29 +660,201 @@ Akzeptanzkriterien:
 
 ## Story 17: Generische `DELETE`-Schnittstelle
 
-Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels `DELETE`-Methode ansprechen können, damit ich Ressourcen auf dem PEAX-Portal entfernen kann.
+Als Benutzer der User API möchte ich einen beliebigen Endpoint mittels
+`DELETE`-Methode ansprechen können, damit ich Ressourcen auf dem PEAX-Portal
+entfernen kann.
 
 Akzeptanzkriterien:
 
-1. Der angegebene Ressourcenpfad wird automatisch anhand der Umgebungsinformationen zu einer URL ergänzt.
+1. Der angegebene Ressourcenpfad wird automatisch anhand der
+   Umgebungsinformationen zu einer URL ergänzt.
 2. Es soll _kein_ Payload mitgegeben werden können.
-3. Antworten, die einen Erfolg signalisieren, sollen auf `stderr` ausgegeben werden, wenn das Flag `-v`/`-verbose` spezifiziert worden ist.
-4. Antworten, die einen Fehler signalisieren, sollen immer auf `stderr` ausgegeben werden.
-5. Der Befehl soll `px delete` heissen.
+3. Der Befehl soll `px delete` heissen.
+
+### Notizen
+
+- Da `delete` in Go ein reserviertes Keyword ist, musste auf einen anderen
+  Funktionsnamen für den Befehl (`dlete`) ausgewichen werden.
+- Es wurden wiederum zunächst die Hilfetexte verfasst.
+- Die Request-Logik konnte mit wenig Aufwand analog zu `px get` umgesetzt
+  werden, wobei hier kein Payload zurück- und ausgegeben wird.
+
+### Testprotokoll
+
+- Da Testfälle wiederholbar ausführbar sein müssen, wurde für `DELETE` kein
+  neues Testskript erstellt. Stattdessen werden bestehende Testskripts, die
+  Ressourcen erzeugen, um eine Löschung derselben erweitert.
+- Es stellte sich heraus, dass das Profilbild (siehe Testprotokoll zu `px put`)
+  die einzige in den Testskripts erstellte Ressource ist, die auch gelöscht
+  werden kann. Dementsprechend wurde das Testskript `ci-px-put-test.sh` um die
+  Löschung des Profilbildes erweitert und zu `ci-px-put-delete-test.sh`
+  umbenannt.
+- Ein erster Aufruf schlug fehl, da beim Authorization-Header der Abstand
+  zwischen `Bearer` und dem Access Token vergessen worden war. Nach dieser
+  Korrektur lief das Skript durch. Das Profilbild verschwand damit aus dem
+  Portal.
+- Das Testskript `ci-px-help-test.sh` wurde um den Aufruf `px help delete`
+  erweitert.
 
 ## Story 18: Rekursives Hochladen von Dokument-Ordnern
 
-Als Benutzer der User API möchte ich einen lokale Ordnstruktur, die Dokumente beinhaltet, mit einem Befehl hochladen können, sodass alle in dieser Ordnerstruktur enthaltenen Dokumente im Upload-Bereich des PEAX-Portals auftauchen.
+Als Benutzer der User API möchte ich einen lokale Ordnstruktur, die Dokumente
+beinhaltet, mit einem Befehl hochladen können, sodass alle in dieser
+Ordnerstruktur enthaltenen Dokumente im Upload-Bereich des PEAX-Portals
+erscheinen.
 
 Akzeptanzkriterien:
 
-1. Es soll der bereits bestehende Befehl `px upload` um ein `-r`/`-recursive`-Flag ergänzt werden, der als Parameter ein Verzeichnis erwartet.
-2. Es sollen sämtliche in diesem Ordner (und dessen Unterordner beliebiger Tiefe) enthaltenen Dateien hochgeladen werden.
-3. Scheitert das Hochladen einer Datei, soll dies entsprechend auf `stderr` inkl. relativem Dateipfad gemeldet werden.
-4. Die generierten UUIDs der erfolgreich erstellten Dateien sollen auf `stdout` ausgegeben werden.
-5. Optional: Mit dem Parameter `-l`/`-log`, der ein Dateiname erwartet, wird ein Protokoll im `JSON`-Format geschrieben, das den Erfolg/Misserfolg für jede Datei (mit absolutem Pfad) angibt. Im Erfolgsfall enthält der Eintrag die generierte UUID des Dokuments, im Fehlerfall eine entsprechende Fehlermeldung.
+1. Es soll der bereits bestehende Befehl `px upload` um ein
+   `-r`/`-recursive`-Flag ergänzt werden, der als Parameter ein Verzeichnis
+   erwartet.
+2. Es sollen sämtliche in diesem Ordner (und dessen Unterordner beliebiger
+   Tiefe) enthaltenen Dateien hochgeladen werden.
+3. Als Ergebnis soll eine Datenstruktur ausgegeben werden, die über Erfolg und
+   Misserfolg jedes versuchten Uploads informiert. Zu jedem Eintrag soll der
+   Pfad der Datei stehen, für die ein Upload versucht worden ist.
+4. Scheitert das Hochladen einer Datei, soll der Eintrag eine entsprechende
+   Fehlermeldung enthalten.
+5. Ist das Hochladen einer Datei erfolgreich, soll der Eintrag die dabei
+   generierte UUID enthalten.
+
+### Notizen
+
+- Zunächst wurde eine Utility-Funktion `ListRecursively` entwickelt, die
+  rekursiv über die Einträge eines Verzeichnisses iteriert. Diese ist mithilfe
+  der Library-Funktion `filepath.Walk` umgesetzt, welche sich um die rekursive
+  Iteration durch das Verzeichnis kümmert. Diese Funktion erwartet eine
+  Funktion als Argument, welche auf jeden gefundenen Eintrag angewendet wird.
+  Die Funktion `isReadable`, die hierfür entwickelt worden ist, prüft für jeden
+  Eintrag, ob er lesbar ist, und fügt ihn in diesem Fall in eine Liste ein
+  (`isReadable` ist als Closure implementiert). Für unlesbare Fehler wird ein
+  Fehler zurückgegeben. Tritt im ganzen zu prüfenden Verzeichnisbaum auch nur
+  ein Fehler auf, gibt `ListRecursively` einen Fehler und keine Einträge
+  zurück. Dies, weil der Benutzer gleich zu Beginn einer grösseren Operation
+  über mögliche Fehler informiert werden soll, und nicht nach einem längeren
+  Upload-Vorgang über einzelne fehlende Dateien enttäuscht ist.
+- Der `upload`-Befehl erhält ein neues Flag `-r`/`-recursively`. Ist dieses
+  Flag gesetzt, wird nicht wie für ein einzelnes Dokument
+  `requests.UploadDocument`, sondern eine neue Funktion
+  `requests.UploadRecursively` aufgerufen.
+- Es wurden zwei neue Datenstrukturen erstllt: `DocumentUploadResult`, das den
+  Erfolg/Misserfolg für einen einzelnen Upload signalisiert; im Erfolgsfall die
+  erstelle UUID des Dokuments, im Fehlerfall eine Fehlermeldung enthält.
+  `FolderUploadResult` enthält eine Liste von `DocumentUploadResult` (ein
+  Eintrag pro Dokument) und statistische Angaben (Anzahl Versuche, Erfolge,
+  Fehler).
+- Die bestehende Upload-Funktion (`requests.UploadDocument`) wurde dahingehend
+  refactored, dass der HTTP-Code in eine Funktion ausgelagert wurde, welche
+  eine HTTP-Response zurückgibt. Für ein einzelnes Dokument kann der Payload
+  dann weiter an den Aufrufer zurückgegeben werden, für eine Reihe von
+  Dokumenten wird der Payload für jedes einzelne Dokument ausgewertet, und
+  schliesslich in einem aggregierten Object (`FolderUploadResult`) an den
+  Aufrufer zurückgegeben.
+- Die Funktion `utils.ListRecursively` wurde dahingehend angepasst, dass sie
+  Verzeichniseinträge ignoriert, d.h. nur noch Dateieinträge zurückgibt.
+- Die Struktur zum Parsen der Upload-Response enthält das Feld `documentID`
+  (Go-Namenskonvention: `ID`), die Response selber jedoch das Feld `documentId`
+  (`Id` mit kleinem `d`). Aus diesem Grund scheiterte das Mapping der
+  resultierenden UUID. Mithilfe eines entsprechenden Tags `json:"documentId"`
+  konnte dieses Mappng korrigiert werden. Da in Go nur exportierte, d.h.
+  grossgeschriebene Felder für die Serialisierung berücksichtigt werden, musste
+  das Feld weiter in `DocumentID` umbenannt werden. Die UUIDs erschienen
+  schliesslich in der Antwort.
+- Zum Schluss wurde noch der Hilfetext für den `upload`-Befehl ergänzt, indem
+  die Option mit dem rekursiven Upload erwähnt und die zurückgelieferte
+  Datenstruktur beschrieben wurde.
+
+### Testprotokoll
+
+- Mithilfe des Unit Tests `filesystem_test.TestListDirectory` wird eine
+  rekursive Dateistruktur im Temp-Verzeichnis mit einer gegebenen Tiefe
+  (`depth`), Anzahl Unterordner pro Stufe (`subFolders`) und Anzahl Dateien pro
+  Unterordner (`filesPerFolder`) angelegt. Dies sollte insgesamt
+  `subFolders^depth*filesPerFolder` Einträge ergeben. Beispiel: Mit `depth =
+  3`, `subFolders = 4` und `filesPerFolder = 5` sollen `4^3*5 = 320` Dateien
+  angelegt werden.
+- Die Upload-Funktion für ein einzelnes Dokument funktionierte nach dem
+  Refactoring noch einwandfrei.
+- Zum Testen des rekursiven Uploads wurde ein Testordner `docfolder` erstellt,
+  der jeweils Unterordner der Struktur
+  `Taxes/[2015..2019]/[Assets,Deductions,Donations,Insurance,Wage-Slips]/`
+  enthält. Jeder dieser Unterordner enthält wiederum ein Testdokument.
+- Beim ersten Test fiel auf, dass für erfolgreich hochgeladenen Dokumente in
+  der erstellten Datenstruktur keine `documentId` vorhanden ist. Ausserdem
+  wurde versucht, Verzeichnisse hochzuladen. Nach den entsprechenden
+  Korrekturen (siehe Notizen) funktionierte alles wie gewünscth.
+- Das Testskript `ci-px-login-upload-test.sh` wurde umbenannt zu
+  `ci-px-upload-test.sh`, also ohne das `login`, da die meisten Testskripts ein
+  Login ausführen, ohne dies im Namen zu tragen.
+- Auf Basis des Testskripts `ci-px-upload-test.sh` wurde das neue Testskript
+  `ci-px-upload-recursively-test.sh` entwickelt. Dieses lädt die Ordnestruktur
+  `docfolder` (siehe Beschreibung oben) hoch. Aus der resultierenden
+  JSON-Datenstruktur wird das Feld `uploaded` extrahiert, und mit der Anzahl
+  Dateien in `docfolder` verglichen.
+
+# Manuelle Tests
+
+Da nicht alle Funktionen automatisiert getestet werden können, sollen am Ende
+eines Sprints manuelle Tests auf allen Plattformen durchgeführt. Es handelt
+sich um folgende Liste von Testfällen, die laufend erweitert wird:
+
+|  # | Beschreibung                                     | seit     |
+|---:|--------------------------------------------------|----------|
+|  1 | Login mit Zwei-Faktor-Authentifizierung          | Sprint 1 |
+| 1a | Login mit TOTP-Code                              | Sprint 1 |
+| 1b | Login mit SMS-Code                               | Sprint 1 |
+|  2 | Sichere Verwahrung der Tokens unter Windows      | Sprint 1 |
+| 2a | Login: Eintrag in Windows _Credential Manager_   | Sprint 1 |
+| 2b | Logout: Löschen aus Windows _Credential Manager_ | Sprint 1 |
+|  3 | Sichere Verwahrung der Tokens unter macOS        | Sprint 1 |
+| 3a | Login: Eintrag in macOS _Keychain Access_        | Sprint 1 |
+| 3b | Logout: Löschen aus macOS _Keychain Access_      | Sprint 1 |
+|  4 | Sichere Verwahrung der Tokens unter Linux        | Sprint 1 |
+| 4a | Login: Eintrag in Linux _Seahorse_               | Sprint 1 |
+| 4b | Logout: Löschen aus Linux _Seahorse_             | Sprint 1 |
+
+Scheitert einer dieser Tests am Ende eines Sprints, wird dies im folgenden
+Abschnitt «Bugs» entsprechend behandelt.
+
+## Zugänge
+
+Für die Tests (2FA und Token Store) werden folgende (produktive) Zugänge
+verwendet:
+
+- Produktivsystem [app.peax.ch](https://app.peax.ch):
+    - 2FA/TOTP: `patrick.bucher@peax.ch`
+    - 2FA/SMS: `patrick.bucher@stud.hslu.ch`
+- Testsytem [peax-v3-frontend-test.osapps.peax.ch](https://peax-v3-frontend-test.osapps.peax.ch/login)
+    - 2FA/TOTP: `paedupeax+totp@gmail.com`
+    - 2FA/SMS: `paedupeax+sms@gmail.com`
+
+## Testprotokolle
+
+Die manuellen Tests wurden erst seit Ende von Sprint 3 systematisch ausgeführt.
+Hierbei werden nur gefundene Probleme aufgezeichnet, nicht erfolgreich
+verlaufene Tests. Letztere werden am Ende des Testdurchlaufs als «durchgeführt»
+erwähnt.
+
+### Sprint 3
+
+1. 2b, 3b und 4b:
+    1. Beim Logout werden die sicher verwahrten Tokens nicht aus dem nativen Keystore gelöscht.
+    2. Beim Login wird der `token_type` nicht korrekt gesetzt in `~/.px-tokens`.
+    3. Beim Logout wird die `default_environment` nicht zurückgesetzt.
+
+Dieses Verhalten konnte auf allen drei Plattformen (Windows, macOS, Linux) nachvollzogen werden.
+
+Alle andere Testfälle konnten erfolgreich durchgeführt werden.
 
 # Bugs
+
+| # | Beschreibung                                    | Status               |
+|--:|-------------------------------------------------|----------------------|
+| 1 | Interaktive Eingabe auf Windows                 | behoben/workaround   |
+| 2 | Refresh-Mechanismus für Agent                   | offen (serverseitig) |
+| 3 | Fehlende Löschung von Tokens aus Keystore       | offen                |
+| 4 | Login setzt `token_type` nicht                  | offen                |
+| 5 | Logout setzt `default_environment` nicht zurück | offen                |
 
 ## 1: Interaktive Eingabe auf Windows funktioniert nicht
 
@@ -696,3 +872,24 @@ weiterhin die sichere Passworteingabe zum Einsatz kommt.
 Es ist derzeit nicht möglich, mit einem Refresh Token eines Agents einen neuen
 Access Token zu holen. Dieses Problem muss auf dem PEAX Identity Provider näher
 analysiert werden.
+
+## 3: Fehlende Löschung von Tokens aus Keystore
+
+Beim Logout werden die sicher verwahrten Tokens nicht aus dem nativen Keystore
+gelöscht. Zwar verschwindet die Referenz auf die Tokens in `~/.px-tokens`,
+könnte aber einfach wieder manuell erstellt werden. Dieser Fehler muss somit
+korrigiert werden. (Falls die Fehlerursache in der Fremdkomponente `go-keyring`
+ist, könnten die Tokens stattdessen mit einem ungültigen  Wert überschrieben
+werden.)
+
+## 4: Login setzt `token_type` nicht
+
+Beim Login wird der `token_type` nicht korrekt gesetzt in `~/.px-tokens`.
+Hierbei handelt es sich eher um ein kosmetisches Problem, da der `token_type`
+bereits Teil des Keys ist, der auf den jeweiligen Eintrag verweist.
+
+## 5: Logout setzt `default_environment` nicht zurück
+
+Beim Logout wird die `default_environment` nicht zurückgesetzt. Dies ist ein
+potenzielles Usability-Problem, da beim nächsten Aufruf eine Standardumgebung
+angenommen wird, für die es keine Tokens mehr gibt.

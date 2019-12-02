@@ -63,13 +63,13 @@ go vet
 
 Ein etwas anderer Ansatz wird in \textsc{Rust} für das sehr umfassende Werkzeug \texttt{cargo} (u.a. für die Kompilierung und das Ausführen von Tests) verwendet. Hier gibt es zwar auch Unterbefehle (\texttt{cargo build}, \texttt{cargo test}), diese sind aber nicht zwingend Teil des \texttt{cargo}-Binaries, sondern separate Binaries, die im Verzeichnis \texttt{~/.cargo/bin/} abgelegt sind, und der Namenskonvention \texttt{cargo-[subcommand]} folgen \cite[Kapitel 14.5]{rust-book}.
 
-Der Ansatz von \textsc{Rust} passt zwar deutlich besser zur \textsc{Unix}-Philosophie ‒ \textit{«Make each program do one thing well.»} \cite[p. 3]{unixtimesharing} ‒ führt aber im Fall von \textsc{Go} aufgrund der statischen Kompilierung zu einer ganzen Reihe grosser Binaries, anstelle nur eines grossen Binaries, was wiederum das Deployment und Setup erschwert.
+Der Ansatz von \textsc{Rust} passt zwar deutlich besser zur \textsc{Unix}-Philosophie ‒ \textit{«Make each program do one thing well.»} \cite[S. 3]{unixtimesharing} ‒ führt aber im Fall von \textsc{Go} aufgrund der statischen Kompilierung zu einer ganzen Reihe grosser Binaries, anstelle nur eines grossen Binaries, was wiederum das Deployment und Setup erschwert.
 
 \subsection{Ausgangslage und Vorleistungen}
 
 Das Projekt \texttt{px} wurde bereits am 11. Juni 2019 auf dem \textsc{GitLab} von PEAX erstellt\footnote{\url{https://gitlab.peax.ch/peax3/px}}. Als erstes wurde eine CI-Pipeline bestehend aus den Schritten \texttt{build} und \texttt{test} eingerichtet. Die Pipeline wurde mittels eines Dummy-Tests überprüft, der einmal erfolgreich durchlaufen und einmal scheitern sollte, um einen Positiv- und einen Negativtest durchführen zu können.
 
-Es wurde eine Hallo-Welt-Programm im \texttt{cmd}-Unterverzeichnis \cite[p. 293]{gopl} erstellt, welches dazu diente, die Kompilierung für verschiedene Plattformen zu testen. Obwohl auch umfassende Go-Programme mittels \texttt{go build} kompiliert werden können und keine weitere Build-Konfiguration benötigen, wurde ein \texttt{Makefile} erstellt, das ausführbare Programme für verschiedene Plattformen im \texttt{build}-Unter\-ver\-zeich\-nis erstellt, also z.B. \texttt{build/windows/px.exe} für \textsc{Windows} oder \texttt{build/linux/px} für \textsc{Linux}.
+Es wurde eine Hallo-Welt-Programm im \texttt{cmd}-Unterverzeichnis \cite[S. 293]{gopl} erstellt, welches dazu diente, die Kompilierung für verschiedene Plattformen zu testen. Obwohl auch umfassende Go-Programme mittels \texttt{go build} kompiliert werden können und keine weitere Build-Konfiguration benötigen, wurde ein \texttt{Makefile} erstellt, das ausführbare Programme für verschiedene Plattformen im \texttt{build}-Unter\-ver\-zeich\-nis erstellt, also z.B. \texttt{build/windows/px.exe} für \textsc{Windows} oder \texttt{build/linux/px} für \textsc{Linux}.
 
 Das \texttt{Makefile} wurde später um ein \texttt{release}-Target erweitert, womit die kompilierten Artefakte jeweils in eine Zip-Datei verpackt werden, die den aktuellen Versionstag (z.B. \texttt{v0.0.3}\footnote{\url{https://semver.org/}}) im Dateinamen enthält.
 
