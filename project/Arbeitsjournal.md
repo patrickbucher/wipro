@@ -81,7 +81,7 @@ author: Patrick Bucher
 | Mo, 11.11.2019 |       1.0 | Projekt       | Arbeitskollegen instruiert und deren Rückmeldungen aufgenommen     |
 | Di, 12.11.2019 |       1.0 | Recherche     | Versionsinformationen in Binärdateien hineinkompilieren            |
 | Di, 12.11.2019 |       0.5 | Umsetzung     | Version von Git-Repository ins Programm hineinkompilieren          |
-| Mi, 13.11.2019 |       1.0 | Dokumentation | Rückmeldungen von Arbeitskollegen geprüft und kommentiert          |
+| Mi, 13.11.2019 |       1.0 | Dokumentation | Rückmeldungen von arbeitskollegen geprüft und kommentiert          |
 | Sa, 16.11.2019 |       2.5 | Dokumentation | Komponentendiagramm erstellt, Sequenzdiagramme verbessert          |
 | Sa, 16.11.2019 |       1.5 | Dokumentation | Struktur der Dokumentation überarbeitet, Notizen eingefügt         |
 | Sa, 16.11.2019 |       0.5 | Dokumentation | Deckblatt ausgefüllt und optisch an Dokumentation angeglichen      |
@@ -116,4 +116,5 @@ author: Patrick Bucher
 | So, 01.12.2019 |       1.0 | Projekt       | Freigabe Release v0.3.0, Release Notes, Team informiert            |
 | Mo, 02.12.2019 |       1.5 | Dokumentation | Ideen und Konzepte: Unix-Philosophie zusammengefasst               |
 | Mo, 02.12.2019 |       0.5 | Dokumentation | Editionsplan für die ganze Woche erarbeitet                        |
-|                | **130.0** | **Total**     |                                                                    |
+| Mo, 02.12.2019 |       0.5 | Dokumentation | Rückmeldungen von arbeitskollegen geprüft und kommentiert          |
+|                | **130.5** | **Total**     |                                                                    |
