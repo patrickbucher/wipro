@@ -114,4 +114,6 @@ author: Patrick Bucher
 | So, 01.12.2019 |       1.0 | Umsetzung     | Testing auf allen unterstützten Plattformen                        |
 | So, 01.12.2019 |       0.5 | Dokumentation | Testergebnisse/Bugs beschrieben                                    |
 | So, 01.12.2019 |       1.0 | Projekt       | Freigabe Release v0.3.0, Release Notes, Team informiert            |
-|                | **128.0** | **Total**     |                                                                    |
+| Mo, 02.12.2019 |       1.5 | Dokumentation | Ideen und Konzepte: Unix-Philosophie zusammengefasst               |
+| Mo, 02.12.2019 |       0.5 | Dokumentation | Editionsplan für die ganze Woche erarbeitet                        |
+|                | **130.0** | **Total**     |                                                                    |

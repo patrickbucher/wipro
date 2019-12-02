@@ -11,7 +11,9 @@ TODO: Libraries, Umgebung, Architektur
     \caption{Komponentendiagramm: Die Komponentenarchitektur von \texttt{px}}
 \end{figure}
 
-Diese Projektstruktur ist bei \textsc{Go}-Anwendungen weit verbreitet \cite[p. 12]{powerful-cli-apps-in-go}.
+Diese Projektstruktur ist bei \textsc{Go}-Anwendungen weit verbreitet \cite[S. 12]{powerful-cli-apps-in-go}.
+
+\subsection{Befehlsstruktur}
 
 \subsection{Zwei-Faktor-Authentifizierung}
 
@@ -21,6 +23,13 @@ Diese Projektstruktur ist bei \textsc{Go}-Anwendungen weit verbreitet \cite[p. 1
     \caption{Sequenzdiagramm: Der Ablauf der Zwei-Faktor-Authentifizierung mit SMS oder OTP}
 \end{figure}
 
+\subsection{Token Store}
+\label{sec:realisierung-token-store}
+
+TODO: sicher und unsicher, Datenstruktur
+
+\subsubsection{Fremdkomponente \texttt{zalando/go-keyring}}
+
 \subsection{Retry-Mechanismus}
 \label{sec:retry-mechanism}
 
@@ -29,10 +38,3 @@ Diese Projektstruktur ist bei \textsc{Go}-Anwendungen weit verbreitet \cite[p. 1
     \includegraphics[width=\linewidth]{pics/sequence-retry.png}
     \caption{Sequenzdiagramm: Der für den Benutzer transparente Retry-Mechanismus mit einem Token Pair, das im Hintergrund automatisch aktualisiert wird}
 \end{figure}
-
-\subsection{Token Store}
-\label{sec:realisierung-token-store}
-
-TODO: sicher und unsicher, Datenstruktur
-
-\subsubsection{Fremdkomponente \texttt{zalando/go-keyring}}

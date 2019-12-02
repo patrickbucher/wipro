@@ -22,18 +22,16 @@ Der zweite Grundsatz geht auf \textsc{Doug McIlroys} erste Stil-Maxime \cite[S. 
 
 Jahre später ‒ und um etliche Erfahrung mit Unix reicher ‒ sammelte \textsc{Mike Gancarz} neun Grundsätze (\textit{tenets}) zur Unix-Philosophie, die hier zusammenfassend wiedergegeben werden \cite{unixphil}:
 
-TODO: auf Deutsch zusammenfassen und Beispiele machen
-
 \begin{enumerate}
-    \item \textit{Small is beautiful.}
-    \item \textit{Make each program do one thing well.}
-    \item \textit{Build a prototype as soon as possible.}
-    \item \textit{Choose portability over efficiency.}
-    \item \textit{Store numerical data in flat ASCII files.}
-    \item \textit{Use software leverage to your advantage.}
-    \item \textit{Use shell scripts to increase leverage and portability.}
-    \item \textit{Avoid captive user interfaces.}
-    \item \textit{Make every program a filter.}
+    \item \textit{Small is beautiful.} Grosse Programme entstehen dann, wenn das zu lösende Problem nicht vollends verstanden und eingegrenzt wird. Bei grossen Programmen wird eine signifikante Menge an Code geschrieben, die nicht das eigentliche Problem löst, sondern andere, nicht-essentielle Sachen macht. Kleine Programme hingegen sind einfach zu verstehen, einfach zu warten, benötigen weniger Systemressourcen ‒ und können einfacher mit anderen Programmen kombiniert werden.
+    \item \textit{Make each program do one thing well.} Ein Programm soll nur zur Lösung eines Problems entwickelt werden, und nicht damit zusammenhängende oder gar ganz andere Probleme zu lösen versuchen. Dieses eine Problem sollte aber so gut wie möglich gelöst werden. Das Formatieren von Ein- und Ausgaben kann oft von anderen Programmen übernommen werden. Interaktive Programme können oft vermieden werden, indem die Aufbereitung der Eingabedaten mit einem anderen Programm gelöst wird.
+    \item \textit{Build a prototype as soon as possible.} Eine Idee sollte zunächst anhand eines Prototypen getestet werden, bevor viel Aufwand in eine umfassende Spezifikation und anschliessende Implementierung fliesst, die nicht gebraucht wird. Das Problem ist in dieser frühen Phase oft noch nicht gänzlich verstanden, und ein entsprechendes Konzept würde bloss am Ziel vorbeischiessen. Ein früher Prototyp minimiert das Risiko für unnütze Aufwände und spart somit viel Zeit. Überhaupt entsteht gute Software über iterative Annäherungen an ein Ziel, nicht auf Basis eines einzigen Konzepts.
+    \item \textit{Choose portability over efficiency.} Ein Programm, das auf vielen Plattformen läuft, ist besser als ein Programm, das die Vorzüge einer einzigen Plattform vollends ausnützt, jedoch nur auf dieser Plattform läuft. Performanceoptimierung für eine einzige Plattform führt oft dazu, dass ein Programm auf anderen Plattformen nur noch schlecht oder gar nicht mehr läuft. Es ist einfacher, eine plattformübergreifende Codebasis zu warten, als verschiedene plattformabhängige. Da die Hardware ständig schneller wird, lösen sich Performanceprobleme oftmals von selber ‒ sofern ein Programm nicht unnötig aufgeblasen wird.
+    \item \textit{Store numerical data in flat ASCII files.} Daten müssen früher oder später auf ein anderes System übertragen werden. Bei Textdateien ist dies in der Regel kein Problem. Bei proprietären Binärformaten ist aber oftmals eine Konvertierung erforderlich, die Zeit und Geld kostet. Textdateien können problemlos manuell mit einem Texteditor und automatisiert mit anderen Programmen bearbeitet werden. \textit{Unix} bietet eine Vielzahl solcher Programme.\footnote{Heutzutage ist UTF-8 das am weitesten verbreitete Format für Textdateien. Dessen Erfolg geht nicht zuletzt darauf zurück, dass es mit dem Ziel entwickelt worden ist, eine Obermenge von ASCII zu sein, wodurch ASCII komplett vorwärtskompatibel zu UTF-8 ist. UTF-8 wurde von Rob Pike und Ken Thompson entwickelt.}
+    \item \textit{Use software leverage to your advantage.} Programmierer sollen sich auf das eigentliche Problem konzentrieren, und nicht auf solche, die bereits von anderen Programmierern zufriedenstellend gelöst worden sind. Um dies zu ermöglichen, muss Programmcode zwischen Programmierern ausgetauscht werden, und nicht als streng gehütetes Geheimnis behandelt werden. Bestehende Software ‒ in der Form von Code oder kompilierter Software ‒ kann mit einer gewaltige Hebelwirkung für die eigene Arbeit eingesetzt werden.
+    \item \textit{Use shell scripts to increase leverage and portability.} Mithilfe von Shell-Skripts kann in wenigen Zeilen Software genutzt werden, die hundertausenden Zeilen ‒ getestetem und von anderen Programmierern gewartetem ‒ C-Code entsprechen. Der Entwicklungszyklus von Shell-Skripts ist schneller als derjenige von C-Programmen, da der Kompilierungsschritt entfällt. Zudem sind Shell-Skripts portabler als Programme, die in C oder in einer anderen Hochsprache geschrieben sind.
+    \item \textit{Avoid captive user interfaces.} Interaktive Programme haben ihre eigene Interaktionssprache, die sich von der Shell unterscheidet, und daher zunächst für jedes Werkzeug gelernt werden muss. Solche Programme gehen davon aus, dass der Benutzer ein Mensch ist, was die Verwendung via Skripts ‒ und somit die Hebelwirkung von Software ‒ verunmöglicht. Interaktive Programme tendieren dazu, Features aus der Umgebung, von der sie sich abkapseln, in eigener, meist schlechterer Implementierung anzubieten, was die Codebasis aufbläht und zu einem inkonsistenten Verhalten führt.
+    \item \textit{Make every program a filter.} Die meisten Programme nehmen Eingabedaten entgegen, transformieren diese, und produzieren daraus Ausgabedaten. Sie produzieren keine originären Daten, sondern verarbeiten Daten, die zumeist von Menschen prodiziert worden sind. Programme, die als Filter konzipiert sind, werden diesem Umstand gerecht. Auf \textsc{Unix} werden Eingabedaten über die Standardeingabe (`stdin`) entgegengenommen und über die Standardausgabe (`stdout`) wieder ausgegeben. Mithilfe der Pipe können so beliebig lange Filterketten erstellt werden, wovon jedes Programm eine Transformation auf den Datenstrom vornimmt. Fehlermeldungen und andere Informationen, die sich von den Nutzdaten unterscheiden, sollen in die Standardfehlerausgabe (`stderr`) geschrieben werden, was eine gesonderte Verarbeitung solcher Meldungen ermöglicht.
 \end{enumerate}
 
 Für \texttt{px} werden diese Grundsätze folgendermassen angewendet:
@@ -56,9 +54,7 @@ Für \texttt{px} werden diese Grundsätze folgendermassen angewendet:
 
 \subsection{Swiss Army Knive}
 
-\subsection{Befehlsstruktur von \texttt{px}}
-
-TODO: swiss army knive \cite[p. 290]{gopl} für CLI
+TODO: swiss army knive \cite[S. 290]{gopl} für CLI beschreiben: command subcommand, flags, help-Befehl
 
 \subsubsection{Generische Befehle für Entwickler}
 
@@ -68,11 +64,13 @@ TODO: generische Befehle für Entwickler (GET, POST, PUT, PATCH, DELETE)
 
 TODO: bequeme Befehle für Prototypen (archive)
 
-\subsection{Token Store}
+\subsection{Token Handling}
 \label{sec:konzept-token-store}
+
+\subsubsection{Token Store}
 
 TODO: token storage (sicher und unsicher)
 
-\subsection{Token Refresh}
+\subsubsection{Token Refresh}
 
 TODO: automatisches Retry

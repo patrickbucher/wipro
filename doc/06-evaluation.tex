@@ -12,7 +12,7 @@ Nach jedem Sprint wird ein Inkrement an die Entwickler ausgeliefert (siehe \secr
 \begin{itemize}
     \item \textsc{Michael Buholzer} wünscht sich Erfolgs- und Vollzugsmeldungen nach dem Login oder dem Upload eines Dokuments.
     \begin{itemize}
-        \item \texttt{stdout} sollte grundsätzlich «sauber» bleiben, d.h. frei von unnötigen Ausgaben, die ein nachgelagertes Programm wieder herausfiltern müsste. Eine wichtige Maxime von \textsc{Unix}-Programmen lautet: \textit{«Expect the output of every program to become the input to another, as yet unknown, program.»} \cite[p. 3]{unixtimesharing}. Siehe dazu auch \textit{Rule of Silence} \cite[p. 20]{unixart} und \textit{Silence is Golden} \cite[p. 111]{unixphil}.\footnote{Brian W. Kernighan berichtet von der Zeit, als die Pipe Einzug in \textsc{Unix} hielt, womit die Ausgabe eines Programms zur Eingabe eines anderen Programms gemacht werden konnte: \textit{«Ken [Thompson] and Dennis [Ritchie] upgraded every command on the system in a single night. […] Overall, the job was not hard—most programs required nothing more than eliminating extraneous messages that would have \textbf{cluttered a pipeline}, and sending error reports to stderr.»} \cite[p. 69]{unix-history-memoir}}
+        \item \texttt{stdout} sollte grundsätzlich «sauber» bleiben, d.h. frei von unnötigen Ausgaben, die ein nachgelagertes Programm wieder herausfiltern müsste. Eine wichtige Maxime von \textsc{Unix}-Programmen lautet: \textit{«Expect the output of every program to become the input to another, as yet unknown, program.»} \cite[S. 3]{unixtimesharing}. Siehe dazu auch \textit{Rule of Silence} \cite[S. 20]{unixart} und \textit{Silence is Golden} \cite[S. 111]{unixphil}.\footnote{Brian W. Kernighan berichtet von der Zeit, als die Pipe Einzug in \textsc{Unix} hielt, womit die Ausgabe eines Programms zur Eingabe eines anderen Programms gemacht werden konnte: \textit{«Ken [Thompson] and Dennis [Ritchie] upgraded every command on the system in a single night. […] Overall, the job was not hard—most programs required nothing more than eliminating extraneous messages that would have \textbf{cluttered a pipeline}, and sending error reports to stderr.»} \cite[S. 69]{unix-history-memoir}}
         \item \texttt{stderr} wird nicht nur als Ausgabekanal für Fehlermeldungen verwendet, sondern für Meldungen allgemein. Für Vollzugsmeldungen wäre \texttt{stderr} vorzuziehen.
         \item Da \texttt{stderr} in \texttt{px} bisher grundsätzlich für Fehlermeldungen verwendet wird, sollen Erfolgsmeldungen über ein zusätzliches Flag \texttt{-verbose}/\texttt{-v} aktiviert werden müssen.
         \item Bei anderen Anwendungsfällen signalisiert die Ausgabe des Payloads auf \texttt{stdout} den Erfolg der Operation. Beim Dokument-Upload besteht dieser beispielsweise aus der generierten UUID des hochgeladenen Dokuments.
@@ -22,7 +22,7 @@ Nach jedem Sprint wird ein Inkrement an die Entwickler ausgeliefert (siehe \secr
         \item Im Arbeitsalltag von PEAX stellt die Handhabung von Vault Secrets tatsächlich eine teils mühsame und langwierige Aufgabe dar. Hier besteht durchaus Automatisierungsbedarf.
         \item \texttt{px} ist als «skriptbare» Anwendung für die PEAX API konzipiert und so potenziell für jeden PEAX-Anwender einsetzbar.
         \item Die Verwaltung und Verwendung von Vault Secrets ist hingegen eine Aufgabe im DevOps-Bereich und betrifft nur interne Entwickler bei PEAX.
-        \item Eine der obersten Maximen von \textsc{Unix} lautet: \textit{«Make each program do one thing well. To do a new job, build afresh rather than complicate old programs by adding new ‹features.›} \cite[p. 3]{unixtimesharing} Die Verwaltung von Vault Secrets und das Ansprechen der PEAX API sind klar zwei verschiedene Sachen und somit nicht «one thing». Die genannte Idee muss also anderweitig weiterverfolgt werden.
+        \item Eine der obersten Maximen von \textsc{Unix} lautet: \textit{«Make each program do one thing well. To do a new job, build afresh rather than complicate old programs by adding new ‹features.›} \cite[S. 3]{unixtimesharing} Die Verwaltung von Vault Secrets und das Ansprechen der PEAX API sind klar zwei verschiedene Sachen und somit nicht «one thing». Die genannte Idee muss also anderweitig weiterverfolgt werden.
     \end{itemize}
 \end{itemize}
 
@@ -62,4 +62,10 @@ Nach jedem Sprint wird ein Inkrement an die Entwickler ausgeliefert (siehe \secr
         \begin{itemize}
             \item Diese Funktionalitäten werden nach der User Story 13 (Einlieferung von Dokumenten per Agent API) für den ersten Punkt bzw. mit den User Stories 14-17 (generische Schnittstellen für \texttt{POST}, \texttt{PUT}, \texttt{PATCH}, \texttt{DELETE}) unterstützt.
         \end{itemize}
+\end{itemize}
+
+\subsubsection{Sprint 3}
+
+\begin{itemize}
+    \item TODO
 \end{itemize}
