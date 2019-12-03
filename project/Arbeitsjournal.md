@@ -117,4 +117,5 @@ author: Patrick Bucher
 | Mo, 02.12.2019 |       1.5 | Dokumentation | Ideen und Konzepte: Unix-Philosophie zusammengefasst               |
 | Mo, 02.12.2019 |       0.5 | Dokumentation | Editionsplan für die ganze Woche erarbeitet                        |
 | Mo, 02.12.2019 |       0.5 | Dokumentation | Rückmeldungen von arbeitskollegen geprüft und kommentiert          |
-|                | **130.5** | **Total**     |                                                                    |
+| Di, 02.12.2019 |       1.5 | Dokumentation | Befehlsstruktur beschrieben                                        |
+|                | **132.0** | **Total**     |                                                                    |
