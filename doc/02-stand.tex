@@ -46,17 +46,17 @@ Da es sich bei \texttt{http} ‒ dem Executable von \textsc{HTTPie} ‒ um ein \
 Bei Kommandozeilenprogrammen grösseren Umfangs hat sich ein Bedienungsmuster etabliert, bei dem der Programmname als der Hauptbefehl und der erste Parameter als Unterbefehl angegeben wird. Hierzu einige Beispiele:
 
 \begin{lstlisting}[caption={Einie Kommandozeilenbeispiele mit Haupt- und Unterbefehl}]
-git add *.c
-git commit -m 'added C files'
-git push
+$ git add *.c
+$ git commit -m 'added C files'
+$ git push
 
-docker rm -f my-container
-docker rmi -f my-image
-docker run redis
+$ docker rm -f my-container
+$ docker rmi -f my-image
+$ docker run redis
 
-go run cmd/px.go
-go build cmd/px.go -o builds/linux/px
-go vet
+$ go run cmd/px.go
+$ go build cmd/px.go -o builds/linux/px
+$ go vet
 \end{lstlisting}
 
 Ähnliche Bedienungsmuster findet man auch in \texttt{oc} (\textsc{OpenShift} Command Line Client), \texttt{pacman} und \texttt{brew} (Paketmanager für \textsc{Arch Linux} bzw. \textsc{macOS}), \texttt{npm} und \texttt{pip} (Paketmanager für \textsc{Node} und \textsc{Python}). Obwohl sich für dieses Bedienungsmuster noch kein allgemein gebräuchlicher Name etabliert hat\footnote{\url{https://superuser.com/q/1020583}}, soll es im Rahmen der vorliegenden Arbeit als \textit{Swiss Army Knife}-Ansatz bezeichnet werden, zumal diese Bezeichnung im Standardwerk zu \textsc{Go} für das \texttt{go}-Tool verwendet wird \cite{gopl}.

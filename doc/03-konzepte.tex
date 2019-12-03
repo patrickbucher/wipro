@@ -77,7 +77,49 @@ Parameter werden nicht von allen Befehlen erwartet/unterstützt. Beim \texttt{up
 
 \subsubsection{Befehle für das Token-Handling}
 
-Die grundlegende Voraussetzung zur Interaktion mit der PEAX API und die wichtigste Erleichterung durch \texttt{px} ist das Token-Handling.
+Die grundlegende Voraussetzung zur Interaktion mit der PEAX API und die wichtigste Erleichterung durch \texttt{px} ist das Token-Handling. Bei einem Login-Vorgang wird ein Token Pair bestehend aus Refresh Token und Access Token vom Identity Provider geholt. Dabei wird zwischen drei Bereichen der API unterschieden: User API, Agent API und Admin API (siehe auch \secref{sec:Systemkontext}).
+
+Die User API deckt die Funktionen des PEAX-Portals ab. Für das Login wird ein Benutzername (E-Mail-Adresse), ein Passwort und ein optionaler zweiter Faktor verwendet. Letzteres kann ein SMS-Code oder eine Time-based One-time-Password (TOTP) sein. 
+
+Die Quelle für diesen zweiten Faktor wird im Portal konfiguriert: Entweder als Mobiltelefonnummer (SMS-Code) oder mittels einer entsprechenden Authenticator-App. Stimmen Benutzername und Passwort im ersten Schritt mit den Angaben auf dem Identity Provider überein, wird interaktiv nach dem zweiten Faktor gefragt, der dann wiederum auf dem Identity Provider überprüft wird. 
+
+Bei einem erfolgreichen Login-Vorgang werden die Tokens via HTTP-Response an den Client übertragen, wo sie verwahrt werden können.
+
+Der Login-Vorgang wird mit dem Unterbefehl \texttt{login} durchgeführt. Als Flags muss eine Umgebung (\texttt{-env}/\texttt{-e}), ein Benutzername (\texttt{-u}/\texttt{-user}) und ein Passwort (\texttt{-p}/\texttt{-pass}) angegeben werden. Benutzername und Passwort werden interaktiv nachgefragt, sollten diese nicht via Flag spezifiziert worden sein.
+
+Mithilfe der Flags \texttt{-s}/\texttt{-secure} und \texttt{-i}/\texttt{-insecure} kann die Umgebungseinstellung bezüglich sicherer Tokenverwahrung übersteuert werden. Die beiden Flags schliessen sich gegenseitig aus. Ist das \texttt{-v}/\texttt{-verbose}-Flag gesetzt, wird nach einem erfolgreichen Login eine entsprechende Meldung ausgegeben.
+
+Die Tokens können mithilfe des Unterbefehls \texttt{logout} wieder entfernt werden. Mit dem Flag \texttt{-a}/\texttt{-all} werden alle lokalen Tokens entfernt. Mit dem Flag \texttt{-e}/\texttt{-env} werden die Tokens zu der jeweiligen Umgebung entfernt. Das \texttt{-v}/\texttt{-verbose}-Flag dient wiederum zur Ausgabe von Erfolgsmeldungen.
+
+In der Anwendung sehen die Befehle folgendermassen aus:
+
+\begin{lstlisting}[caption={Anwendung der Befehle für Login und Logout}]
+# Login auf Umgebung test mit Benutzername und Passwort
+$ px login -e test -u john.doe@acme.org -p TopSecret1337!
+
+# Das gleiche Login mit interaktiver Passworteingabe
+$ px login -e test -u john.doe@acme.org
+Password: [versteckt]
+
+# Das gleiche Login mit interaktiver Benutzername- und Passworteingabe
+$ px login -e test
+Username: john.doe@acme.org
+Password: [versteckt]
+
+# Login mit konfigurierter Zwei-Faktor-Authentifizierung und verbose-Flag
+$ px login -e test -u john.doe@acme.org -p TopSecret1337! -v
+SMS Code: 123467
+login for user john.doe@acme.org to environment test was successful
+
+# Logout von Umgebung test mit verbose-Flag
+$ px logout -e test -v
+user logout from environment test was successful
+
+# Logout von allen Umgebungen
+$ px logout -a
+\end{lstlisting}
+
+TODO: agent-login, agent-logout
 
 \subsubsection{Generische Befehle für Entwickler}
 
