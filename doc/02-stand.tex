@@ -45,7 +45,7 @@ Da es sich bei \texttt{http} ‒ dem Executable von \textsc{HTTPie} ‒ um ein \
 
 Bei Kommandozeilenprogrammen grösseren Umfangs hat sich ein Bedienungsmuster etabliert, bei dem der Programmname als der Hauptbefehl und der erste Parameter als Unterbefehl angegeben wird. Hierzu einige Beispiele:
 
-\begin{lstlisting}[language=bash,caption={Einie Kommandozeilenbeispiele mit Haupt- und Unterbefehl}]
+\begin{lstlisting}[caption={Einie Kommandozeilenbeispiele mit Haupt- und Unterbefehl}]
 git add *.c
 git commit -m 'added C files'
 git push
@@ -66,6 +66,7 @@ Ein etwas anderer Ansatz wird in \textsc{Rust} für das sehr umfassende Werkzeug
 Der Ansatz von \textsc{Rust} passt zwar deutlich besser zur \textsc{Unix}-Philosophie ‒ \textit{«Make each program do one thing well.»} \cite[S. 3]{unixtimesharing} ‒ führt aber im Fall von \textsc{Go} aufgrund der statischen Kompilierung zu einer ganzen Reihe grosser Binaries, anstelle nur eines grossen Binaries, was wiederum das Deployment und Setup erschwert.
 
 \subsection{Ausgangslage und Vorleistungen}
+\label{sec:ausgangslage}
 
 Das Projekt \texttt{px} wurde bereits am 11. Juni 2019 auf dem \textsc{GitLab} von PEAX erstellt\footnote{\url{https://gitlab.peax.ch/peax3/px}}. Als erstes wurde eine CI-Pipeline bestehend aus den Schritten \texttt{build} und \texttt{test} eingerichtet. Die Pipeline wurde mittels eines Dummy-Tests überprüft, der einmal erfolgreich durchlaufen und einmal scheitern sollte, um einen Positiv- und einen Negativtest durchführen zu können.
 

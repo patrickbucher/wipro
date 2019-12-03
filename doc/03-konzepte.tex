@@ -54,7 +54,30 @@ Für \texttt{px} werden diese Grundsätze folgendermassen angewendet:
 
 \subsection{Swiss Army Knive}
 
-TODO: swiss army knive \cite[S. 290]{gopl} für CLI beschreiben: command subcommand, flags, help-Befehl
+Die «Swiss Army Knive»-Befehlsstruktur \cite[S. 290]{gopl}, wie sie im vorhergehenden Kapitel beschrieben (\secref{sec:command-line-tools}) und im Prototyp (\secref{sec:ausgangslage}) verwendet worden ist, soll beibehalten werden. Befehle in \texttt{px} sollen etwa folgendermassen aussehen:
+
+\begin{lstlisting}[caption={Beispielhafter Befehl mit Command, Subcommand, Flags, Parametern}]
+# Login-Vorgang: Tokens vom IDP holen
+px login -env test -verbose -user john.doe@acme.org
+
+# Upload-Vorgang: Ein Dokument hochladen
+px upload -e test document.pdf
+
+# Logout-Vorgang: lokale Tokens entfernen
+px logout -e test
+\end{lstlisting}
+
+Die Struktur ist immer dieselbe: \texttt{[Befehl] [Unterbefehl] [Flags] [Parameter]}, wobei der \texttt{Befehl} im Rahmen dieser Arbeit immer \texttt{px} lautet. Die einzelnen Unterbefehle werden in den folgenden Abschnitten erläutert.
+
+Die Flags treten in zweierlei Ausprägung auf: Einerseits als \textit{Switches}, wobei eine Option durch das Vorhandensein eines Flags aktiviert und durch das Fehlen deaktiviert wird. Das \texttt{-verbose}-Flag ist ein Beispiel dafür. Andererseits als \textit{Key-Value-Parameter}, wobei das Flag einen zusätzlichen Wert erfordert. Beispiele hierfür sind die Flags \texttt{-env} und \texttt{-user} im Beispiel oben.
+
+Zu den Flags soll es jeweils eine lange Version (\texttt{-verbose}, \texttt{-user}, \texttt{-env}) und eine zugehörige kurze Version (bestehend aus dem ersten Buchstaben der langen Version) geben (\texttt{-v}, \texttt{-u}, \texttt{-e}). Treten dabei Kollisionen auf (mehrere Flags, die mit dem gleichen Buchstaben beginnen), muss improvisiert werden.
+
+Parameter werden nicht von allen Befehlen erwartet/unterstützt. Beim \texttt{upload}-Unterbefehl ist etwa ein Dokument (als relativer Dateipfad) erforderlich. Bei anderen Befehlen sind es Ressourcenpfade.
+
+\subsubsection{Befehle für das Token-Handling}
+
+Die grundlegende Voraussetzung zur Interaktion mit der PEAX API und die wichtigste Erleichterung durch \texttt{px} ist das Token-Handling.
 
 \subsubsection{Generische Befehle für Entwickler}
 
