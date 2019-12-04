@@ -34,7 +34,9 @@ Jahre später ‒ und um etliche Erfahrung mit Unix reicher ‒ sammelte \textsc
     \item \textit{Make every program a filter.} Die meisten Programme nehmen Eingabedaten entgegen, transformieren diese, und produzieren daraus Ausgabedaten. Sie produzieren keine originären Daten, sondern verarbeiten Daten, die zumeist von Menschen prodiziert worden sind. Programme, die als Filter konzipiert sind, werden diesem Umstand gerecht. Auf \textsc{Unix} werden Eingabedaten über die Standardeingabe (`stdin`) entgegengenommen und über die Standardausgabe (`stdout`) wieder ausgegeben. Mithilfe der Pipe können so beliebig lange Filterketten erstellt werden, wovon jedes Programm eine Transformation auf den Datenstrom vornimmt. Fehlermeldungen und andere Informationen, die sich von den Nutzdaten unterscheiden, sollen in die Standardfehlerausgabe (`stderr`) geschrieben werden, was eine gesonderte Verarbeitung solcher Meldungen ermöglicht.
 \end{enumerate}
 
-Für \texttt{px} werden diese Grundsätze folgendermassen angewendet:
+\subsubsection{Anwendung auf \texttt{px}}
+
+Für \texttt{px} werden die Grundsätze der \textsc{Unix}-Philosophie folgendermassen angewendet:
 
 \begin{enumerate}
     \item \textit{Small is beautiful.} \texttt{px} soll nicht jeden Anwendungsfall mit einem einfachen, benutzerfreundlichen Befehl abdecken, sondern mit folgender Doppelstrategie mit möglichst wenig Aufwand zu einem möglichst für alle Benutzergruppen befriedigenden Ergebnis kommen:
@@ -119,15 +121,175 @@ user logout from environment test was successful
 $ px logout -a
 \end{lstlisting}
 
-TODO: agent-login, agent-logout
+Die Agent API bietet Partnern und Zulieferern ‒ die \textit{Agents} ‒ die Möglichkeit, beliebigen Benutzern Dokumente und Metadaten ins Portal zu stellen. Sie wird für verschiedene Input-Kanäle von PEAX verwendet.
+
+Im Gegensatz zur User API erfolgt die Authentifizierung nicht mit Benutzername und Passwort, sondern mit einer \textit{Client ID} und einem \textit{Client Secret}.\footnote{Bei OAuth 2.0 wird dies als der \textit{OAuth 2.0 Client Credentials Grant} bezeichnet. Bei der User API gibt es die Client ID \texttt{peax.portal}, die für alle Benutzer gleich ist.} Jeder Agent verfügt über seine eigene Kombinatation von ID und Secret.
+
+Der Agent-API-Nutzers verwendet Client ID und Client Secret somit wie Benutzername und Passwort. Dementsprechend sollen auch die Kommandozeilenparameter entsprechend lauten: \texttt{-u}/\texttt{-user} für die Client ID und \texttt{-p}/\texttt{-pass} für das Client Secret.
+
+Die Befehle für das Login und Logout erhalten das Prefix \texttt{agent}. In der Anwendung sehen diese Befehle folgendermassen aus:
+
+\begin{lstlisting}[caption={Anwendung der Befehle für Agent-Login und -Logout}]
+# Agent-Login auf Umgebung test mit Client Secrets
+$ px agent-login -u PEAX-Agent-ACME -p 123456-789abc-...
+
+# Agent-Login mit interaktiver Eingabe des Secrets:
+$ px agent-login -e test -u PEAX-Agent-ACME
+Client Secret: 123456-789abc...
+
+# Logout
+$ px agent-logout -e test
+\end{lstlisting}
+
+Für die Admin API wird der gleiche Login-Mechanismus wie für die User API verwendet. Der einzige Unterschied im Gebrauch dieser APIs ist, dass die Benutzer für die Admin API über zusätzliche Berechtigungen verfügen, welche im Access Token entsprechend kodiert sind.
 
 \subsubsection{Generische Befehle für Entwickler}
 
-TODO: generische Befehle für Entwickler (GET, POST, PUT, PATCH, DELETE)
+Damit Entwickler oftmals an einzelnen Endpoints arbeiten, sollen sie einen möglichst feingranularen Zugriff auf die API erhalten, sprich über die HTTP-Methoden \texttt{GET}, \texttt{POST}, \texttt{PATCH} usw.\footnote{\texttt{px} wurde im Ideenstadium als \textit{«\texttt{curl} for the PEAX API»} bezeichnet.} Die Befehle werden dementsprechend (mit Kleinbuchstaben) bezeichnet.
 
-\subsubsection{Spezifische Befehle für Prototypen}
+Befehle für HTTP-Methoden, die über einen Body verfügen (\texttt{POST}, \texttt{PUT}, \texttt{PATCH}), verfügen über den Parameter \texttt{-p}/\texttt{-payload}, womit eine entsprechende Datei angegeben werden kann.
 
-TODO: bequeme Befehle für Prototypen (archive)
+\begin{lstlisting}[caption={Anwendung der feingranularen HTTP-Befehle}]
+# Abrufen der Anzahl Dokumente eines Benutzers
+$ px get document/api/v3/account/455.5462.5012.69/collection
+
+# Hinzufügen einer Organisation (für spätere Postabonnierung)
+$ px post -p testdata/organization.json \
+    network/api/v3/network/455.5462.5012.69/userorganizationrelationship
+
+# Aktualisierung der Metadaten eines Dokuments
+$ px patch -p document-patch.json \
+    document/api/v3/document/123456-789abc...
+
+# Hochladen eines Profilbildes
+$ px put -p pic.jpg \
+    profile/api/v3/profile/455.5462.5012.69/picture/avatar
+
+# Löschen des Profilbildes
+$ px delete \
+    profile/api/v3/profile/455.5462.5012.69/picture/avatar
+\end{lstlisting}
+
+\subsubsection{Spezifische Befehle wichtiger Funktionen}
+
+Eine der wichtigsten Funktionen von PEAX ist das Einstellen von Dokumenten ins Portal. Dies geschieht einerseits über die Agent API, wo ein Agent einem beliebigen Nutzer ein Dokument (mitsamt Metadaten) ins Portal stellen kann. Andererseits kann ein Benutzer Dokumente für sich selber hochladen.\footnote{Die anderen Eingangskanäle (App, E-Mail, Postumleitung via Scanning-Center, Sammelcouvert) sind allesamt mit diesen beiden Schnittstellen umgesetzt.}
+
+Ein Agent soll den Benutzern über den Befehl \texttt{deliver} Dokumente in den Posteingang stellen können. Der Endpoint ist immer der gleiche. Der Empfänger (und Sender) muss mithilfe von Metadaten (JSON-Format) spezifiziert werden, die mit dem Parameter \texttt{-m}/\texttt{-meta} mitgegeben werden können. Diese Metadaten sehen beispielsweise folgendermassen aus (\texttt{meta.json}):
+
+\begin{lstlisting}[caption={Metadaten für die Dokument-Einflieferung}]
+{
+    "type": "DOCUMENT",
+    "source": "SCANCENTER",
+    "title": "Testdokument",
+    "senderUid": "CHE-123.456.789",
+    "senderName": "px: PEAX Command Line Client",
+    "receiverPeaxId": "455.5462.5012.69"
+}
+\end{lstlisting}
+
+Die \texttt{senderUid} ist die MWST-Nummer des Dokument-Absenders. Der Empfänger ist mit der \texttt{receiverPeaxId} definiert. Die Felder \texttt{type} und \texttt{source} sind spezielle Konstanten, die serverseitig geprüft werden, und eine besondere Bedeutung haben. Die Felder \texttt{title} und \texttt{senderName} sind Freitextfelder für den Dokumenttitel und den Absendernamen. Eine Vielzahl anderer Angaben (z.B. komplette Zahlungsinformationen für Rechnungen) können auf diese Weise gemacht werden. Die API ist PEAX-intern entsprechend dokumentiert.
+
+Als Parameter erwartet der \texttt{deliver}-Befehl den Pfad zu einer Dokumentdatei:
+
+\begin{lstlisting}[caption={Dokument-Einlieferung über die Delivery-Schnittstelle}]
+# Dokument mit Metadaten einliefern
+$ px deliver -e test -m meta.json document.pdf
+\end{lstlisting}
+
+Einem Benutzer der User API soll der \texttt{upload}-Befehl zum Hochladen von Dokumenten zur Verfügung stehen. Rekursives Hochladen von Dokumentordnern kann mit dem Flag \texttt{-r}/\texttt{-recursive} und einer entsprechenden Ordnerangabe als Parameter bewerkstelligt werden. Fehlt dieses Flag, wird als Parameter der Pfad zu einer Dokumentdatei erwartet:
+
+
+\begin{lstlisting}[caption={Hochladen von Dateien}]
+# Upload eines einzelnen Dokuments
+$ px upload document.pdf
+
+# rekursiver Upload eines Ordners, der Dokumente enhält
+$ px upload -r docfolder/
+\end{lstlisting}
+
+\subsubsection{Hilfefunktion}
+
+Damit sich der Benutzer bei Unklarheiten selber helfen kann, und damit ihm der Einstieg in die Verwendung von \texttt{px} erleichtert wird, soll ihm eine Hilfefunktion zur Verfügung stehen. Mit dem Unterbefehl \texttt{help} soll er einführende Erläuterungen und einen Überblick über alle zur Verfügung stehenden Befehle erhalten. Gibt er zusätzlich als Parameter den Namen eines Befehls an, soll er Hilfe zu diesem jeweiligen Befehl erhalten. Hilfe zu den einzelnen Flags eines Befehls soll er mit Befehlen der Struktur \texttt{px [subcommand] -h} erhalten.
+
+\begin{lstlisting}[caption={Verwendung der Hilfefunktion}]
+# Allgemeine Hilfe (Ausgabe gekürzt)
+$ px help
+
+px ‒ the PEAX Command Line Client
+
+This tool is supposed to make dealing with the PEAX API easier [...]
+
+The following subcommands are supported at the moment:
+
+    px login: log into a PEAX environment (fetch tokens)
+    px get: execute a HTTP GET request against a given resource
+    [...]
+
+# Befehlsspezifische Hilfe (Ausgabe gekürzt)
+$ px help env
+
+px env: find our or define the default environment for upcoming commands
+
+This command can be used in two ways: ...
+
+Sample usage:
+
+    # print the current default environment
+    px env
+
+    # set prod as the default environment
+    px env prod
+
+Run 'px env -h' to get information on the individual flags.
+
+# Informationen über die Flags eines Befehls
+$ px env -h
+Usage of env:
+    -v    print success message to STDERR (shorthand)
+    -verbose
+          print success message to STDERR
+\end{lstlisting}
+
+Zu jedem Unterbefehl sollen allgemeine Informationen und Beispielaufrufe beschrieben sein. Bei manchen Befehlen ist es sinnvoll, wenn spezifische Zusatzinformationen ausgegeben werden. Beim \texttt{login}-Unterbefehl ist dies etwa eine Liste mit allen zur Verfügung stehenden Umgebungen.
+
+\subsubsection{Weitere Befehle}
+
+Damit der Benutzer nicht bei jedem Aufruf eine Umgebung mit dem Flag \texttt{-e}/\texttt{-env} spezifizieren muss, soll es eine Standardumgebung geben. Diese ist nicht konstant, sondern soll sich auf das jeweils letzte Login beziehen: Hat sich der Benutzer beispielsweise zuletzt auf \texttt{prod} eingeloggt, soll dies seine Standardumgebung sein.
+
+Da ein Benutzer zu einem gegebenen Zeitpunkt mehrere aktive Logins, d.h. gültige Tokens, auf verschiedenen Umgebungen haben kann, soll er die Standardumgebung wechseln können; nicht nur mit dem \texttt{-e}/\texttt{-env}-Flag jedes Aufrufs, sondern über mehrere Aufrufe hinweg mithilfe des Unterbefehls \texttt{env}. Wird dieser mit einem Parameter (Umgebungsname) aufgerufen, wird die Standardumgebung entsprechend gesetzt, sofern ein Token für diese Umgebung vorhanden ist. Wird der Unterbefehl ohne Parameter aufgerufen, wird die derzeit aktive Standardumgebung ausgegeben.\footnote{Dieses Verhalten ist dem Befehl \texttt{oc project} des OpenShift Command Line Clients nachempfunden (\url{https://docs.openshift.com/container-platform/3.11/cli_reference/basic_cli_operations.html\#project}).}
+
+\begin{lstlisting}[caption={Ausgeben und Wechseln der Standardumgebung}]
+# Login auf Umgebung test
+$ px login -e test -u ... -p ...
+
+# Ausgabe der aktuellen Standardumgebung
+$ px env
+test
+
+# Login auf Umgebung prod
+$ px login -e prod -u ... -p ...
+
+# Ausgabe der aktuellen Standardumgebung
+$ px env
+prod
+
+# Wechseln der Standardumgebung
+$ px env test
+$ px env
+test
+
+# Wechseln auf eine Umgebung, für die kein Login besteht
+$ px env prototype
+env: no tokens for environment 'prototype', you must login first
+\end{lstlisting}
+
+Damit ein Benutzer weiss, welche Version von \texttt{px} er gegenwärtig verwendet, soll ihm der Unterbefehl \texttt{version} zur Verfügung stehen, der ihm die semantische Versionsnummer ausgibt. Diese Angabe soll fix ins Programm hineinkompiliert sein.
+
+\begin{lstlisting}[caption={Ausgeben der Versionsnummer}]
+# Ausgeben der Versionsnummer von px
+$ px version
+v0.3.0
+\end{lstlisting}
 
 \subsection{Token Handling}
 \label{sec:konzept-token-store}
