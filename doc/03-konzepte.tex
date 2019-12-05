@@ -16,7 +16,7 @@ Die Unix-Philosophie wird oftmals mit den folgenden beiden Grundsätzen wiederge
     \item \textit{When you build something, you write things that are for a single purpose, but that do that purpose well.}\footnote{Wenn man etwas erstellt, macht man es zu einem einzigen Zweck, den es gut erfüllen soll.}
 \end{enumerate}
 
-Für den ersten Grundsatz lassen sich schwer Quellen finden. Die Unix-Pioniere \textsc{Doug McIlroy} und \textsc{Brain Kernighan} beschreiben aber den bei der Entwicklung von Unix eingeschlagenen Weg mit einem hierarchischen Dateisystem als revolutionär und als Grund für den Erfolg von Unix und dessen Nachfolger \cite[Kapitel 4.1, S. 62-62, und Kapitel 9.1, S. 166]{unix-history-memoir}. Das experimentelle Betriebssystem Plan 9 verfolgte diesen Grundsatz noch konsequenter \cite[Kapitel 8.4, S. 161]{unix-history-memoir}.
+Für den ersten Grundsatz lassen sich schwer Quellen finden. Die Unix-Pioniere \textsc{Doug McIlroy} und \textsc{Brain Kernighan} beschreiben aber den bei der Entwicklung von Unix eingeschlagenen Weg mit einem hierarchischen Dateisystem als revolutionär und als Mitgrund für den Erfolg von Unix und dessen Nachfolger \cite[Kapitel 4.1, S. 62-62, und Kapitel 9.1, S. 166]{unix-history-memoir}. Das experimentelle Betriebssystem Plan 9 verfolgte diesen Grundsatz noch konsequenter \cite[Kapitel 8.4, S. 161]{unix-history-memoir}.
 
 Der zweite Grundsatz geht auf \textsc{Doug McIlroys} erste Stil-Maxime \cite[S. 3]{unixtimesharing} \textit{«Make each program do one thing well.»}\footnote{Jedes Programm soll eine Sache gut erfüllen.} zurück. Die zweite Maxime \textit{«Expect the output of every program to become the input to another, as yet unknown, program. Don't clutter output with extraneous information. [...]»} ist im Zusammenhang mit Kommandozeilenprogrammen ebenfalls zu beachten. \textsc{Doug McIlroys} \textit{Pipe}-Idee von 1964 und Ken Thompsons Implementierung davon 1972 haben dazu geführt, dass in Unix praktisch jedes Programm mit jedem anderen Programm zusammenarbeiten kann, sofern diese zweite Maxime eingehalten wird.\footnote{Ken Thompson soll den Pipe-Mechanismus nach der ersten Verwendung als «mind-blowing» bezeichnet haben \cite[Kapitel 4.4, S. 68-69]{unix-history-memoir}.} Auf die weiteren Maximen soll an dieser Stelle nicht eingegangen werden.\footnote{\textsc{McIlroys} dritte Maxime, man solle Software idealerweise innert Wochen gestalten und erstellen, um sie früh ausprobieren zu können, wird diese Arbeit bereits aufgrund ihres Rahmens und des vorangegangenen Prototypen gerecht.}
 
@@ -50,7 +50,7 @@ Für \texttt{px} werden die Grundsätze der \textsc{Unix}-Philosophie folgenderm
     \item \textit{Store numerical data in flat ASCII files.} Die unsicher verwahrten Tokens sollen in einer JSON-Datei namens \texttt{.px-tokens} im \texttt{HOME}-Verzeichnis des Benutzers abgelegt werden. JWT-Tokens sind numerische Daten im weitesten Sinn, sprich Base64-codiertes JSON. Zwar lässt sich JSON nicht wie eine «flache» ASCII-Datei komfortabel mit Tools wie \texttt{grep} und Konsorten bearbeiten, dafür bietet \textsc{Go} sehr komfortable \textit{Marshaling}-Mechanismen um Datenstrukturen aus und zu JSON zu serialisieren \cite[Kapitel 4.5]{gopl}. Wichtig ist, dass zur Speicherung der Tokens keine Binärdateien, sondern Textdateien \textit{im weitesten Sinn} (JSON) zum Einsatz kommen.
     \item \textit{Use software leverage to your advantage.} Die Hebelwirkung von \textit{bestehender} Software soll für \texttt{px} auf verschiedenen Stufen genutzt werden. Die sehr umfassende und hochwertige Standard Library von \textsc{Go}, gerade das sehr mächtige Package \texttt{net/http} unterstützt das Ansprechen einer RESTful HTTP-API. Eine Fremdkomponente von Zalando (\texttt{go-keyring}) bietet plattformübergreifende Unterstützung für den nativen Keystore des Betriebssystems. Das sehr mächtige \texttt{go}-Tool kommt u.a. zur statischen Quellcodeanalyse (\texttt{go vet}), zum Testen (\texttt{go test}), Verwalten von Abhängigkeiten (\texttt{go mod}) und kompilieren (\texttt{go build}) zum Einsatz. In der Entwicklung werden Hilfstools wie \texttt{golint} (Quellcodeanalyse), \texttt{goimports} (Formatierung von Code und Importieren von Packages) und \texttt{gopls} (automatische, Texteditor-unabhängige Code-Vervollständigung).
     \item \textit{Use shell scripts to increase leverage and portability.} Die Teststrategie (siehe \secref{sec:testing-q2}) setzt stark auf Shell-Skripts zum Erreichen einer hohen Testabdeckung mit aussagekräftigen Tests. Die Skripts könnten auch dann noch verwendet werden, sollte \texttt{px} dereinst mit einer anderen Programmiersprache neu implementiert werden (siehe auch \secref{sec:decision-programming-language}).
-    \item \textit{Avoid captive user interfaces.} Grundsätzlich soll \texttt{px} interaktiv bedienbar und in Skripten verwendet werden können. So können Benutzername und Passwort per Kommandozeilenparameter mitgegeben werden, und werden nur interaktiv erfragt, falls ersteres unterlassen wird. Bei der Zwei-Faktor-Authentifizierung ist jedoch eine interaktive Eingabe vonnöten, da der SMS-Code zum Zeitpunkt der initialen Login-Anfrage noch nicht bekannt ist.\footnote{Mit einem One-Time Password würde dies theoretisch funktionieren, da die Codes jeweils vorweg für eine bestimmte Zeitspanne gültig sind. Der Nutzen hiervon ist jedoch äusserst gering, da der Benutzer ja doch am Terminal sitzen muss, um den Code \textit{vor} der Ausführung von \texttt{px} einzugeben.}
+    \item \textit{Avoid captive user interfaces.} Grundsätzlich soll \texttt{px} interaktiv bedienbar und in Skripten verwendet werden können. So können Benutzername und Passwort per Kommandozeilenparameter gesetzt und nur interaktiv erfragt werden, falls ersteres unterlassen wird. Bei der Zwei-Faktor-Authentifizierung ist jedoch eine interaktive Eingabe vonnöten, da der SMS-Code zum Zeitpunkt der initialen Login-Anfrage noch nicht bekannt ist.\footnote{Mit einem One-Time Password würde dies theoretisch funktionieren, da die Codes jeweils vorweg für eine bestimmte Zeitspanne gültig sind. Der Nutzen hiervon ist jedoch äusserst gering, da der Benutzer ja doch am Terminal sitzen muss, um den Code \textit{vor} der Ausführung von \texttt{px} einzugeben.}
     \item \textit{Make every program a filter.} \texttt{px} soll keine unnötigen Ausgaben machen und nur Nutzdaten auf \texttt{stdout} ausgeben. Werden Vollzugs- und Erfolgsmeldungen benötigt, sollen diese per speziellem Parameter verlangt und nach \texttt{stderr} ausgegeben werden (siehe auch die Diskussion bei \secref{sec:feedback-sprint1}).
 \end{enumerate}
 
@@ -75,7 +75,7 @@ Die Flags treten in zweierlei Ausprägung auf: Einerseits als \textit{Switches},
 
 Zu den Flags soll es jeweils eine lange Version (\texttt{-verbose}, \texttt{-user}, \texttt{-env}) und eine zugehörige kurze Version (bestehend aus dem ersten Buchstaben der langen Version) geben (\texttt{-v}, \texttt{-u}, \texttt{-e}). Treten dabei Kollisionen auf (mehrere Flags, die mit dem gleichen Buchstaben beginnen), muss improvisiert werden.
 
-Parameter werden nicht von allen Befehlen erwartet/unterstützt. Beim \texttt{upload}-Unterbefehl ist etwa ein Dokument (als relativer Dateipfad) erforderlich. Bei anderen Befehlen sind es Ressourcenpfade.
+Parameter werden nicht von allen Befehlen erwartet/unterstützt. Beim \texttt{upload}-Unter\-be\-fehl ist etwa ein Dokument (als relativer Dateipfad) erforderlich. Bei anderen Befehlen sind es Ressourcenpfade.
 
 \subsubsection{Befehle für das Token-Handling}
 
@@ -103,12 +103,12 @@ $ px login -e test -u john.doe@acme.org -p TopSecret1337!
 $ px login -e test -u john.doe@acme.org
 Password: [versteckt]
 
-# Das gleiche Login mit interaktiver Benutzername- und Passworteingabe
+# Das gleiche Login mit interaktiver Benutzer- und Passworteingabe
 $ px login -e test
 Username: john.doe@acme.org
 Password: [versteckt]
 
-# Login mit konfigurierter Zwei-Faktor-Authentifizierung und verbose-Flag
+# Login mit Zwei-Faktor-Authentifizierung und verbose-Flag
 $ px login -e test -u john.doe@acme.org -p TopSecret1337! -v
 SMS Code: 123467
 login for user john.doe@acme.org to environment test was successful
@@ -144,6 +144,7 @@ $ px agent-logout -e test
 Für die Admin API wird der gleiche Login-Mechanismus wie für die User API verwendet. Der einzige Unterschied im Gebrauch dieser APIs ist, dass die Benutzer für die Admin API über zusätzliche Berechtigungen verfügen, welche im Access Token entsprechend kodiert sind.
 
 \subsubsection{Generische Befehle für Entwickler}
+\label{sec:generische-befehle}
 
 Damit Entwickler oftmals an einzelnen Endpoints arbeiten, sollen sie einen möglichst feingranularen Zugriff auf die API erhalten, sprich über die HTTP-Methoden \texttt{GET}, \texttt{POST}, \texttt{PATCH} usw.\footnote{\texttt{px} wurde im Ideenstadium als \textit{«\texttt{curl} for the PEAX API»} bezeichnet.} Die Befehle werden dementsprechend (mit Kleinbuchstaben) bezeichnet.
 
@@ -228,7 +229,7 @@ The following subcommands are supported at the moment:
 # Befehlsspezifische Hilfe (Ausgabe gekürzt)
 $ px help env
 
-px env: find our or define the default environment for upcoming commands
+px env: get or set the default environment for next commands
 
 This command can be used in two ways: ...
 
@@ -294,10 +295,38 @@ v0.3.0
 \subsection{Token Handling}
 \label{sec:konzept-token-store}
 
+Wie die Befehle der vorhergehenden Abschnitte (besonders \secref{sec:generische-befehle}) gezeigt haben, kann \texttt{px} ähnlich wie \texttt{curl} (\secref{sec:curl}) verwendet werden, ohne sich um \texttt{Authorization}-Headers, Tokens und dergleichen kümmern zu müssen. Dies, weil \texttt{px} sich um das Abholen (\texttt{px login}) und Verwalten der Tokens kümmert.
+
 \subsubsection{Token Store}
 
-TODO: token storage (sicher und unsicher)
+OAuth-Tokens erlauben den Zugriff auf möglicherweise sensitive Informationen. Sie sind ähnlich mächtig, wie ein zeitlich begrenzt gültiges Passwort. Sie sollen darum sicher verwahrt werden können. Andererseits müssen sich Entwickler bei der Fehlersuche die Tokens mit wenig Aufwand anschauen können. Dieser Zielkonflikt kann folgendermassen gelöst werden:
+
+\begin{itemize}
+    \item Es soll zwei Arten der Token-Verwahrung geben: Eine sichere und eine unsichere.
+    \item Für die sichere Token-Verwahrung soll der betriebssystem-eigene Token-Store verwendet werden. Bei \textsc{macOS} ist dies die Anwendung \textsc{Keychain Access}. Bei \textsc{Windows} heisst die entsprechende Anwendung \textsc{Credential Manager}. Auf \textsc{Linux} gibt es verschiedene Varianten, z.B. die Anwendung \textsc{Seahorse}.
+    \item Für die unsichere Token-Verwahrung dient die JSON-Datei \texttt{.px-tokens}, die im \texttt{HOME}-Verzeichnis des Benutzers abgelegt wird. Diese Art der Verwahrung ist insofern unsicher, dass jedes Programm mit Leseberechtigungen für das entsprechende Verzeichnis auf die Tokens zugreifen kann ‒ was auch für die privaten Dokumente gilt, die ein Benutzer auf seinem Computer ablegt.
+    \item Für Entwicklungs- und Testsysteme ist der komfortable Zugriff auf die Tokens wichtig. Tokens von diesen Systemen sollen in \texttt{\$HOME/.px-tokens} verwahrt werden.
+    \item Für das Produktivsystem ist die sichere Verwahrung der Tokens wichtig. Sie sollen im nativen Keystore abgelegt werden.
+    \item Mit den Flags \texttt{-s}/\texttt{-secure} und \texttt{-i}/\texttt{-insecure} kann das Verhalten vom Benutzer übersteuert werden.
+\end{itemize}
 
 \subsubsection{Token Refresh}
 
-TODO: automatisches Retry
+Der Access Token ist in der Regel kurzlebig. Bei IDP von PEAX beträgt seine Gültigkeitsdauer fünf Minuten ab Ausstellungszeitpunkt. Refresh Tokens sind langlebiger. Sie dienen dazu, ein neues Paar von Token vom IDP zu holen. Bei PEAX beträgt deren Lebensdauer 30 Minuten.
+
+Nach dem Login kann der Benutzer fünf Minuten lang mit dem Access Token Anfragen an die API stellen. Nach diesen fünf Minuten werden seine Anfragen mit dem HTTP-Status \texttt{401 Unauthorized} quittiert.
+
+Wird nun mit dem Refresh-Token ein neues Token Pair beim IDP geholt, können nicht für fünf weitere Minuten weitere API-Anfragen an den Server gestellt werden, sondern es kann auch für 30 Minuten ein neues Token Pair geholt werden. Damit kann die Sitzungsdauer beliebig lange sein, sofern die einzelnen Anfragen nie länger als 30 Minuten auseinanderliegen.
+
+Für die Aktualisierung des Token Pairs gibt es zwei Ansätze:
+
+\begin{enumerate}
+    \item proaktive Variante: Die Gültigkeit des Access Tokens wird \texttt{vor} jedem Request anhand der Zeitinformationen im Token überprüft. Ist der Token abgelaufen, wird ein neues Token Pair anhand des Refresh Tokens geholt. Ist der Refresh Token, dessen Gültigkeitsdauer ebenfalls vorher geprüft werden soll,  auch abgelaufen, wird der Prozess mit einem Fehler abgebrochen.
+    \item «lazy»-Variante: Ein Request soll mit dem jeweils aktuellen Access Token gestellt werden. Wird er mit dem HTTP-Status \texttt{401 Unauthorized} quittiert, soll ein Token Refresh vorgenommen werden. Scheitert der Token Refresh aufgrund eines abgelaufenen Refresh Tokens (wiederum \texttt{401 Unauthorized}), soll dies dem Benutzer angezeigt werden.
+\end{enumerate}
+
+Die proaktive Variante hat den Vorteil, das keine unnötigen Anfragen an den Server gestellt werden. Die «lazy»-Variante hat den Vorteil, dass clientseitig weniger Logik implementiert werden muss.
+
+Mag die proaktive Variante technisch ausgereifter erscheinen, führt ihr zugrundeliegender Gedanke in eine Sackgasse: Soll \texttt{px} \textit{vor} einer Anfrage prüfen, ob diese vom Server akzeptiert werden wird, müsste die serverseitige Validierungslogik im Client abgebildet werden. Um Antworten mit HTTP-Status \texttt{400 Bad Request} verhindern zu können, müssten die erlaubten Payload-Schemas und -Restriktionen dem Client bekannt sein. Möchte man zusätzlich Antworten mit HTTP-Status \texttt{404 Not Found} verhindern, müsste eine lokale Liste der möglichen Endpoints geführt und gepflegt werden.
+
+Da \texttt{px} mitunter ein Entwickler-Werkzeug für Backend-Entwickler ist, und Backend-Entwickler das Verhalten des Servers ‒ und hierzu gehört die Validierungslogik ‒ prüfen möchten, sind lokale Validierungen nur hinderlich. Darum soll die «lazy»-Variante umgesetzt werden, die dem Anwender das bereits zitierte \textit{«\texttt{curl} for PEAX»} an die Hand gibt.

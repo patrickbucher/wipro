@@ -10,7 +10,7 @@ Für das direkte (d.h. nicht durch ein Web-Frontend vermittelte) Ansprechen eine
 
 Die Anwendung \textsc{Postman}\footnote{\url{https://www.getpostman.com/product/api-client}} erfreut sich bei PEAX-Entwicklern grosser Beliebtheit. \textsc{Postman} wird v.a. als HTTP-Client eingesetzt.
 
-Requests können mit URL, Parametern und Body definiert und manuell in Collections gruppiert werden. Diese Gruppierungen werden beispielsweise nach Umgebung (\texttt{dev}, \texttt{test}) oder nach API-Bereich (Profile, Document) vorgenommen.
+Requests können mit URL, Parametern und Body definiert und manuell in sogenannte Collections gruppiert werden. Diese Gruppierungen werden beispielsweise nach Umgebung (\texttt{dev}, \texttt{test}) oder nach API-Bereich (Profile, Document) vorgenommen.
 
 Es besteht auch die Möglichkeit, Variablen zu definieren. So kann beispielsweise nach einer erfolgreichen Authentifizierung der zurückgelieferte Access Token abgespeichert werden. Diese Token-Variable kann dann im einen weiteren Request zwecks Autentifikation im \textit{Authentication}-Header mitgegeben werden.
 
@@ -23,14 +23,15 @@ Obwohl \textsc{Postman} einen hohen Komfort bietet und als generischer HTTP-Clie
 \end{description}
 
 \subsubsection{cUrl}
+\label{sec:curl}
 
-Bei \texttt{curl} handelt es sich um ein Kommandozeilenprogramm zum Ansprechen verschiedenster Protokolle\footnote{\url{https://curl.haxx.se/}}, wobei im Kontext von PEAX nur HTTP relevant ist. Verglichen mit \textsc{Postman} wird \texttt{curl} von weniger Entwicklern eingesetzt, es kommt aber immer dann zum Einsatz, wenn ein grösserer Ablauf automatisiert werden soll\footnote{Beispiel: Einem bestimmten Benutzer für Testzwecke 2000 Dokumente per Delivery-API ins Portal stellen, was aufgrund der langen Laufzeit periodische Token-Aktualisierung erfordert.}.
+Bei \texttt{curl} handelt es sich um ein Kommandozeilenprogramm zum Ansprechen verschiedenster Protokolle\footnote{\url{https://curl.haxx.se/}}, wobei im Kontext von PEAX nur HTTP relevant ist. Verglichen mit \textsc{Postman} wird \texttt{curl} von weniger Entwicklern eingesetzt, es kommt aber immer dann zum Einsatz, wenn ein grösserer Ablauf automatisiert werden soll.\footnote{Beispiel: Einem bestimmten Benutzer für Testzwecke 2000 Dokumente per Delivery-API ins Portal stellen, was aufgrund der langen Laufzeit periodische Token-Aktualisierung erfordert.}
 
 \texttt{curl} wird oft in Skripts verwendet. Hierzu wird ein High-Level-Skript geschrieben, das die eigentliche Aufgabe übernimmt (Dokument einliefern, Daten abrufen), welches ein Low-Level-Skript für die jeweilige Umgebung aufruft, das sich um das Token-Handling kümmert. Diese Skripts rufen meistens \texttt{jq}\footnote{\url{https://stedolan.github.io/jq/}} auf, um relevante Informationen aus den JSON-Payloads zu extrahieren.
 
 Im Gegensatz zu den \textsc{Postman}-Collections sind diese Skripts und deren Änderungen in einem \textsc{Git}-Kontext einfach zu verstehen. Die Automatisierung ist nicht nur wie bei \textsc{Postman} eine ungenutzte Möglichkeit, sondern wird auch tatsächlich genutzt.
 
-Die Problematik der Credentials, die im Klartext herumgereicht werden, besteht aber dennoch. Ausserdem werden Ansammlungen solcher Skripts oftmals unübersichtlich und sind nur noch vom ursprünglichen Entwickler versteh- und wartbar.
+Die Problematik der Credentials, die im Klartext herumgereicht werden, besteht dennoch. Ausserdem werden Ansammlungen solcher Skripts oftmals unübersichtlich und sind nur noch vom ursprünglichen Entwickler versteh- und wartbar.
 
 \texttt{curl} benötigt zudem einiges an Einarbeitungszeit, um die einzelnen Kommandozeilenparameter zu verstehen ‒ und zusätzliches Verständnis von Kommandozeilenkonzepten (Pipes, Stdin/Stdout) sowie weiterer Kommandozeilenwerkzeuge (\texttt{js}, \texttt{grep}), um sinnvoll einsetzbar zu sein.
 
