@@ -7,3 +7,7 @@ document.lol
 document.lot
 document.out
 document.toc
+xelatex.err
+xelatex.out
+bibtex.err
+bibtex.out
