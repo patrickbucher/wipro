@@ -4,7 +4,7 @@ Der PEAX Command Line Client \texttt{px} soll zwei grundlegenden Design-Prinzipi
 
 \begin{enumerate}
     \item der Unix-Philosophie, und
-    \item dem \textit{Swiss Army Knive}-Ansatz, der bereits in \secref{sec:command-line-tools} beschrieben wurde.
+    \item dem \textit{Swiss Army Knive}-Ansatz, der bereits in \secref{sec:Kommandozeilenprogramme} beschrieben wurde.
 \end{enumerate}
 
 \subsection{Unix-Philosophie}
@@ -16,27 +16,27 @@ Die Unix-Philosophie wird oftmals mit den folgenden beiden Grundsätzen wiederge
     \item \textit{When you build something, you write things that are for a single purpose, but that do that purpose well.}\footnote{Wenn man etwas erstellt, macht man es zu einem einzigen Zweck, den es gut erfüllen soll.}
 \end{enumerate}
 
-Für den ersten Grundsatz lassen sich schwer Quellen finden. Die Unix-Pioniere \textsc{Doug McIlroy} und \textsc{Brain Kernighan} beschreiben aber den bei der Entwicklung von Unix eingeschlagenen Weg mit einem hierarchischen Dateisystem als revolutionär und als Grund für den Erfolg von Unix und dessen Nachfolger \cite[Kapitel 4.1, S. 62-62, und Kapitel 9.1, S. 166]{unix-history-memoir}. Das experimentelle Betriebssystem Plan 9 verfolgte diesen Grundsatz noch konsequenter \cite[Kapitel 8.4, S. 161]{unix-history-memoir}.
+Für den ersten Grundsatz lassen sich schwer Quellen finden. Die Unix-Pioniere \textsc{Doug McIlroy} und \textsc{Brain Kernighan} beschreiben aber den bei der Entwicklung von Unix eingeschlagenen Weg mit einem hierarchischen Dateisystem als revolutionär und als Mitgrund für den Erfolg von Unix und dessen Nachfolger \cite[Kapitel 4.1, S. 62-62, und Kapitel 9.1, S. 166]{unix-history-memoir}. Das experimentelle Betriebssystem Plan 9 verfolgte diesen Grundsatz noch konsequenter \cite[Kapitel 8.4, S. 161]{unix-history-memoir}.
 
 Der zweite Grundsatz geht auf \textsc{Doug McIlroys} erste Stil-Maxime \cite[S. 3]{unixtimesharing} \textit{«Make each program do one thing well.»}\footnote{Jedes Programm soll eine Sache gut erfüllen.} zurück. Die zweite Maxime \textit{«Expect the output of every program to become the input to another, as yet unknown, program. Don't clutter output with extraneous information. [...]»} ist im Zusammenhang mit Kommandozeilenprogrammen ebenfalls zu beachten. \textsc{Doug McIlroys} \textit{Pipe}-Idee von 1964 und Ken Thompsons Implementierung davon 1972 haben dazu geführt, dass in Unix praktisch jedes Programm mit jedem anderen Programm zusammenarbeiten kann, sofern diese zweite Maxime eingehalten wird.\footnote{Ken Thompson soll den Pipe-Mechanismus nach der ersten Verwendung als «mind-blowing» bezeichnet haben \cite[Kapitel 4.4, S. 68-69]{unix-history-memoir}.} Auf die weiteren Maximen soll an dieser Stelle nicht eingegangen werden.\footnote{\textsc{McIlroys} dritte Maxime, man solle Software idealerweise innert Wochen gestalten und erstellen, um sie früh ausprobieren zu können, wird diese Arbeit bereits aufgrund ihres Rahmens und des vorangegangenen Prototypen gerecht.}
 
 Jahre später ‒ und um etliche Erfahrung mit Unix reicher ‒ sammelte \textsc{Mike Gancarz} neun Grundsätze (\textit{tenets}) zur Unix-Philosophie, die hier zusammenfassend wiedergegeben werden \cite{unixphil}:
 
-TODO: auf Deutsch zusammenfassen und Beispiele machen
-
 \begin{enumerate}
-    \item \textit{Small is beautiful.}
-    \item \textit{Make each program do one thing well.}
-    \item \textit{Build a prototype as soon as possible.}
-    \item \textit{Choose portability over efficiency.}
-    \item \textit{Store numerical data in flat ASCII files.}
-    \item \textit{Use software leverage to your advantage.}
-    \item \textit{Use shell scripts to increase leverage and portability.}
-    \item \textit{Avoid captive user interfaces.}
-    \item \textit{Make every program a filter.}
+    \item \textit{Small is beautiful.} Grosse Programme entstehen dann, wenn das zu lösende Problem nicht vollends verstanden und eingegrenzt wird. Bei grossen Programmen wird eine signifikante Menge an Code geschrieben, die nicht das eigentliche Problem löst, sondern andere, nicht-essentielle Sachen macht. Kleine Programme hingegen sind einfach zu verstehen, einfach zu warten, benötigen weniger Systemressourcen ‒ und können einfacher mit anderen Programmen kombiniert werden.
+    \item \textit{Make each program do one thing well.} Ein Programm soll nur zur Lösung eines Problems entwickelt werden, und nicht damit zusammenhängende oder gar ganz andere Probleme zu lösen versuchen. Dieses eine Problem sollte aber so gut wie möglich gelöst werden. Das Formatieren von Ein- und Ausgaben kann oft von anderen Programmen übernommen werden. Interaktive Programme können oft vermieden werden, indem die Aufbereitung der Eingabedaten mit einem anderen Programm gelöst wird.
+    \item \textit{Build a prototype as soon as possible.} Eine Idee sollte zunächst anhand eines Prototypen getestet werden, bevor viel Aufwand in eine umfassende Spezifikation und anschliessende Implementierung fliesst, die nicht gebraucht wird. Das Problem ist in dieser frühen Phase oft noch nicht gänzlich verstanden, und ein entsprechendes Konzept würde bloss am Ziel vorbeischiessen. Ein früher Prototyp minimiert das Risiko für unnütze Aufwände und spart somit viel Zeit. Überhaupt entsteht gute Software über iterative Annäherungen an ein Ziel, nicht auf Basis eines einzigen Konzepts.
+    \item \textit{Choose portability over efficiency.} Ein Programm, das auf vielen Plattformen läuft, ist besser als ein Programm, das die Vorzüge einer einzigen Plattform vollends ausnützt, jedoch nur auf dieser Plattform läuft. Performanceoptimierung für eine einzige Plattform führt oft dazu, dass ein Programm auf anderen Plattformen nur noch schlecht oder gar nicht mehr läuft. Es ist einfacher, eine plattformübergreifende Codebasis zu warten, als verschiedene plattformabhängige. Da die Hardware ständig schneller wird, lösen sich Performanceprobleme oftmals von selber ‒ sofern ein Programm nicht unnötig aufgeblasen wird.
+    \item \textit{Store numerical data in flat ASCII files.} Daten müssen früher oder später auf ein anderes System übertragen werden. Bei Textdateien ist dies in der Regel kein Problem. Bei proprietären Binärformaten ist aber oftmals eine Konvertierung erforderlich, die Zeit und Geld kostet. Textdateien können problemlos manuell mit einem Texteditor und automatisiert mit anderen Programmen bearbeitet werden. \textit{Unix} bietet eine Vielzahl solcher Programme.\footnote{Heutzutage ist UTF-8 das am weitesten verbreitete Format für Textdateien. Dessen Erfolg geht nicht zuletzt darauf zurück, dass es mit dem Ziel entwickelt worden ist, eine Obermenge von ASCII zu sein, wodurch ASCII komplett vorwärtskompatibel zu UTF-8 ist. UTF-8 wurde von Rob Pike und Ken Thompson entwickelt.}
+    \item \textit{Use software leverage to your advantage.} Programmierer sollen sich auf das eigentliche Problem konzentrieren, und nicht auf solche, die bereits von anderen Programmierern zufriedenstellend gelöst worden sind. Um dies zu ermöglichen, muss Programmcode zwischen Programmierern ausgetauscht werden, und nicht als streng gehütetes Geheimnis behandelt werden. Bestehende Software ‒ in der Form von Code oder kompilierter Software ‒ kann mit einer gewaltige Hebelwirkung für die eigene Arbeit eingesetzt werden.
+    \item \textit{Use shell scripts to increase leverage and portability.} Mithilfe von Shell-Skripts kann in wenigen Zeilen Software genutzt werden, die hundertausenden Zeilen ‒ getestetem und von anderen Programmierern gewartetem ‒ C-Code entsprechen. Der Entwicklungszyklus von Shell-Skripts ist schneller als derjenige von C-Programmen, da der Kompilierungsschritt entfällt. Zudem sind Shell-Skripts portabler als Programme, die in C oder in einer anderen Hochsprache geschrieben sind.
+    \item \textit{Avoid captive user interfaces.} Interaktive Programme haben ihre eigene Interaktionssprache, die sich von der Shell unterscheidet, und daher zunächst für jedes Werkzeug gelernt werden muss. Solche Programme gehen davon aus, dass der Benutzer ein Mensch ist, was die Verwendung via Skripts ‒ und somit die Hebelwirkung von Software ‒ verunmöglicht. Interaktive Programme tendieren dazu, Features aus der Umgebung, von der sie sich abkapseln, in eigener, meist schlechterer Implementierung anzubieten, was die Codebasis aufbläht und zu einem inkonsistenten Verhalten führt.
+    \item \textit{Make every program a filter.} Die meisten Programme nehmen Eingabedaten entgegen, transformieren diese, und produzieren daraus Ausgabedaten. Sie produzieren keine originären Daten, sondern verarbeiten Daten, die zumeist von Menschen prodiziert worden sind. Programme, die als Filter konzipiert sind, werden diesem Umstand gerecht. Auf \textsc{Unix} werden Eingabedaten über die Standardeingabe (`stdin`) entgegengenommen und über die Standardausgabe (`stdout`) wieder ausgegeben. Mithilfe der Pipe können so beliebig lange Filterketten erstellt werden, wovon jedes Programm eine Transformation auf den Datenstrom vornimmt. Fehlermeldungen und andere Informationen, die sich von den Nutzdaten unterscheiden, sollen in die Standardfehlerausgabe (`stderr`) geschrieben werden, was eine gesonderte Verarbeitung solcher Meldungen ermöglicht.
 \end{enumerate}
 
-Für \texttt{px} werden diese Grundsätze folgendermassen angewendet:
+\subsubsection{Anwendung auf \texttt{px}}
+
+Für \texttt{px} werden die Grundsätze der \textsc{Unix}-Philosophie folgendermassen angewendet:
 
 \begin{enumerate}
     \item \textit{Small is beautiful.} \texttt{px} soll nicht jeden Anwendungsfall mit einem einfachen, benutzerfreundlichen Befehl abdecken, sondern mit folgender Doppelstrategie mit möglichst wenig Aufwand zu einem möglichst für alle Benutzergruppen befriedigenden Ergebnis kommen:
@@ -49,30 +49,284 @@ Für \texttt{px} werden diese Grundsätze folgendermassen angewendet:
     \item \textit{Choose portability over efficiency.} Mit \textsc{Go} wurde eine Programmiersprache gewählt, die das Kompilieren für andere Betriebssysteme und Architekturen \textit{out of the box} unterstützt.\footnote{Mit \textsc{Ken Thompson} und \textsc{Rob Pike} sind zwei der drei Schöpfer dieser Programmiersprache Unix-Pioniere erster und zweiter Stunde, was man ihr an verschiedensten Stellen anmerkt.}
     \item \textit{Store numerical data in flat ASCII files.} Die unsicher verwahrten Tokens sollen in einer JSON-Datei namens \texttt{.px-tokens} im \texttt{HOME}-Verzeichnis des Benutzers abgelegt werden. JWT-Tokens sind numerische Daten im weitesten Sinn, sprich Base64-codiertes JSON. Zwar lässt sich JSON nicht wie eine «flache» ASCII-Datei komfortabel mit Tools wie \texttt{grep} und Konsorten bearbeiten, dafür bietet \textsc{Go} sehr komfortable \textit{Marshaling}-Mechanismen um Datenstrukturen aus und zu JSON zu serialisieren \cite[Kapitel 4.5]{gopl}. Wichtig ist, dass zur Speicherung der Tokens keine Binärdateien, sondern Textdateien \textit{im weitesten Sinn} (JSON) zum Einsatz kommen.
     \item \textit{Use software leverage to your advantage.} Die Hebelwirkung von \textit{bestehender} Software soll für \texttt{px} auf verschiedenen Stufen genutzt werden. Die sehr umfassende und hochwertige Standard Library von \textsc{Go}, gerade das sehr mächtige Package \texttt{net/http} unterstützt das Ansprechen einer RESTful HTTP-API. Eine Fremdkomponente von Zalando (\texttt{go-keyring}) bietet plattformübergreifende Unterstützung für den nativen Keystore des Betriebssystems. Das sehr mächtige \texttt{go}-Tool kommt u.a. zur statischen Quellcodeanalyse (\texttt{go vet}), zum Testen (\texttt{go test}), Verwalten von Abhängigkeiten (\texttt{go mod}) und kompilieren (\texttt{go build}) zum Einsatz. In der Entwicklung werden Hilfstools wie \texttt{golint} (Quellcodeanalyse), \texttt{goimports} (Formatierung von Code und Importieren von Packages) und \texttt{gopls} (automatische, Texteditor-unabhängige Code-Vervollständigung).
-    \item \textit{Use shell scripts to increase leverage and portability.} Die Teststrategie (siehe \secref{sec:testing-q2}) setzt stark auf Shell-Skripts zum Erreichen einer hohen Testabdeckung mit aussagekräftigen Tests. Die Skripts könnten auch dann noch verwendet werden, sollte \texttt{px} dereinst mit einer anderen Programmiersprache neu implementiert werden (siehe auch \secref{sec:decision-programming-language}).
-    \item \textit{Avoid captive user interfaces.} Grundsätzlich soll \texttt{px} interaktiv bedienbar und in Skripten verwendet werden können. So können Benutzername und Passwort per Kommandozeilenparameter mitgegeben werden, und werden nur interaktiv erfragt, falls ersteres unterlassen wird. Bei der Zwei-Faktor-Authentifizierung ist jedoch eine interaktive Eingabe vonnöten, da der SMS-Code zum Zeitpunkt der initialen Login-Anfrage noch nicht bekannt ist.\footnote{Mit einem One-Time Password würde dies theoretisch funktionieren, da die Codes jeweils vorweg für eine bestimmte Zeitspanne gültig sind. Der Nutzen hiervon ist jedoch äusserst gering, da der Benutzer ja doch am Terminal sitzen muss, um den Code \textit{vor} der Ausführung von \texttt{px} einzugeben.}
-    \item \textit{Make every program a filter.} \texttt{px} soll keine unnötigen Ausgaben machen und nur Nutzdaten auf \texttt{stdout} ausgeben. Werden Vollzugs- und Erfolgsmeldungen benötigt, sollen diese per speziellem Parameter verlangt und nach \texttt{stderr} ausgegeben werden (siehe auch die Diskussion bei \secref{sec:feedback-sprint1}).
+    \item \textit{Use shell scripts to increase leverage and portability.} Die Teststrategie (siehe \secref{sec:Testing-Q2}) setzt stark auf Shell-Skripts zum Erreichen einer hohen Testabdeckung mit aussagekräftigen Tests. Die Skripts könnten auch dann noch verwendet werden, sollte \texttt{px} dereinst mit einer anderen Programmiersprache neu implementiert werden (siehe auch \secref{sec:Entscheidung-Programmiersprache}).
+    \item \textit{Avoid captive user interfaces.} Grundsätzlich soll \texttt{px} interaktiv bedienbar und in Skripten verwendet werden können. So können Benutzername und Passwort per Kommandozeilenparameter gesetzt und nur interaktiv erfragt werden, falls ersteres unterlassen wird. Bei der Zwei-Faktor-Authentifizierung ist jedoch eine interaktive Eingabe vonnöten, da der SMS-Code zum Zeitpunkt der initialen Login-Anfrage noch nicht bekannt ist.\footnote{Mit einem One-Time Password würde dies theoretisch funktionieren, da die Codes jeweils vorweg für eine bestimmte Zeitspanne gültig sind. Der Nutzen hiervon ist jedoch äusserst gering, da der Benutzer ja doch am Terminal sitzen muss, um den Code \textit{vor} der Ausführung von \texttt{px} einzugeben.}
+    \item \textit{Make every program a filter.} \texttt{px} soll keine unnötigen Ausgaben machen und nur Nutzdaten auf \texttt{stdout} ausgeben. Werden Vollzugs- und Erfolgsmeldungen benötigt, sollen diese per speziellem Parameter verlangt und nach \texttt{stderr} ausgegeben werden (siehe auch die Diskussion bei \secref{sec:Feedback-Sprint1}).
 \end{enumerate}
 
 \subsection{Swiss Army Knive}
 
-\subsection{Befehlsstruktur von \texttt{px}}
+Die «Swiss Army Knive»-Befehlsstruktur \cite[S. 290]{gopl}, wie sie im vorhergehenden Kapitel beschrieben (\secref{sec:Kommandozeilenprogrammen}) und im Prototyp (\secref{sec:Ausgangslage-und-Vorleistungen}) verwendet worden ist, soll beibehalten werden. Befehle in \texttt{px} sollen etwa folgendermassen aussehen:
 
-TODO: swiss army knive \cite[p. 290]{gopl} für CLI
+\begin{lstlisting}[caption={Beispielhafter Befehl mit Command, Subcommand, Flags, Parametern}]
+# Login-Vorgang: Tokens vom IDP holen
+px login -env test -verbose -user john.doe@acme.org
+
+# Upload-Vorgang: Ein Dokument hochladen
+px upload -e test document.pdf
+
+# Logout-Vorgang: lokale Tokens entfernen
+px logout -e test
+\end{lstlisting}
+
+Die Struktur ist immer dieselbe: \texttt{[Befehl] [Unterbefehl] [Flags] [Parameter]}, wobei der \texttt{Befehl} im Rahmen dieser Arbeit immer \texttt{px} lautet. Die einzelnen Unterbefehle werden in den folgenden Abschnitten erläutert.
+
+Die Flags treten in zweierlei Ausprägung auf: Einerseits als \textit{Switches}, wobei eine Option durch das Vorhandensein eines Flags aktiviert und durch das Fehlen deaktiviert wird. Das \texttt{-verbose}-Flag ist ein Beispiel dafür. Andererseits als \textit{Key-Value-Parameter}, wobei das Flag einen zusätzlichen Wert erfordert. Beispiele hierfür sind die Flags \texttt{-env} und \texttt{-user} im Beispiel oben.
+
+Zu den Flags soll es jeweils eine lange Version (\texttt{-verbose}, \texttt{-user}, \texttt{-env}) und eine zugehörige kurze Version (bestehend aus dem ersten Buchstaben der langen Version) geben (\texttt{-v}, \texttt{-u}, \texttt{-e}). Treten dabei Kollisionen auf (mehrere Flags, die mit dem gleichen Buchstaben beginnen), muss improvisiert werden.
+
+Parameter werden nicht von allen Befehlen erwartet/unterstützt. Beim \texttt{upload}-Unter\-be\-fehl ist etwa ein Dokument (als relativer Dateipfad) erforderlich. Bei anderen Befehlen sind es Ressourcenpfade.
+
+\subsubsection{Befehle für das Token-Handling}
+
+Die grundlegende Voraussetzung zur Interaktion mit der PEAX API und die wichtigste Erleichterung durch \texttt{px} ist das Token-Handling. Bei einem Login-Vorgang wird ein Token Pair bestehend aus Refresh Token und Access Token vom Identity Provider geholt. Dabei wird zwischen drei Bereichen der API unterschieden: User API, Agent API und Admin API (siehe auch \secref{sec:Systemkontext}).
+
+Die User API deckt die Funktionen des PEAX-Portals ab. Für das Login wird ein Benutzername (E-Mail-Adresse), ein Passwort und ein optionaler zweiter Faktor verwendet. Letzteres kann ein SMS-Code oder eine Time-based One-time-Password (TOTP) sein. 
+
+Die Quelle für diesen zweiten Faktor wird im Portal konfiguriert: Entweder als Mobiltelefonnummer (SMS-Code) oder mittels einer entsprechenden Authenticator-App. Stimmen Benutzername und Passwort im ersten Schritt mit den Angaben auf dem Identity Provider überein, wird interaktiv nach dem zweiten Faktor gefragt, der dann wiederum auf dem Identity Provider überprüft wird. 
+
+Bei einem erfolgreichen Login-Vorgang werden die Tokens via HTTP-Response an den Client übertragen, wo sie verwahrt werden können.
+
+Der Login-Vorgang wird mit dem Unterbefehl \texttt{login} durchgeführt. Als Flags muss eine Umgebung (\texttt{-env}/\texttt{-e}), ein Benutzername (\texttt{-u}/\texttt{-user}) und ein Passwort (\texttt{-p}/\texttt{-pass}) angegeben werden. Benutzername und Passwort werden interaktiv nachgefragt, sollten diese nicht via Flag spezifiziert worden sein.
+
+Mithilfe der Flags \texttt{-s}/\texttt{-secure} und \texttt{-i}/\texttt{-insecure} kann die Umgebungseinstellung bezüglich sicherer Tokenverwahrung übersteuert werden. Die beiden Flags schliessen sich gegenseitig aus. Ist das \texttt{-v}/\texttt{-verbose}-Flag gesetzt, wird nach einem erfolgreichen Login eine entsprechende Meldung ausgegeben.
+
+Die Tokens können mithilfe des Unterbefehls \texttt{logout} wieder entfernt werden. Mit dem Flag \texttt{-a}/\texttt{-all} werden alle lokalen Tokens entfernt. Mit dem Flag \texttt{-e}/\texttt{-env} werden die Tokens zu der jeweiligen Umgebung entfernt. Das \texttt{-v}/\texttt{-verbose}-Flag dient wiederum zur Ausgabe von Erfolgsmeldungen.
+
+In der Anwendung sehen die Befehle folgendermassen aus:
+
+\begin{lstlisting}[caption={Anwendung der Befehle für Login und Logout}]
+# Login auf Umgebung test mit Benutzername und Passwort
+$ px login -e test -u john.doe@acme.org -p TopSecret1337!
+
+# Das gleiche Login mit interaktiver Passworteingabe
+$ px login -e test -u john.doe@acme.org
+Password: [versteckt]
+
+# Das gleiche Login mit interaktiver Benutzer- und Passworteingabe
+$ px login -e test
+Username: john.doe@acme.org
+Password: [versteckt]
+
+# Login mit Zwei-Faktor-Authentifizierung und verbose-Flag
+$ px login -e test -u john.doe@acme.org -p TopSecret1337! -v
+SMS Code: 123467
+login for user john.doe@acme.org to environment test was successful
+
+# Logout von Umgebung test mit verbose-Flag
+$ px logout -e test -v
+user logout from environment test was successful
+
+# Logout von allen Umgebungen
+$ px logout -a
+\end{lstlisting}
+
+Die Agent API bietet Partnern und Zulieferern ‒ die \textit{Agents} ‒ die Möglichkeit, beliebigen Benutzern Dokumente und Metadaten ins Portal zu stellen. Sie wird für verschiedene Input-Kanäle von PEAX verwendet.
+
+Im Gegensatz zur User API erfolgt die Authentifizierung nicht mit Benutzername und Passwort, sondern mit einer \textit{Client ID} und einem \textit{Client Secret}.\footnote{Bei OAuth 2.0 wird dies als der \textit{OAuth 2.0 Client Credentials Grant} bezeichnet. Bei der User API gibt es die Client ID \texttt{peax.portal}, die für alle Benutzer gleich ist.} Jeder Agent verfügt über seine eigene Kombinatation von ID und Secret.
+
+Der Agent-API-Nutzers verwendet Client ID und Client Secret somit wie Benutzername und Passwort. Dementsprechend sollen auch die Kommandozeilenparameter entsprechend lauten: \texttt{-u}/\texttt{-user} für die Client ID und \texttt{-p}/\texttt{-pass} für das Client Secret.
+
+Die Befehle für das Login und Logout erhalten das Prefix \texttt{agent}. In der Anwendung sehen diese Befehle folgendermassen aus:
+
+\begin{lstlisting}[caption={Anwendung der Befehle für Agent-Login und -Logout}]
+# Agent-Login auf Umgebung test mit Client Secrets
+$ px agent-login -u PEAX-Agent-ACME -p 123456-789abc-...
+
+# Agent-Login mit interaktiver Eingabe des Secrets:
+$ px agent-login -e test -u PEAX-Agent-ACME
+Client Secret: 123456-789abc...
+
+# Logout
+$ px agent-logout -e test
+\end{lstlisting}
+
+Für die Admin API wird der gleiche Login-Mechanismus wie für die User API verwendet. Der einzige Unterschied im Gebrauch dieser APIs ist, dass die Benutzer für die Admin API über zusätzliche Berechtigungen verfügen, welche im Access Token entsprechend kodiert sind.
 
 \subsubsection{Generische Befehle für Entwickler}
+\label{sec:Generische-Befehle}
 
-TODO: generische Befehle für Entwickler (GET, POST, PUT, PATCH, DELETE)
+Damit Entwickler oftmals an einzelnen Endpoints arbeiten, sollen sie einen möglichst feingranularen Zugriff auf die API erhalten, sprich über die HTTP-Methoden \texttt{GET}, \texttt{POST}, \texttt{PATCH} usw.\footnote{\texttt{px} wurde im Ideenstadium als \textit{«\texttt{curl} for the PEAX API»} bezeichnet.} Die Befehle werden dementsprechend (mit Kleinbuchstaben) bezeichnet.
 
-\subsubsection{Spezifische Befehle für Prototypen}
+Befehle für HTTP-Methoden, die über einen Body verfügen (\texttt{POST}, \texttt{PUT}, \texttt{PATCH}), verfügen über den Parameter \texttt{-p}/\texttt{-payload}, womit eine entsprechende Datei angegeben werden kann.
 
-TODO: bequeme Befehle für Prototypen (archive)
+\begin{lstlisting}[caption={Anwendung der feingranularen HTTP-Befehle}]
+# Abrufen der Anzahl Dokumente eines Benutzers
+$ px get document/api/v3/account/455.5462.5012.69/collection
 
-\subsection{Token Store}
-\label{sec:konzept-token-store}
+# Hinzufügen einer Organisation (für spätere Postabonnierung)
+$ px post -p testdata/organization.json \
+    network/api/v3/network/455.5462.5012.69/userorganizationrelationship
 
-TODO: token storage (sicher und unsicher)
+# Aktualisierung der Metadaten eines Dokuments
+$ px patch -p document-patch.json \
+    document/api/v3/document/123456-789abc...
 
-\subsection{Token Refresh}
+# Hochladen eines Profilbildes
+$ px put -p pic.jpg \
+    profile/api/v3/profile/455.5462.5012.69/picture/avatar
 
-TODO: automatisches Retry
+# Löschen des Profilbildes
+$ px delete \
+    profile/api/v3/profile/455.5462.5012.69/picture/avatar
+\end{lstlisting}
+
+\subsubsection{Spezifische Befehle wichtiger Funktionen}
+
+Eine der wichtigsten Funktionen von PEAX ist das Einstellen von Dokumenten ins Portal. Dies geschieht einerseits über die Agent API, wo ein Agent einem beliebigen Nutzer ein Dokument (mitsamt Metadaten) ins Portal stellen kann. Andererseits kann ein Benutzer Dokumente für sich selber hochladen.\footnote{Die anderen Eingangskanäle (App, E-Mail, Postumleitung via Scanning-Center, Sammelcouvert) sind allesamt mit diesen beiden Schnittstellen umgesetzt.}
+
+Ein Agent soll den Benutzern über den Befehl \texttt{deliver} Dokumente in den Posteingang stellen können. Der Endpoint ist immer der gleiche. Der Empfänger (und Sender) muss mithilfe von Metadaten (JSON-Format) spezifiziert werden, die mit dem Parameter \texttt{-m}/\texttt{-meta} mitgegeben werden können. Diese Metadaten sehen beispielsweise folgendermassen aus (\texttt{meta.json}):
+
+\begin{lstlisting}[caption={Metadaten für die Dokument-Einflieferung}]
+{
+    "type": "DOCUMENT",
+    "source": "SCANCENTER",
+    "title": "Testdokument",
+    "senderUid": "CHE-123.456.789",
+    "senderName": "px: PEAX Command Line Client",
+    "receiverPeaxId": "455.5462.5012.69"
+}
+\end{lstlisting}
+
+Die \texttt{senderUid} ist die MWST-Nummer des Dokument-Absenders. Der Empfänger ist mit der \texttt{receiverPeaxId} definiert. Die Felder \texttt{type} und \texttt{source} sind spezielle Konstanten, die serverseitig geprüft werden, und eine besondere Bedeutung haben. Die Felder \texttt{title} und \texttt{senderName} sind Freitextfelder für den Dokumenttitel und den Absendernamen. Eine Vielzahl anderer Angaben (z.B. komplette Zahlungsinformationen für Rechnungen) können auf diese Weise gemacht werden. Die API ist PEAX-intern entsprechend dokumentiert.
+
+Als Parameter erwartet der \texttt{deliver}-Befehl den Pfad zu einer Dokumentdatei:
+
+\begin{lstlisting}[caption={Dokument-Einlieferung über die Delivery-Schnittstelle}]
+# Dokument mit Metadaten einliefern
+$ px deliver -e test -m meta.json document.pdf
+\end{lstlisting}
+
+Einem Benutzer der User API soll der \texttt{upload}-Befehl zum Hochladen von Dokumenten zur Verfügung stehen. Rekursives Hochladen von Dokumentordnern kann mit dem Flag \texttt{-r}/\texttt{-recursive} und einer entsprechenden Ordnerangabe als Parameter bewerkstelligt werden. Fehlt dieses Flag, wird als Parameter der Pfad zu einer Dokumentdatei erwartet:
+
+
+\begin{lstlisting}[caption={Hochladen von Dateien}]
+# Upload eines einzelnen Dokuments
+$ px upload document.pdf
+
+# rekursiver Upload eines Ordners, der Dokumente enhält
+$ px upload -r docfolder/
+\end{lstlisting}
+
+\subsubsection{Hilfefunktion}
+
+Damit sich der Benutzer bei Unklarheiten selber helfen kann, und damit ihm der Einstieg in die Verwendung von \texttt{px} erleichtert wird, soll ihm eine Hilfefunktion zur Verfügung stehen. Mit dem Unterbefehl \texttt{help} soll er einführende Erläuterungen und einen Überblick über alle zur Verfügung stehenden Befehle erhalten. Gibt er zusätzlich als Parameter den Namen eines Befehls an, soll er Hilfe zu diesem jeweiligen Befehl erhalten. Hilfe zu den einzelnen Flags eines Befehls soll er mit Befehlen der Struktur \texttt{px [subcommand] -h} erhalten.
+
+\begin{lstlisting}[caption={Verwendung der Hilfefunktion}]
+# Allgemeine Hilfe (Ausgabe gekürzt)
+$ px help
+
+px ‒ the PEAX Command Line Client
+
+This tool is supposed to make dealing with the PEAX API easier [...]
+
+The following subcommands are supported at the moment:
+
+    px login: log into a PEAX environment (fetch tokens)
+    px get: execute a HTTP GET request against a given resource
+    [...]
+
+# Befehlsspezifische Hilfe (Ausgabe gekürzt)
+$ px help env
+
+px env: get or set the default environment for next commands
+
+This command can be used in two ways: ...
+
+Sample usage:
+
+    # print the current default environment
+    px env
+
+    # set prod as the default environment
+    px env prod
+
+Run 'px env -h' to get information on the individual flags.
+
+# Informationen über die Flags eines Befehls
+$ px env -h
+Usage of env:
+    -v    print success message to STDERR (shorthand)
+    -verbose
+          print success message to STDERR
+\end{lstlisting}
+
+Zu jedem Unterbefehl sollen allgemeine Informationen und Beispielaufrufe beschrieben sein. Bei manchen Befehlen ist es sinnvoll, wenn spezifische Zusatzinformationen ausgegeben werden. Beim \texttt{login}-Unterbefehl ist dies etwa eine Liste mit allen zur Verfügung stehenden Umgebungen.
+
+\subsubsection{Weitere Befehle}
+
+Damit der Benutzer nicht bei jedem Aufruf eine Umgebung mit dem Flag \texttt{-e}/\texttt{-env} spezifizieren muss, soll es eine Standardumgebung geben. Diese ist nicht konstant, sondern soll sich auf das jeweils letzte Login beziehen: Hat sich der Benutzer beispielsweise zuletzt auf \texttt{prod} eingeloggt, soll dies seine Standardumgebung sein.
+
+Da ein Benutzer zu einem gegebenen Zeitpunkt mehrere aktive Logins, d.h. gültige Tokens, auf verschiedenen Umgebungen haben kann, soll er die Standardumgebung wechseln können; nicht nur mit dem \texttt{-e}/\texttt{-env}-Flag jedes Aufrufs, sondern über mehrere Aufrufe hinweg mithilfe des Unterbefehls \texttt{env}. Wird dieser mit einem Parameter (Umgebungsname) aufgerufen, wird die Standardumgebung entsprechend gesetzt, sofern ein Token für diese Umgebung vorhanden ist. Wird der Unterbefehl ohne Parameter aufgerufen, wird die derzeit aktive Standardumgebung ausgegeben.\footnote{Dieses Verhalten ist dem Befehl \texttt{oc project} des OpenShift Command Line Clients nachempfunden (\url{https://docs.openshift.com/container-platform/3.11/cli_reference/basic_cli_operations.html\#project}).}
+
+\begin{lstlisting}[caption={Ausgeben und Wechseln der Standardumgebung}]
+# Login auf Umgebung test
+$ px login -e test -u ... -p ...
+
+# Ausgabe der aktuellen Standardumgebung
+$ px env
+test
+
+# Login auf Umgebung prod
+$ px login -e prod -u ... -p ...
+
+# Ausgabe der aktuellen Standardumgebung
+$ px env
+prod
+
+# Wechseln der Standardumgebung
+$ px env test
+$ px env
+test
+
+# Wechseln auf eine Umgebung, für die kein Login besteht
+$ px env prototype
+env: no tokens for environment 'prototype', you must login first
+\end{lstlisting}
+
+Damit ein Benutzer weiss, welche Version von \texttt{px} er gegenwärtig verwendet, soll ihm der Unterbefehl \texttt{version} zur Verfügung stehen, der ihm die semantische Versionsnummer ausgibt. Diese Angabe soll fix ins Programm hineinkompiliert sein.
+
+\begin{lstlisting}[caption={Ausgeben der Versionsnummer}]
+# Ausgeben der Versionsnummer von px
+$ px version
+v0.3.0
+\end{lstlisting}
+
+\subsection{Token Handling}
+\label{sec:Konzept-Token-Store}
+
+Wie die Befehle der vorhergehenden Abschnitte (besonders \secref{sec:Generische-Befehle}) gezeigt haben, kann \texttt{px} ähnlich wie \texttt{curl} (\secref{sec:cUrl}) verwendet werden, ohne sich um \texttt{Authorization}-Headers, Tokens und dergleichen kümmern zu müssen. Dies, weil \texttt{px} sich um das Abholen (\texttt{px login}) und Verwalten der Tokens kümmert.
+
+\subsubsection{Token Store}
+
+OAuth-Tokens erlauben den Zugriff auf möglicherweise sensitive Informationen. Sie sind ähnlich mächtig, wie ein zeitlich begrenzt gültiges Passwort. Sie sollen darum sicher verwahrt werden können. Andererseits müssen sich Entwickler bei der Fehlersuche die Tokens mit wenig Aufwand anschauen können. Dieser Zielkonflikt kann folgendermassen gelöst werden:
+
+\begin{itemize}
+    \item Es soll zwei Arten der Token-Verwahrung geben: Eine sichere und eine unsichere.
+    \item Für die sichere Token-Verwahrung soll der betriebssystem-eigene Token-Store verwendet werden. Bei \textsc{macOS} ist dies die Anwendung \textsc{Keychain Access}. Bei \textsc{Windows} heisst die entsprechende Anwendung \textsc{Credential Manager}. Auf \textsc{Linux} gibt es verschiedene Varianten, z.B. die Anwendung \textsc{Seahorse}.
+    \item Für die unsichere Token-Verwahrung dient die JSON-Datei \texttt{.px-tokens}, die im \texttt{HOME}-Verzeichnis des Benutzers abgelegt wird. Diese Art der Verwahrung ist insofern unsicher, dass jedes Programm mit Leseberechtigungen für das entsprechende Verzeichnis auf die Tokens zugreifen kann ‒ was auch für die privaten Dokumente gilt, die ein Benutzer auf seinem Computer ablegt.
+    \item Für Entwicklungs- und Testsysteme ist der komfortable Zugriff auf die Tokens wichtig. Tokens von diesen Systemen sollen in \texttt{\$HOME/.px-tokens} verwahrt werden.
+    \item Für das Produktivsystem ist die sichere Verwahrung der Tokens wichtig. Sie sollen im nativen Keystore abgelegt werden.
+    \item Mit den Flags \texttt{-s}/\texttt{-secure} und \texttt{-i}/\texttt{-insecure} kann das Verhalten vom Benutzer übersteuert werden.
+\end{itemize}
+
+\subsubsection{Token Refresh}
+
+Der Access Token ist in der Regel kurzlebig. Bei IDP von PEAX beträgt seine Gültigkeitsdauer fünf Minuten ab Ausstellungszeitpunkt. Refresh Tokens sind langlebiger. Sie dienen dazu, ein neues Paar von Token vom IDP zu holen. Bei PEAX beträgt deren Lebensdauer 30 Minuten.
+
+Nach dem Login kann der Benutzer fünf Minuten lang mit dem Access Token Anfragen an die API stellen. Nach diesen fünf Minuten werden seine Anfragen mit dem HTTP-Status \texttt{401 Unauthorized} quittiert.
+
+Wird nun mit dem Refresh-Token ein neues Token Pair beim IDP geholt, können nicht für fünf weitere Minuten weitere API-Anfragen an den Server gestellt werden, sondern es kann auch für 30 Minuten ein neues Token Pair geholt werden. Damit kann die Sitzungsdauer beliebig lange sein, sofern die einzelnen Anfragen nie länger als 30 Minuten auseinanderliegen.
+
+Für die Aktualisierung des Token Pairs gibt es zwei Ansätze:
+
+\begin{enumerate}
+    \item proaktive Variante: Die Gültigkeit des Access Tokens wird \texttt{vor} jedem Request anhand der Zeitinformationen im Token überprüft. Ist der Token abgelaufen, wird ein neues Token Pair anhand des Refresh Tokens geholt. Ist der Refresh Token, dessen Gültigkeitsdauer ebenfalls vorher geprüft werden soll,  auch abgelaufen, wird der Prozess mit einem Fehler abgebrochen.
+    \item «lazy»-Variante: Ein Request soll mit dem jeweils aktuellen Access Token gestellt werden. Wird er mit dem HTTP-Status \texttt{401 Unauthorized} quittiert, soll ein Token Refresh vorgenommen werden. Scheitert der Token Refresh aufgrund eines abgelaufenen Refresh Tokens (wiederum \texttt{401 Unauthorized}), soll dies dem Benutzer angezeigt werden.
+\end{enumerate}
+
+Die proaktive Variante hat den Vorteil, das keine unnötigen Anfragen an den Server gestellt werden. Die «lazy»-Variante hat den Vorteil, dass clientseitig weniger Logik implementiert werden muss.
+
+Mag die proaktive Variante technisch ausgereifter erscheinen, führt ihr zugrundeliegender Gedanke in eine Sackgasse: Soll \texttt{px} \textit{vor} einer Anfrage prüfen, ob diese vom Server akzeptiert werden wird, müsste die serverseitige Validierungslogik im Client abgebildet werden. Um Antworten mit HTTP-Status \texttt{400 Bad Request} verhindern zu können, müssten die erlaubten Payload-Schemas und -Restriktionen dem Client bekannt sein. Möchte man zusätzlich Antworten mit HTTP-Status \texttt{404 Not Found} verhindern, müsste eine lokale Liste der möglichen Endpoints geführt und gepflegt werden.
+
+Da \texttt{px} mitunter ein Entwickler-Werkzeug für Backend-Entwickler ist, und Backend-Entwickler das Verhalten des Servers ‒ und hierzu gehört die Validierungslogik ‒ prüfen möchten, sind lokale Validierungen nur hinderlich. Darum soll die «lazy»-Variante umgesetzt werden, die dem Anwender das bereits zitierte \textit{«\texttt{curl} for PEAX»} an die Hand gibt.

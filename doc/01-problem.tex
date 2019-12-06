@@ -18,12 +18,12 @@ Eine RESTful API besteht aus einer Reihe sogenannter \textit{Endpoints}, d.h Pfa
 
 \subsubsection{HTTP-Methoden}
 
-Ein Endpoint kann über eine oder mehrere HTTP-Methoden angesprochen werden \cite[Abschnitt 4.3]{RFC7231}. Im Kontext der PEAX API sind folgende Methoden relevant:
+Ein Endpoint kann über verschiedene HTTP-Methoden angesprochen werden \cite[Abschnitt 4.3]{RFC7231}. Im Kontext der PEAX API sind die folgenden Methoden relevant:
 
 \begin{itemize}
 	\item \texttt{GET}: Erfragt eine Repräsentation einer bestimmten Ressource; greift nur lesend auf diese zu.
     \item \texttt{HEAD}: Analog zu \texttt{GET}, es wird jedoch nur der Header und nicht der Body der Ressource übertragen.
-	\item \texttt{POST}: Übermittelt eine Ressource zur Speicherung oder Manipulation einer bestehenden Ressource.
+	\item \texttt{POST}: Übermittelt einen Payload zur Speicherung oder Manipulation einer bestehenden Ressource.
 	\item \texttt{PUT}: Ersetzt eine bestehende Ressource durch den mitgeschickten Payload.
 	\item \texttt{DELETE}: Löscht eine Ressource.
     \item \texttt{OPTIONS}: Beschreibt die Kommunikationsoptionen für eine bestimmte Ressource, wird etwa für CORS Pre-Flight Requests eingesetzt \cite{mdn-cors}.
@@ -57,13 +57,14 @@ An dieser Stelle sollen nur die Grundlagen beschrieben werden, die dann im Umset
 
 Bei einem Login-Vorgang mit OAuth 2.0 sendet der Benutzer seine Credentials (Benutzername, Passwort, optionaler zweiter Faktor wie SMS-Code) an den Token-Endpoint eines \textit{Identity Providers} (IDP). Stimmen diese Angaben mit den Informationen auf dem IDP überein, erhält der Benutzer ein \textit{Token Pair} bestehend aus \textit{Access Token} und \textit{Refresh Token}. Der Access Token dient zum Zugriff auf eine geschützte Ressource und ist in der Regel kurzlebig. (Bei PEAX läuft er nach fünf Minuten ab.) Mithilfe des Refresh Tokens kann der Benutzer einen neues Token Pair vom IDP anfordern. Der Refresh Token ist darum langlebiger (30 Minuten bei PEAX).
 
-Werden die Tokens jeweils vor Ablauf dieser Zeitspanne aktualisiert, kann eine Session beliebig lange aufrecht erhalten werden (siehe \secref{sec:retry-mechanism}). Aufgrund der Handhabung dieser Tokens (sehr lange Base64-codierte Strings) ist das Ansteuern der PEAX API mit Programmen wie \texttt{curl} und \textsc{Postman} sehr umständlich.\footnote{Eine beispielhafte Analyse ergab, dass ein Access Token 1604 Zeichen lang ist. Refersh Token sind in der Regel etwas kürzer, da sie weniger Informationen zum Gültigkeitsbereich des Tokens enthalten.}
+Werden die Tokens jeweils vor Ablauf dieser Zeitspanne aktualisiert, kann eine Session beliebig lange aufrecht erhalten werden (siehe \secref{sec:Retry-Mechanismus}). Aufgrund der Handhabung dieser Tokens (sehr lange Base64-codierte Strings) ist das Ansteuern der PEAX API mit Programmen wie \texttt{curl} und \textsc{Postman} sehr umständlich.\footnote{Eine beispielhafte Analyse ergab, dass ein Access Token 1604 Zeichen lang ist. Refersh Token sind in der Regel etwas kürzer, da sie weniger Informationen zum Gültigkeitsbereich des Tokens enthalten.}
 
 Die Anfragen werden vom Client (d.h. Frontend ‒ oder der hier beschriebene Command Line Client) nicht direkt an das Backend geschickt, sondern an einen Proxy-Server. Dieser entscheidet aufgrund der Anfrage, ob die Kombination aus Ressource und Methode einen gültigen Access Token benötigt.\footnote{Eine \texttt{POST}-Anfrage auf den \texttt{account}-Endpoint, der zur Registrierung dient, benötigt etwa keinen Access Token, da man einen solchen vor der Registrierung noch nicht haben kann.} 
 
 Der Access Token wird auf seine Gültigkeit geprüft; die Anfrage im Erfolgsfall an das Backend weitergeleitet. Die Prüfung, ob der mitgelieferte Access Token für die jeweilige Aktion über den richtigen Scope verfügt, wird teilweise vom Proxy-Server anhand des URL-Schemas (eindeutige PEAX ID des Benutzers im Ressourcenpfad) geprüft. Für andere Aktionen, v.a. im Backoffice-Bereich\footnote{Als \textit{Backoffice} wird in diesem Zusammenhang nicht die Organisationseinheit, sondern die Web-Oberfläche zur Administration der PEAX-Anwendung verstanden.}, finden zusätzliche Scope-Prüfungen anhand von Benutzerattributen statt.
 
 \subsubsection{Umgebungen}
+\label{sec:Umgebungen}
 
 Bei PEAX gibt es verschiedene Umgebungen oder «Stufen», welche den ganzen PEAX-Stack (Datenbank, Backend, Frontend, IDP, Proxy) für einen bestimmten Zweck zur Verfügung stellen:
 
@@ -76,7 +77,7 @@ Bei PEAX gibt es verschiedene Umgebungen oder «Stufen», welche den ganzen PEAX
     \item[devpatch] Dies ist die Entwicklungsumgebung für den Hotfix-Pfad. Nach einem Release wird der aktuelle Stand von \texttt{prod} auf diese Stufe deployed. Bis zum nächsten Release können hier dringende Fehlerkorrekturen vorgenommen werden.
     \item[testpatch] Dies ist die Testumgebung für den Hotfix-Pfad. Dringende Fehlerkorrekturen werden von \texttt{devpatch} auf diese Stufe übernommen und hier abgenommen. Die Änderungen werden von hier aus direkt auf \texttt{prod} deployed.
     \item[prototype] Hierbei handelt es sich um eine Umgebung, die sporadisch für Prototypen und Demos verwendet wird.
-    \item[perf] Diese Umgebung wurde vor dem grossen v3-Release im Frühling 2019 für Performance-Tests verwendet und ist seither nur sporadisch in Betrieb, etwa zum Ausprobieren neuer Konfigurationen oder Technologien.
+    \item[perf] Diese Umgebung wurde vor dem grossen v3-Release im Frühling 2019 für Last- und Performance-Tests verwendet und ist seither nur sporadisch in Betrieb, etwa zum Ausprobieren neuer Konfigurationen oder Technologien.
 \end{description}
 
 \subsubsection{Arten von Parametern}
@@ -96,7 +97,7 @@ Es gibt verschiedene Gruppen von Benutzern, die \texttt{px} gewinnbringend einse
     \item[Backend-Entwickler] Diese entwickeln, erweitern und korrigieren die RESTful APIs, die das Backend von PEAX ausmachen. Von ihnen kann \texttt{px} einerseits für schnelle Tests und das Erstellen von Testdaten verwendet werden, andererseits kann \texttt{px} auch dabei hilfreich sein, die API (gerade Datenstrukturen) explorativ kennenzulernen.
     \item[Frontend-Entwickler] Ist die Spezifikation eines Endpoints unvollständig, unklar oder gar fehlerhaft, kann darauf kein funktionierendes Frontend aufsetzen. Hier kann \texttt{px} dabei hilfreich sein, das tatsächliche Verhalten des Backends zu überprüfen, und die Struktur der zurückgelieferten Payloads zu betrachten.
     \item[Tester] Die manuellen Regressionstests finden direkt auf dem Portal bzw. auf der App statt. Oftmals wäre es hilfreich, Testdaten grösseren Umfangs für einen neu registrierten Benutzer zu erstellen. Mithilfe von \texttt{px} können hierzu einfache Skripts zur Verfügung gestellt werden. (Die Skripts werden tendenziell eher von Entwicklern zur Verfügung gestellt, aber die Tester können diese nach Instruktion selbständig ausführen.)
-    \item[Projektleiter] Soll ein grosser Dokumentbestand eines Firmenkunden auf das PEAX-Portal übertragen werden, ist dies per Web-Interface sehr aufwändig. Hier könnte \texttt{px} zur Automatisierung herangezogen werden.
+    \item[Projektleiter] Sollen grosse Verzeichnisse von Dokumenten eines Firmenkunden auf das PEAX-Portal übertragen werden, ist dies per Web-Interface sehr aufwändig. Hier könnte \texttt{px} zur Automatisierung herangezogen werden.
 \end{description}
 
 \subsubsection{Betriebssysteme}
@@ -111,7 +112,7 @@ Es sind somit die Betriebssysteme macOS, Windows und Linux für die Ausführung 
 
 Verschiedene Betriebssysteme haben verschiedene Shells. Im \textsc{Unix}-Bereich gibt es auch zahlreiche Shells mit unterschiedlichen Merkmalen, die parallel zueinander installiert werden können.
 
-\textsc{Bash} ist nicht nur die Standard-Shell vieler \textsc{Linux}-Distributionen, sondern kommt bei Entwicklern auch auf \textsc{Windows} als \textsc{Git Bash} zum Einsatz. Auf \textsc{macOS} gehört \textsc{Bash} ebenfalls zum Lieferumfang, wobei die mächtigere \textsc{Zsh} seit \textsc{macOS Catalina} standardmässig zum Einsatz kommt. \footnote{\url{https://support.apple.com/en-us/HT208050}} Andere populäre \textsc{Unix}-Shells wie \textsc{Fish}, \textsc{Ksh} und \textsc{Tcsh} haben zwar unterschiedliche Merkmale, jedoch den \textsc{POSIX}-Standard als kleinsten gemeinsamen Nenner \cite{posix-shell}.
+\textsc{Bash} ist nicht nur die Standard-Shell vieler \textsc{Linux}-Distributionen, sondern kommt bei Entwicklern auch auf \textsc{Windows} als \textsc{Git Bash} zum Einsatz. Auf \textsc{macOS} gehört \textsc{Bash} ebenfalls zum Lieferumfang, wobei die mächtigere \textsc{Zsh} seit \textsc{macOS Catalina} standardmässig zum Einsatz kommt. \footnote{\url{https://support.apple.com/en-us/HT208050}} Andere mehr oder weniger populäre \textsc{Unix}-Shells wie \textsc{Fish}, \textsc{Ksh} und \textsc{Tcsh} haben unterschiedliche Merkmale, jedoch den \textsc{POSIX}-Standard als kleinsten gemeinsamen Nenner \cite{posix-shell}.
 
 Auf \textsc{Windows} spielen zudem die \textsc{PowerShell} sowie \texttt{cmd.exe} eine Rolle.
 
@@ -126,13 +127,13 @@ Für das vorliegende Projekt könne folgende Risiken identifiziert werden:
 \begin{description}
     \item[Projektrisiken] Diese Risiken beziehen sich auf den Erfolg des Projekts als Ganzes:
         \begin{itemize}
-            \item \textbf{Fehlende Adaption}: Auch wenn alle Anforderungen formell erfüllt sind, kann es dennoch sein, dass Entwickler und andere potenzielle Benutzer \texttt{px} nicht verwenden wollen. Eine Kombination aus mangelndem Mehrwert, Gewohnheit und Bequemlichkeit könnte der Grund dafür sein. Es gilt also nicht nur ein gutes Werkzeug zu erstellen, es muss auch dessen Mehrwert überzeugend demonstriert werden.
-            \item \textbf{Mangelnde Abdeckung der API}: Werden signifikante Teile der API nicht durch \texttt{px} abgedeckt, ist man wiederum zur Verwendung der herkömmlichen Werkzeuge gezwungen. Diese Situation gilt es zu vermeiden, indem eine weite Abdeckung der API erreicht werden soll.
+            \item Fehlende Adaption: Auch wenn alle Anforderungen formell erfüllt sind, kann es dennoch sein, dass Entwickler und andere potenzielle Benutzer \texttt{px} nicht verwenden wollen. Eine Kombination aus mangelndem Mehrwert, Gewohnheit und Bequemlichkeit könnte der Grund dafür sein. Es gilt also nicht nur ein gutes Werkzeug zu erstellen, es muss auch dessen Mehrwert überzeugend demonstriert werden.
+            \item Mangelnde Abdeckung der API: Werden signifikante Teile der API nicht durch \texttt{px} abgedeckt, ist man wiederum zur Verwendung der herkömmlichen Werkzeuge gezwungen. Diese Situation gilt es zu vermeiden, indem eine weite Abdeckung der API erreicht werden soll.
         \end{itemize}
     \item[Sicherheitsrisiken] Gegenüber \texttt{cUrl}, \textsc{Postman} und dergleichen soll \texttt{px} eine höhere Sicherheit schaffen. Die folgenden Sicherheitsrisiken können diesem Ziel abträglich sein:
         \begin{itemize}
-            \item \textbf{Token-Verwahrung}: Werden die Tokens von \texttt{px} nicht angemessen sicher verwahrt, könnten diese von einem Angreifer verwendet werden.
-            \item \textbf{Payment-Schnittstelle}: Über die PEAX API können ‒ ein hinterlegtes Bankkonto vorausgesetzt ‒ Zahlungen durchgeführt werden. In Kombination mit unsicher verwahrten Tokens könnte diese API für betrügerische Überweisungen verwendet werden.
+            \item Token-Verwahrung: Werden die Tokens von \texttt{px} nicht angemessen sicher verwahrt, könnten diese von einem Angreifer verwendet werden.
+            \item Payment-Schnittstelle: Über die PEAX API können ‒ ein hinterlegtes Bankkonto vorausgesetzt ‒ Zahlungen durchgeführt werden. In Kombination mit unsicher verwahrten Tokens könnte diese API für betrügerische Überweisungen verwendet werden.
         \end{itemize}
     \item[technische Risiken] Diese Risiken beziehen sich auf die Implementierung der einzelnen Features von \texttt{px}. Sie werden im Rahmen der einzelnen \texttt{User Stories} besprochen und behandelt.
 \end{description}

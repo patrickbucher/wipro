@@ -27,7 +27,7 @@ Meilenstein erreicht.
 |------:|-----------:|---:|-----------------------------------------|---------------------------------------------|
 |     3 | 06.10.2019 |  1 | Backlog und Konzept bereit              | Analyse, Grobkonzept, Testkonzept, Backlog  |
 |     9 | 10.11.2019 |  2 | Login- und Token-Handling funktionieren | Prototyp, Dokumentation, Meilensteinbericht |
-|    12 | 01.12.2019 |  3 | Signifikante Abdeckung der API erreicht | Prototyp, Dokumentation, Meilensteinbericht |
+|    13 | 15.12.2019 |  3 | Signifikante Abdeckung der API erreicht | Prototyp, Dokumentation, Meilensteinbericht |
 |    14 | 21.12.2019 |  4 | Bericht abgabebereit                    | Abschlussbericht                            |
 
 # Wochenplan

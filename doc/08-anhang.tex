@@ -54,7 +54,7 @@ Aus der Aufgabenstellung und dem Umfeld bei PEAX ergeben sich folgende nicht-fun
 
 \textsc{Java}, das bei PEAX im Backend-Bereich zum Einsatz kommt, erfordert die lokale Installation einer JRE in der richtigen Version, was bei Frontend-Entwicklern nicht gegeben ist. Ausserdem werden Wrapper-Skripts benötigt (\texttt{java -jar px.jar} ist nicht praktikabel).
 
-Python, Ruby, Perl und andere Skriptsprachen benötigen ebenfalls einen vorinstallierten Interpreter in der richtigen Version.
+\textsc{Python}, \textsc{Ruby}, \textsc{Perl} und andere Skriptsprachen benötigen ebenfalls einen vorinstallierten Interpreter in der richtigen Version.
 
 Zwar gibt es mit Mono eine Variante von .Net, die überall lauffähig ist, hier werden aber wiederum eine Laufzeitumgebung bzw. vorinstallierte Libraries benötigt.
 
@@ -73,54 +73,42 @@ Im Folgenden werden die gemachten Erfahrungen und die dabei empfundenen Vor- und
 Mit \textsc{Go} konnte der Autor dieser Arbeit bereits einges an Erfahrung sammeln. So wurde neben dem Prototyp zu \texttt{px} bereits die Testat-Aufgabe im Modul Software Testing\footnote{\url{https://github.com/patrickbucher/getting-to-philosophy}}, ein Thumbnailer\footnote{\url{https://github.com/patrickbucher/thumbnailer}} sowie zahlreiche Utilities\footnote{\url{https://github.com/patrickbucher/go-scratch}} (viele darunter als HTTP-Clients) in \textsc{Go} entwickelt. Dabei wurden folgende Vor- und Nachteile ermittelt:
 
 \begin{itemize}
-	\item Vorteile
-		\begin{itemize}
-			\item aufgrund weniger Keywords und Features einfach zu lernen
-			\item hervorragendes Tooling out-of-the-box
-			\item Cross-Compilation ohne Zusatztools auf alle unterstützte Plattformen möglich
-			\item schnelle Kompilierung
-			\item umfassende Standard-Library, die u.a. ein hervorrangendes HTTP-Package beinhaltet
-			\item persönlich bereits viel (positive) Erfahrungen damit gesammelt
-			\item wird bereits für andere bei PEAX gebräuchliche CLI-Tools eingesetzt (\texttt{oc}, \texttt{docker})
-            \item fügt sich sehr gut in die \textsc{Unix}-Philosophie ein (Tooling, Libraries)
-			\item Einfaches Interface für nebenläufige Programmierung (Goroutines und Channels)
-			\item geringer Memory-Verbrach bei relativ hoher Performance\footnote{\url{https://benchmarksgame-team.pages.debian.net/benchmarksgame/fastest/go.html}}
-		\end{itemize}
-	\item Nachteile
-		\begin{itemize}
-			\item keine Features wie Generics, Exceptions und \texttt{filter}/\texttt{map}/\texttt{reduce}
-			\item Binaries fallen relativ gross aus\footnote{\url{https://golang.org/doc/faq\#Why\_is\_my\_trivial\_program\_such\_a\_large\_binary}}
-			\item Error-Handling aufwändig und teils repetitiv
-		\end{itemize}
+    \item[+] aufgrund weniger Keywords und Features einfach zu lernen
+    \item[+] hervorragendes Tooling out-of-the-box
+    \item[+] Cross-Compilation ohne Zusatztools auf alle unterstützte Plattformen möglich
+    \item[+] schnelle Kompilierung
+    \item[+] umfassende Standard-Library, die u.a. ein hervorrangendes HTTP-Package beinhaltet
+    \item[+] persönlich bereits viel (positive) Erfahrungen damit gesammelt
+    \item[+] wird bereits für andere bei PEAX gebräuchliche CLI-Tools eingesetzt (\texttt{oc}, \texttt{docker})
+    \item[+] fügt sich sehr gut in die \textsc{Unix}-Philosophie ein (Tooling, Libraries)
+    \item[+] Einfaches Interface für nebenläufige Programmierung (Goroutines und Channels)
+    \item[+] geringer Memory-Verbrach bei relativ hoher Performance\footnote{\url{https://benchmarksgame-team.pages.debian.net/benchmarksgame/fastest/go.html}}
+    \item[-] keine Features wie Generics, Exceptions und \texttt{filter}/\texttt{map}/\texttt{reduce}
+    \item[-] Binaries fallen relativ gross aus\footnote{\url{https://golang.org/doc/faq\#Why\_is\_my\_trivial\_program\_such\_a\_large\_binary}}
+    \item[-] Error-Handling aufwändig und teils repetitiv
 \end{itemize}
 
 \subsubsection{\textsc{Rust}}
 
-Der Autor dieser Arbeit konnte sich bereits letztes Jahr im Rahmen des Moduls \textit{Programming Concepts and Paradigms} an der HSLU Informatik mit \textsc{Rust} befassen \cite[p. 12]{pcp-rust}. Nach selbständiger Beschäftigung mit dieser Programmiersprache im Sommer können (teils ergänzend) folgende Vor- und Nachteile genannt werden:
+Der Autor dieser Arbeit konnte sich bereits letztes Jahr im Rahmen des Moduls \textit{Programming Concepts and Paradigms} an der HSLU Informatik mit \textsc{Rust} befassen \cite[S. 12]{pcp-rust}. Nach selbständiger Beschäftigung mit dieser Programmiersprache im Sommer können (teils ergänzend) folgende Vor- und Nachteile genannt werden:
 
 \begin{itemize}
-	\item Vorteile
-		\begin{itemize}
-			\item viele moderne Features (Generics, \texttt{filter}/\texttt{map}/\texttt{reduce})
-			\item hervorragendes Typsystem
-			\item gutes und ausgereiftes Tooling
-			\item weder manuelles Memory-Management noch Garbage Collector nötig
-			\item Pattern Matching führt zu sehr solidem Code
-			\item gegenüber \textsc{Go} schlankere Binaries
-			\item kommt bereits in der Form einiger CLI-Tools persönlich zum Einsatz (\texttt{rg}, \texttt{bat}, \texttt{hexyl}, \texttt{battop})
-			\item erstklassige Performance (im Bereich von C/C++) bei geringem Speicherverbrauch\footnote{\url{https://benchmarksgame-team.pages.debian.net/benchmarksgame/fastest/rust-go.html}}
-		\end{itemize}
-	\item Nachteile
-		\begin{itemize}
-			\item hohe Einstiegshürde und lange Einarbeitungszeit
-			\item Cross-Compilation benötigt Zusatztools
-			\item noch keine praxisnahe Erfahrung damit gesammelt
-			\item aufgrund schlanker Standard Library auf viele Dependencies angewiesen
-		\end{itemize}
+    \item[+] viele moderne Features (Generics, \texttt{filter}/\texttt{map}/\texttt{reduce})
+    \item[+] hervorragendes Typsystem
+    \item[+] gutes und ausgereiftes Tooling
+    \item[+] weder manuelles Memory-Management noch Garbage Collector nötig
+    \item[+] Pattern Matching führt zu sehr solidem Code
+    \item[+] gegenüber \textsc{Go} schlankere Binaries
+    \item[+] kommt bereits in der Form einiger CLI-Tools persönlich zum Einsatz (\texttt{rg}, \texttt{bat}, \texttt{hexyl}, \texttt{battop})
+    \item[+] erstklassige Performance (im Bereich von C/C++) bei geringem Speicherverbrauch\footnote{\url{https://benchmarksgame-team.pages.debian.net/benchmarksgame/fastest/rust-go.html}}
+    \item[-] hohe Einstiegshürde und lange Einarbeitungszeit
+    \item[-] Cross-Compilation benötigt Zusatztools
+    \item[-] noch keine praxisnahe Erfahrung damit gesammelt
+    \item[-] aufgrund schlanker Standard Library auf viele Dependencies angewiesen
 \end{itemize}
 
-\subsubsection{Entscheidung}
-\label{sec:decision-programming-language}
+\subsubsection{Entscheidung Programmiersprache}
+\label{sec:Entscheidung-Programmiersprache}
 
 \textsc{Rust} hat gegenüber \textsc{Go} einige unbestreitbare Vorzüge (Memory Management, Typsystem, Ausdrucksstärke, Eliminierung ganzer Fehlerklassen, Performance, schlankere Binärdateien). Bezogen auf das umzusetzende Projekt haben jedoch einige davon kaum einen wichtigen Stellenwert (etwa Performance und Zero-Cost Abstractions). Hier fallen die Vorzüge von \textsc{Go} (umfassende Standard Library, Cross-Compilation) wesentlich stärker ins Gewicht.
 
@@ -142,7 +130,7 @@ TODO: JWT, Keystore, Password Input
     \item[Projektplan] Der Projektplan (\texttt{Anhang/Projektplan.pdf}) besteht aus einem Rahmenplan, einem Meilensteinplan und einem Wochenplan.
     \item[Backlog] Das Backlog (\texttt{Anhang/Backlog.pdf}) enthält die einzelnen User Stories, die Sprint-Planung, Umsetzungsnotizen zu einzelnen User Stories und Testprotokolle dazu. 
     \item[Meilensteinbericht 1] Der erste Meilensteinbericht (\texttt{Anhang/Meilensteinbericht-1.pdf}) beschreibt die Vorgeschichte des Projekts und die Phase der Projektinitialisierung.
-    \item[Meilensteinbericht 2] Der zweiten Meilensteinbericht (\texttt{Anhang/Meilensteinbericht-2.pdf}) umfasst die ersten beiden Sprints.
+    \item[Meilensteinbericht 2] Der zweite Meilensteinbericht (\texttt{Anhang/Meilensteinbericht-2.pdf}) umfasst die ersten beiden Sprints.
     \item[Meilensteinbericht 3] \texttt{Anhang/Meilensteinbericht-3.pdf}
     \item[Arbeitsjournal] Im Arbeitsjournal (\texttt{Anhang/Arbeitsjournal.pdf}) sind die einzelnen Aufwände auf halbe Stunden gerundet nach Bereich ‒ Projekt(administration), Dokumentation, Umsetzung ‒ rapportiert. Mithilfe eines AWK-Skripts können die Aufwände nach Bereich und User Story ausgewertet werden.
 \end{description}

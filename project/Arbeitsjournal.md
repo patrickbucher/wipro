@@ -49,7 +49,7 @@ author: Patrick Bucher
 | So, 20.10.2019 |       0.5 | Umsetzung     | Story 4: Erweiterung der CI-Pipeline um Logout-Test                |
 | So, 20.10.2019 |       1.0 | Umsetzung     | Story 4: Test auf Windows und macOS                                |
 | So, 20.10.2019 |       1.0 | Umsetzung     | Story 4: Sicher verwahrten Token für weitere Requests verwenden    |
-| So, 20.10.2019 |       0.5 | Umsetzung     | Erstellung Release v0.1.0                                          |
+| So, 20.10.2019 |       0.5 | Projekt       | Erstellung Release v0.1.0                                          |
 | So, 20.10.2019 |       0.5 | Dokumentation | Sequenzdiagramm zur Zwei-Faktor-Authentifizierung erstellt         |
 | Mo, 21.10.2019 |       1.0 | Dokumentation | Abstract entworfen, Umgebungen beschrieben, offene Punkte vermerkt |
 | Mi, 23.10.2019 |       1.0 | Dokumentation | Feedback zu Sprint 1 aufgenommen und kommentiert                   |
@@ -75,13 +75,13 @@ author: Patrick Bucher
 | So, 10.11.2019 |       2.0 | Umsetzung     | Ausgiebiges Testen auf Linux, macOS und Windows                    |
 | So, 10.11.2019 |       0.5 | Recherche     | Unterscheidung von Betriebssystemen (Build Tags)                   |
 | So, 10.11.2019 |       1.0 | Umsetzung     | Hotfix: Passworteingabe auf Windows korrigiert; erneute Tests      |
-| So, 10.11.2019 |       1.0 | Projekt       | Freigabe Release, Release Notes und Meilensteinbericht             |
+| So, 10.11.2019 |       1.0 | Projekt       | Freigabe Release v0.2.1, Release Notes und Meilensteinbericht      |
 | So, 10.11.2019 |       1.0 | Recherche     | Geschichte von UNIX (Design von Kommandozeilenprogrammen)          |
 | Mo, 11.11.2019 |       0.5 | Dokumentation | Konzept von `stderr`/`stdout` erläutert                            |
 | Mo, 11.11.2019 |       1.0 | Projekt       | Arbeitskollegen instruiert und deren Rückmeldungen aufgenommen     |
 | Di, 12.11.2019 |       1.0 | Recherche     | Versionsinformationen in Binärdateien hineinkompilieren            |
 | Di, 12.11.2019 |       0.5 | Umsetzung     | Version von Git-Repository ins Programm hineinkompilieren          |
-| Mi, 13.11.2019 |       1.0 | Dokumentation | Rückmeldungen von Arbeitskollegen geprüft und kommentiert          |
+| Mi, 13.11.2019 |       1.0 | Dokumentation | Rückmeldungen von arbeitskollegen geprüft und kommentiert          |
 | Sa, 16.11.2019 |       2.5 | Dokumentation | Komponentendiagramm erstellt, Sequenzdiagramme verbessert          |
 | Sa, 16.11.2019 |       1.5 | Dokumentation | Struktur der Dokumentation überarbeitet, Notizen eingefügt         |
 | Sa, 16.11.2019 |       0.5 | Dokumentation | Deckblatt ausgefüllt und optisch an Dokumentation angeglichen      |
@@ -109,4 +109,16 @@ author: Patrick Bucher
 | Fr, 29.11.2019 |       1.5 | Umsetzung     | Story 18: Dateien für rekursiven Upload auflisten                  |
 | Fr, 29.11.2019 |       1.0 | Projekt       | Besprechung mit Betreuer                                           |
 | Sa, 30.11.2019 |       0.5 | Projekt       | Besprechungsnotizen verarbeitet                                    |
-|                | **121.5** | **Total**     |                                                                    |
+| Sa, 30.11.2019 |       3.0 | Umsetzung     | Story 18: Rekursiven Verzeichnis-Upload umgesetzt                  |
+| So, 01.12.2019 |       1.0 | Dokumentation | Manuelle Tests beschrieben und Zugänge dafür erstellt              |
+| So, 01.12.2019 |       1.0 | Umsetzung     | Testing auf allen unterstützten Plattformen                        |
+| So, 01.12.2019 |       0.5 | Dokumentation | Testergebnisse/Bugs beschrieben                                    |
+| So, 01.12.2019 |       1.0 | Projekt       | Freigabe Release v0.3.0, Release Notes, Team informiert            |
+| Mo, 02.12.2019 |       1.5 | Dokumentation | Ideen und Konzepte: Unix-Philosophie zusammengefasst               |
+| Mo, 02.12.2019 |       0.5 | Dokumentation | Editionsplan für die ganze Woche erarbeitet                        |
+| Mo, 02.12.2019 |       0.5 | Dokumentation | Rückmeldungen von arbeitskollegen geprüft und kommentiert          |
+| Di, 03.12.2019 |       1.5 | Dokumentation | Befehlsstruktur beschrieben                                        |
+| Mi, 04.12.2019 |       2.0 | Dokumentation | Befehlstruktur fertig beschrieben                                  |
+| Do, 05.12.2019 |       2.0 | Dokumentation | Konzept zum Token-Handling beschrieben                             |
+| Fr, 06.12.2019 |       1.5 | Dokumentation | Architektur der Anwendung und erste Packages beschrieben           |
+|                | **137.5** | **Total**     |                                                                    |
