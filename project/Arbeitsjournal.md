@@ -120,4 +120,5 @@ author: Patrick Bucher
 | Di, 03.12.2019 |       1.5 | Dokumentation | Befehlsstruktur beschrieben                                        |
 | Mi, 04.12.2019 |       2.0 | Dokumentation | Befehlstruktur fertig beschrieben                                  |
 | Do, 05.12.2019 |       2.0 | Dokumentation | Konzept zum Token-Handling beschrieben                             |
-|                | **136.0** | **Total**     |                                                                    |
+| Fr, 06.12.2019 |       1.5 | Dokumentation | Architektur der Anwendung und erste Packages beschrieben           |
+|                | **137.5** | **Total**     |                                                                    |
