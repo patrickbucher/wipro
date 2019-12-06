@@ -4,7 +4,7 @@ Der PEAX Command Line Client \texttt{px} soll zwei grundlegenden Design-Prinzipi
 
 \begin{enumerate}
     \item der Unix-Philosophie, und
-    \item dem \textit{Swiss Army Knive}-Ansatz, der bereits in \secref{sec:command-line-tools} beschrieben wurde.
+    \item dem \textit{Swiss Army Knive}-Ansatz, der bereits in \secref{sec:Kommandozeilenprogramme} beschrieben wurde.
 \end{enumerate}
 
 \subsection{Unix-Philosophie}
@@ -49,14 +49,14 @@ Für \texttt{px} werden die Grundsätze der \textsc{Unix}-Philosophie folgenderm
     \item \textit{Choose portability over efficiency.} Mit \textsc{Go} wurde eine Programmiersprache gewählt, die das Kompilieren für andere Betriebssysteme und Architekturen \textit{out of the box} unterstützt.\footnote{Mit \textsc{Ken Thompson} und \textsc{Rob Pike} sind zwei der drei Schöpfer dieser Programmiersprache Unix-Pioniere erster und zweiter Stunde, was man ihr an verschiedensten Stellen anmerkt.}
     \item \textit{Store numerical data in flat ASCII files.} Die unsicher verwahrten Tokens sollen in einer JSON-Datei namens \texttt{.px-tokens} im \texttt{HOME}-Verzeichnis des Benutzers abgelegt werden. JWT-Tokens sind numerische Daten im weitesten Sinn, sprich Base64-codiertes JSON. Zwar lässt sich JSON nicht wie eine «flache» ASCII-Datei komfortabel mit Tools wie \texttt{grep} und Konsorten bearbeiten, dafür bietet \textsc{Go} sehr komfortable \textit{Marshaling}-Mechanismen um Datenstrukturen aus und zu JSON zu serialisieren \cite[Kapitel 4.5]{gopl}. Wichtig ist, dass zur Speicherung der Tokens keine Binärdateien, sondern Textdateien \textit{im weitesten Sinn} (JSON) zum Einsatz kommen.
     \item \textit{Use software leverage to your advantage.} Die Hebelwirkung von \textit{bestehender} Software soll für \texttt{px} auf verschiedenen Stufen genutzt werden. Die sehr umfassende und hochwertige Standard Library von \textsc{Go}, gerade das sehr mächtige Package \texttt{net/http} unterstützt das Ansprechen einer RESTful HTTP-API. Eine Fremdkomponente von Zalando (\texttt{go-keyring}) bietet plattformübergreifende Unterstützung für den nativen Keystore des Betriebssystems. Das sehr mächtige \texttt{go}-Tool kommt u.a. zur statischen Quellcodeanalyse (\texttt{go vet}), zum Testen (\texttt{go test}), Verwalten von Abhängigkeiten (\texttt{go mod}) und kompilieren (\texttt{go build}) zum Einsatz. In der Entwicklung werden Hilfstools wie \texttt{golint} (Quellcodeanalyse), \texttt{goimports} (Formatierung von Code und Importieren von Packages) und \texttt{gopls} (automatische, Texteditor-unabhängige Code-Vervollständigung).
-    \item \textit{Use shell scripts to increase leverage and portability.} Die Teststrategie (siehe \secref{sec:testing-q2}) setzt stark auf Shell-Skripts zum Erreichen einer hohen Testabdeckung mit aussagekräftigen Tests. Die Skripts könnten auch dann noch verwendet werden, sollte \texttt{px} dereinst mit einer anderen Programmiersprache neu implementiert werden (siehe auch \secref{sec:decision-programming-language}).
+    \item \textit{Use shell scripts to increase leverage and portability.} Die Teststrategie (siehe \secref{sec:Testing-Q2}) setzt stark auf Shell-Skripts zum Erreichen einer hohen Testabdeckung mit aussagekräftigen Tests. Die Skripts könnten auch dann noch verwendet werden, sollte \texttt{px} dereinst mit einer anderen Programmiersprache neu implementiert werden (siehe auch \secref{sec:Entscheidung-Programmiersprache}).
     \item \textit{Avoid captive user interfaces.} Grundsätzlich soll \texttt{px} interaktiv bedienbar und in Skripten verwendet werden können. So können Benutzername und Passwort per Kommandozeilenparameter gesetzt und nur interaktiv erfragt werden, falls ersteres unterlassen wird. Bei der Zwei-Faktor-Authentifizierung ist jedoch eine interaktive Eingabe vonnöten, da der SMS-Code zum Zeitpunkt der initialen Login-Anfrage noch nicht bekannt ist.\footnote{Mit einem One-Time Password würde dies theoretisch funktionieren, da die Codes jeweils vorweg für eine bestimmte Zeitspanne gültig sind. Der Nutzen hiervon ist jedoch äusserst gering, da der Benutzer ja doch am Terminal sitzen muss, um den Code \textit{vor} der Ausführung von \texttt{px} einzugeben.}
-    \item \textit{Make every program a filter.} \texttt{px} soll keine unnötigen Ausgaben machen und nur Nutzdaten auf \texttt{stdout} ausgeben. Werden Vollzugs- und Erfolgsmeldungen benötigt, sollen diese per speziellem Parameter verlangt und nach \texttt{stderr} ausgegeben werden (siehe auch die Diskussion bei \secref{sec:feedback-sprint1}).
+    \item \textit{Make every program a filter.} \texttt{px} soll keine unnötigen Ausgaben machen und nur Nutzdaten auf \texttt{stdout} ausgeben. Werden Vollzugs- und Erfolgsmeldungen benötigt, sollen diese per speziellem Parameter verlangt und nach \texttt{stderr} ausgegeben werden (siehe auch die Diskussion bei \secref{sec:Feedback-Sprint1}).
 \end{enumerate}
 
 \subsection{Swiss Army Knive}
 
-Die «Swiss Army Knive»-Befehlsstruktur \cite[S. 290]{gopl}, wie sie im vorhergehenden Kapitel beschrieben (\secref{sec:command-line-tools}) und im Prototyp (\secref{sec:ausgangslage}) verwendet worden ist, soll beibehalten werden. Befehle in \texttt{px} sollen etwa folgendermassen aussehen:
+Die «Swiss Army Knive»-Befehlsstruktur \cite[S. 290]{gopl}, wie sie im vorhergehenden Kapitel beschrieben (\secref{sec:Kommandozeilenprogrammen}) und im Prototyp (\secref{sec:Ausgangslage-und-Vorleistungen}) verwendet worden ist, soll beibehalten werden. Befehle in \texttt{px} sollen etwa folgendermassen aussehen:
 
 \begin{lstlisting}[caption={Beispielhafter Befehl mit Command, Subcommand, Flags, Parametern}]
 # Login-Vorgang: Tokens vom IDP holen
@@ -144,7 +144,7 @@ $ px agent-logout -e test
 Für die Admin API wird der gleiche Login-Mechanismus wie für die User API verwendet. Der einzige Unterschied im Gebrauch dieser APIs ist, dass die Benutzer für die Admin API über zusätzliche Berechtigungen verfügen, welche im Access Token entsprechend kodiert sind.
 
 \subsubsection{Generische Befehle für Entwickler}
-\label{sec:generische-befehle}
+\label{sec:Generische-Befehle}
 
 Damit Entwickler oftmals an einzelnen Endpoints arbeiten, sollen sie einen möglichst feingranularen Zugriff auf die API erhalten, sprich über die HTTP-Methoden \texttt{GET}, \texttt{POST}, \texttt{PATCH} usw.\footnote{\texttt{px} wurde im Ideenstadium als \textit{«\texttt{curl} for the PEAX API»} bezeichnet.} Die Befehle werden dementsprechend (mit Kleinbuchstaben) bezeichnet.
 
@@ -293,9 +293,9 @@ v0.3.0
 \end{lstlisting}
 
 \subsection{Token Handling}
-\label{sec:konzept-token-store}
+\label{sec:Konzept-Token-Store}
 
-Wie die Befehle der vorhergehenden Abschnitte (besonders \secref{sec:generische-befehle}) gezeigt haben, kann \texttt{px} ähnlich wie \texttt{curl} (\secref{sec:curl}) verwendet werden, ohne sich um \texttt{Authorization}-Headers, Tokens und dergleichen kümmern zu müssen. Dies, weil \texttt{px} sich um das Abholen (\texttt{px login}) und Verwalten der Tokens kümmert.
+Wie die Befehle der vorhergehenden Abschnitte (besonders \secref{sec:Generische-Befehle}) gezeigt haben, kann \texttt{px} ähnlich wie \texttt{curl} (\secref{sec:cUrl}) verwendet werden, ohne sich um \texttt{Authorization}-Headers, Tokens und dergleichen kümmern zu müssen. Dies, weil \texttt{px} sich um das Abholen (\texttt{px login}) und Verwalten der Tokens kümmert.
 
 \subsubsection{Token Store}
 

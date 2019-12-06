@@ -23,7 +23,7 @@ Obwohl \textsc{Postman} einen hohen Komfort bietet und als generischer HTTP-Clie
 \end{description}
 
 \subsubsection{cUrl}
-\label{sec:curl}
+\label{sec:cUrl}
 
 Bei \texttt{curl} handelt es sich um ein Kommandozeilenprogramm zum Ansprechen verschiedenster Protokolle\footnote{\url{https://curl.haxx.se/}}, wobei im Kontext von PEAX nur HTTP relevant ist. Verglichen mit \textsc{Postman} wird \texttt{curl} von weniger Entwicklern eingesetzt, es kommt aber immer dann zum Einsatz, wenn ein grösserer Ablauf automatisiert werden soll.\footnote{Beispiel: Einem bestimmten Benutzer für Testzwecke 2000 Dokumente per Delivery-API ins Portal stellen, was aufgrund der langen Laufzeit periodische Token-Aktualisierung erfordert.}
 
@@ -42,7 +42,7 @@ Die Problematik der Credentials, die im Klartext herumgereicht werden, besteht d
 Da es sich bei \texttt{http} ‒ dem Executable von \textsc{HTTPie} ‒ um ein \textsc{Python}-Skript handelt, ist die Installation einer entsprechenden Laufzeitumgebung vorausgesetzt. Ansonsten hat \textsc{HTTPie} in der Anwendung die gleichen Vor- und Nachteile wie \texttt{curl}.
 
 \subsection{Kommandozeilenprogramme}
-\label{sec:command-line-tools}
+\label{sec:Kommandozeilenprogramme}
 
 Bei Kommandozeilenprogrammen grösseren Umfangs hat sich ein Bedienungsmuster etabliert, bei dem der Programmname als der Hauptbefehl und der erste Parameter als Unterbefehl angegeben wird. Hierzu einige Beispiele:
 
@@ -67,7 +67,7 @@ Ein etwas anderer Ansatz wird in \textsc{Rust} für das sehr umfassende Werkzeug
 Der Ansatz von \textsc{Rust} passt zwar deutlich besser zur \textsc{Unix}-Philosophie ‒ \textit{«Make each program do one thing well.»} \cite[S. 3]{unixtimesharing} ‒ führt aber im Fall von \textsc{Go} aufgrund der statischen Kompilierung zu einer ganzen Reihe grosser Binaries, anstelle nur eines grossen Binaries, was wiederum das Deployment und Setup erschwert.
 
 \subsection{Ausgangslage und Vorleistungen}
-\label{sec:ausgangslage}
+\label{sec:Ausgangslage-und-Vorleistungen}
 
 Das Projekt \texttt{px} wurde bereits am 11. Juni 2019 auf dem \textsc{GitLab} von PEAX erstellt\footnote{\url{https://gitlab.peax.ch/peax3/px}}. Als erstes wurde eine CI-Pipeline bestehend aus den Schritten \texttt{build} und \texttt{test} eingerichtet. Die Pipeline wurde mittels eines Dummy-Tests überprüft, der einmal erfolgreich durchlaufen und einmal scheitern sollte, um einen Positiv- und einen Negativtest durchführen zu können.
 
