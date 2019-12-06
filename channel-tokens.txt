@@ -1,0 +1,19 @@
+Problem: When parallelizing HTTP requests for a large set of documents to be
+uploaded, too many open connections could be opened.
+
+gopl, p. 260 (logical: 241)
+
+"We can limit parallelism...": counting semaphore
+
+    // define counting semaphore as a channel of tokens
+    const parallelTasks = 10
+    var tokens = make(chan struct{}, parallelTasks)
+
+    // acquire token: locks if all tokens acquired
+    tokens <- struct{}{}
+
+    // do some work
+    // ...
+
+    // release token: releases possible lock from above
+    <-tokens
