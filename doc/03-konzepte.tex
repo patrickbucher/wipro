@@ -298,6 +298,7 @@ v0.3.0
 Wie die Befehle der vorhergehenden Abschnitte (besonders \secref{sec:Generische-Befehle}) gezeigt haben, kann \texttt{px} ähnlich wie \texttt{curl} (\secref{sec:cUrl}) verwendet werden, ohne sich um \texttt{Authorization}-Headers, Tokens und dergleichen kümmern zu müssen. Dies, weil \texttt{px} sich um das Abholen (\texttt{px login}) und Verwalten der Tokens kümmert.
 
 \subsubsection{Token Store}
+\label{sec:Konzept-Token-Store}
 
 OAuth-Tokens erlauben den Zugriff auf möglicherweise sensitive Informationen. Sie sind ähnlich mächtig, wie ein zeitlich begrenzt gültiges Passwort. Sie sollen darum sicher verwahrt werden können. Andererseits müssen sich Entwickler bei der Fehlersuche die Tokens mit wenig Aufwand anschauen können. Dieser Zielkonflikt kann folgendermassen gelöst werden:
 

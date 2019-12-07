@@ -122,4 +122,5 @@ author: Patrick Bucher
 | Do, 05.12.2019 |       2.0 | Dokumentation | Konzept zum Token-Handling beschrieben                             |
 | Fr, 06.12.2019 |       1.5 | Dokumentation | Architektur der Anwendung und erste Packages beschrieben           |
 | Sa, 07.12.2019 |       1.5 | Dokumentation | Verbleibende Packages beschrieben                                  |
-|                | **139.0** | **Total**     |                                                                    |
+| Sa, 07.12.2019 |       1.0 | Dokumentation | Dokumentation 2FA und Keystore                                     |
+|                | **140.0** | **Total**     |                                                                    |

@@ -29,16 +29,55 @@ Der Code für das ausführbare Programm (\texttt{px.go}) befindet sich gemäss K
 
 \subsection{Zwei-Faktor-Authentifizierung}
 
+Hat ein Benutzer im Portal die Zwei-Faktor-Authentifizierung über SMS oder TOTP aktiviert, wird der initiale Login-Request mit Benutzername und Passwort mit dem HTTP-Status 380 quittiert. Diese Antwort enthält auch die Information, welcher zweite Faktor (SMS oder TOTP) verlangt wird.
+
+Dem Benutzer wird eine entsprechende Eingebeaufforderung angezeigt. Nach der Eingabe wird der initiale Request mit dem eingegebenen zweiten Faktor ergänzt und erneut an den IDP gesendet. Hat der Vorgang funktioniert, erhält der Benutzer das Token-Pair, das im Keystore für die spätere Verwendung abgelegt wird.
+
+Dieser Vorgang ist in \imgref{fig:2fa} mit einem Sequenzdiagramm veranschaulicht.
+
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{pics/sequence-2fa.png}
-    \caption{Sequenzdiagramm: Der Ablauf der Zwei-Faktor-Authentifizierung mit SMS oder OTP}
+    \caption{Der Ablauf der Zwei-Faktor-Authentifizierung mit SMS oder OTP (Sequenzdiagramm)}
+    \label{fig:2fa}
 \end{figure}
 
 \subsection{Token Store}
 \label{sec:Realisierung-Token-Store}
 
-TODO: sicher und unsicher, Datenstruktur
+Für jede Umgebung ist mit dem Flag \texttt{Confidential} definiert, ob die Tokens standardmässig sicher oder unsicher verwahrt werden sollen. Wie im Abschnitt \secref{sec:Konzept-Token-Store} beschrieben kann diese Einstellung mit den entsprechenden Flags übersteuert werden.
+
+Wurde die unsichere Variante gewählt bzw. beibehalten, werden die beiden Tokens direkt in die JSON-Struktur geschrieben, die vor Beendigung des Clients nach \texttt{\$HOME/.px-tokens} geschrieben wird. Für jede Kombination von Token-Art (\texttt{user} oder \texttt{agent}) und Umgebung (\texttt{test}, \texttt{stage} usw.) wird je ein Feld \texttt{refresh\_token} und \texttt{access\_token} gespeichert. Als zusätzliches Feld wird \texttt{use\_keystore} mit dem Wert \texttt{false} abgespeichert.
+
+Wird jedoch die sichere Variante gewählt bzw. beibehalten, wird unter der Kombination von Token-Art und Umgebung kein Token Pair abgespeichert, sondern bloss das Feld \texttt{use\_keystore} mit dem Wert \texttt{true}, was bei künftigen Token-Zugriffen als Verweis auf den nativen Keystore zu verstehen ist.
+
+Das folgende Codebeispiel zeigt einen verkürzten Auszug aus der Datei \texttt{\$HOME/.px-tokens}, wobei für die Umgebung \texttt{test} die unsichere und für die Umgebung \texttt{stage} die sichere Token-Verwahrung verwendet worden ist.
+
+\begin{lstlisting}[caption={Die JSON-Struktur für den Keystore (Auszug)}]
+{
+	"tokens": {
+		"user_test": {
+			"access_token": "eyJhbGciOiJSUz...",
+			"refresh_token": "eyJhbGciOiJIUz...",
+			"use_keystore": false
+		},
+		"user_stage": {
+			"use_keystore": true
+		}
+	},
+	"default_environment": "stage"
+}
+\end{lstlisting}
+
+Der sichere Keystore ist als Key-Value-Store mit globalem Namensraum zu verstehen. Die Keys müssen also vollständig qualifiziert sein, d.h. alle Informationen enthalten, die etwa einen Refresh Token von \texttt{px} für einen Benutzer auf der Umgebung \texttt{prod} von einem auf dem Computer hinterlegten E-Mail-Passwort oder dergleichen unterscheidet. Hierzu wurde das folgende Namensschema gewählt:
+
+\texttt{px:[environment]:[(user|agent)]:[(refresh|access)Token]}.
+
+Ein Refresh Token für die User API auf der Umgebung \texttt{test} hätte etwa folgenden Key:
+
+\texttt{px:test:user:refreshToken}
+
+TODO: Agent-Beispiel
 
 \subsubsection{Fremdkomponente \texttt{zalando/go-keyring}}
 
