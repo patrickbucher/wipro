@@ -124,4 +124,5 @@ author: Patrick Bucher
 | Sa, 07.12.2019 |       1.5 | Dokumentation | Verbleibende Packages beschrieben                                  |
 | Sa, 07.12.2019 |       1.0 | Dokumentation | Dokumentation 2FA und Keystore                                     |
 | So, 08.12.2019 |       2.0 | Dokumentation | Kapitel zur Realisierung (vorerst) abgeschlossen                   |
-|                | **142.0** | **Total**     |                                                                    |
+| So, 08.12.2019 |       0.5 | Dokumentation | Umgang mit Risiken in der Realisierung erörtert                    |
+|                | **142.5** | **Total**     |                                                                    |
