@@ -24,11 +24,11 @@ author: Patrick Bucher
 | 16 | Generische `PATCH`-Schnittstelle               | umgesetzt in Sprint 3 | 3            |
 | 17 | Generische `DELETE`-Schnittstelle              | umgesetzt in Sprint 3 | 1            |
 | 18 | Rekursives Hochladen von Dokument-Ordnern      | umgesetzt in Sprint 3 | 5            |
-|    | Fehlerkorrekturen: Bugs 3, 4 und 5             | offen                 | 3            |
-|    | Nebenläufiger Upload von Dokument-Ordnern      | offen                 | 1            |
-|    | Statusangabe bei Upload von Dokument-Ordnern   | offen                 | 1            |
-|    | Automatisches Tagging hochgeladener Ordner     | offen                 | 3            |
-|    | Variablen in der Ressourcenangabe              | offen                 | 3            |
+| 19 | Fehlerkorrekturen: Bugs 3, 4 und 5             | geplant für Sprint 4  | 3            |
+| 20 | Statusangabe bei Upload von Dokument-Ordnern   | geplant für Sprint 4  | 1            |
+| 21 | Nebenläufiger Upload von Dokument-Ordnern      | geplant für Sprint 4  | 1            |
+| 22 | Automatisches Tagging hochgeladener Ordner     | geplant für Sprint 4  | 5            |
+|    | PEAX ID als Variable in der Ressourcenangabe   | offen                 |
 |    | Verbesserung der Testabdeckung                 | offen                 |
 |    | Automatische Formatierung von JSON-Ausgaben    | offen                 |
 |    | Anzeigen der aktiven Logins                    | offen                 |
@@ -43,11 +43,12 @@ author: Patrick Bucher
 
 # Sprints
 
-| Sprint | Stories geplant  | Stories umgesetzt | Aufwand | Stories offen | h/SP |
-|-------:|------------------|-------------------|--------:|---------------|-----:|
-|      1 | 6 (1-6), 20 SP   | 4 (1-4), 14 SP    |   14.5h | 2 (5-6), 6 SP | 1.05 |
-|      2 | 6 (5-10), 18 SP  | 6 (5-10), 18 SP   |   20.5h | 0             | 1.15 |
-|      3 | 8 (11-18), 20 SP | 8 (11-18), 20  SP |   19.5h | 0             | 0.98 |
+| Sprint | Stories geplant  | Stories umgesetzt | Aufwand | Stories offen   | h/SP |
+|-------:|------------------|-------------------|--------:|-----------------|-----:|
+|      1 | 6 (1-6), 20 SP   | 4 (1-4), 14 SP    |   14.5h | 2 (5-6), 6 SP   | 1.05 |
+|      2 | 6 (5-10), 18 SP  | 6 (5-10), 18 SP   |   20.5h | 0               | 1.15 |
+|      3 | 8 (11-18), 20 SP | 8 (11-18), 20  SP |   19.5h | 0               | 0.98 |
+|      4 | 4 (19-22), 10 SP | 0                 |         | 4 (19-22), 10SP |      |
 
 # User Stories
 
@@ -864,6 +865,91 @@ Akzeptanzkriterien:
   `docfolder` (siehe Beschreibung oben) hoch. Aus der resultierenden
   JSON-Datenstruktur wird das Feld `uploaded` extrahiert, und mit der Anzahl
   Dateien in `docfolder` verglichen.
+
+## Story 19: Fehlerkorrekturen der Bugs 3, 4 und 5
+
+- Bug 3: Als Anwender möchte ich, dass die Tokens beim Logout aus dem Keystore gelöscht werden, damit sie nicht in falsche Hände geraten können.
+
+- Bug 4: Als Anwender möchte ich, dass beim Login der `token_type` automatisch gesetzt wird, damit dieser einfacher ersichtlich ist.
+
+- Bug 5: Als Anwender möchte ich, dass beim Logout die Standardumgebung zurückgesetzt wird, damit ich keine Requestversuche mehr auf eine Umgebung unternehme, für die ich keine Token mehr habe, und bei einem solchen Versuch aussagekräftigere Fehlermeldungen erhalte.
+
+Akzeptanzkriterien:
+
+1. Nach dem Logout von einer Umgebung sind auf dieser keine Tokens mehr im Keystore vorhanden. Sollte dies aufgrund eines Fehlers in der Fremdkomponente `zalando/go-keyring` nicht möglich sein, soll der Token nicht gelöscht, aber wenigstens mit einem leeren oder ungültigen Wert überschrieben werden.
+2. Tokens in `~/.px-tokens` sollen stets den korrekten Token-Typ gesetzt haben.
+3. Nach dem Logout ist das Feld `default_environment` immer leer oder nicht vorhanden in `~/.px-tokens`.
+
+### Notizen
+
+- 
+
+### Testprotokoll
+
+- 
+
+## Story 20: Statusangabe bei Upload von Dokument-Ordnern
+
+Als Benutzer möchte ich über den Verlauf des rekursiven Uploadvorgangs informiert werden, damit ich die verbleibende Zeitdauer besser abschätzen kann.
+
+Akzeptanzkriterien:
+
+1. Die Statusmeldung erfolgt nach dem Schema `m/n`, wobei `m` für die Anzahl abgeschlossener Uploadvorgänge und `n` für die Gesamtzahl der Uploadvorgänge, d.h. die Anzahl Dokumente im hochzuladenen Ordner, steht.
+2. Ein gescheiterter, d.h. fehlerhafter Vorgang wird wie ein abgeschlossener Uploadvorgang behandelt, d.h. er erhöht die erste Zahl um 1.
+3. Die Ausgabe soll nach `stderr` erfolgen.
+4. Die Ausgabe soll nur erfolgen, wenn das Flag `-v`/`-verbose` gesetzt worden ist.
+
+### Notizen
+
+- 
+
+### Testprotokoll
+
+- 
+
+## Story 21: Nebenläufiger Upload von Dokument-Ordnern
+
+Als Benutzer möchte ich, dass beim rekursiven Upload von Dokument-Ordnern mehrere Uploadvorgänge nebenläufig ausgeführt werden, um die Zeitdauer des Uploads so zu verkürzen.
+
+Akzeptanzkriterien:
+
+1. Die Anzahl der nebenläufigen Vorgänge soll auf maximal zehn beschränkt werden.
+2. Die Statusangabe und das Reporting am Ende des Vorgangs dürfen durch die Nebenläufigkeit nicht beeinträchtigt werden.
+3. Die Sortierreihenfolge im bestehenden Report darf durch die Nebenläufigkeit durcheinandergeraten bzw. ist nicht relevant.
+
+### Notizen
+
+-
+
+### Testprotokoll
+
+-
+
+## Story 22: Automatisches Tagging hochgeladener Ordner
+
+Als Benutzer möchte ich, dass bei einem rekursiven Upload die Dokumente automatisch anhand ihrer Überverzeichnisse getaggtwerden, damit ich dies nicht manuell auf dem Portal machen muss.
+
+Akzeptanzkriterien:
+
+1. Das automatische Tagging wird mit dem Flag `-t`/`-tag` aktiviert.
+2. Existiert ein Tag noch nicht für den betreffenden Benutzer, wird dieser zunächst erstellt.
+3. Das für den rekursiven Upload angegebene Verzeichnis wird als Tagname verwendet.
+4. Darunterliegende Verzeichnisse werden auch als Tagnamen verwendet.
+5. Darüberliegende Verzeichnisse werden nicht als Tagnamen verwendet.
+6. Für jedes Dokument soll im Report nachgewiesen werden, ob das Tagging funktioniert hat, oder eine Fehlermeldung angefügt werden.
+7. Können fehlende Tags zu Beginn des Vorgangs nicht erstellt werden, finden keine Uploads statt.
+
+Beispiel: Wird das Verzeichnis `taxes` im Verzeichnis `/home/johndoe/documents/taxes` mittels `px upload -r /home/johndoe/taxes` hochgeladen, erhalten die Dokumente alle den Tag `taxes`, jedoch nicht den Tag `home` oder `johndoe`.
+
+Sind zu Beginn des Vorgangs neue Tags zu erfassen, geschieht dies vor der nebenläufigen Ausführung der Hochlade- und Tagvorgänge.
+
+### Notizen
+
+-
+
+### Testprotokoll
+
+-
 
 # Manuelle Tests
 
