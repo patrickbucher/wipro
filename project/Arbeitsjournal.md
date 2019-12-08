@@ -123,4 +123,5 @@ author: Patrick Bucher
 | Fr, 06.12.2019 |       1.5 | Dokumentation | Architektur der Anwendung und erste Packages beschrieben           |
 | Sa, 07.12.2019 |       1.5 | Dokumentation | Verbleibende Packages beschrieben                                  |
 | Sa, 07.12.2019 |       1.0 | Dokumentation | Dokumentation 2FA und Keystore                                     |
-|                | **140.0** | **Total**     |                                                                    |
+| So, 08.12.2019 |       2.0 | Dokumentation | Kapitel zur Realisierung (vorerst) abgeschlossen                   |
+|                | **142.0** | **Total**     |                                                                    |

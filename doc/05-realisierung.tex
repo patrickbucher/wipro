@@ -69,23 +69,46 @@ Das folgende Codebeispiel zeigt einen verkürzten Auszug aus der Datei \texttt{\
 }
 \end{lstlisting}
 
-Der sichere Keystore ist als Key-Value-Store mit globalem Namensraum zu verstehen. Die Keys müssen also vollständig qualifiziert sein, d.h. alle Informationen enthalten, die etwa einen Refresh Token von \texttt{px} für einen Benutzer auf der Umgebung \texttt{prod} von einem auf dem Computer hinterlegten E-Mail-Passwort oder dergleichen unterscheidet. Hierzu wurde das folgende Namensschema gewählt:
+Der sichere Keystore ist als Key-Value-Store mit globalem Namensraum zu verstehen. Die Keys müssen also vollständig qualifiziert sein, d.h. alle Informationen enthalten, die etwa einen Refresh Token von \texttt{px} für einen Benutzer auf der Umgebung \texttt{prod} von einem auf dem Computer hinterlegten E-Mail-Passwort oder dergleichen unterscheidet. Hierzu wurde das folgende Namensschema (Zeile 1) gewählt:
 
-\texttt{px:[environment]:[(user|agent)]:[(refresh|access)Token]}.
+\begin{lstlisting}[caption={Namensschema für die Keys auf dem nativen Keystore (mit Beispielen)},numbers=left]
+px:[environment]:[(user|agent)]:[(refresh|access)Token]
+px:test:user:refreshToken
+px:prod:agent:accessToken
+\end{lstlisting}
 
-Ein Refresh Token für die User API auf der Umgebung \texttt{test} hätte etwa folgenden Key:
-
-\texttt{px:test:user:refreshToken}
-
-TODO: Agent-Beispiel
+Zeile 2 zeigt den Key für einen Refresh Token für die User API auf der Umgebung \texttt{test}. Auf Zeile 3 ist ein Key für einen Access Token für die Agent API auf der Umgebng \texttt{prod} zu sehen.
 
 \subsubsection{Fremdkomponente \texttt{zalando/go-keyring}}
+
+Da sich der Zugriff auf den sicheren Keystore von Plattform zu Plattform unterscheidet, wurde dieser Mechanismus nicht selber implementiert. Das Package \texttt{go-keyring} von \textsc{Zalando}\footnote{\url{https://github.com/zalando/go-keyring}} löst dieses Problem bereits ‒ und funktionierte auf Anhieb.
+
+Das Package \texttt{go-keyring} wird nur im Package \texttt{tokenstore} verwendet, und sonst nirgends in \texttt{px}. Mithilfe der Funktionen \texttt{keyring.Set}, \texttt{keyring.Get} und \texttt{keyring.Delete} kann Secret abgespeichert, gelesen und gelöscht werden. Zu jedem Key wird nicht nur ein Passwort (das eigentliche Secret), sondern auch ein Benutzername abgelegt. Als Passwort dient jeweils der Token. Als Benutzername wurde der Vollständigkeit halber der String \texttt{"px"} verwendet.\footnote{Für \texttt{px} spielt es keine Rolle, \textit{welcher} Benutzer eingeloggt ist. Validierungen auf den Scope zur Verhinderung von Fremdzugriffen werden serverseitig geprüft. Der Benutzer von \texttt{px} soll auch solche Zugriffe versuchen können, ohne schon clientseitig abgeblockt zu werden, um etwa Angriffe simulieren zu können.}
+
+Diese drei Funktionen werden durch die eigenen Funktionen \texttt{storeSecret}, \texttt{loadSecret} und \texttt{deleteSecret} (\texttt{tokenstore/tokenpair.go}) gewrappt, wobei zusätzlich ein einheitliches Key-Format über die Funktion \texttt{tokenKeys} sichergestellt wird.
 
 \subsection{Retry-Mechanismus}
 \label{sec:Retry-Mechanismus}
 
+Im Konzept (\secref{sec:Token-Refresh}) wurde beschrieben, nach welcher Strategie die Tokens aktualisiert werden sollen. Das Sequenzdiagramm \imgref{fig:retry-mechanism} zeigt, wie dies umgesetzt worden ist.
+
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{pics/sequence-retry.png}
-    \caption{Sequenzdiagramm: Der für den Benutzer transparente Retry-Mechanismus mit einem Token Pair, das im Hintergrund automatisch aktualisiert wird}
+    \caption{Der für den Benutzer transparente Retry-Mechanismus mit einem Token Pair, das im Hintergrund automatisch aktualisiert wird (Sequenzdiagramm)}
+    \label{fig:retry-mechanism}
 \end{figure}
+
+Einige Implementierungsdetails, die auf dem Sequenzdiagramm nicht ersichtlich sind, sollen an dieser Stelle noch erläutert werden.
+
+Der erste, naive Implementierungsversuch, der darin bestand, einen gescheiterten Request (mit HTTP-Status \texttt{401 Unauthorized}) mit aktualisiertem \texttt{Authorization}-Header einfach erneut abzuschicken, scheiterte für Requests, die über einen Body verfügen, was bei \texttt{POST}, \texttt{PUT} und \texttt{PATCH} der Fall ist. Grund dafür ist, dass die Repräsentation des Bodies bei einem ausgeführten Request konsumiert wird, und anschliessend nicht mehr verwendet werden darf.
+
+Technisch war dies zunächst so implementiert worden, dass die Funktion \texttt{doWithToken\-Refresh} (\texttt{requests/requests.go}) als Parameter (nebst Kontextinformationen zum Auffinden der richtigen Tokens) einen Request erwartete. Die einzelnen Request-Funktionen (\texttt{Get}, \texttt{Post}, \texttt{Put}, \texttt{Patch} usw.) erstellten den initialen Request und übergaben ihn an \texttt{doWith\-Token\-Refresh}, welches dann anhand des Token Stores einen Token Refresh durchführte, und den initialen Request mit aktualisiertem \texttt{Authorization}-Header erneut abschickte.
+
+Die Lösung für das Problem mit den konsumierten Bodies konnte gelöst werden, indem für jeden erneuten Versuch ein neuer Request aufgebaut wird. Da \texttt{doWithTokenRefresh} jedoch nicht über alle Informationen verfügen kann, welche zum Erstellen eines Requests nötig sind, musste ein Weg gefunden werden, diese Kontextinformationen für alle möglichen Arten von Requests mitliefern zu können. Da \textsc{Go} \textit{first class functions} unterstützt, konnte dies sehr elegant mit einer Closure gelöst werden \cite[S. 136]{gopl}. Die Client-Funktion übergibt nicht mehr einen Request, sondern eine Funktion, die einen Request erstellt. Die Kontextinformationen zur Erstellung des Requests erhält sie von der umschliessenden (\textit{enclosing}) Funktion; den aktualisierten Access Token erhält sie zu einem späteren Zeitpunkt als Parameter, nachdem \texttt{doWithTokenRefresh} das Token Pair aktualisiert hat.\footnote{Wäre \texttt{px} mit einer stark objektorientierten Programmiersprache wie \textsc{Java} oder \textsc{C++} umgesetzt worden, dürfte an dieser Stelle wohl ein Klassendiagramm mit \texttt{AbstractRequestFactory}, \texttt{GetRequestFactoryImpl} und dergleichen stehen. \textsc{Peter Norvig} hat demonstriert, dass in funktionalen Programiersprachen 16 der 23 \textsc{GoF}-Patterns \textit{«invisible or simpler»} sind (\url{http://www.norvig.com/design-patterns/design-patterns.pdf}). Die Implementierung von \texttt{doWithTokenRefresh} veranschaulicht dieses Prinzip.}
+
+\subsection{Notizen zur Implementierung und zum Testing}
+
+Während der Umsetzung von \texttt{px} wurden zu jeder User Story Umsetzungsnotizen und Testprotokolle geschrieben, die im Zusatzdokument \textit{Backlog} (\secref{apx:WeitereDokumente}) zu finden sind. Da dieses Dokument recht umfassend ist, ist es als Referenz zu lesen. Hierbei ist jedoch zu beachten, dass das Dokument, gerade die Auflistung der User Stories, historisch gewachsen ist: Notizen früherer Stories wurden teils durch Notizen späterer Stories obsolet gemacht. Es empfiehlt sich also, bei der Lektüre so weit unten wie möglich ‒ d.h. bei der jeweiligen Story, die von Interesse ist ‒ einzusteigen, und bei Unklarheiten weiter oben nachzulesen, um den Hintergrund besser erfassen zu können.
+
+Aufgrund der agilen Vorgehensweise gibt es keine umfassenden Testpläne und Testprotokolle, zumal das Testen nicht als von der Implementierung getrennte Phase praktiziert worden ist. Eine Ausnahme bilden die wenigen manuellen Tests (Regressionstests), die ab Sprint 3 jeweils durchgeführt worden und am Ende des \textit{Backlog}-Dokuments verzeichnet sind.

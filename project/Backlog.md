@@ -288,52 +288,125 @@ Akzeptanzkriterien:
 
 ## Story 6: Generische `GET`-Schnittstelle
 
-Als Benutzer möchte ich einen `get`-Befehl zur Verfügung haben, damit ich lesend auf meine Ressourcen zugreifen kann.
+Als Benutzer möchte ich einen `get`-Befehl zur Verfügung haben, damit ich
+lesend auf meine Ressourcen zugreifen kann.
 
 Akzeptanzkriterien:
 
-1. Dem Befehl kann ein beliebiger Ressourcenpfad mitsamt Query-Parametern mitgegeben werden.
-2. Die Base-URL der jeweiligen API und Umgebung wird dem Ressourcenpfad automatisch vorangestellt.
-3. Im Falle eines erfolgreichen Zugriffs (`200 OK`) soll der resultierende Payload auf die Standardausgabe (`stdout`) ausgegeben werden.
-4. Im Falle eines fehlerhaften Zugriffs soll der Status-Code auf die Standardfehlerausgage (`stdout`) ausgegeben werden.
+1. Dem Befehl kann ein beliebiger Ressourcenpfad mitsamt Query-Parametern
+   mitgegeben werden.
+2. Die Base-URL der jeweiligen API und Umgebung wird dem Ressourcenpfad
+   automatisch vorangestellt.
+3. Im Falle eines erfolgreichen Zugriffs (`200 OK`) soll der resultierende
+   Payload auf die Standardausgabe (`stdout`) ausgegeben werden.
+4. Im Falle eines fehlerhaften Zugriffs soll der Status-Code auf die
+   Standardfehlerausgage (`stdout`) ausgegeben werden.
 
 ### Notizen
 
-- Eine komortable Zusatzfunktion wäre, dass man Pfade nicht komplett mit der PEAX ID ausschreiben müsste (`document/api/v3/account/455.5462.5012.69/collection`), sondern einen Platzhalter wie {paexId} verwenden könnte (`document/api/v3/account/{peaxId}/collection`). Dies soll jedoch nicht Bestandteil dieser Story sein.
+- Eine komfortable Zusatzfunktion wäre, dass man Pfade nicht komplett mit der
+  PEAX ID ausschreiben müsste
+  (`document/api/v3/account/455.5462.5012.69/collection`), sondern einen
+  Platzhalter wie {paexId} verwenden könnte
+  (`document/api/v3/account/{peaxId}/collection`). Dies soll jedoch nicht
+  Bestandteil dieser Story sein.
 
 ### Testprotokoll
 
-- Das Testskript `ci-px-get-test.sh` führt ein Login auf `test` aus und lädt sich die Ressource `document/api/v3/account/455.5462.5012.69/collection`. Das Ergebnis wird mittels Pipe an `jq` weitergeleitet, das scheitern würde, wäre der Payload kein korrektes JSON.
+- Das Testskript `ci-px-get-test.sh` führt ein Login auf `test` aus und lädt
+  sich die Ressource `document/api/v3/account/455.5462.5012.69/collection`. Das
+  Ergebnis wird mittels Pipe an `jq` weitergeleitet, das scheitern würde, wäre
+  der Payload kein korrektes JSON.
 
 ## Story 7: Automatische Aktualisierung von Tokens
 
-Als Benutzer möchte ich dass ein Request, der aufgrund eines abgelaufenen Access Tokens scheitert, mit einem neuen Access Token erneut versucht wird, damit ich mich nicht ständig neu einloggen muss.
+Als Benutzer möchte ich dass ein Request, der aufgrund eines abgelaufenen
+Access Tokens scheitert, mit einem neuen Access Token erneut versucht wird,
+damit ich mich nicht ständig neu einloggen muss.
 
 Akzeptanzkriterien:
 
 1. Der Retry-Mechanismus soll für den Benutzer transparent sein.
 2. Der neue Access Token soll anhand des Refresh Tokens ausgestellt werden.
-3. Kann aufgrund eines abgelaufenen Refresh Tokens kein neuer Access Token geholt werden, soll dies dem Benutzer gemeldet werden.
+3. Kann aufgrund eines abgelaufenen Refresh Tokens kein neuer Access Token
+   geholt werden, soll dies dem Benutzer gemeldet werden.
 
 ### Notizen
 
-- Der Token Store wird im Hauptprogramm (`cmd/px.go`) derzeit wie eine Map (Key: Umgebung, Value: Token Pair) angesprochen. Auf die sicher verwahrten Tokens muss separat zugegriffen werden. Dieser Zugriff soll vereinheitlicht werden, was ein Refactoring erfordert.
-- Das Usage Log, das die Anzahl Aufrufe und das Datum des letzten Aufrufs von `px` trackte, wurde entfernt.
-- Sicher verwahrte Schlüssel werden neu in `./px-tokens` als Dummy-Eintrag abgelegt, sodass der Token Store ohne Zugriffe auf den Keystore über die Information verfügt, ob zu einer Umgebung überhaupt ein sicher verwahrter Schlüssel vorhanden ist.
-- Bei den Dummy-Einträgen für sicher verwahrte Tokens wurde zunächst ein eigenartiger Datumswert abgelegt. Hierbei handelte es sich um den Zero-Wert der Struktur `time.Time`. Das Problem konnte behoben werden, indem `time.Time` als Pointer statt als Wert verwendet wird.
-- Um den automatischen Retry-Mechanismus umzusetzen, musste zuerst herausgefunden werden, wie man anhand des Refresh Tokens einen neuen Access Token erhalten kann. Dies passiert über den gleichen Endpoint wie das Login, nur dass die Credentials mit dem `grant_type=refresh_token` (statt `grant_type=password`) und dem Refresh Token als Payload (statt Benutzername/Passwort) mitgegeben werden. Dieser Mechanismus wurde per Reverse Engineering ermittelt. Hierzu kann man sich auf dem Portal einloggen, für über fünf Minuten warten, eine Aktion auslösen, die mit dem Server kommuniziert -- und schon sieht man den entsprechenden Request ablaufen.
-- Die Zwei-Faktor-Authentifizierung läuft ab als Folge von Request, Response, Request, wobei vor dem zweiten Request eine interaktive Eingabe des Benutzers (SMS- oder TOTP-Code) erforderlich ist. Um die Konsoleneingabe vom Request-Mechanismus zu entkoppeln, wurde die Funktion `requestTokenPair` um einen Funktionsparameter namens `secondFactorPrompt` erweitert. Eine entsprechende Funktion `promptSecondFactor` erwartet einen String als Prompt (z.B. `"SMS Code"` oder `"OTP Code"`, fragt die entsprechende Information vom Benutzer ab und gibt sie zurück -- oder einen Fehler, falls die Eingabe abgebrochen wurde. Dank dieser Entkopplung konnte der Request-Code grösstenteils aus dem Hauptprogramm entfernt werden.
-- Nachdem aller Code, der HTTP-Requests verwendet, von `cmd/px.go` in das `requests`-Modul verschoben werden konnte, hatte das Hauptprogramm keine Referenz mehr auf das HTTP-Package.
-- Der urpsrüngliche Ansatz, einen Request (mit aktualisiertem `Authorization`-Header) erneut abzuschicken, funktioniert leider nicht bei Requests mit einem Body. Grund dafür ist, dass der Request Body bei diesem Vorgang konsumiert wird. Der Request muss also für den erneuten Versuch neu aufgebaut werden. Im neuen Lösungsansatz erwartet zentrale Funktion `doWithTokenRefresh` nicht mehr einen blossen Request zur Ausführung, sondern eine Funktion, die einen entsprechenden Request generiert. So können die Implementierungsdetails vom Retry-Mechanismus entkoppelt werden.
-- Beim Anfordern eines neuen Token Pairs anhand des Refresh Tokens wird nicht ein neuer Access Token ausgestellt, es wird auch der Refresh Token aktualisiert. Somit kann ein Benutzer nach einem Login so lange mit `px` arbeiten, wie er will, solange zwischen zwei Requests nicht mehr als 30 Minuten vergehen. Wichtig ist, dass auch der aktualisierte Refresh Token im Token Store abgelegt wird.
+- Der Token Store wird im Hauptprogramm (`cmd/px.go`) derzeit wie eine Map
+  (Key: Umgebung, Value: Token Pair) angesprochen. Auf die sicher verwahrten
+  Tokens muss separat zugegriffen werden. Dieser Zugriff soll vereinheitlicht
+  werden, was ein Refactoring erfordert.
+- Das Usage Log, das die Anzahl Aufrufe und das Datum des letzten Aufrufs von
+  `px` trackte, wurde entfernt.
+- Sicher verwahrte Schlüssel werden neu in `./px-tokens` als Dummy-Eintrag
+  abgelegt, sodass der Token Store ohne Zugriffe auf den Keystore über die
+  Information verfügt, ob zu einer Umgebung überhaupt ein sicher verwahrter
+  Schlüssel vorhanden ist.
+- Bei den Dummy-Einträgen für sicher verwahrte Tokens wurde zunächst ein
+  eigenartiger Datumswert abgelegt. Hierbei handelte es sich um den Zero-Wert
+  der Struktur `time.Time`. Das Problem konnte behoben werden, indem
+  `time.Time` als Pointer statt als Wert verwendet wird.
+- Um den automatischen Retry-Mechanismus umzusetzen, musste zuerst
+  herausgefunden werden, wie man anhand des Refresh Tokens einen neuen Access
+  Token erhalten kann. Dies passiert über den gleichen Endpoint wie das Login,
+  nur dass die Credentials mit dem `grant_type=refresh_token` (statt
+  `grant_type=password`) und dem Refresh Token als Payload (statt
+  Benutzername/Passwort) mitgegeben werden. Dieser Mechanismus wurde per
+  Reverse Engineering ermittelt. Hierzu kann man sich auf dem Portal einloggen,
+  für über fünf Minuten warten, eine Aktion auslösen, die mit dem Server
+  kommuniziert -- und schon sieht man den entsprechenden Request ablaufen.
+- Die Zwei-Faktor-Authentifizierung läuft ab als Folge von Request, Response,
+  Request, wobei vor dem zweiten Request eine interaktive Eingabe des Benutzers
+  (SMS- oder TOTP-Code) erforderlich ist. Um die Konsoleneingabe vom
+  Request-Mechanismus zu entkoppeln, wurde die Funktion `requestTokenPair` um
+  einen Funktionsparameter namens `secondFactorPrompt` erweitert. Eine
+  entsprechende Funktion `promptSecondFactor` erwartet einen String als Prompt
+  (z.B. `"SMS Code"` oder `"OTP Code"`, fragt die entsprechende Information vom
+  Benutzer ab und gibt sie zurück -- oder einen Fehler, falls die Eingabe
+  abgebrochen wurde. Dank dieser Entkopplung konnte der Request-Code
+  grösstenteils aus dem Hauptprogramm entfernt werden.
+- Nachdem aller Code, der HTTP-Requests verwendet, von `cmd/px.go` in das
+  `requests`-Modul verschoben werden konnte, hatte das Hauptprogramm keine
+  Referenz mehr auf das HTTP-Package.
+- Der urpsrüngliche Ansatz, einen Request (mit aktualisiertem
+  `Authorization`-Header) erneut abzuschicken, funktioniert leider nicht bei
+  Requests mit einem Body. Grund dafür ist, dass der Request Body bei diesem
+  Vorgang konsumiert wird. Der Request muss also für den erneuten Versuch neu
+  aufgebaut werden. Im neuen Lösungsansatz erwartet zentrale Funktion
+  `doWithTokenRefresh` nicht mehr einen blossen Request zur Ausführung, sondern
+  eine Funktion, die einen entsprechenden Request generiert. So können die
+  Implementierungsdetails vom Retry-Mechanismus entkoppelt werden.
+- Beim Anfordern eines neuen Token Pairs anhand des Refresh Tokens wird nicht
+  ein neuer Access Token ausgestellt, es wird auch der Refresh Token
+  aktualisiert. Somit kann ein Benutzer nach einem Login so lange mit `px`
+  arbeiten, wie er will, solange zwischen zwei Requests nicht mehr als 30
+  Minuten vergehen. Wichtig ist, dass auch der aktualisierte Refresh Token im
+  Token Store abgelegt wird.
 
 ### Testprotokoll
 
-- Verschiedenste Skripts schlugen nach dem Refactoring zunächst fehl. Der `env`-Befehl funktionierte zunächst nicht mehr. Dies konnte aber mit der neuen Token-Store-Schnittstelle schnell korrigiert werden. Die Skript-Pipeline hat sich dabei als sehr hilfreich erwiesen.
-- Das Testskript `standalone-px-upload-test.sh` führt einen Login aus, lädt ein Dokument hoch, wartet etwas länger als fünf Minuten (Gültigkeitsdauer eines Access Tokens) und lädt das Dokument erneut hoch. Da dieser Testfall naturgemäss sehr lange dauert, wird er nicht in die automatische Pipeline integriert, sondern kann bei Bedarf manuell ausgeführt werden.
-- Tatsächlich wurde mithilfe dieses Testskripts ein Fehler erkannt: Bei erneuten Versuch eines Requests wurde zwar ein neuer Access Token vom IDP geholt, der neue Request wurde jedoch noch mit dem alten Access Token erstellt, was naturgemäss fehlschlägt. Nach der entsprechenden Korrektur lief der Test dann erfolgreich durch.
-- Das Skript `standalone.sh` bietet Hilfestellungen für solche Standalone-Testskripts, indem etwa der Kompilierungsschritt und das Aufräumen nach dem Test vorgegeben wird.
-- Für den `get`-Befehl wurde ein testgetriebenes Vorgehen gewählt: `standalone-px-get-test.sh` wurde zuerst als Skript erstellt, das wie geplant scheiterte. Nachdem der `get`-Befehl auch mit Token Refresh arbeitete, funktionierte das Skript anschliessend.
+- Verschiedenste Skripts schlugen nach dem Refactoring zunächst fehl. Der
+  `env`-Befehl funktionierte zunächst nicht mehr. Dies konnte aber mit der
+  neuen Token-Store-Schnittstelle schnell korrigiert werden. Die
+  Skript-Pipeline hat sich dabei als sehr hilfreich erwiesen.
+- Das Testskript `standalone-px-upload-test.sh` führt einen Login aus, lädt ein
+  Dokument hoch, wartet etwas länger als fünf Minuten (Gültigkeitsdauer eines
+  Access Tokens) und lädt das Dokument erneut hoch. Da dieser Testfall
+  naturgemäss sehr lange dauert, wird er nicht in die automatische Pipeline
+  integriert, sondern kann bei Bedarf manuell ausgeführt werden.
+- Tatsächlich wurde mithilfe dieses Testskripts ein Fehler erkannt: Bei
+  erneuten Versuch eines Requests wurde zwar ein neuer Access Token vom IDP
+  geholt, der neue Request wurde jedoch noch mit dem alten Access Token
+  erstellt, was naturgemäss fehlschlägt. Nach der entsprechenden Korrektur lief
+  der Test dann erfolgreich durch.
+- Das Skript `standalone.sh` bietet Hilfestellungen für solche
+  Standalone-Testskripts, indem etwa der Kompilierungsschritt und das Aufräumen
+  nach dem Test vorgegeben wird.
+- Für den `get`-Befehl wurde ein testgetriebenes Vorgehen gewählt:
+  `standalone-px-get-test.sh` wurde zuerst als Skript erstellt, das wie geplant
+  scheiterte. Nachdem der `get`-Befehl auch mit Token Refresh arbeitete,
+  funktionierte das Skript anschliessend.
 
 ## Story 8: Login für Agent API
 
