@@ -4,42 +4,35 @@ subtitle: 'Wirtschaftsprojekt «px: PEAX Command Line Client»'
 author: Patrick Bucher
 ---
 
-|  # | User Story                                     | Status                | Story Points |
-|---:|------------------------------------------------|-----------------------|--------------|
-|  1 | Konfiguration sämtlicher Umgebungen            | umgesetzt in Sprint 1 | 1            |
-|  2 | Erweiterung der CI-Pipeline                    | umgesetzt in Sprint 1 | 5            |
-|  3 | Login mit Zwei-Faktor-Authentifizierung        | umgesetzt in Sprint 1 | 3            |
-|  4 | Sichere Verwahrung der Tokens                  | umgesetzt in Sprint 1 | 5            |
-|  5 | Handhabung mehrerer Umgebungen                 | umgesetzt in Sprint 2 | 3            |
-|  6 | Generische `GET`-Schnittstelle                 | umgesetzt in Sprint 2 | 3            |
-|  7 | Automatische Aktualisierung von Tokens         | umgesetzt in Sprint 2 | 5            |
-|  8 | Login für Agent API                            | umgesetzt in Sprint 2 | 3            |
-|  9 | Verbesserung der Hilfe-Funktion                | umgesetzt in Sprint 2 | 3            |
-| 10 | Vollzugsmeldungen mit `-v`/`-verbose`-Flag     | umgesetzt in Sprint 2 | 1            |
-| 11 | Verbesserung der Quellcodedokumentation        | umgesetzt in Sprint 3 | 1            |
-| 12 | Aktuelle Version ausgeben                      | umgesetzt in Sprint 3 | 1            |
-| 13 | Einliefern von Dokumenten per Agent API        | umgesetzt in Sprint 3 | 3            |
-| 14 | Generische `POST`-Schnittstelle                | umgesetzt in Sprint 3 | 3            |
-| 15 | Generische `PUT`-Schnittstelle                 | umgesetzt in Sprint 3 | 3            |
-| 16 | Generische `PATCH`-Schnittstelle               | umgesetzt in Sprint 3 | 3            |
-| 17 | Generische `DELETE`-Schnittstelle              | umgesetzt in Sprint 3 | 1            |
-| 18 | Rekursives Hochladen von Dokument-Ordnern      | umgesetzt in Sprint 3 | 5            |
-| 19 | Fehlerkorrekturen: Bugs 3, 4 und 5             | geplant für Sprint 4  | 3            |
-| 20 | Statusangabe bei Upload von Dokument-Ordnern   | geplant für Sprint 4  | 1            |
-| 21 | Nebenläufiger Upload von Dokument-Ordnern      | geplant für Sprint 4  | 1            |
-| 22 | Automatisches Tagging hochgeladener Ordner     | geplant für Sprint 4  | 5            |
-|    | PEAX ID als Variable in der Ressourcenangabe   | offen                 |
-|    | Verbesserung der Testabdeckung                 | offen                 |
-|    | Automatische Formatierung von JSON-Ausgaben    | offen                 |
-|    | Anzeigen der aktiven Logins                    | offen                 |
-|    | Auflisten von Dokumenten mit Suche/Filterung   | offen                 |
-|    | Ausführung von Befehlen für mehrere Umgebungen | offen                 |
-|    | Fortschrittsanzeige bei längeren Vorgängen     | offen                 |
-|    | Ausgabe von Tokens                             | offen                 |
-|    | Inspektion von Tokens                          | offen                 |
-|    | Code für Login-Funktion vereinheitlichen       | offen                 |
-|    | Dokumente mit Metadaten hochladen              | offen                 |
-|    | Überarbeitung der README                       | offen                 |
+|  # | User Story                                   | Status                | Story Points |
+|---:|----------------------------------------------|-----------------------|--------------|
+|  1 | Konfiguration sämtlicher Umgebungen          | umgesetzt in Sprint 1 | 1            |
+|  2 | Erweiterung der CI-Pipeline                  | umgesetzt in Sprint 1 | 5            |
+|  3 | Login mit Zwei-Faktor-Authentifizierung      | umgesetzt in Sprint 1 | 3            |
+|  4 | Sichere Verwahrung der Tokens                | umgesetzt in Sprint 1 | 5            |
+|  5 | Handhabung mehrerer Umgebungen               | umgesetzt in Sprint 2 | 3            |
+|  6 | Generische `GET`-Schnittstelle               | umgesetzt in Sprint 2 | 3            |
+|  7 | Automatische Aktualisierung von Tokens       | umgesetzt in Sprint 2 | 5            |
+|  8 | Login für Agent API                          | umgesetzt in Sprint 2 | 3            |
+|  9 | Verbesserung der Hilfe-Funktion              | umgesetzt in Sprint 2 | 3            |
+| 10 | Vollzugsmeldungen mit `-v`/`-verbose`-Flag   | umgesetzt in Sprint 2 | 1            |
+| 11 | Verbesserung der Quellcodedokumentation      | umgesetzt in Sprint 3 | 1            |
+| 12 | Aktuelle Version ausgeben                    | umgesetzt in Sprint 3 | 1            |
+| 13 | Einliefern von Dokumenten per Agent API      | umgesetzt in Sprint 3 | 3            |
+| 14 | Generische `POST`-Schnittstelle              | umgesetzt in Sprint 3 | 3            |
+| 15 | Generische `PUT`-Schnittstelle               | umgesetzt in Sprint 3 | 3            |
+| 16 | Generische `PATCH`-Schnittstelle             | umgesetzt in Sprint 3 | 3            |
+| 17 | Generische `DELETE`-Schnittstelle            | umgesetzt in Sprint 3 | 1            |
+| 18 | Rekursives Hochladen von Dokument-Ordnern    | umgesetzt in Sprint 3 | 5            |
+| 19 | Fehlerkorrekturen: Bugs 3, 4 und 5           | geplant für Sprint 4  | 3            |
+| 20 | Statusangabe bei Upload von Dokument-Ordnern | geplant für Sprint 4  | 1            |
+| 21 | Nebenläufiger Upload von Dokument-Ordnern    | geplant für Sprint 4  | 1            |
+| 22 | Automatisches Tagging hochgeladener Ordner   | geplant für Sprint 4  | 5            |
+|    | Lokale Umgebung unterstützen                 | offen                 |
+|    | PEAX ID als Variable in der Ressourcenangabe | offen                 |
+|    | Verbesserung der Testabdeckung               | offen                 |
+|    | Automatische Formatierung von JSON-Ausgaben  | offen                 |
+|    | Überarbeitung der README                     | offen                 |
 
 # Sprints
 
@@ -868,25 +861,70 @@ Akzeptanzkriterien:
 
 ## Story 19: Fehlerkorrekturen der Bugs 3, 4 und 5
 
-- Bug 3: Als Anwender möchte ich, dass die Tokens beim Logout aus dem Keystore gelöscht werden, damit sie nicht in falsche Hände geraten können.
+- Bug 3: Als Anwender möchte ich, dass die Tokens beim Logout aus dem Keystore
+  gelöscht werden, damit sie nicht in falsche Hände geraten können.
 
-- Bug 4: Als Anwender möchte ich, dass beim Login der `token_type` automatisch gesetzt wird, damit dieser einfacher ersichtlich ist.
+- Bug 4: Als Anwender möchte ich, dass beim Login der `token_type` automatisch
+  gesetzt wird, damit dieser einfacher ersichtlich ist.
 
-- Bug 5: Als Anwender möchte ich, dass beim Logout die Standardumgebung zurückgesetzt wird, damit ich keine Requestversuche mehr auf eine Umgebung unternehme, für die ich keine Token mehr habe, und bei einem solchen Versuch aussagekräftigere Fehlermeldungen erhalte.
+- Bug 5: Als Anwender möchte ich, dass beim Logout die Standardumgebung
+  zurückgesetzt wird, damit ich keine Requestversuche mehr auf eine Umgebung
+  unternehme, für die ich keine Token mehr habe, und bei einem solchen Versuch
+  aussagekräftigere Fehlermeldungen erhalte.
 
 Akzeptanzkriterien:
 
-1. Nach dem Logout von einer Umgebung sind auf dieser keine Tokens mehr im Keystore vorhanden. Sollte dies aufgrund eines Fehlers in der Fremdkomponente `zalando/go-keyring` nicht möglich sein, soll der Token nicht gelöscht, aber wenigstens mit einem leeren oder ungültigen Wert überschrieben werden.
+1. Nach dem Logout von einer Umgebung sind auf dieser keine Tokens mehr im
+   Keystore vorhanden. Sollte dies aufgrund eines Fehlers in der
+   Fremdkomponente `zalando/go-keyring` nicht möglich sein, soll der Token
+   nicht gelöscht, aber wenigstens mit einem leeren oder ungültigen Wert
+   überschrieben werden.
 2. Tokens in `~/.px-tokens` sollen stets den korrekten Token-Typ gesetzt haben.
-3. Nach dem Logout ist das Feld `default_environment` immer leer oder nicht vorhanden in `~/.px-tokens`.
+3. Nach dem Logout ist das Feld `default_environment` immer leer oder nicht
+   vorhanden in `~/.px-tokens`.
 
 ### Notizen
-
-- 
+ 
+- Bei einem Logout-Vorgang wurde `deleteSecret` gar nie aufgerufen, weil das
+  Token Pair die Option `UseKeystore` als `false` gesetzt hatte. In
+  `~/.px-tokens` war die Angabe jedoch korrekt. Der Grund dafür ist, dass das
+  Token Pair vor dem Löschen aus dem Keystore geladen wird, wobei die Felder
+  `UseKeystore`, `Environment` und `Type` nicht initialisiert worden sind. So
+  konnte der korrekte Key zum Löschen nicht erstellt werden. Die Löschung
+  schlug fehl, ohne einen Fehler zurückzugeben.
+- Die Funktion `loadSafely` wurde dahingehend ergänzt, dass immer alle
+  Informationen in die `TokenPair`-Struktur geschrieben werden. Nach dieser
+  Korrektur funktionierte das Löschen von sicher verwahrten Tokens korrekt,
+  zumindest für die Tokens einer bestimmten Umgebung.
+- Beim Löschen aller Tokens mit `px logout -a` werden alle User-Token gelöscht;
+  bei `px agent-logout -a` alle Agent-Token. Da der Token-Typ jedoch in
+  `~/.px-tokens` fehlt, können die zu löschenden Tokens nicht anhand dieser
+  Information gefunden werden. Bug 3 und 4 hängen also zusammen.
+- Der Token-Typ fehlte in `~/.px-tokens`, da zu sicher verwahrten Token Pairs
+  nur ein Dummy-Eintrag geschrieben wird, bei welchem das Typ-Feld nicht
+  gesetzt worden ist. Dies konnte bei der Erstellung des Dummy-Eintrages
+  entsprechend korrigiert werden.
+- Beim Löschen _aller_ Tokens besteht jedoch das Problem, dass das Token Pair
+  nicht anhand einer bestimmten Umgebung gelöscht werden kann. Grund dafür ist,
+  dass die Tokens zwar aufgrund der Umgebung gefunden werden können (der Key im
+  Token Store enthält diese Information), das dazugehörige Feld auf dem Token
+  Pair jedoch nicht serialisiert wird, und daher über mehrere Aufrufe hinweg
+  verloren geht. Die Serialisierung ist hier, aus welchem Grund auch immer, für
+  dieses Feld explizit deaktiviert worden. Neu wird das Feld wieder
+  serialisiert, wodurch die Löschung aller Tokens mit `px logout -a` wieder
+  funktioniert.
 
 ### Testprotokoll
 
-- 
+- Nach der ersten Korrektur (Token Pair beim Laden aus dem Keystore vollständig
+  aufbauen) funktionierte `px logout` auf eine bestimmte Umgebung, jedoch nicht
+  mit dem `-a`/`-all`-Flag.
+- Nach der zweiten Korrektur (erweiterter Dummy-Eintrag,
+  serialisieren/abspeichern er Umgebungsinformation) funktionierte auch das
+  Logout auf allen Umgebungen wieder.
+- TODO: weitere Tests mit mehreren Umgebungen und `agent-login/logout`
+- TODO: Erweiterung der Testskripts: auf Vorhandensein von env/type prüfen;
+  logout -a testen
 
 ## Story 20: Statusangabe bei Upload von Dokument-Ordnern
 

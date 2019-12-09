@@ -126,4 +126,5 @@ author: Patrick Bucher
 | So, 08.12.2019 |       2.0 | Dokumentation | Kapitel zur Realisierung (vorerst) abgeschlossen                   |
 | So, 08.12.2019 |       0.5 | Dokumentation | Umgang mit Risiken in der Realisierung erörtert                    |
 | So, 08.12.2019 |       1.0 | Projekt       | Backlog für Sprint 4 vorbereitet, User Stories spezifiziert        |
-|                | **143.5** | **Total**     |                                                                    |
+| Mo, 09.12.2019 |       1.5 | Umsetzung     | Story 19: zwei von drei Bugs behoben
+|                | **145.0** | **Total**     |                                                                    |
