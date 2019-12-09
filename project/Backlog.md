@@ -913,6 +913,9 @@ Akzeptanzkriterien:
   dieses Feld explizit deaktiviert worden. Neu wird das Feld wieder
   serialisiert, wodurch die Löschung aller Tokens mit `px logout -a` wieder
   funktioniert.
+- Die Standardumgebung wird bei einem Logout zurückgesetzt, falls das
+  `-e`/`-env`-Flag auf die Standardumgebung lautet, oder wenn sich das Logout
+  auf alle Umgebungen bezieht.
 
 ### Testprotokoll
 
@@ -922,9 +925,12 @@ Akzeptanzkriterien:
 - Nach der zweiten Korrektur (erweiterter Dummy-Eintrag,
   serialisieren/abspeichern er Umgebungsinformation) funktionierte auch das
   Logout auf allen Umgebungen wieder.
-- TODO: weitere Tests mit mehreren Umgebungen und `agent-login/logout`
-- TODO: Erweiterung der Testskripts: auf Vorhandensein von env/type prüfen;
-  logout -a testen
+- Nach einem Login auf `dev` und `test` (in dieser Reihenfolge) war die
+  Umgebung `test` als Standard gesetzt. Ein Logout von `dev` setzte die
+  Standardumgebung nicht zurück. Beim Logout von `test` wurde die
+  Standardumgebung dann korrekt zurückgesetzt.
+- TODO: Testautomatisierung!
+- TODO: Tests mit agent-login/agent-logout!
 
 ## Story 20: Statusangabe bei Upload von Dokument-Ordnern
 
