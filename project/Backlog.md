@@ -24,8 +24,8 @@ author: Patrick Bucher
 | 16 | Generische `PATCH`-Schnittstelle             | umgesetzt in Sprint 3 | 3            |
 | 17 | Generische `DELETE`-Schnittstelle            | umgesetzt in Sprint 3 | 1            |
 | 18 | Rekursives Hochladen von Dokument-Ordnern    | umgesetzt in Sprint 3 | 5            |
-| 19 | Fehlerkorrekturen: Bugs 3, 4 und 5           | geplant für Sprint 4  | 3            |
-| 20 | Statusangabe bei Upload von Dokument-Ordnern | geplant für Sprint 4  | 1            |
+| 19 | Fehlerkorrekturen: Bugs 3, 4 und 5           | umgesetzt in Sprint 4 | 3            |
+| 20 | Statusangabe bei Upload von Dokument-Ordnern | umgesetzt in Sprint 4 | 1            |
 | 21 | Nebenläufiger Upload von Dokument-Ordnern    | geplant für Sprint 4  | 1            |
 | 22 | Automatisches Tagging hochgeladener Ordner   | geplant für Sprint 4  | 5            |
 |    | Lokale Umgebung unterstützen                 | offen                 |
@@ -36,12 +36,12 @@ author: Patrick Bucher
 
 # Sprints
 
-| Sprint | Stories geplant  | Stories umgesetzt | Aufwand | Stories offen   | h/SP |
-|-------:|------------------|-------------------|--------:|-----------------|-----:|
-|      1 | 6 (1-6), 20 SP   | 4 (1-4), 14 SP    |   14.5h | 2 (5-6), 6 SP   | 1.05 |
-|      2 | 6 (5-10), 18 SP  | 6 (5-10), 18 SP   |   20.5h | 0               | 1.15 |
-|      3 | 8 (11-18), 20 SP | 8 (11-18), 20  SP |   19.5h | 0               | 0.98 |
-|      4 | 4 (19-22), 10 SP | 0                 |         | 4 (19-22), 10SP |      |
+| Sprint | Stories geplant  | Stories umgesetzt | Aufwand | Stories offen  | h/SP |
+|-------:|------------------|-------------------|--------:|----------------|-----:|
+|      1 | 6 (1-6), 20 SP   | 4 (1-4), 14 SP    |   14.5h | 2 (5-6), 6 SP  | 1.05 |
+|      2 | 6 (5-10), 18 SP  | 6 (5-10), 18 SP   |   20.5h | 0              | 1.15 |
+|      3 | 8 (11-18), 20 SP | 8 (11-18), 20 SP  |   19.5h | 0              | 0.98 |
+|      4 | 4 (19-22), 10 SP | 2 (19-20), 4 SP   |    3.5h | 2 (21-22), 6SP | 0.88 |
 
 # User Stories
 
@@ -929,27 +929,47 @@ Akzeptanzkriterien:
   Umgebung `test` als Standard gesetzt. Ein Logout von `dev` setzte die
   Standardumgebung nicht zurück. Beim Logout von `test` wurde die
   Standardumgebung dann korrekt zurückgesetzt.
-- TODO: Testautomatisierung!
-- TODO: Tests mit agent-login/agent-logout!
+- Dieser Testfall wurde zusätzlich im Testskript `ci-px-env-test.sh`
+  abgebildet. Der Testfall schlug zunächst fehl, da `px` auf mehreren Rechnern
+  entwickelt wird, und die letzten Aktualisierungen zunächst nicht mit `git
+  pull` geholt worden sind, lief danach aber wie gewünscht durch.
+- Das Testskript `ci-px-login-logout-test.sh` wurde ebenfalls erweitert, sodass
+  nach einem Login überprüft wird, ob der Token Type und die Umgebung korrekt
+  gesetzt sind, was bei sicher verwahrten Tokens nötig zu deren Löschung ist.
 
 ## Story 20: Statusangabe bei Upload von Dokument-Ordnern
 
-Als Benutzer möchte ich über den Verlauf des rekursiven Uploadvorgangs informiert werden, damit ich die verbleibende Zeitdauer besser abschätzen kann.
+Als Benutzer möchte ich über den Verlauf des rekursiven Uploadvorgangs
+informiert werden, damit ich die verbleibende Zeitdauer besser abschätzen kann.
 
 Akzeptanzkriterien:
 
-1. Die Statusmeldung erfolgt nach dem Schema `m/n`, wobei `m` für die Anzahl abgeschlossener Uploadvorgänge und `n` für die Gesamtzahl der Uploadvorgänge, d.h. die Anzahl Dokumente im hochzuladenen Ordner, steht.
-2. Ein gescheiterter, d.h. fehlerhafter Vorgang wird wie ein abgeschlossener Uploadvorgang behandelt, d.h. er erhöht die erste Zahl um 1.
+1. Die Statusmeldung erfolgt nach dem Schema `m/n`, wobei `m` für die Anzahl
+   abgeschlossener Uploadvorgänge und `n` für die Gesamtzahl der
+   Uploadvorgänge, d.h. die Anzahl Dokumente im hochzuladenen Ordner, steht.
+2. Ein gescheiterter, d.h. fehlerhafter Vorgang wird wie ein abgeschlossener
+   Uploadvorgang behandelt, d.h. er erhöht die erste Zahl um 1.
 3. Die Ausgabe soll nach `stderr` erfolgen.
-4. Die Ausgabe soll nur erfolgen, wenn das Flag `-v`/`-verbose` gesetzt worden ist.
+4. Die Ausgabe soll nur erfolgen, wenn das Flag `-v`/`-verbose` gesetzt worden
+   ist.
 
 ### Notizen
 
-- 
+- Zunächst wurde das Verhalten des `-v`/`-verbose`-Flags für Einzelnuploads
+  definiert: Hier wird eine einfache Statusmeldung ausgegeben, dass das
+  Dokument erfolgreich hochgeladen worden sei.
+- Beim rekursiven Upload wird das `-v`/`-verbose`-Flag jedoch an die Funktion
+  `UploadRecursively` des `requests`-Packages übergeben, die dann die
+  entsprechende Ausgabe nach jeder Iteration vornimmt.
 
 ### Testprotokoll
 
-- 
+- Das Testskript `ci-px-upload-recursively-test.sh` wurde dahingehend
+  erweitert, dass `stderr` in eine Datei `upload.err` umgeleitet, und `px` mit
+  dem Parameter `-v` aufgerufen wird. Die Datei `upload.err` wird anschliessend
+  mit `grep` auf das Muster `^[0-9]+/[0-9]+$` geprüft: Dabei sollen so viele
+  Matches auftauchen, wie Dokumente hochzuladen sind. Der Test funktionierte
+  auf Anhieb.
 
 ## Story 21: Nebenläufiger Upload von Dokument-Ordnern
 
