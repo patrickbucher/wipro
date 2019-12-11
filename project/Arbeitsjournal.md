@@ -131,4 +131,5 @@ author: Patrick Bucher
 | Di, 10.12.2019 |       0.5 | Umsetzung     | Story 19: Testskripts um verbessertes Verhalten erweitert          |
 | Di, 10.12.2019 |       1.0 | Umsetzung     | Story 19: Statusausgabe bei rekursiven Uploads                     |
 | Di, 10.12.2019 |       2.0 | Umsetzung     | Story 20: Nebenläufiger Upload von Dokumentverzeichnissen          |
-|                | **149.0** | **Total**     |                                                                    |
+| Di, 10.12.2019 |       0.5 | Umsetzung     | Optimierung: kleineren Dokumentordner für Upload-Test              |
+|                | **149.5** | **Total**     |                                                                    |
