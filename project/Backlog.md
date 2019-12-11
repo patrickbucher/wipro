@@ -26,7 +26,7 @@ author: Patrick Bucher
 | 18 | Rekursives Hochladen von Dokument-Ordnern    | umgesetzt in Sprint 3 | 5            |
 | 19 | Fehlerkorrekturen: Bugs 3, 4 und 5           | umgesetzt in Sprint 4 | 3            |
 | 20 | Statusangabe bei Upload von Dokument-Ordnern | umgesetzt in Sprint 4 | 1            |
-| 21 | Nebenläufiger Upload von Dokument-Ordnern    | geplant für Sprint 4  | 1            |
+| 21 | Nebenläufiger Upload von Dokument-Ordnern    | umgesetzt in Sprint 4 | 1            |
 | 22 | Automatisches Tagging hochgeladener Ordner   | geplant für Sprint 4  | 5            |
 |    | Lokale Umgebung unterstützen                 | offen                 |
 |    | PEAX ID als Variable in der Ressourcenangabe | offen                 |
@@ -36,12 +36,12 @@ author: Patrick Bucher
 
 # Sprints
 
-| Sprint | Stories geplant  | Stories umgesetzt | Aufwand | Stories offen  | h/SP |
-|-------:|------------------|-------------------|--------:|----------------|-----:|
-|      1 | 6 (1-6), 20 SP   | 4 (1-4), 14 SP    |   14.5h | 2 (5-6), 6 SP  | 1.05 |
-|      2 | 6 (5-10), 18 SP  | 6 (5-10), 18 SP   |   20.5h | 0              | 1.15 |
-|      3 | 8 (11-18), 20 SP | 8 (11-18), 20 SP  |   19.5h | 0              | 0.98 |
-|      4 | 4 (19-22), 10 SP | 2 (19-20), 4 SP   |    3.5h | 2 (21-22), 6SP | 0.88 |
+| Sprint | Stories geplant  | Stories umgesetzt | Aufwand | Stories offen | h/SP |
+|-------:|------------------|-------------------|--------:|---------------|-----:|
+|      1 | 6 (1-6), 20 SP   | 4 (1-4), 14 SP    |   14.5h | 2 (5-6), 6 SP | 1.05 |
+|      2 | 6 (5-10), 18 SP  | 6 (5-10), 18 SP   |   20.5h | 0             | 1.15 |
+|      3 | 8 (11-18), 20 SP | 8 (11-18), 20 SP  |   19.5h | 0             | 0.98 |
+|      4 | 4 (19-22), 10 SP | 3 (19-20), 5 SP   |    5.5h | 1 (22), 5SP   | 1.10 |
 
 # User Stories
 
@@ -973,21 +973,76 @@ Akzeptanzkriterien:
 
 ## Story 21: Nebenläufiger Upload von Dokument-Ordnern
 
-Als Benutzer möchte ich, dass beim rekursiven Upload von Dokument-Ordnern mehrere Uploadvorgänge nebenläufig ausgeführt werden, um die Zeitdauer des Uploads so zu verkürzen.
+Als Benutzer möchte ich, dass beim rekursiven Upload von Dokument-Ordnern
+mehrere Uploadvorgänge nebenläufig ausgeführt werden, um die Zeitdauer des
+Uploads so zu verkürzen.
 
 Akzeptanzkriterien:
 
-1. Die Anzahl der nebenläufigen Vorgänge soll auf maximal zehn beschränkt werden.
-2. Die Statusangabe und das Reporting am Ende des Vorgangs dürfen durch die Nebenläufigkeit nicht beeinträchtigt werden.
-3. Die Sortierreihenfolge im bestehenden Report darf durch die Nebenläufigkeit durcheinandergeraten bzw. ist nicht relevant.
+1. Die Anzahl der nebenläufigen Vorgänge soll auf maximal zehn beschränkt
+   werden.
+2. Die Statusangabe und das Reporting am Ende des Vorgangs dürfen durch die
+   Nebenläufigkeit nicht beeinträchtigt werden.
+3. Die Sortierreihenfolge im bestehenden Report darf durch die Nebenläufigkeit
+   durcheinandergeraten bzw. ist nicht relevant.
 
 ### Notizen
 
--
+- Bei der Umsetzung kommen Goroutinen und ein Channel zum Einsatz. Pro
+  Uploadvorgang wird eine Goroutine (Producer) gestartet, die ihr Ergebnis vom
+  Typ `DocumentUploadResult` an  einen Channel desselben Typs sendet. In einer
+  weiteren Goroutine (Consumer) wird in einem Loop solange von diesem Channel
+  gelesen, bis dieser geschlossen wird. Dabei werden die ankommenden Resultate
+  ausgewertet und zur Gesamtstatistik (Anzahl erfolgreiche und gescheiterte
+  Uploads) gezählt. Eine `WaitGroup`, die bei jedem gestarteten Uploadvorgang
+  um eins erhöht und am Ende des Vorgangs um eins gesenkt wird, wartet nach dem
+  Starten der beiden Goroutinen darauf, bis alle Vorgänge abgeschlossen sind,
+  und schliesst anschliessend den Channel, sodass der Loop der
+  Producer-Goroutine zu Ende geht. Die Procuder-Goroutine meldet die
+  gesammelten Statistik wiederum per Channel an die Hauptgoroutine zurück,
+  welches von dieser in eine JSON-Struktur umgewandelt und zurückgegeben wird.
+  Das Prinzip ist in _The Go Programming Language_ in Kapitel 8.5 (Seite 234
+  ff.) beschrieben.
+- Der automatische Token-Refresh führte anfänglich zu einer Race-Condition. Da
+  jeder parallelle Uploadvorgang theoretisch einen Token-Refresh zur Folge
+  haben kann, kann der Seiteneffekt (Abspeicherung des Tokens) von mehreren
+  Goroutinen gleichzeitig ausgeführt werden, was zu einem undefinierten
+  Verhalten führt. Das Problem wurde mithilfe eines Semaphores gelöst, der
+  zulässt, dass mehrere Token-Refreshs nebenläufig vonstatten gehen, aber immer
+  nur eine Gouroutine gleichzeitig speichern lässt. Dies könnte zwar zu
+  unnötigen Token-Refreshs führen; würde aber der kritische Bereich weiter
+  gefasst, wäre der ganze Uploadvorgang wiederum serialisiert, womit man die
+  Nebenläufigkeit gleich von Anfang an weglassen könnte. Semaphoren sind in
+  _The Go Programming Language_ in Kapitel 9.2 (Seite 262 ff.) beschrieben.
+- Um die Anzahl gleichzeitiger Vorgänge ‒ und somit die Anzahl parallel
+  laufender HTTP-Anfragen ‒ auf zehn zu beschränken, wurde wiederum eine
+  Semaphore eingesetzt; dieses mal eine der Grösse zehn. Vor jedem Request wird
+  auf einen Channel mit Bufferlänge zehn ein Dummy-Eintrag geschrieben. Nach
+  dem Request wird wieder ein Dummy-Eintrag vom Channel gelesen. Beim Schreiben
+  wird die Semaphore heruntergezählt, beim Lesen wieder hochgezählt. Ein gutes
+  Beispiel dafür findet sich in _The Go Programming Language_ in Kapitel 8.6
+  (Seite 239 ff.).
+- Der Aufwand ist unterschätzt worden. Einerseits wurde die mögliche
+  Race-Condition beim Abspeichern der aktualisierten Token nicht bedacht;
+  andererseits führte das instabile Testsystem zu Verzögerungen. Die
+  eigentliche Implementierung ging aber dank der hervorragenden
+  Concurrency-Features von Go sehr schnell und einfach vonstatten.
 
 ### Testprotokoll
 
--
+- Die Testskripts wurden nicht erweitert, da die parallelen Uploadvorgänge
+  nichts an der Funktionalität ändern sollen. Ein Performancegewinn in der
+  Abarbeitung der Pipeline war jedoch ein erfreulicher Nebeneffekt.
+- Alle manuellen Tests sind mit `go run -race` ausgeführt worden, d.h. mit dem
+  Go Race Detector, der mögliche Race-Conditions aufzeigt. Das potenzielle
+  Problem mit der gleichzeitigen Token-Abspeicherung konnte damit entdeckt und
+  entschärft werden.
+- Einige Tests auf der Umgebung `test` schlugen zunächst (mit unterschiedlichem
+  Verhalten) fehl, was auf eine instabile Betriebslage an diesem Abend
+  zurückzuführen war. Nach dem Ausweichen auf die Umgebung `prod` konnten die
+  Testläufe erfolgreich durchgeführt werden.
+- Das jüngst eingeführte `-v`/`-verbose`-Flag funktionierte nach der Umsetzung
+  des nebenläufigen Uploads weiterhin tadellos.
 
 ## Story 22: Automatisches Tagging hochgeladener Ordner
 

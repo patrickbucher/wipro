@@ -130,4 +130,5 @@ author: Patrick Bucher
 | Mo, 09.12.2019 |       0.5 | Umsetzung     | Story 19: Default-Umgebung bei Logout zurücksetzen                 |
 | Di, 10.12.2019 |       0.5 | Umsetzung     | Story 19: Testskripts um verbessertes Verhalten erweitert          |
 | Di, 10.12.2019 |       1.0 | Umsetzung     | Story 19: Statusausgabe bei rekursiven Uploads                     |
-|                | **147.0** | **Total**     |                                                                    |
+| Di, 10.12.2019 |       2.0 | Umsetzung     | Story 20: Nebenläufiger Upload von Dokumentverzeichnissen          |
+|                | **149.0** | **Total**     |                                                                    |
