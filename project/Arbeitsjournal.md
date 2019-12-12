@@ -129,7 +129,8 @@ author: Patrick Bucher
 | Mo, 09.12.2019 |       1.5 | Umsetzung     | Story 19: zwei von drei Bugs behoben                               |
 | Mo, 09.12.2019 |       0.5 | Umsetzung     | Story 19: Default-Umgebung bei Logout zurücksetzen                 |
 | Di, 10.12.2019 |       0.5 | Umsetzung     | Story 19: Testskripts um verbessertes Verhalten erweitert          |
-| Di, 10.12.2019 |       1.0 | Umsetzung     | Story 19: Statusausgabe bei rekursiven Uploads                     |
-| Di, 10.12.2019 |       2.0 | Umsetzung     | Story 20: Nebenläufiger Upload von Dokumentverzeichnissen          |
+| Di, 10.12.2019 |       1.0 | Umsetzung     | Story 20: Statusausgabe bei rekursiven Uploads                     |
+| Di, 10.12.2019 |       2.0 | Umsetzung     | Story 21: Nebenläufiger Upload von Dokumentverzeichnissen          |
 | Di, 10.12.2019 |       0.5 | Umsetzung     | Optimierung: kleineren Dokumentordner für Upload-Test              |
-|                | **149.5** | **Total**     |                                                                    |
+| Do, 12.12.2019 |       1.5 | Umsetzung     | Story 22: Tags anhand Pfadangaben ermitteln                        |
+|                | **151.0** | **Total**     |                                                                    |

@@ -27,7 +27,7 @@ author: Patrick Bucher
 | 19 | Fehlerkorrekturen: Bugs 3, 4 und 5           | umgesetzt in Sprint 4 | 3            |
 | 20 | Statusangabe bei Upload von Dokument-Ordnern | umgesetzt in Sprint 4 | 1            |
 | 21 | Nebenläufiger Upload von Dokument-Ordnern    | umgesetzt in Sprint 4 | 1            |
-| 22 | Automatisches Tagging hochgeladener Ordner   | geplant für Sprint 4  | 5            |
+| 22 | Automatisches Tagging hochgeladener Ordner   | in Umsetzung          | 5            |
 |    | Lokale Umgebung unterstützen                 | offen                 |
 |    | PEAX ID als Variable in der Ressourcenangabe | offen                 |
 |    | Verbesserung der Testabdeckung               | offen                 |
@@ -1046,21 +1046,45 @@ Akzeptanzkriterien:
 
 ## Story 22: Automatisches Tagging hochgeladener Ordner
 
-Als Benutzer möchte ich, dass bei einem rekursiven Upload die Dokumente automatisch anhand ihrer Überverzeichnisse getaggtwerden, damit ich dies nicht manuell auf dem Portal machen muss.
+Als Benutzer möchte ich, dass bei einem rekursiven Upload die Dokumente
+automatisch anhand ihrer Überverzeichnisse getaggt werden, damit ich dies nicht
+manuell auf dem Portal machen muss.
 
 Akzeptanzkriterien:
 
 1. Das automatische Tagging wird mit dem Flag `-t`/`-tag` aktiviert.
-2. Existiert ein Tag noch nicht für den betreffenden Benutzer, wird dieser zunächst erstellt.
-3. Das für den rekursiven Upload angegebene Verzeichnis wird als Tagname verwendet.
-4. Darunterliegende Verzeichnisse werden auch als Tagnamen verwendet.
-5. Darüberliegende Verzeichnisse werden nicht als Tagnamen verwendet.
-6. Für jedes Dokument soll im Report nachgewiesen werden, ob das Tagging funktioniert hat, oder eine Fehlermeldung angefügt werden.
-7. Können fehlende Tags zu Beginn des Vorgangs nicht erstellt werden, finden keine Uploads statt.
+2. Existiert ein Tag noch nicht für den betreffenden Benutzer, wird dieser
+   zunächst erstellt.
+3. Die für den rekursiven Upload angegebene Verzeichnisstruktur wird nach
+   untenstehender Regel für das Tagging verwendet.
+4. Für jedes Dokument soll im Report nachgewiesen werden, ob das Tagging
+   funktioniert hat, oder eine Fehlermeldung angefügt werden.
+5. Können fehlende Tags zu Beginn des Vorgangs nicht erstellt werden, finden
+   keine Uploads statt.
 
-Beispiel: Wird das Verzeichnis `taxes` im Verzeichnis `/home/johndoe/documents/taxes` mittels `px upload -r /home/johndoe/taxes` hochgeladen, erhalten die Dokumente alle den Tag `taxes`, jedoch nicht den Tag `home` oder `johndoe`.
+Regel für das Tagging:
 
-Sind zu Beginn des Vorgangs neue Tags zu erfassen, geschieht dies vor der nebenläufigen Ausführung der Hochlade- und Tagvorgänge.
+Der Benutzer `johndoe` befindet sich im Arbeitsverzeichnis `/home/johndoe`, wo
+er das Verzeichnis `documents` mittels `px upload -r` mit folgenden absoluten
+Pfaden rekursiv hochlädt.
+
+    /home/johndoe/documents/taxes/2018/deductions/insurances.pdf
+    /home/johndoe/documents/taxes/2018/deductions/donations.pdf
+    /home/johndoe/documents/taxes/2018/wage-slips/work.pdf
+    /home/johndoe/documents/taxes/2019/deductions/insurances.pdf
+    /home/johndoe/documents/taxes/2019/wage-slips/work.pdf
+    /home/johndoe/documents/taxes/2019/wage-slips/side-job.pdf
+
+Für das Tagging soll nur der Teil ab `taxes` verwendet werden, nicht aber der
+Ordner `documents`, der eigentlich beim Upload angegeben worden ist. Es soll
+_der Ordner oberhalb des ersten differenzierenden Ordners_ für das Tagging
+verwendet werden. Die Ordner unterhalb von `taxes` sind differenzierend, weil
+es mehr als einen davon gibt.
+
+Sind zu Beginn des Vorgangs neue Tags zu erfassen, geschieht dies vor der
+nebenläufigen Ausführung der Hochlade- und Tagvorgänge. Tritt während dem
+initialen Erstellen der Tags ein Fehler auf, wird der ganze Prozess
+abgebrochen, ohne dass auch nur ein Dokument hochgeladen worden ist.
 
 ### Notizen
 
