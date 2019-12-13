@@ -2,7 +2,7 @@
 
 skinparam monochrome true
 skinparam defaultFontName Lato
-skinparam dpi 150
+skinparam dpi 300
 
 group 2FA
     User -> px: Login
