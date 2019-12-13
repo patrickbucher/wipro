@@ -1088,11 +1088,18 @@ abgebrochen, ohne dass auch nur ein Dokument hochgeladen worden ist.
 
 ### Notizen
 
--
+- Zum Umsetzen der Tagging-Regel (_«der Ordner oberhalb des ersten
+  differenzierenden Ordners»_) muss zunächst anhand einer Reihe von Pfaden der
+  gemeinsame und der jeweils für jeden Pfad distinguirende Teil gefunden
+  werden. Dies wird mithilfe der Funktion `SplitCommonDistinct`
+  (`utils/filesystem.go`) bewerkstelligt.
 
 ### Testprotokoll
 
--
+- Zur Funktion `SplitCommonDistinct` gibt es einen Unit Test
+  (`TestSplitCommonDistinct` in `utils/filesystem_test.go`), der für Pfade
+  analog der oben stehenden prüft, ob der Teil bis `taxes` zum gemeinsamen und
+  der Rest zum distinguirenden Teil der Pfadangabe gehört.
 
 # Manuelle Tests
 
