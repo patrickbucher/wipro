@@ -38,7 +38,7 @@ Im Kontextdiagramm (\imgref{fig:kontextdiagramm}) wird die zu entwickelnde Kompo
 
 \subsection{Technologie-Evaluation}
 
-- Vorgabe: PEAX API (RESTful)
+Im Bereich der Technologie gilt es vor allem eine passende Programmiersprache auszuwählen. Die API von PEAX wird bereits durch den Projektrahmen vorgegeben, und dadurch auch die Protokolle OAuth 2.0 und HTTP.
 
 \subsubsection{Programmiersprache}
 
@@ -120,7 +120,7 @@ Eine spätere Neuimplementierung von \texttt{px} in \textsc{Rust} wäre ein tech
 
 \subsection{Libraries}
 
-TODO: JWT, Keystore, Password Input
+Wie bereits in \secref{sec:Go-Keyring} geschildert, wird nur eine einzige Fremdkomponente verwendet: Das Package \texttt{go-keyring} von \textsc{Zalando}. Für die sichere Passworteingabe wird ein SSH-Terminal (\texttt{golang.org/x/crypto}) verwendet, das zu den halboffiziellen \textsc{Go}-Packages gehört.\footnote{Die \textsc{Go}-Packages unter \texttt{golang.org/x} sind vergleichbar mit den \textsc{Java}-Libraries unter \texttt{javax}.}
 
 \subsection{Weitere Dokumente}
 \label{apx:WeitereDokumente}
@@ -128,9 +128,9 @@ TODO: JWT, Keystore, Password Input
 \begin{description}
     \item[Projektauftrag] Im Projektauftrag (\texttt{Anhang/Projektauftrag.pdf}) ist die Aufgabe beschrieben, wie sie zu Beginn des Projekts definiert worden ist.
     \item[Projektplan] Der Projektplan (\texttt{Anhang/Projektplan.pdf}) besteht aus einem Rahmenplan, einem Meilensteinplan und einem Wochenplan.
-    \item[Backlog] Das Backlog (\texttt{Anhang/Backlog.pdf}) enthält die einzelnen User Stories, die Sprint-Planung, Umsetzungsnotizen zu einzelnen User Stories und Testprotokolle dazu. 
+    \item[Backlog] Das Backlog (\texttt{Anhang/Backlog.pdf}) enthält die einzelnen User Stories, die Sprint-Planung, Umsetzungsnotizen zu einzelnen User Stories mit Testprotokolle dazu, sowie Informationen zu manuellen Tests und gefundenen Bugs.
     \item[Meilensteinbericht 1] Der erste Meilensteinbericht (\texttt{Anhang/Meilensteinbericht-1.pdf}) beschreibt die Vorgeschichte des Projekts und die Phase der Projektinitialisierung.
     \item[Meilensteinbericht 2] Der zweite Meilensteinbericht (\texttt{Anhang/Meilensteinbericht-2.pdf}) umfasst die ersten beiden Sprints.
-    \item[Meilensteinbericht 3] \texttt{Anhang/Meilensteinbericht-3.pdf}
+    \item[Meilensteinbericht 3] Der dritte Meilensteinbericht (\texttt{Anhang/Meilensteinbericht-3.pdf}) umfasst die letzten beiden Sprints.
     \item[Arbeitsjournal] Im Arbeitsjournal (\texttt{Anhang/Arbeitsjournal.pdf}) sind die einzelnen Aufwände auf halbe Stunden gerundet nach Bereich ‒ Projekt(administration), Dokumentation, Umsetzung ‒ rapportiert. Mithilfe eines AWK-Skripts können die Aufwände nach Bereich und User Story ausgewertet werden.
 \end{description}

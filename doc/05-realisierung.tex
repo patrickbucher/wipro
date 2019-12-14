@@ -80,6 +80,7 @@ px:prod:agent:accessToken
 Zeile 2 zeigt den Key für einen Refresh Token für die User API auf der Umgebung \texttt{test}. Auf Zeile 3 ist ein Key für einen Access Token für die Agent API auf der Umgebng \texttt{prod} zu sehen.
 
 \subsubsection{Fremdkomponente \texttt{zalando/go-keyring}}
+\label{sec:Go-Keyring}
 
 Da sich der Zugriff auf den sicheren Keystore von Plattform zu Plattform unterscheidet, wurde dieser Mechanismus nicht selber implementiert. Das Package \texttt{go-keyring} von \textsc{Zalando}\footnote{\url{https://github.com/zalando/go-keyring}} löst dieses Problem bereits ‒ und funktionierte auf Anhieb.
 
