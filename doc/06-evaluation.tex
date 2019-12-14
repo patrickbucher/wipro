@@ -75,3 +75,17 @@ Nach jedem Sprint wird ein Inkrement an die Entwickler ausgeliefert (siehe \secr
             \item Die lokale \texttt{clientId} heisst \texttt{peax.local}.
         \end{itemize}
 \end{itemize}
+
+\subsection{Ergebnisse}
+
+In den vergangenen 14 Wochen ist aus dem kleinen, undokumentierten und etwas holprig zu bedienenden Prototyp \texttt{px} eine Software geworden, die den ursprünglich gesteckten Zielen gerecht wird: Ein grosser Teil der API von PEAX kann über generische HTTP-Befehle (\texttt{GET}, \texttt{POST} usw.) abgedeckt werden; mit spezifischen Befehlen (\texttt{upload}, \texttt{deliver}) können häufige Use Cases komfortabel abgedeckt werden.
+
+Mit dem sicheren Keystore wird \texttt{px} den gestellten Sicherheitsanforderungen gerecht, ohne den Anwender dabei zu bevormunden. Die Handhabung von Access und Refresh Tokens wird dem Benutzer dank deren transparenter und automatischer Aktualisierung im Hintergrund abgenommen.
+
+Mit dem Hochladen ganzer Verzeichnisstrukturen mit automatischem Tagging ist \texttt{px} nicht nur ein Hilfsprogramm für die Weiterentwicklung des PEAX-Portals, sondern auch ein mächtiger Prototyp für Kundenprojekte.
+
+Insgesamt wurden ca. 3000 Zeilen \textsc{Go}-Code geschrieben. Die pragmatische Teststrategie, die zu einem grossen Teil auf bedienungsnahe Testskripts setzt, brachte ca. 700 Zeilen \textsc{Bash}-Code hervor. Mit einem kaum 50 Zeilen fassenden \texttt{Makefile} wurden die meisten wiederkehrenden Aufgaben (Quellcodeanalyse, Unit Tests starten, Kompilieren) mit wenig Aufwand automatisiert.
+
+Die vorliegende Dokumentation ist überraschend schnell gewachsen. Gerade die Umsetzungsnotizen und Testprotokolle (Backlog-Dokument) wuchsen bei der Umsetzung praktisch um eine Druckseite pro Tag.
+
+Das agile Vorgehen brachte wenige Projektmanagement-Artefakte hervor. Ein schlanker Projekt- und Meilensteinplan, ein konsequent nachgeführtes Arbeitsjournal und die Meilensteinberichte sind das Ergebnis davon.
