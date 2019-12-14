@@ -22,6 +22,7 @@
     - keine gedruckte Version
     - Upload
     - Quellcode als Zip-Archiv mitgeben
+    - Eidesstattliche Erklärung ausdrucken, unterschreiben, einscannen
 - Dokumentation
     - Beispielaufrufe (Demo-Session) mit Kommentaren (Anhang)
     - Einführung in Code-Struktur (Klassendiagramme nicht nötig, anderen Weg
