@@ -1192,15 +1192,19 @@ Dieses Verhalten konnte auf allen drei Plattformen (Windows, macOS, Linux) nachv
 
 Alle andere Testfälle konnten erfolgreich durchgeführt werden.
 
+### Sprint 4
+
+TODO: manuelle Regressionstests durchführen
+
 # Bugs
 
 | # | Beschreibung                                    | Status               |
 |--:|-------------------------------------------------|----------------------|
 | 1 | Interaktive Eingabe auf Windows                 | behoben/workaround   |
 | 2 | Refresh-Mechanismus für Agent                   | offen (serverseitig) |
-| 3 | Fehlende Löschung von Tokens aus Keystore       | offen                |
-| 4 | Login setzt `token_type` nicht                  | offen                |
-| 5 | Logout setzt `default_environment` nicht zurück | offen                |
+| 3 | Fehlende Löschung von Tokens aus Keystore       | behoben              |
+| 4 | Login setzt `token_type` nicht                  | behoben              |
+| 5 | Logout setzt `default_environment` nicht zurück | behoben              |
 
 ## 1: Interaktive Eingabe auf Windows funktioniert nicht
 
