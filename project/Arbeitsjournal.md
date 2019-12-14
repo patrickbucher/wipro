@@ -133,4 +133,6 @@ author: Patrick Bucher
 | Di, 10.12.2019 |       2.0 | Umsetzung     | Story 21: Nebenläufiger Upload von Dokumentverzeichnissen          |
 | Di, 10.12.2019 |       0.5 | Umsetzung     | Optimierung: kleineren Dokumentordner für Upload-Test              |
 | Do, 12.12.2019 |       1.5 | Umsetzung     | Story 22: Tags anhand Pfadangaben ermitteln                        |
-|                | **151.0** | **Total**     |                                                                    |
+| Sa, 14.12.2019 |       2.5 | Umsetzung     | Story 22: Existenz aller notwendigen Tags sicherstellen            |
+| Sa, 14.12.2019 |       2.0 | Umsetzung     | Story 22: Hochgeladene Dokumente Taggen; Testskript                |
+|                | **155.5** | **Total**     |                                                                    |

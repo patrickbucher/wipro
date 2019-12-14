@@ -27,7 +27,7 @@ author: Patrick Bucher
 | 19 | Fehlerkorrekturen: Bugs 3, 4 und 5           | umgesetzt in Sprint 4 | 3            |
 | 20 | Statusangabe bei Upload von Dokument-Ordnern | umgesetzt in Sprint 4 | 1            |
 | 21 | Nebenläufiger Upload von Dokument-Ordnern    | umgesetzt in Sprint 4 | 1            |
-| 22 | Automatisches Tagging hochgeladener Ordner   | in Umsetzung          | 5            |
+| 22 | Automatisches Tagging hochgeladener Ordner   | umgesetzt in Sprint 4 | 5            |
 |    | Lokale Umgebung unterstützen                 | offen                 |
 |    | PEAX ID als Variable in der Ressourcenangabe | offen                 |
 |    | Verbesserung der Testabdeckung               | offen                 |
@@ -41,7 +41,7 @@ author: Patrick Bucher
 |      1 | 6 (1-6), 20 SP   | 4 (1-4), 14 SP    |   14.5h | 2 (5-6), 6 SP | 1.05 |
 |      2 | 6 (5-10), 18 SP  | 6 (5-10), 18 SP   |   20.5h | 0             | 1.15 |
 |      3 | 8 (11-18), 20 SP | 8 (11-18), 20 SP  |   19.5h | 0             | 0.98 |
-|      4 | 4 (19-22), 10 SP | 3 (19-20), 5 SP   |    5.5h | 1 (22), 5SP   | 1.10 |
+|      4 | 4 (19-22), 10 SP | 4 (19-22), 10 SP  |   11.5h | 0             | 1.15 |
 
 # User Stories
 
@@ -1093,13 +1093,50 @@ abgebrochen, ohne dass auch nur ein Dokument hochgeladen worden ist.
   gemeinsame und der jeweils für jeden Pfad distinguirende Teil gefunden
   werden. Dies wird mithilfe der Funktion `SplitCommonDistinct`
   (`utils/filesystem.go`) bewerkstelligt.
+- Der Befehl `px upload` erhält zusätzlich das Flag `-t`/`-tag`, womit das
+  automatische Tagging aktiviert wird. Es kann nur im Zusammenhang mit
+  `-r`/`-recurisve` verwendet werden, nicht für einzelne Dokumente.
+- Anhand der gemeinsamen und distinguirenden Pfadelementen wird eine Liste der
+  benötigten Tags erstellt, indem für die gemeinsamen Pfadsegmente nur das
+  letzte, und für die distinguirenden Pfadsegmente alle ausser das letzte
+  (welches der Dateiname ist) verwendet.
+- Vom Portal wird eine Liste der existierenden Tags abgeholt. Hierzu konnte die
+  Funktion `requests.Get` wiederverwendet werden. Die benötigten Tags werden
+  anhand der geholten Tag-Liste auf die noch nicht existierenden Tags
+  reduziert. Diese Liste wird wiederum für die Erstellung neuer Tags verwendet,
+  wozu `requests.Post` wiederverwendet wird. Da diese Funktion eine
+  Payload-Datei erwartet, werden die Payloads zuerst in temporäre Dateien
+  geschrieben, die nach dem Request wieder gelöscht werden können.
+- Das Zuordnen der ‒ bestehenden und neu erstellten ‒ Tags wird nach dem Upload
+  eines Dokuments anhand der UUID des Dokuments und der zuvor erstellten
+  Tagliste für jedes Dokument vorgenommen. Hierzu konnte die Funktion
+  `requests.Patch` wiederverwendet werden.
+- Im Report wird zu jedem Dokument eine Liste erstellter Tags vermerkt. Löst
+  das Tagging einen Fehler aus, wird die Fehlermeldung auch im Report vermerkt.
+  Der Upload wird aber als erfolgreich nachgewiesen.
+- Die Funktionen, die für das Tagging verwendet werden (`assignTagsToFile`,
+  `extractUniqueTagNames`, `createTagsIfMissing`, `addTags`) befinden sich im
+  `requests`-Package in einer separaten Datei (`requests/tagging.go`).
 
 ### Testprotokoll
 
 - Zur Funktion `SplitCommonDistinct` gibt es einen Unit Test
   (`TestSplitCommonDistinct` in `utils/filesystem_test.go`), der für Pfade
   analog der oben stehenden prüft, ob der Teil bis `taxes` zum gemeinsamen und
-  der Rest zum distinguirenden Teil der Pfadangabe gehört.
+  der Rest zum distinguirenden Teil der Pfadangabe gehört. Da die Testdaten der
+  Bequemlichkeit halber als Unix-Pfade geschrieben worden sind, müssen die
+  Pfadtrennzeichen (`/`) vor dem Test durch `os.PathSeparator` ersetzt werden,
+  damit der Testfall auch auf Windows durchläuft. Die Implementierung verwendet
+  konsequent `os.PathSeparator`.
+- Das Erstellen der fehlenden Tags funktionierte auf Anhieb. Für den Ordner
+  `scripts/testdata/docfolder` wurden beim ersten Versuch verschiedenste Tags
+  erstellt, bei einer Wiederholung kein einziger mehr. Nachdem im Portal
+  manuell einige der neu erstellten Tags gelöscht worden sind, konnten diese
+  bei einem erneuten Versuch wieder erstellt werden.
+- Mithilfe des Testskripts `ci-px-autotag-test.sh` wird das Verzeichnis
+  `scripts/testdata/docfolder-small` rekursiv mit automatischem Tagging
+  hochgeladen. Hat dies funktioniert, wird der Report ausgewertet, indem
+  geprüft wird, ob für jedes Dokument mindestens ein Tag erstellt worden ist.
 
 # Manuelle Tests
 
