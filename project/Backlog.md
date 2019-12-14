@@ -1194,7 +1194,7 @@ Alle andere Testfälle konnten erfolgreich durchgeführt werden.
 
 ### Sprint 4
 
-TODO: manuelle Regressionstests durchführen
+Sämtliche Tests konnten erfolgreich durchgeführt werden.
 
 # Bugs
 

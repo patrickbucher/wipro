@@ -135,4 +135,7 @@ author: Patrick Bucher
 | Do, 12.12.2019 |       1.5 | Umsetzung     | Story 22: Tags anhand Pfadangaben ermitteln                        |
 | Sa, 14.12.2019 |       2.5 | Umsetzung     | Story 22: Existenz aller notwendigen Tags sicherstellen            |
 | Sa, 14.12.2019 |       2.0 | Umsetzung     | Story 22: Hochgeladene Dokumente Taggen; Testskript                |
-|                | **155.5** | **Total**     |                                                                    |
+| Sa, 14.12.2019 |       1.0 | Umsetzung     | Testing auf allen unterstützten Plattformen                        |
+| Sa, 14.12.2019 |       1.0 | Projekt       | Freigabe Releas v0.4.0, Release Notes, Team informiert             |
+| Sa, 14.12.2019 |       0.5 | Projekt       | Meilensteinbericht 3 verfasst und versendet                        |
+|                | **158.0** | **Total**     |                                                                    |

@@ -3,7 +3,7 @@ PDF_PARAMS_LANDSCAPE=-s --pdf-engine=xelatex -V documentclass=scrartcl -V papers
 FONT_PARAMS=-V mainfont="Vollkorn" -V sansfont="Lato" -V monofont="Inconsolata"
 DATE=-V date="`date +'%d.%m.%Y'`"
 
-all: Projektplan.pdf Arbeitsjournal.pdf Rahmenplan.pdf Meilensteinplan.pdf Meilensteinbericht-1.pdf Meilensteinbericht-2.pdf Backlog.pdf
+all: Projektplan.pdf Arbeitsjournal.pdf Rahmenplan.pdf Meilensteinplan.pdf Meilensteinbericht-1.pdf Meilensteinbericht-2.pdf Meilensteinbericht-3.pdf Backlog.pdf
 
 Projektplan.pdf: Projektplan.md
 	pandoc $(PDF_PARAMS_LANDSCAPE) $(FONT_PARAMS) $(DATE) $^ -o $@
@@ -21,6 +21,9 @@ Meilensteinbericht-1.pdf: Meilensteinbericht-1.md
 	pandoc $(PDF_PARAMS) $(FONT_PARAMS) $^ -o $@
 
 Meilensteinbericht-2.pdf: Meilensteinbericht-2.md
+	pandoc $(PDF_PARAMS) $(FONT_PARAMS) $^ -o $@
+
+Meilensteinbericht-3.pdf: Meilensteinbericht-3.md
 	pandoc $(PDF_PARAMS) $(FONT_PARAMS) $^ -o $@
 
 Backlog.pdf: Backlog.md
