@@ -1,8 +1,12 @@
 \section{Anhang}
 
-Im Anhang sind verschiedene Teile der Dokumentation gesammelt, die den Lesefluss im Hauptteil unnötig erschweren würden, und eher als Referenz denn zum Durchlesen gedacht sind.
+Der Anhang besteht aus den folgenden drei Teilen:
 
-Weiter sind hier im Anhang Dokumente aufgelistet, die mit der Arbeit im Zusammenhang stehen, aber nicht physisch mit diesem Dokument verbunden sein sollen.
+\begin{enumerate}
+    \item der Systemspezifikation mit Kontextdiagramm,
+    \item der Technologieevaluation, v.a. bezogen auf die Programmiersprache, und
+    \item einer Liste von weiteren Dokumenten, die mit dem vorliegenden Dokument zusammen abgegeben werden.\footnote{Die Dokumente wurden nicht physisch zusammengehängt, damit die Outline der digitalen Version zwecks einfacherer Navigierbarkeit erhalten bleibt.}
+\end{enumerate}
 
 \subsection{Systemspezifikation}
 
@@ -36,13 +40,35 @@ Im Kontextdiagramm (\imgref{fig:kontextdiagramm}) wird die zu entwickelnde Kompo
 	\item IDP: Identity Provider, API-übergreifende Benutzer- und Zugangsverwaltung (AuthN/AuthZ)
 \end{itemize}
 
+\subsubsection{Architektur und Designentscheide}
+
+Die Architektur der Anwendung ist im \secref{sec:Realisierung}, Designentscheide sind im \secref{sec:Ideen-und-Konzepte} beschrieben.
+
+Limitierende Mengengerüste sind im relevanten Systemkontext aufseiten des Backends zu verorten und liegen daher nicht im Scope der vorliegenden Arbeit. Lokal fallen pro Umgebung maximal zwei Token Pairs (Access und Refresh Token; User- und Agent-API) an, d.h. vier Tokens. Mit den bis dato acht verfügbaren Umgebungen ergibt dies eine maximale Anzahl von 32 gleichzeitig abzuspeichernden Tokens. Ein Access Token, der grössere der beiden Tokens, hat eine Länge von ca. 1800 Bytes; der kürzere Refresh Token wiegt die zusätzlichen abgespeicherten Informationen (PEAX ID, Token Type usw.) und den JSON-Overhead bei weitem auf, sodass lokal maximal 57'600 Bytes abzuspeichern sind. Die ausführbaren \texttt{px}-Dateien sind mit ca. 7.5 bis 9.5 MB (je nach Plattform) wesentlich grösser. 
+
+\subsubsection{Schnittstellen}
+
+Als externe Schnittstellen verwendet \texttt{px} die im Kontextdiagramm (\imgref{fig:kontextdiagramm}) verwendeten APIs des Backends und des IDPs. Diese Interaktionen sind im Kapitel \secref{sec:Realisierung} beschrieben. Weiter interagiert \texttt{px} mit dem Dateisystem (Token Store \texttt{\~{}/.px-tokens}, temporäre Dateien für Payloads) des Betriebssystems. Die Schnittstelle zum nativen Keystore wurde mit der Fremdkomponente \texttt{go-keyring} von \textsc{Zalando} (\secref{sec:Go-Keyring}) gelöst.
+
+Die internen Schnittstellen sind am besten in der Package-Übersicht (\secref{sec:Architektur-Package-Übersicht}) ersichtlich.\footnote{Führt man im Quellcodeverzeichnis von \texttt{px} den Befehl \texttt{godoc} aus, kann die Quellcodedokumentation komfortabel im Browser unter \url{http://localhost:6060/pkg/px/} betrachtet werden.}
+
+Die Benutzerschnittstelle ist im Kapitel \secref{sec:Swiss-Army-Knive} konzeptionell und anhand konkreter Beispiele erläutert. 
+
+\subsubsection{Environment-Anforderungen}
+
+An die Umgebung stellt \texttt{px} nur geringe Anforderungen. Zur Ausführung wird \textsc{macOS}, \textsc{Windows} oder \textsc{Linux} in einer mehr oder weniger aktuellen Version benötigt. Tests wurden auf \textsc{macOS Catalina}, \textsc{Windows 10} und \textsc{Arch Linux} erfolgreich ausgeführt. Zur Bedienung wird eine \textsc{Unix}-Shell wie z.B. \textsc{Bash} empfohlen, wobei \texttt{px} auch mit \texttt{cmd.exe} oder der \textsc{PowerShell} funktioniert. Eine funktionierende Internetverbindung wird angenommen.
+
+Grundsätzlich kann \texttt{px} auf allen Betriebssystemen und Plattformen kompiliert werden, auf denen \textsc{Go} läuft.\footnote{siehe \url{https://github.com/golang/go/wiki/MinimumRequirements}} Die aktuelle Build-Konfiguration geht von der \texttt{amd64}-Architek\-tur aus. Mithilfe der Umgebungsvariablen \texttt{GOOS} und \texttt{GOARCH} kann \texttt{px} auf eine Vielzahl von Umgebungen cross-kompiliert werden.\footnote{\url{https://gist.github.com/asukakenji/f15ba7e588ac42795f421b48b8aede63} bietet eine gute Übersicht.}
+
+Dateien werden jeweils mit dem Encoding \texttt{UTF-8} gelesen und geschrieben. Für Quellcodedateien ist dies bei \textsc{Go} sogar eine verbindliche Vorgabe.\footnote{siehe \url{https://golang.org/ref/spec\#Source_code_representation}}
+
 \subsection{Technologie-Evaluation}
 
 Im Bereich der Technologie gilt es vor allem eine passende Programmiersprache auszuwählen. Die API von PEAX wird bereits durch den Projektrahmen vorgegeben, und dadurch auch die Protokolle OAuth 2.0 und HTTP.
 
 \subsubsection{Programmiersprache}
 
-Aus der Aufgabenstellung und dem Umfeld bei PEAX ergeben sich folgende nicht-funktionale Anforderungen an die zu erstellende Software:
+Aus der Aufgabenstellung und dem Umfeld bei PEAX ergeben sich folgende nicht-funktio\-nale Anforderungen an die zu erstellende Software:
 
 \begin{description}
     \item[Installation] Die Software soll sich einfach installieren lassen.
@@ -130,7 +156,7 @@ Wie bereits in \secref{sec:Go-Keyring} geschildert, wird nur eine einzige Fremdk
     \item[Projektplan] Der Projektplan (\texttt{Anhang/Projektplan.pdf}) besteht aus einem Rahmenplan, einem Meilensteinplan und einem Wochenplan.
     \item[Backlog] Das Backlog (\texttt{Anhang/Backlog.pdf}) enthält die einzelnen User Stories, die Sprint-Planung, Umsetzungsnotizen zu einzelnen User Stories mit Testprotokolle dazu, sowie Informationen zu manuellen Tests und gefundenen Bugs.
     \item[Meilensteinbericht 1] Der erste Meilensteinbericht (\texttt{Anhang/Meilensteinbericht-1.pdf}) beschreibt die Vorgeschichte des Projekts und die Phase der Projektinitialisierung.
-    \item[Meilensteinbericht 2] Der zweite Meilensteinbericht (\texttt{Anhang/Meilensteinbericht-2.pdf}) umfasst die ersten beiden Sprints.
-    \item[Meilensteinbericht 3] Der dritte Meilensteinbericht (\texttt{Anhang/Meilensteinbericht-3.pdf}) umfasst die letzten beiden Sprints.
+    \item[Meilensteinbericht 2] In diesem Meilensteinbericht (\texttt{Anhang/Meilensteinbericht-2.pdf}) geht es um die ersten beiden Sprints.
+    \item[Meilensteinbericht 3] In diesem Meilensteinbericht (\texttt{Anhang/Meilensteinbericht-3.pdf}) geht es um die letzten beiden Sprints.
     \item[Arbeitsjournal] Im Arbeitsjournal (\texttt{Anhang/Arbeitsjournal.pdf}) sind die einzelnen Aufwände auf halbe Stunden gerundet nach Bereich ‒ Projekt(administration), Dokumentation, Umsetzung ‒ rapportiert. Mithilfe eines AWK-Skripts können die Aufwände nach Bereich und User Story ausgewertet werden.
 \end{description}

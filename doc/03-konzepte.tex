@@ -1,4 +1,5 @@
 \section{Ideen und Konzepte}
+\label{sec:Ideen-und-Konzepte}
 
 Der PEAX Command Line Client \texttt{px} soll zwei grundlegenden Design-Prinzipien folgen:
 
@@ -31,7 +32,7 @@ Jahre später ‒ und um etliche Erfahrung mit Unix reicher ‒ sammelte \textsc
     \item \textit{Use software leverage to your advantage.} Programmierer sollen sich auf das eigentliche Problem konzentrieren, und nicht auf solche, die bereits von anderen Programmierern zufriedenstellend gelöst worden sind. Um dies zu ermöglichen, muss Programmcode zwischen Programmierern ausgetauscht werden, und nicht als streng gehütetes Geheimnis behandelt werden. Bestehende Software ‒ in der Form von Code oder kompilierter Software ‒ kann mit einer gewaltige Hebelwirkung für die eigene Arbeit eingesetzt werden.
     \item \textit{Use shell scripts to increase leverage and portability.} Mithilfe von Shell-Skripts kann in wenigen Zeilen Software genutzt werden, die hundertausenden Zeilen ‒ getestetem und von anderen Programmierern gewartetem ‒ C-Code entsprechen. Der Entwicklungszyklus von Shell-Skripts ist schneller als derjenige von C-Programmen, da der Kompilierungsschritt entfällt. Zudem sind Shell-Skripts portabler als Programme, die in C oder in einer anderen Hochsprache geschrieben sind.
     \item \textit{Avoid captive user interfaces.} Interaktive Programme haben ihre eigene Interaktionssprache, die sich von der Shell unterscheidet, und daher zunächst für jedes Werkzeug gelernt werden muss. Solche Programme gehen davon aus, dass der Benutzer ein Mensch ist, was die Verwendung via Skripts ‒ und somit die Hebelwirkung von Software ‒ verunmöglicht. Interaktive Programme tendieren dazu, Features aus der Umgebung, von der sie sich abkapseln, in eigener, meist schlechterer Implementierung anzubieten, was die Codebasis aufbläht und zu einem inkonsistenten Verhalten führt.
-    \item \textit{Make every program a filter.} Die meisten Programme nehmen Eingabedaten entgegen, transformieren diese, und produzieren daraus Ausgabedaten. Sie produzieren keine originären Daten, sondern verarbeiten Daten, die zumeist von Menschen prodiziert worden sind. Programme, die als Filter konzipiert sind, werden diesem Umstand gerecht. Auf \textsc{Unix} werden Eingabedaten über die Standardeingabe (`stdin`) entgegengenommen und über die Standardausgabe (`stdout`) wieder ausgegeben. Mithilfe der Pipe können so beliebig lange Filterketten erstellt werden, wovon jedes Programm eine Transformation auf den Datenstrom vornimmt. Fehlermeldungen und andere Informationen, die sich von den Nutzdaten unterscheiden, sollen in die Standardfehlerausgabe (`stderr`) geschrieben werden, was eine gesonderte Verarbeitung solcher Meldungen ermöglicht.
+    \item \textit{Make every program a filter.} Die meisten Programme nehmen Eingabedaten entgegen, transformieren diese, und produzieren daraus Ausgabedaten. Sie produzieren keine originären Daten, sondern verarbeiten Daten, die zumeist von Menschen prodiziert worden sind. Programme, die als Filter konzipiert sind, werden diesem Umstand gerecht. Auf \textsc{Unix} werden Eingabedaten über die Standardeingabe (`stdin`) entgegengenommen und über die Standardausgabe (\texttt{stdout}) wieder ausgegeben. Mithilfe der Pipe können so beliebig lange Filterketten erstellt werden, wovon jedes Programm eine Transformation auf den Datenstrom vornimmt. Fehlermeldungen und andere Informationen, die sich von den Nutzdaten unterscheiden, sollen in die Standardfehlerausgabe (\texttt{stderr}) geschrieben werden, was eine gesonderte Verarbeitung solcher Meldungen ermöglicht.
 \end{enumerate}
 
 \subsubsection{Anwendung auf \texttt{px}}
@@ -55,6 +56,7 @@ Für \texttt{px} werden die Grundsätze der \textsc{Unix}-Philosophie folgenderm
 \end{enumerate}
 
 \subsection{Swiss Army Knive}
+\label{sec:Swiss-Army-Knive}
 
 Die «Swiss Army Knive»-Befehlsstruktur \cite[S. 290]{gopl}, wie sie im vorhergehenden Kapitel beschrieben (\secref{sec:Kommandozeilenprogramme}) und im Prototyp (\secref{sec:Ausgangslage-und-Vorleistungen}) verwendet worden ist, soll beibehalten werden. Befehle in \texttt{px} sollen etwa folgendermassen aussehen:
 

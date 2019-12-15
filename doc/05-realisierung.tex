@@ -6,6 +6,7 @@ Wie im Anhang (\secref{sec:Entscheidung-Programmiersprache}) beschrieben und beg
 Enorm hilfreich in der Umsetzung war Standardwerk zu \textsc{Go} \cite{gopl}, das nicht nur die Programmiersprache beschreibt, sondern auch deren idiomatischen Gebrauch.
 
 \subsection{Architektur: Package-Übersicht}
+\label{sec:Architektur-Package-Übersicht}
 
 \textsc{Go}-Code wird in sogenannte Packages aufgeteilt. Da das Projekt in \textsc{GitLab} \texttt{px} heisst, wird das Hauptpackage als \texttt{px} benannt. Im Root-Verzeichnis befindet sich kein \textsc{Go}-Code.\footnote{\texttt{px.go} beinhaltet bloss eine Package-Deklaration mit einem entsprechenden Kommentar.} Dieser ist in verschiedenen Unterverzeichnissen (\texttt{requests}, \texttt{tokenstore}, usw.) abgelegt. Die Dateien in den Unterpackages deklarieren ihre Packagezugehörigkeit jeweils mit dem unmittelbaren Überverzeichnis, also beispielsweise nicht \texttt{px/tokenstore}, sondern nur \texttt{tokenstore}. Bei der Verwendung der Packages hingegen wird der ganze Pfad angegeben: \texttt{px/tokenstore}.
 
