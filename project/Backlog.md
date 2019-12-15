@@ -81,7 +81,7 @@ Akzeptanzkriterien:
 - Es wurde manuell mit Logins auf verschiedenen Umgebungen getestet.
 - Die Umgebungen `perf` und `prototype waren heruntergefahren und konnten so
   nicht getestet werden.
-- Auf der Umgebung `prod` stehen derzeit nur Benutzer mit
+- Auf der Umgebung `prod` stehen derzeit nur Benutzer mit aktivierter
   Zwei-Faktor-Authentifizierung zur Verfügung. Da dies noch nicht umgesetzt
 - Die Antworten wiesen wie erwartet die folgenden HTTP-Stati auf:
     1. Login vor der Registrierung: `401` (nicht möglich)
@@ -300,9 +300,9 @@ Akzeptanzkriterien:
 
 - Eine komfortable Zusatzfunktion wäre, dass man Pfade nicht komplett mit der
   PEAX ID ausschreiben müsste
-  (`document/api/v3/account/455.5462.5012.69/collection`), sondern einen
-  Platzhalter wie {paexId} verwenden könnte
-  (`document/api/v3/account/{peaxId}/collection`). Dies soll jedoch nicht
+  (`document/api/v3/account/455.5462.5012.69/col-lection`), sondern einen
+  Platzhalter wie `{peaxId}` verwenden könnte
+  (`document/a-pi/v3/account/{peaxId}/collection`). Dies soll jedoch nicht
   Bestandteil dieser Story sein.
 
 ### Testprotokoll
@@ -344,8 +344,8 @@ Akzeptanzkriterien:
 - Um den automatischen Retry-Mechanismus umzusetzen, musste zuerst
   herausgefunden werden, wie man anhand des Refresh Tokens einen neuen Access
   Token erhalten kann. Dies passiert über den gleichen Endpoint wie das Login,
-  nur dass die Credentials mit dem `grant_type=refresh_token` (statt
-  `grant_type=password`) und dem Refresh Token als Payload (statt
+  nur dass die Credentials mit dem `grant_type` `refresh_token` (statt
+  `grant_type` `password`) und dem Refresh Token als Payload (statt
   Benutzername/Passwort) mitgegeben werden. Dieser Mechanismus wurde per
   Reverse Engineering ermittelt. Hierzu kann man sich auf dem Portal einloggen,
   für über fünf Minuten warten, eine Aktion auslösen, die mit dem Server
@@ -566,11 +566,10 @@ Akzeptanzkriterien:
   Gegensatz zur User API, wo sie immer `peax.portal` lautet, sich bei jedem
   Agent unterscheidet.
 - Verschiedene manuelle Tests mit einem gültigen Refresh Token ergaben, dass
-  die Aktualisierung eines Token Pairs für die Agent API mit dem
-  `grant_type=refresh_token` (derzeit?) nicht funktioniert. Da die automatische
-  Token-Aktualisierung kein Akzeptanzkriterium ist, und das Problem
-  serverseitig geprüft werden muss, soll diese Funktionalität vorerst offen
-  bleiben.
+  die Aktualisierung eines Token Pairs für die Agent API mit dem `grant_type`
+  `refresh_token` nicht funktioniert. Da die automatische Token-Aktualisierung
+  kein Akzeptanzkriterium ist, und das Problem serverseitig geprüft werden
+  muss, soll diese Funktionalität vorerst offen bleiben.
 
 ### Testprotokoll
 
@@ -844,7 +843,7 @@ Akzeptanzkriterien:
   Refactoring noch einwandfrei.
 - Zum Testen des rekursiven Uploads wurde ein Testordner `docfolder` erstellt,
   der jeweils Unterordner der Struktur
-  `Taxes/[2015..2019]/[Assets,Deductions,Donations,Insurance,Wage-Slips]/`
+  `Taxes/[2015..2019]/[Assets, Deductions, Donations, Insurance, Wage-Slips]/`
   enthält. Jeder dieser Unterordner enthält wiederum ein Testdokument.
 - Beim ersten Test fiel auf, dass für erfolgreich hochgeladenen Dokumente in
   der erstellten Datenstruktur keine `documentId` vorhanden ist. Ausserdem
@@ -1120,7 +1119,7 @@ abgebrochen, ohne dass auch nur ein Dokument hochgeladen worden ist.
 
 ### Testprotokoll
 
-- Zur Funktion `SplitCommonDistinct` gibt es einen Unit Test
+- Zur Funktion `SplitCommonDistinct` wurde ein Unit Test
   (`TestSplitCommonDistinct` in `utils/filesystem_test.go`), der für Pfade
   analog der oben stehenden prüft, ob der Teil bis `taxes` zum gemeinsamen und
   der Rest zum distinguirenden Teil der Pfadangabe gehört. Da die Testdaten der
@@ -1134,7 +1133,7 @@ abgebrochen, ohne dass auch nur ein Dokument hochgeladen worden ist.
   manuell einige der neu erstellten Tags gelöscht worden sind, konnten diese
   bei einem erneuten Versuch wieder erstellt werden.
 - Mithilfe des Testskripts `ci-px-autotag-test.sh` wird das Verzeichnis
-  `scripts/testdata/docfolder-small` rekursiv mit automatischem Tagging
+  `docfolder-small` in `scripts/testdata` rekursiv mit automatischem Tagging
   hochgeladen. Hat dies funktioniert, wird der Report ausgewertet, indem
   geprüft wird, ob für jedes Dokument mindestens ein Tag erstellt worden ist.
 
@@ -1211,10 +1210,12 @@ Sämtliche Tests konnten erfolgreich durchgeführt werden.
 Tests auf Windows ergaben, dass es derzeit nicht möglich ist, ein Password
 sicher (ohne Echo) über die Kommandozeile einzugeben. Recherchen haben ergeben,
 dass es in diesem Bereich derzeit einen [offenen
-Bug](https://github.com/golang/go/issues/34461) gibt. Als Workaround wird bis
-zur Fehlerkorrektur auf die sichere Passworteingabe verzichtet. Mithilfe eines
-[Build Tags](https://golang.org/pkg/go/build/#hdr-Build_Constraints) konnte
-dieser Workaround auf Windows eingeschränkt werden, sodass auf macOS und Linux
+Bug](https://github.com/golang/go/issues/34461) gibt.
+
+Als Workaround wird bis zur Fehlerkorrektur auf die sichere Passworteingabe
+verzichtet. Mithilfe eines [Build
+Tags](https://golang.org/pkg/go/build/#hdr-Build_Constraints) konnte dieser
+Workaround auf Windows eingeschränkt werden, sodass auf macOS und Linux
 weiterhin die sichere Passworteingabe zum Einsatz kommt.
 
 ## 2: Refresh-Mechanismus funktioniert nicht für Agent API
