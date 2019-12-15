@@ -139,4 +139,5 @@ author: Patrick Bucher
 | Sa, 14.12.2019 |       1.0 | Projekt       | Freigabe Releas v0.4.0, Release Notes, Team informiert             |
 | Sa, 14.12.2019 |       0.5 | Projekt       | Meilensteinbericht 3 verfasst und versendet                        |
 | Sa, 14.12.2019 |       1.0 | Dokumentation | Ergebnisse der Arbeit beschrieben; Lücken gefüllt                  |
-|                | **159.0** | **Total**     |                                                                    |
+| So, 15.12.2019 |       1.5 | Dokumentation | SysSpec (Anhang) ergänzt; Anhang umstrukturiert                    |
+|                | **160.5** | **Total**     |                                                                    |

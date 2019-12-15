@@ -10,9 +10,9 @@ author: 'Patrick Bucher'
 |-------:|------------:|------------:|----------------------|-----------------------------------------------|
 |    1-3 |  16.09.2019 |  06.10.2019 | Initialisierunsphase | Initialisierung, Planung, Analyse, Konzeption |
 |   4-13 |  07.10.2019 |  15.12.2019 | Umsetzungsphase      | iterative Implementierung (Sprints)           |
-|     14 |  16.12.2019 |  21.12.2019 | Abschlussphase       | Schlussabgabe vorbereiten                     |
+|     14 |  16.12.2019 |  20.12.2019 | Abschlussphase       | Schlussabgabe vorbereiten                     |
 
-![Rahmenplan (grafisch)](graphics/zeitstrahl-white.png)\
+![Rahmenplan (grafisch)](graphics/zeitstrahl.png){width=100%}\
 
 # Meilensteinplan
 
@@ -28,7 +28,7 @@ Meilenstein erreicht.
 |     3 | 06.10.2019 |  1 | Backlog und Konzept bereit              | Analyse, Grobkonzept, Testkonzept, Backlog  |
 |     9 | 10.11.2019 |  2 | Login- und Token-Handling funktionieren | Prototyp, Dokumentation, Meilensteinbericht |
 |    13 | 15.12.2019 |  3 | Signifikante Abdeckung der API erreicht | Prototyp, Dokumentation, Meilensteinbericht |
-|    14 | 21.12.2019 |  4 | Bericht abgabebereit                    | Abschlussbericht                            |
+|    14 | 20.12.2019 |  4 | Bericht abgabebereit                    | Abschlussbericht                            |
 
 # Wochenplan
 

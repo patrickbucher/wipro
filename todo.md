@@ -7,8 +7,8 @@
     - [ ] Reflexion
     - [ ] ungelöste Probleme
     - [ ] weitere Ideen
-- [ ] Anhänge
-    - [ ] SysSpec
+- [x] Anhänge
+    - [x] SysSpec
 - [ ] Glossar
 - [ ] Korrekturlesen
     - [ ] Dokumentation
