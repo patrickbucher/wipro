@@ -141,4 +141,6 @@ author: Patrick Bucher
 | Sa, 14.12.2019 |       1.0 | Dokumentation | Ergebnisse der Arbeit beschrieben; Lücken gefüllt                  |
 | So, 15.12.2019 |       1.5 | Dokumentation | SysSpec (Anhang) ergänzt; Anhang umstrukturiert                    |
 | So, 15.12.2019 |       1.0 | Dokumentation | Aufräumarbeiten und kosmetische Korrekturen                        |
-|                | **161.5** | **Total**     |                                                                    |
+| Mo, 16.12.2019 |       1.0 | Dokumentation | Kapitel 6 (Evaluation und Validation) vorerst abgeschlossen        |
+| Mo, 16.12.2019 |       1.0 | Dokumentation | Kapitel 7 (Ausblick): Reflexion                                    |
+|                | **163.5** | **Total**     |                                                                    |
