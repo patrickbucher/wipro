@@ -1,10 +1,10 @@
 \section{Evaluation und Validierung}
 
-Das vorliegende Projekt entstammt dem PEAX-Ideation-Prozess, worin sich Entwicklungs- und Validierungsphase abwechseln. 
+Das vorliegende Projekt entstammt dem PEAX-Ideation-Prozess, worin sich Phasen der Entwicklung (\textit{Ideate}) und der Validierung (\textit{Validate}) abwechseln. Innerhalb des Projekts wechselten sich Sprints zur Entwicklung mit einzelnen Wochen zur Dokumentation ab, wobei während letzterer jeweils Rückmeldungen von Kollegen (v.a. Entwickler) aufgenommen wurden (siehe Folgeabschnitt). Aus der Perspektive des Ideation-Prozesses war \texttt{px} jedoch für die letzten drei Monate in der \textit{Ideate}-Phase, worauf nach Abschluss der vorliegenden Projektarbeit eine Validierung im Rahmen des Ideation-Gremiums folgen soll.
 
 \subsection{Rückmeldungen von Entwicklern}
 
-Nach jedem Sprint wird ein Inkrement an die Entwickler ausgeliefert (siehe \secref{sec:Vorgehen}). Die Rückmeldungen werden hier gesammelt und kommentiert ‒ und fliessen in den jeweils nachfolgenden Sprint ein.
+Nach jedem Sprint wird ein Inkrement an die Entwickler ausgeliefert (siehe \secref{sec:Vorgehen}). Die Rückmeldungen werden hier gesammelt und kommentiert ‒ und fliessen ins Backlog und nach Möglichkeit ins den jeweils nachfolgenden Sprint ein.
 
 \subsubsection{Sprint 1}
 \label{sec:Feedback-Sprint1}
@@ -13,11 +13,11 @@ Nach jedem Sprint wird ein Inkrement an die Entwickler ausgeliefert (siehe \secr
     \item \textsc{Michael Buholzer} wünscht sich Erfolgs- und Vollzugsmeldungen nach dem Login oder dem Upload eines Dokuments.
     \begin{itemize}
         \item \texttt{stdout} sollte grundsätzlich «sauber» bleiben, d.h. frei von unnötigen Ausgaben, die ein nachgelagertes Programm wieder herausfiltern müsste. Eine wichtige Maxime von \textsc{Unix}-Programmen lautet: \textit{«Expect the output of every program to become the input to another, as yet unknown, program.»} \cite[S. 3]{unixtimesharing}. Siehe dazu auch \textit{Rule of Silence} \cite[S. 20]{unixart} und \textit{Silence is Golden} \cite[S. 111]{unixphil}.\footnote{Brian W. Kernighan berichtet von der Zeit, als die Pipe Einzug in \textsc{Unix} hielt, womit die Ausgabe eines Programms zur Eingabe eines anderen Programms gemacht werden konnte: \textit{«Ken [Thompson] and Dennis [Ritchie] upgraded every command on the system in a single night. […] Overall, the job was not hard—most programs required nothing more than eliminating extraneous messages that would have \textbf{cluttered a pipeline}, and sending error reports to stderr.»} \cite[S. 69]{unix-history-memoir}}
-        \item \texttt{stderr} wird nicht nur als Ausgabekanal für Fehlermeldungen verwendet, sondern für Meldungen allgemein. Für Vollzugsmeldungen wäre \texttt{stderr} vorzuziehen.
-        \item Da \texttt{stderr} in \texttt{px} bisher grundsätzlich für Fehlermeldungen verwendet wird, sollen Erfolgsmeldungen über ein zusätzliches Flag \texttt{-verbose}/\texttt{-v} aktiviert werden müssen.
-        \item Bei anderen Anwendungsfällen signalisiert die Ausgabe des Payloads auf \texttt{stdout} den Erfolg der Operation. Beim Dokument-Upload besteht dieser beispielsweise aus der generierten UUID des hochgeladenen Dokuments.
+        \item \texttt{stderr} wird nicht nur als Ausgabekanal für Fehlermeldungen verwendet, sondern für Meldungen allgemein. Für Vollzugsmeldungen ist \texttt{stderr} vorzuziehen.
+        \item Da \texttt{stderr} in \texttt{px} bisher grundsätzlich für Fehlermeldungen verwendet wird, sollen Erfolgsmeldungen über ein zusätzliches Flag \texttt{-v}/\texttt{-verbose} aktiviert werden müssen.
+        \item Bei anderen Anwendungsfällen signalisiert die Ausgabe des Payloads auf \texttt{std\-out} den Erfolg der Operation. Beim Dokument-Upload besteht dieser etwa aus der generierten UUID des hochgeladenen Dokuments.
     \end{itemize}
-\item \textsc{Patrick Roos} sieht die Möglichkeit, \texttt{px} auch zur Handhabung der \textit{Vault Secrets}\footnote{\url{https://docs.ansible.com/ansible/latest/user_guide/vault.html}} (Verschlüsselung und Entschlüsselung von Benutzernamen, Passwörtern etc. zu verwenden.
+\item \textsc{Patrick Roos} sieht die Möglichkeit, \texttt{px} auch zur Handhabung der \textit{Vault Secrets}\footnote{\url{https://docs.ansible.com/ansible/latest/user_guide/vault.html}} (zur Verschlüsselung und Entschlüsselung von Benutzernamen, Passwörtern etc.) zu verwenden.
     \begin{itemize}
         \item Im Arbeitsalltag von PEAX stellt die Handhabung von Vault Secrets tatsächlich eine teils mühsame und langwierige Aufgabe dar. Hier besteht durchaus Automatisierungsbedarf.
         \item \texttt{px} ist als «skriptbare» Anwendung für die PEAX API konzipiert und so potenziell für jeden PEAX-Anwender einsetzbar.
@@ -32,24 +32,25 @@ Nach jedem Sprint wird ein Inkrement an die Entwickler ausgeliefert (siehe \secr
     \item \textsc{Stefano Pellegrini} fände einen Befehl \texttt{px version} sinnvoll, der die aktuelle Versionsnummer ausgibt. Damit könne man sicherstellen, dass man nicht etwa eine veraltete Version verwendet und (hinfällige) Rückmeldungen auf diese gibt.
         \begin{itemize}
             \item Tatsächlich stellen die meisten Kommandozeilentools eine solche Möglichkeit zur Verfügung, wie z.B. \textsc{Go} oder \textsc{Docker} mit den Befehlen \texttt{go version} und \texttt{docker version}. Andere Werkzeuge, wie etwa der Command Line Client von \textsc{Heroku} oder das Tool \textsc{Ripgrep} stellen ein entsprechendes Flag zur Verfügung (\texttt{heroku -v} bzw. \texttt{rg --version}).
-            \item Ein Versionstag ist bereits über das Git-Repository verfügbar. Die jeweils aktuelle Version kann mittels \texttt{git describe --tags} abgerufen werden.
+            \item Ein Versionstag ist bereits über das \textsc{Git}-Repository verfügbar. Die jeweils aktuelle Version kann mittels \texttt{git describe --tags} abgerufen werden.
             \item Der Linker von \textsc{Go}\footnote{\url{https://golang.org/cmd/link/}} erlaubt es mit dem Parameter \texttt{-ldflags} uninitialisierte Strings im Programmcode mit einem Wert zu belegen.
             \item Heisst die Variable im \texttt{main}-Modul \texttt{Version}, kann die aktuelle Versionsnummer folgendermassen in die Binärdatei hineinkompiliert werden: \texttt{go build -ldflags="{}-X main.Version=\$(git describe --tags)"{} cmd/px.go}
+            \item Der Befehl \texttt{px version} soll wie gewünscht umgesetzt werden.
         \end{itemize} 
-    \item Weiter hat \textsc{Stefano Pellegrini} vorgeschlagen, dass \texttt{logout} sich auf die jeweils aktuelle Standardumgebung beziehen soll, damit man nicht immer eine Umgebung mit dem \texttt{-env}-Parameter angeben muss.
+    \item Weiter hat \textsc{Stefano Pellegrini} vorgeschlagen, dass \texttt{logout} sich auf die jeweils aktuelle Standardumgebung beziehen soll, damit man nicht immer eine Umgebung mit dem \texttt{-e}/\texttt{-env}-Parameter angeben muss.
     \begin{itemize}
         \item Der Vorschlag ist sinnvoll und soll entsprechend umgesetzt werden.
     \end{itemize}
 \item \textsc{Michael Buholzer} wünscht sich, dass die Ausgabe von JSON-Datenstrukturen automatisch formatiert wird (\textit{pretty print}).
     \begin{itemize}
         \item Grundsätzlich lässt sich die JSON-Ausgabe sehr einfach formatieren, indem sie mittels Pipe durch ein Programm wie \texttt{jq} gesendet wird\footnote{Siehe \url{https://stedolan.github.io/jq/}, das auch die Möglichkeit bietet, Teile mittels einer DSL aus der Datenstruktur zu extrahieren.}.
-        \item \textsc{Go} bietet jedoch mit \texttt{json.Indent} eine sehr komfortable Funktion, womit ein beliebiger JSON-Payload\footnote{D.h. nicht nur ein JSON-Payload, dessen Struktur mittels einer \texttt{struct} und den entsprechenden Annotations beschrieben ist, was zu einem unverhältnismässigen Mehraufwand führen würde, zumal dann jeder mögliche Payload statisch beschrieben sein müsste.} einfach formatiert werden kann.
-        \item Der Vorschlag soll umgesetzt werden. Weitere Features im Zusammenhang mit generischer JSON-Verarbeitung sollen jedoch der \textsc{Unix}-Philosophie entsprechend an \texttt{jq} oder ähnliche Programme mittels Pipe delegiert werden.
+        \item \textsc{Go} bietet mit \texttt{json.Indent} eine sehr komfortable Funktion, womit ein beliebiger JSON-Payload\footnote{D.h. nicht nur ein JSON-Payload, dessen Struktur mittels einer \texttt{struct} und den entsprechenden Annotations beschrieben ist, was zu einem unverhältnismässigen Mehraufwand führen würde, zumal dann jeder mögliche Payload statisch beschrieben sein müsste.} einfach formatiert werden kann.
+        \item Der Vorschlag kommt ins Backlog ‒ jedoch mit tiefer Priorität, da das Problem mithilfe von \texttt{jq} einfach gelöst werden kann. Weitere Features im Zusammenhang mit generischer JSON-Verarbeitung sollen der \textsc{Unix}-Philosophie entsprechend an \texttt{jq} oder ähnliche Programme mittels Pipe delegiert werden.
     \end{itemize}
 \item Zudem schlägt \textsc{Michael Buholzer} im Zusammenhang mit dem \texttt{get}-Befehl vor, dass die PEAX ID automatisch anhand des eingeloggten Benutzers ergänzt werden soll, und man so nicht beispielsweise \texttt{profile/api/v3/profile/785.2120.8339.75} sondern bloss \texttt{profile/api/v3/profile} eingeben muss. Die PEAX ID sei für den Benutzer von \texttt{px} nirgends ersichtlich.
     \begin{itemize}
         \item Eine generische \texttt{GET}-Schnittstelle kann nur angeboten werden, wenn die Ressourcenpfade für den Client transparent sind. So ist es nicht möglich, die PEAX ID automatisch zu ergänzen, zumal sie nicht zwingend am Ende, sondern auch mitten im Ressourcenpfad auftreten kann.
-        \item Eine bereits angedachte Lösung sind Variablen im Ressourcenpfad, die dann vom Client automatisch ergänzt werden, z.B. \texttt{profile/api/v3/profile/\{peaxid\}}. Hiermit kann eine generische Schnittstelle gewährleistet werden, und für den Benutzer wird die Handhabung einfacher.
+        \item Eine bereits angedachte Lösung sind Variablen im Ressourcenpfad, die vom Client automatisch ergänzt werden, z.B. \texttt{profile/api/v3/profile/\{peaxid\}}. Hiermit kann eine generische Schnittstelle gewährleistet werden ‒ und für den Benutzer wird die Handhabung einfacher.
         \item Evtl. wäre es sinnvoll, zu jeder Umgebung, die ein Login repräsentiert, ergänzende Token-Informationen ausgeben zu können, z.B. die PEAX ID.
     \end{itemize}
     \item \textsc{Stephan Korner} meldet eine Reihe spezifischer Use-Cases, die ihm beim Testen der Mobile App (\textsc{iOS}) nützlich sein würden:
@@ -71,14 +72,14 @@ Nach jedem Sprint wird ein Inkrement an die Entwickler ausgeliefert (siehe \secr
         \begin{itemize}
             \item Technisch ist dies möglich, die Umgebung \texttt{local} benötigt jedoch eine spezielle Konfiguration. So werden hier keine Domains verwendet, sondern bloss Hostnamen und Ports.
             \item Der lokale Proxy ist unter Port \texttt{8050}, der IDP unter Port \texttt{8080} verfügbar. Der Host heisst jeweils \texttt{localhost}.
-            \item Das lokale Keycloak-Realm heisst \texttt{peax-id-local}.
-            \item Die lokale \texttt{clientId} heisst \texttt{peax.local}.
+            \item Das Keycloak-Realm heisst \texttt{peax-id-local}; die \texttt{clientId} \texttt{peax.local}.
+            \item Die Idee wird ins Backlog aufgenommen.
         \end{itemize}
 \end{itemize}
 
 \subsection{Ergebnisse}
 
-In den vergangenen 14 Wochen ist aus dem kleinen, undokumentierten und etwas holprig zu bedienenden Prototyp \texttt{px} eine Software geworden, die den ursprünglich gesteckten Zielen gerecht wird: Ein grosser Teil der API von PEAX kann über generische HTTP-Befehle (\texttt{GET}, \texttt{POST} usw.) abgedeckt werden; mit spezifischen Befehlen (\texttt{upload}, \texttt{deliver}) können häufige Use Cases komfortabel abgedeckt werden.
+In den vergangenen 14 Wochen ist aus dem kleinen, undokumentierten und etwas holprig zu bedienenden Prototyp \texttt{px} eine Software geworden, die den ursprünglich gesteckten Zielen gerecht wird: Ein grosser Teil der API von PEAX kann über generische HTTP-Befehle (\texttt{GET}, \texttt{POST} usw.) abgedeckt werden; mit spezifischen Befehlen (\texttt{upload}, \texttt{deliver}) können häufige Use Cases komfortabel abgedeckt werden.\footnote{Da die «signifikante Abdeckung» im Projektauftrag nicht quantifiziert worden ist, soll hier auch keine quantitative Auswertung vorgenommen werden. Im Bereich der User API konnten während der Entwicklung alle Endpoints mit den generischen HTTP-Befehlen angesteuert werden. Der Multipart-Request der Delivery-API zum Einliefern von Dokumenten wurde mit dem spezifischen Befehl \texttt{px deliver} umgesetzt. Zugriffe auf die Admin API wurden während des Projekts nie gewünscht ‒ und deshalb nie unternommen.}
 
 Mit dem sicheren Keystore wird \texttt{px} den gestellten Sicherheitsanforderungen gerecht, ohne den Anwender dabei zu bevormunden. Die Handhabung von Access und Refresh Tokens wird dem Benutzer dank deren transparenter und automatischer Aktualisierung im Hintergrund abgenommen.
 
@@ -89,3 +90,5 @@ Insgesamt wurden ca. 3000 Zeilen \textsc{Go}-Code geschrieben. Die pragmatische 
 Die vorliegende Dokumentation ist überraschend schnell gewachsen. Gerade die Umsetzungsnotizen und Testprotokolle (Backlog-Dokument) wuchsen bei der Umsetzung praktisch um eine Druckseite pro Tag.
 
 Das agile Vorgehen brachte wenige Projektmanagement-Artefakte hervor. Ein schlanker Projekt- und Meilensteinplan, ein konsequent nachgeführtes Arbeitsjournal und die Meilensteinberichte sind das Ergebnis davon.
+
+Die fehlende Adaption, die das bisher letzte in \secref{sec:Risikoanalyse} angesprochene Risiko darstellt, kann zu diesem Zeitpunkt noch nicht eingeschätzt werden. Es wurden Rückmeldungen aufgenommen und ‒ wenn sinnvoll ‒ ins Backlog aufgenommen und/oder umgesetzt, sodass die Beteiligten die Software erhalten, die sie benötigen. Die Validierungsphase im Ideation-Prozess wird Aufschluss über die Adaption geben.

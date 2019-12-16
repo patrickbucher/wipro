@@ -1,8 +1,8 @@
 # TODO
 
-- [ ] Evaluation und Validation
-    - [ ] Auswertung und Interpretation der Ergebnisse
-    - [ ] Nachweis der Zielerreichung (v.a. Abdeckung der API)
+- [x] Evaluation und Validation
+    - [x] Auswertung und Interpretation der Ergebnisse
+    - [x] Nachweis der Zielerreichung (v.a. Abdeckung der API)
 - [ ] Ausblick
     - [ ] Reflexion
     - [ ] ungelöste Probleme
