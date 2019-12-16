@@ -4,7 +4,7 @@
     - [x] Auswertung und Interpretation der Ergebnisse
     - [x] Nachweis der Zielerreichung (v.a. Abdeckung der API)
 - [ ] Ausblick
-    - [ ] Reflexion
+    - [x] Reflexion
     - [ ] ungelöste Probleme
     - [ ] weitere Ideen
 - [x] Anhänge
