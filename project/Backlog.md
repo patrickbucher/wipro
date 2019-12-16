@@ -1204,6 +1204,7 @@ Sämtliche Tests konnten erfolgreich durchgeführt werden.
 | 3 | Fehlende Löschung von Tokens aus Keystore       | behoben              |
 | 4 | Login setzt `token_type` nicht                  | behoben              |
 | 5 | Logout setzt `default_environment` nicht zurück | behoben              |
+| 6 | `client_id` fehlt in sicher verwahrten Tokens   | behoben              |
 
 ## 1: Interaktive Eingabe auf Windows funktioniert nicht
 
@@ -1244,3 +1245,12 @@ bereits Teil des Keys ist, der auf den jeweiligen Eintrag verweist.
 Beim Logout wird die `default_environment` nicht zurückgesetzt. Dies ist ein
 potenzielles Usability-Problem, da beim nächsten Aufruf eine Standardumgebung
 angenommen wird, für die es keine Tokens mehr gibt.
+
+## 6: Fehlende `client_id` bei sicherem Keystore
+
+Die `client_id` wurde bei Laden aus dem nativen Keystore nicht korrekt gesetzt.
+Dies führte dazu, dass die Token-Aktualisierung für sicher verwahrte Schlüssel
+nicht funktionierte, sofern die `client_id` nicht aus dem Access Token selber
+gelesen werden konnte. Der Fehler wurde korrigiert, indem im Falle einer leeren
+`client_id` der Default-Wert `peax.portal` gesetzt wird. Die
+Token-Aktualisierung funktionierte anschliessend problemlos.

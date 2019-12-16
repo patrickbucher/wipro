@@ -143,4 +143,5 @@ author: Patrick Bucher
 | So, 15.12.2019 |       1.0 | Dokumentation | Aufräumarbeiten und kosmetische Korrekturen                        |
 | Mo, 16.12.2019 |       1.0 | Dokumentation | Kapitel 6 (Evaluation und Validation) vorerst abgeschlossen        |
 | Mo, 16.12.2019 |       1.0 | Dokumentation | Kapitel 7 (Ausblick): Reflexion                                    |
-|                | **163.5** | **Total**     |                                                                    |
+| Mo, 16.12.2019 |       1.5 | Umsetzung     | Bug 6: Vorhandensein einer `client_id` sicherstellen               |
+|                | **165.0** | **Total**     |                                                                    |
