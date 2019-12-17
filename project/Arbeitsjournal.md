@@ -145,4 +145,5 @@ author: Patrick Bucher
 | Mo, 16.12.2019 |       1.0 | Dokumentation | Kapitel 7 (Ausblick): Reflexion                                    |
 | Mo, 16.12.2019 |       1.5 | Umsetzung     | Bug 6: Vorhandensein einer `client_id` sicherstellen               |
 | Di, 17.12.2019 |       1.5 | Dokumentation | Ausblick, Korrekturen, Glossar                                     |
-|                | **166.5** | **Total**     |                                                                    |
+| Di, 17.12.2019 |       2.0 | Dokumentation | Schlusskorrektur des Backlog-Dokuments                             |
+|                | **168.5** | **Total**     |                                                                    |

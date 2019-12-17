@@ -4,35 +4,35 @@ subtitle: 'Wirtschaftsprojekt «px: PEAX Command Line Client»'
 author: Patrick Bucher
 ---
 
-|  # | User Story                                   | Status                | Story Points |
-|---:|----------------------------------------------|-----------------------|--------------|
-|  1 | Konfiguration sämtlicher Umgebungen          | umgesetzt in Sprint 1 | 1            |
-|  2 | Erweiterung der CI-Pipeline                  | umgesetzt in Sprint 1 | 5            |
-|  3 | Login mit Zwei-Faktor-Authentifizierung      | umgesetzt in Sprint 1 | 3            |
-|  4 | Sichere Verwahrung der Tokens                | umgesetzt in Sprint 1 | 5            |
-|  5 | Handhabung mehrerer Umgebungen               | umgesetzt in Sprint 2 | 3            |
-|  6 | Generische `GET`-Schnittstelle               | umgesetzt in Sprint 2 | 3            |
-|  7 | Automatische Aktualisierung von Tokens       | umgesetzt in Sprint 2 | 5            |
-|  8 | Login für Agent API                          | umgesetzt in Sprint 2 | 3            |
-|  9 | Verbesserung der Hilfe-Funktion              | umgesetzt in Sprint 2 | 3            |
-| 10 | Vollzugsmeldungen mit `-v`/`-verbose`-Flag   | umgesetzt in Sprint 2 | 1            |
-| 11 | Verbesserung der Quellcodedokumentation      | umgesetzt in Sprint 3 | 1            |
-| 12 | Aktuelle Version ausgeben                    | umgesetzt in Sprint 3 | 1            |
-| 13 | Einliefern von Dokumenten per Agent API      | umgesetzt in Sprint 3 | 3            |
-| 14 | Generische `POST`-Schnittstelle              | umgesetzt in Sprint 3 | 3            |
-| 15 | Generische `PUT`-Schnittstelle               | umgesetzt in Sprint 3 | 3            |
-| 16 | Generische `PATCH`-Schnittstelle             | umgesetzt in Sprint 3 | 3            |
-| 17 | Generische `DELETE`-Schnittstelle            | umgesetzt in Sprint 3 | 1            |
-| 18 | Rekursives Hochladen von Dokument-Ordnern    | umgesetzt in Sprint 3 | 5            |
-| 19 | Fehlerkorrekturen: Bugs 3, 4 und 5           | umgesetzt in Sprint 4 | 3            |
-| 20 | Statusangabe bei Upload von Dokument-Ordnern | umgesetzt in Sprint 4 | 1            |
-| 21 | Nebenläufiger Upload von Dokument-Ordnern    | umgesetzt in Sprint 4 | 1            |
-| 22 | Automatisches Tagging hochgeladener Ordner   | umgesetzt in Sprint 4 | 5            |
-|    | Lokale Umgebung unterstützen                 | offen                 |
-|    | PEAX ID als Variable in der Ressourcenangabe | offen                 |
-|    | Verbesserung der Testabdeckung               | offen                 |
-|    | Automatische Formatierung von JSON-Ausgaben  | offen                 |
-|    | Überarbeitung der README                     | offen                 |
+|  # | User Story                                    | Status                | Story Points |
+|---:|-----------------------------------------------|-----------------------|--------------|
+|  1 | Konfiguration sämtlicher Umgebungen           | umgesetzt in Sprint 1 | 1            |
+|  2 | Erweiterung der CI-Pipeline                   | umgesetzt in Sprint 1 | 5            |
+|  3 | Login mit Zwei-Faktor-Authentifizierung       | umgesetzt in Sprint 1 | 3            |
+|  4 | Sichere Verwahrung der Tokens                 | umgesetzt in Sprint 1 | 5            |
+|  5 | Handhabung mehrerer Umgebungen                | umgesetzt in Sprint 2 | 3            |
+|  6 | Generische `GET`-Schnittstelle                | umgesetzt in Sprint 2 | 3            |
+|  7 | Automatische Aktualisierung von Tokens        | umgesetzt in Sprint 2 | 5            |
+|  8 | Login für Agent API                           | umgesetzt in Sprint 2 | 3            |
+|  9 | Verbesserung der Hilfefunktion                | umgesetzt in Sprint 2 | 3            |
+| 10 | Vollzugsmeldungen mit `-v`/`-verbose`-Flag    | umgesetzt in Sprint 2 | 1            |
+| 11 | Verbesserung der Quellcodedokumentation       | umgesetzt in Sprint 3 | 1            |
+| 12 | Aktuelle Version ausgeben                     | umgesetzt in Sprint 3 | 1            |
+| 13 | Einliefern von Dokumenten per Agent API       | umgesetzt in Sprint 3 | 3            |
+| 14 | Generische `POST`-Schnittstelle               | umgesetzt in Sprint 3 | 3            |
+| 15 | Generische `PUT`-Schnittstelle                | umgesetzt in Sprint 3 | 3            |
+| 16 | Generische `PATCH`-Schnittstelle              | umgesetzt in Sprint 3 | 3            |
+| 17 | Generische `DELETE`-Schnittstelle             | umgesetzt in Sprint 3 | 1            |
+| 18 | Rekursives Hochladen von Dokument-Ordnern     | umgesetzt in Sprint 3 | 5            |
+| 19 | Fehlerkorrekturen der Bugs 3, 4 und 5         | umgesetzt in Sprint 4 | 3            |
+| 20 | Statusangabe beim Upload von Dokument-Ordnern | umgesetzt in Sprint 4 | 1            |
+| 21 | Nebenläufiger Upload von Dokument-Ordnern     | umgesetzt in Sprint 4 | 1            |
+| 22 | Automatisches Tagging hochgeladener Ordner    | umgesetzt in Sprint 4 | 5            |
+|    | Lokale Umgebung unterstützen                  | offen                 |
+|    | PEAX ID als Variable in der Ressourcenangabe  | offen                 |
+|    | Verbesserung der Testabdeckung                | offen                 |
+|    | Automatische Formatierung von JSON-Ausgaben   | offen                 |
+|    | Überarbeitung der `README`                    | offen                 |
 
 # Sprints
 
@@ -76,16 +76,17 @@ Akzeptanzkriterien:
 
 ### Testprotokoll
 
-- Der Unit Test `env_test.go` ist gemäss _Table Driven Test Design_ (Donovan &
-  Kernighan, 2015) entwickelt worden.
+- Der Unit Test `env_test.go` ist gemäss _table-driven testing_ (Donovan &
+  Kernighan, 2015, Kapitel 11.2) entwickelt worden.
 - Es wurde manuell mit Logins auf verschiedenen Umgebungen getestet.
-- Die Umgebungen `perf` und `prototype waren heruntergefahren und konnten so
+- Die Umgebungen `perf` und `prototype` waren heruntergefahren und konnten so
   nicht getestet werden.
 - Auf der Umgebung `prod` stehen derzeit nur Benutzer mit aktivierter
   Zwei-Faktor-Authentifizierung zur Verfügung. Da dies noch nicht umgesetzt
+  ist, konnten hier keine Tests durchgeführt werden.
 - Die Antworten wiesen wie erwartet die folgenden HTTP-Stati auf:
     1. Login vor der Registrierung: `401` (nicht möglich)
-    2. Login nach derRegistrierung bzw. vor der Verifizierung: `403` (nicht möglich)
+    2. Login nach der Registrierung bzw. vor der Verifizierung: `403` (nicht möglich)
     3. Login nach der Verifizierung: `200` (erfolgreich)
 
 ## Story 2: Erweiterung der CI-Pipeline
@@ -104,7 +105,7 @@ Akzeptanzkriterien:
 ### Notizen
 
 - Es wurde zunächst viel Zeit aufgrund mangelhafter Bash-Kenntnisse verloren,
-  v.a. beim Iterieren über Liste von Skriptdateinamen.
+  v.a. beim Iterieren über die Liste von Skriptdateinamen.
 - Das erste Akzeptanzkriterium wurde nur teilweise eingehalten. Zwar wird vor
   den Testskripts immer ein Build ausgeführt, um ein entsprechendes
   ausführbares Artefakt zur Verfügung zu haben, dies geschieht jedoch nicht
@@ -137,14 +138,14 @@ Akzeptanzkriterien:
 
 ## Story 3: Login mit Zwei-Faktor-Authentifizierung
 
-Als Benutzer möchte ich mich per Zwei-Faktor-Authentifizierung einloggen
+Als Benutzer möchte ich mich per Zwei-Faktor-Authentifizierung (2FA) einloggen
 können, damit ich `px` auch mit entsprechend konfigurierten Zugängen verwenden
 kann.
 
 Akzeptanzkriterien:
 
 1. Die Abfrage des zweiten Faktors soll interaktiv passieren.
-2. Es sollen die Authentifizierungsarten SMS und OTP (One-Time Password)
+2. Es sollen die Authentifizierungsarten SMS und TOTP (Time-based One-time Password)
    unterstützt werden.
 3. Das Login soll bei entsprechend konfigurierten Benutzerkonti auch weiterhin
    ohne Zwei-Faktor-Authentifizierung funktionieren.
@@ -162,7 +163,7 @@ Akzeptanzkriterien:
 - Das Refactoring wurde schliesslich ausgedehnt; es enstanden die neuen
   Untermodule `px/tokenstore` und `px/utils`.
 - Es wurden neue Datenstrukturen erstellt, etwa für die Credentials (mit und
-  ohne 2FA), und für den Login-Payload mit 2FA
+  ohne 2FA), und für den Login-Payload mit 2FA.
 - Der Code wurde neu organisieren, was  nötig und sinnvoll war.
 
 ### Testprotokoll
@@ -200,8 +201,9 @@ Akzeptanzkriterien:
    Passwortabfragen durch den Keystore).
 4. Der Benutzer soll das Standardverhalten für die jeweiligen Umgebungen
    (produktiv: nur sichere Verwahrung; nicht-produktiv: Verwahrung im Klartext)
-   mit den Kommandozeilenparametern `-safe` bzw. `-unsafe` übersteuern können.
-5. Die sichere Verwahrung der Tokens muss Windows, macOS und Linux
+   mit den Kommandozeilenparametern `-s`/`-safe` bzw. `-u`/`-unsafe`
+   übersteuern können.
+5. Die sichere Verwahrung der Tokens muss unter Windows, macOS und Linux
    funktionieren.
 6. Auf Systemen ohne GUI soll zumindest die unsichere Variante der
    Token-Verwahrung funktionieren.
@@ -214,7 +216,7 @@ Akzeptanzkriterien:
 - Die Library `zalando/go-keyring` kann Schlüssel auf Linux, macOS und Windows
   sicher im nativen Keystore verwahren.
 - Die Konfiguration des nativen Keystores ist für jede Plattform anders und ist
-  im README des Projekts dokumentiert.
+  für Linux im `README` des Projekts dokumentiert.
 - Bei einem Anwendungsfall wie dem Upload musste die Logik erweitert werden,
   sodass der sicher abgelegte Token für die Autorisierung verwendet werden
   kann.
@@ -233,7 +235,7 @@ Akzeptanzkriterien:
   getestet wird.
 - Darin wird nach dem Login mit `jq` geprüft, ob das Feld `access_token` für
   die Umgebung `test` in `~/.px-tokens` vorhanden ist.
-- Nach dem Logout wird das Fehlen desselben geprüft
+- Nach dem Logout wird das Fehlen desselben geprüft.
 - Auf Windows sind die Tokens in der Anwendung _Credential Manager_ unter
   _Windows Credentials_ zu finden.
 - Auf macOS sind die Tokens in der Anwendung _Keychain Access_ unter _login_ zu
@@ -314,7 +316,7 @@ Akzeptanzkriterien:
 
 ## Story 7: Automatische Aktualisierung von Tokens
 
-Als Benutzer möchte ich dass ein Request, der aufgrund eines abgelaufenen
+Als Benutzer möchte ich, dass ein Request, der aufgrund eines abgelaufenen
 Access Tokens scheitert, mit einem neuen Access Token erneut versucht wird,
 damit ich mich nicht ständig neu einloggen muss.
 
@@ -332,8 +334,8 @@ Akzeptanzkriterien:
   Tokens muss separat zugegriffen werden. Dieser Zugriff soll vereinheitlicht
   werden, was ein Refactoring erfordert.
 - Das Usage Log, das die Anzahl Aufrufe und das Datum des letzten Aufrufs von
-  `px` trackte, wurde entfernt.
-- Sicher verwahrte Schlüssel werden neu in `./px-tokens` als Dummy-Eintrag
+  `px` trackte, was noch vom Prototypen stammte, wurde entfernt.
+- Sicher verwahrte Schlüssel werden neu in `~/.px-tokens` als Dummy-Eintrag
   abgelegt, sodass der Token Store ohne Zugriffe auf den Keystore über die
   Information verfügt, ob zu einer Umgebung überhaupt ein sicher verwahrter
   Schlüssel vorhanden ist.
@@ -359,7 +361,7 @@ Akzeptanzkriterien:
   (z.B. `"SMS Code"` oder `"OTP Code"`, fragt die entsprechende Information vom
   Benutzer ab und gibt sie zurück -- oder einen Fehler, falls die Eingabe
   abgebrochen wurde. Dank dieser Entkopplung konnte der Request-Code
-  grösstenteils aus dem Hauptprogramm entfernt werden.
+  grösstenteils aus dem Hauptprogramm herausgelöst werden.
 - Nachdem aller Code, der HTTP-Requests verwendet, von `cmd/px.go` in das
   `requests`-Modul verschoben werden konnte, hatte das Hauptprogramm keine
   Referenz mehr auf das HTTP-Package.
@@ -367,12 +369,12 @@ Akzeptanzkriterien:
   `Authorization`-Header) erneut abzuschicken, funktioniert leider nicht bei
   Requests mit einem Body. Grund dafür ist, dass der Request Body bei diesem
   Vorgang konsumiert wird. Der Request muss also für den erneuten Versuch neu
-  aufgebaut werden. Im neuen Lösungsansatz erwartet zentrale Funktion
+  aufgebaut werden. Im neuen Lösungsansatz erwartet die zentrale Funktion
   `doWithTokenRefresh` nicht mehr einen blossen Request zur Ausführung, sondern
   eine Funktion, die einen entsprechenden Request generiert. So können die
   Implementierungsdetails vom Retry-Mechanismus entkoppelt werden.
 - Beim Anfordern eines neuen Token Pairs anhand des Refresh Tokens wird nicht
-  ein neuer Access Token ausgestellt, es wird auch der Refresh Token
+  nur ein neuer Access Token ausgestellt, es wird auch der Refresh Token
   aktualisiert. Somit kann ein Benutzer nach einem Login so lange mit `px`
   arbeiten, wie er will, solange zwischen zwei Requests nicht mehr als 30
   Minuten vergehen. Wichtig ist, dass auch der aktualisierte Refresh Token im
@@ -389,7 +391,7 @@ Akzeptanzkriterien:
   Access Tokens) und lädt das Dokument erneut hoch. Da dieser Testfall
   naturgemäss sehr lange dauert, wird er nicht in die automatische Pipeline
   integriert, sondern kann bei Bedarf manuell ausgeführt werden.
-- Tatsächlich wurde mithilfe dieses Testskripts ein Fehler erkannt: Bei
+- Tatsächlich wurde mithilfe dieses Testskripts ein Fehler erkannt: Beim
   erneuten Versuch eines Requests wurde zwar ein neuer Access Token vom IDP
   geholt, der neue Request wurde jedoch noch mit dem alten Access Token
   erstellt, was naturgemäss fehlschlägt. Nach der entsprechenden Korrektur lief
@@ -404,76 +406,143 @@ Akzeptanzkriterien:
 
 ## Story 8: Login für Agent API
 
-Als Benutzer möchte ich mich mit als Agent einloggen können, um anderen Benutzern Dokumente einliefern zu können.
+Als Benutzer möchte ich mich als Agent einloggen können, um anderen Benutzern
+Dokumente einliefern zu können.
 
 Akzeptanzkriterien:
 
-1. Das Login für Agents soll mit einem anderen Subcommand als `login` funktionieren (Vorschlag: `agent-login`).
-2. Die Tokens sollen nach der gleichen Logik sicher bzw. unsicher verwahrt werden wie diejenige für die User API.
-3. Die Agent Tokens sollen unabhängig von den User Tokens gespeichert werden, d.h. auf einer Umgebung kann gleichzeitig ein User Token und ein Agent Token abgespeichert werden.
-4. Der `env`-Befehl soll keine Agent Tokens berücksichtigen: Ein `agent-login` ändert die Standardumgebung nicht.
+1. Das Login für Agents soll mit einem anderen Subcommand als `login`
+   funktionieren (Vorschlag: `agent-login`).
+2. Die Tokens sollen nach der gleichen Logik sicher bzw. unsicher verwahrt
+   werden wie diejenige für die User API.
+3. Die Agent Tokens sollen unabhängig von den User Tokens gespeichert werden,
+   d.h. auf einer Umgebung kann gleichzeitig ein User Token und ein Agent Token
+   abgespeichert werden.
+4. Der `env`-Befehl soll keine Agent Tokens berücksichtigen: Ein `agent-login`
+   ändert die Standardumgebung nicht.
 
 ### Notizen
 
-- Da `login` und `agent-login` die gleichen Flags verwenden, wurde das Parsen der Befehlszeile refactored. Beide Funktionen (`login` und `agentLogin`) können nun die gleiche Logik für das Ermitteln der Kommandozeilenoptionen verwenden.
-- Beim Login für die Agent API werden eine Client ID und ein Client Secret verwendet, bei User Login eine Client ID, ein Benutzername und ein Passwort. Beim Login-Request unterscheiden sich nur die beiden Payloads, welche mit den Strukturen `Credentials` und `AgentCredentials` umgesetzt werden. Die gemeinsame Methode `ToFormDataURLEncoded` ist in einem Interface definiert, womit der Payload für die beiden Logins abstrahiert werden kann.
-- Da neu pro Umgebung mehrere Tokens (Agent und User) abgelegt werden können, muss die Datenstruktur hinter dem Token Store angepasst werden. Bestand der Key vormals nur aus dem Namen der Umgebung, ist es neu eine Kombination aus dem Typ des Tokens (`"user"`, `"agent"`) und der Umgebung. Diese Anpassung erfordert ein Refactoring. Gerade die der `logout`-Befehl manipulierte die zugrundeliegende Map noch selber. Neu wird dies über eine Methode `RemoveToken` gemacht. Ein ergänzender `agent-logout`-Befehl wird zudem benötigt.
-- Die Keys im Secret Token Store müssen ebenfalls um den `TokenType` erweitert werden, um zwischen `user`- und `agent`-Tokens unterscheiden zu können.
+- Da `login` und `agent-login` die gleichen Flags verwenden, wurde das Parsen
+  der Befehlszeile refactored. Beide Funktionen (`login` und `agentLogin`)
+  können nun die gleiche Logik für das Ermitteln der Kommandozeilenoptionen
+  verwenden.
+- Beim Login für die Agent API werden eine Client ID und ein Client Secret
+  verwendet, bei User Login eine Client ID, ein Benutzername und ein Passwort.
+  Beim Login-Request unterscheiden sich nur die beiden Payloads, welche mit den
+  Strukturen `Credentials` und `AgentCredentials` umgesetzt werden. Die
+  gemeinsame Methode `ToFormDataURLEncoded` ist in einem Interface definiert,
+  womit der Payload für die beiden Logins abstrahiert werden kann.
+- Da neu pro Umgebung mehrere Tokens (Agent und User) abgelegt werden können,
+  muss die Datenstruktur hinter dem Token Store angepasst werden. Bestand der
+  Key vormals nur aus dem Namen der Umgebung, ist es neu eine Kombination aus
+  dem Typ des Tokens (`"user"`, `"agent"`) und der Umgebung. Diese Anpassung
+  erfordert ein Refactoring. Gerade der `logout`-Befehl manipulierte die
+  zugrundeliegende Map noch selber. Neu wird dies über eine Methode
+  `RemoveToken` gemacht. Ein ergänzender `agent-logout`-Befehl wird zudem
+  benötigt.
+- Die Keys im Secret Token Store müssen ebenfalls um den `TokenType` erweitert
+  werden, um zwischen `user`- und `agent`-Tokens unterscheiden zu können.
 
 ### Testprotokoll
 
-- Zunächst mussten die entsprechenden Credentials (Client ID und Client Secret) auf GitLab hinterlegt werden, um das Login damit testen zu können.
-- Aufgrund des Refactorings sind zunächst Unit Tests und Skrittests fehlgeschlagen. Das Zeichen `:` als Key-Separator zwischen Token Type (`agent`, `user`) und Umgebung funktioniert nicht mit dem Utility `jq` zusammen, das zur Extraktion der JSON-Datenstrukturen in der Test-Pipeline dient. Darum wurde es durch einen Underscore `_` ersetzt.
-- Der Skrittests `ci-px-agent-login-logout-test.sh` funktioniert analog zum Testfall `ci-px-login-logout-test.sh`, nur dass er die Befehle `agent-login` und `agent-logout` statt `login` bzw. `logout` verwendet.
+- Zunächst mussten die entsprechenden Credentials (Client ID und Client Secret)
+  auf GitLab hinterlegt werden, um das Login damit testen zu können.
+- Aufgrund des Refactorings sind zunächst Unit Tests und Skripttests
+  fehlgeschlagen. Das Zeichen «`:`» als Key-Separator zwischen Token Type
+  (`agent`, `user`) und Umgebung funktioniert nicht mit dem Utility `jq`
+  zusammen, das zur Extraktion der JSON-Datenstrukturen in der Test-Pipeline
+  dient. Darum wurde es durch einen Underscore ersetzt.
+- Der Skripttests `ci-px-agent-login-logout-test.sh` funktioniert analog zum
+  Testfall `ci-px-login-logout-test.sh`, nur dass er die Befehle `agent-login`
+  und `agent-logout` statt `login` bzw. `logout` verwendet.
 
-## Story 9: Verbesserung der Hilfe-Funktion
+## Story 9: Verbesserung der Hilfefunktion
 
-Als Benutzer möchte ich eine ausführliche Hilfefunktion für `px` als Ganzes wie auch für die einzelnen Subcommands haben.
+Als Benutzer möchte ich eine ausführliche Hilfefunktion für `px` als Ganzes wie
+auch für die einzelnen Subcommands haben.
 
 Akzeptanzkriterien:
 
 1. Es muss eine generische Hilfefunktion `px help` geben.
-2. Es muss für jeden Subcommand eine Hilfefunktion `px help [subcommand]` oder `px [subcommand] -h` geben.
+2. Es muss für jeden Subcommand eine Hilfefunktion `px help [subcommand]` oder
+   `px [subcommand] -h` geben.
 
 Für zukünftige User Stories ist die Hilfefunktion entsprechend nachzuführen.
 
 ### Notizen
 
-- Das von der Go Standard Library zur Verfügung gestellte `flag`-Modul stellt mit dem Flag `-h` eine Hilfefunktion zur Verfügung, die mit der Syntax `px [subcommand] -h aufgerufen werden kann. Diese Funktion ist sinnvoll zum Verständnis der Flags, jedoch ungenügend.
-- Der bereits existierende Befehl `px help` (ohne Parameter) zeigt einen Überblick über alle Subcommands an. Diese Funktion ist sinnvoll und soll beibehalten werden. Zusätzlich soll es für jeden Subcommand einen eine ausführliche Hilfestellung geben, die mittels `px help [subcommand]` aufgerufen wird. `px [subcommand] -h` ist weiterhin für die Erläuterung der Flags zuständig.
-- Die derzeitige `main()`-Funktion prüft den eingegebenen Subcommand mittels `switch`/`case`-Kontrollstruktur. Da die meisten Subcommand-Funktionen der gleichen Signatur folgen ‒ den `TokenStore` erwarten und nichts als einen `error` zurückgeben, können die Beziehungen zwischen eingegebenem Befehl (`"agent-login"`) und der aufzurufenden Funktion (`"agentLogin"`) mit einer Map modelliert werden. Als Key wird der Befehlsname verwendet, als Value eine Struktur bestehend aus der auszuführenden Funktion ‒ und einer Funktion, die einen Hilfestring zurückgibt.
-- Die wenigen Befehle, deren Funktion eine andere Signatur haben, werden weiterhin per `switch`/`case` abgehandelt. Sie sind trotzdem in der Map abgelegt, wobei die Funktion den Wert `nil` hat. Einen Hilfestring-Funktion enthalten die Einträge in der Map dennoch für jeden Befehl.
-- Die Hilfetexte werden als öffentliche Funktionen im Untermodul `help` abgelegt. Für statische Hilfetexte werden [mehrzeilige Strings](https://golang.org/ref/spec#String_literals) verwendet. Die Hilfe zur Login-Funktion ist etwa per `help.Login()` abrufbar. Andere Texte werden dynamisch generiert, z.B. um alle verfügbaren Umgebugen aufzulisten.
-- Jeder Hilfetext enthält neben einer Erklärung des Befehls auch beispielhafte Aufrufe und Verweise auf die Hilfsfunktion zu den jeweiligen Flags, sowie Hinweise auf andere Befehle.
+- Das von der Go Standard Library zur Verfügung gestellte `flag`-Modul stellt
+  mit dem Flag `-h` eine Hilfefunktion zur Verfügung, die mit `px [subcommand]
+  -h` aufgerufen werden kann. Diese Funktion ist sinnvoll zum Verständnis der
+  Flags, jedoch ungenügend.
+- Der bereits existierende Befehl `px help` (ohne Parameter) zeigt einen
+  Überblick über alle Subcommands an. Diese Funktion ist sinnvoll und soll
+  beibehalten werden. Zusätzlich soll es für jeden Subcommand eine ausführliche
+  Hilfestellung geben, die mittels `px help [subcommand]` aufgerufen wird. `px
+  [subcommand] -h` ist weiterhin für die Erläuterung der Flags zuständig.
+- Die derzeitige `main()`-Funktion prüft den eingegebenen Subcommand mittels
+  `switch`/`case`-Kontrollstruktur. Da die meisten Subcommand-Funktionen der
+  gleichen Signatur folgen ‒ den `TokenStore` erwarten und nichts als einen
+  `error` zurückgeben, können die Beziehungen zwischen eingegebenem Befehl
+  (`"agent-login"`) und der aufzurufenden Funktion (`"agentLogin"`) mit einer
+  Map modelliert werden. Als Key wird der Befehlsname verwendet, als Value eine
+  Struktur bestehend aus der auszuführenden Funktion ‒ und einer Funktion, die
+  einen Hilfestring zurückgibt.
+- Die wenigen Befehle, deren Funktion eine andere Signatur haben, werden
+  weiterhin per `switch`/`case` abgehandelt. Sie sind trotzdem in der Map
+  abgelegt, wobei die Funktion den Wert `nil` hat. Eine Hilfestring-Funktion
+  enthalten die Einträge in der Map dennoch für jeden Befehl.
+- Die Hilfetexte werden als öffentliche Funktionen im Untermodul `help`
+  abgelegt. Für statische Hilfetexte werden [mehrzeilige
+  Strings](https://golang.org/ref/spec#String_literals) verwendet. Die Hilfe
+  zur Login-Funktion ist etwa per `help.Login()` abrufbar. Andere Texte werden
+  dynamisch generiert, z.B. um alle verfügbaren Umgebugen aufzulisten.
+- Jeder Hilfetext enthält neben einer Erklärung des Befehls auch beispielhafte
+  Aufrufe und Verweise auf die Hilfsfunktion zu den jeweiligen Flags, sowie
+  Hinweise auf andere Befehle.
 
 ### Testprotokoll
 
-- Das Testskript `ci-px-help.sh` ruft die Hilfefunktion auf und prüft, ob dies fehlerfrei abläuft. Das Skript wurde erweitert, sodass es über alle verfügbaren Befehle iteriert, und für jeden dieser Befehle die Hilfefunktion aufruft. Es wird geprüft, ob dies erstens fehlerfrei passiert, und ob der dabei zurückgelieferte Text zweitens kein leerer String ist.
+- Das Testskript `ci-px-help.sh` ruft die Hilfefunktion auf und prüft, ob dies
+  fehlerfrei abläuft. Das Skript wurde erweitert, sodass es über alle
+  verfügbaren Befehle iteriert, und für jeden dieser Befehle die Hilfefunktion
+  aufruft. Es wird geprüft, ob dies erstens fehlerfrei passiert, und ob der
+  dabei zurückgelieferte Text zweitens kein leerer String ist.
 - Nach zahlreichen manuellen Tests wurden die Hilfetexte verbessert.
 
 ## Story 10: Vollzugsmeldungen mit `-v`/`-verbose`-Flag
 
-Als Benutzer möchte ich Vollzugsmeldungen aktivieren können, damit ich sehen kann, ob ein Vorgang erfolgreich war.
+Als Benutzer möchte ich Vollzugsmeldungen aktivieren können, damit ich sehen
+kann, ob ein Vorgang erfolgreich war.
 
 Akzeptanzkriterien:
 
-1. Es sollen für alle bestehenden Befehle entsprechende Meldungen erstellt werden, wo ein Erfolg nicht schon anderweitig dem Benutzer gemeldet wird.
-2. Die Vollzugsmeldungen sollen mit dem Flag `-v` bzw. `-verbose` aktiviert werden.
+1. Es sollen für alle bestehenden Befehle entsprechende Meldungen erstellt
+   werden, wo ein Erfolg nicht schon anderweitig dem Benutzer gemeldet wird.
+2. Die Vollzugsmeldungen sollen mit dem Flag `-v`/`-verbose` aktiviert werden.
 
 ### Notizen
 
-- Von den bestehenden Befehlen produzieren folgende bereits eine Ausgabe im Erfolgsfall:
+- Von den bestehenden Befehlen produzieren folgende bereits eine Ausgabe im
+  Erfolgsfall:
     - `px help`: Es wird die gewünschte Hilfefunktion angezeigt.
-    - `px upload`: Es wird das serverseitig generierte Metadaten-Objekt in seiner JSON-Repräsentation ausgegeben.
-    - `px get`: Es wird die geladene Ressource in ihrer JSON-Representation angezeigt.
-    - `px env` (ohne Angabe der Umgebung): Es wird die Standardumgebung angezeigt
+    - `px upload`: Es wird das serverseitig generierte Metadaten-Objekt in
+      seiner JSON-Repräsentation ausgegeben.
+    - `px get`: Es wird die geladene Ressource in ihrer JSON-Representation
+      angezeigt.
+    - `px env` (ohne Angabe der Umgebung): Es wird die Standardumgebung
+      angezeigt.
 - Bei den folgenden Befehlen wird im Erfolgsfall keine Ausgabe erzeugt:
     - `px login`
     - `px logout`
     - `px agent-login`
     - `px agent-logout`
     - `px env` (mit Angabe einer Umgebung)
-- Die letztgenannten Befehle wurden jeweils mit den Flags `-v` und `-verbose` ausgestattet, die eine kurze Vollzugsmeldung mit relevanten Kontextinformatioen (Benutzername und Umgebung beim Login, Umgebung bei Setzen der Umgebung mit `px env`).
+- Die letztgenannten Befehle wurden jeweils mit den Flags `-v` und `-verbose`
+  ausgestattet, die eine kurze Vollzugsmeldung mit relevanten
+  Kontextinformationen (Benutzername und Umgebung beim Login, Umgebung bei
+  Setzen der Umgebung mit `px env`) ausgibt.
 
 ### Testprotokoll
 
@@ -491,10 +560,12 @@ erläutern sind.
 
 Akzeptanzkriterien:
 
-1. Die Kommentare sollen den den [Best
-   Practices](https://blog.golang.org/godoc-documenting-go-code) entsprechen.
+1. Die Kommentare sollen den [Best
+   Practices](https://blog.golang.org/godoc-documenting-go-code) von Go
+   entsprechen.
 2. Das Werkzeug `go lint` soll über die ganze Codebasis von `px` keine
-   Beanstandungen im Bezug auf undokumentierte, exporte Elemente mehr machen.
+   Beanstandungen im Bezug auf undokumentierte, exportierte Elemente mehr
+   machen.
 3. Dieser Zustand ist auch in Zukunft am Ende eines jeden Sprints herzustellen.
    Die Aufwände für das Erstellen der entsprechenden Kommentare fliesst jeweils
    in die User Story ein, die neue exportierte (d.h. zu kommentierende)
@@ -524,27 +595,48 @@ Akzeptanzkriterien:
 
 ## Story 12: Aktuelle Version ausgeben
 
-Als Anwender möchte ich einen Befehl zur Verfügung haben, der die Version von `px` ausgibt, damit ich sehen kann, ob ich die aktuelle Version der Software verwende, und diese bei Rückmeldungen verwenden kann.
+Als Anwender möchte ich einen Befehl zur Verfügung haben, der die Version von
+`px` ausgibt, damit ich sehen kann, ob ich die aktuelle Version der Software
+verwende, und diese bei Rückmeldungen verwenden kann.
 
 Akzeptanzkriterien:
 
-1. Die Versionierung soll gemäss [_Semantic Versioning_](https://semver.org) erfolgen.
-2. Die Version soll beim Kompilieren von Release-Artefakten automatisch aus dem SCM (`git`) verwendet werden.
-3. Die Versionsangabe soll über den Befehl `px version` in der Form `v0.3.1` ausgegeben werden.
+1. Die Versionierung soll gemäss [_Semantic Versioning_](https://semver.org)
+   erfolgen.
+2. Die Version soll beim Kompilieren von Release-Artefakten automatisch aus der
+   Versionskontrolle (`git`) bezogen werden.
+3. Die Versionsangabe soll über den Befehl `px version` in der Form `v0.3.1`
+   ausgegeben werden.
 
 ### Notizen
 
-- Die jeweils aktulle Versionsangabe wird aus dem SCM mittels `git describe --tags` ermittelt.
-- Die unititialisierte, exportierte String-Variable `Version` in `cmd/px.go` wird mit dem Parameter `-ldflags="-X main.Version=$(git describe --tags)` mit der jeweils aktuellen Versionsangabe initialisiert.
-- Die bestehenden Targets `build/mac/px`, `build/linux/px` und `build/windows/px.exe` werden im `Makefile` mit dem entsprechenden Parameter (als Variable `LDFLAGS`) ausgestattet.
-- Das Makefile wurde um ein zusätzliches Target `px` ergänzt, das eine ausführbare Version im aktuellen Arbeitszeichnis (für die jeweilige Plattform) mitsamt Versionsangaben erstellt. Andernfalls müsste zum Testen von `px version` jeweils `go run` mitsamt `-ldflags` aufgerufen werden.
+- Die jeweils aktulle Versionsangabe wird aus der Versionskontrolle mittels
+  `git describe --tags` ermittelt.
+- Die unititialisierte, exportierte String-Variable `Version` in `cmd/px.go`
+  wird mit dem Parameter `-ldflags="-X main.Version=$(git describe --tags)` mit
+  der jeweils aktuellen Versionsangabe initialisiert.
+- Die bestehenden Targets `build/mac/px`, `build/linux/px` und
+  `build/windows/px.exe` werden im `Makefile` mit dem entsprechenden Parameter
+  (als Variable `LDFLAGS`) ausgestattet.
+- Das `Makefile` wurde um ein zusätzliches Target `px` ergänzt, das eine
+  ausführbare Version im aktuellen Arbeitszeichnis (für die jeweilige
+  Plattform) mitsamt Versionsangaben erstellt. Andernfalls müsste zum Testen
+  von `px version` jeweils `go run` mitsamt `-ldflags` aufgerufen werden.
 
 ### Testprotokoll
 
-- In einem Branch wird die Tag-Nummer jeweils um die Anzahl der Commits und die ersten sieben Stellen des letzten Commit-Hashes ergänzt. Der Tag `v0.2.4-9-gdc83825` sagt etwa aus, dass es sich um Version 0.2.4 mit zusätzlichen neun Commits handelt, und nach dem Präfix `g` die ersten sieben Stellen des letzten Commit-Hashes (`dc83825`, hexadezimal) stehen. Das ist nützlich für ad-hoc erstellte Zwischenreleases.
-- Im master-Branch wird nur die Tag-Nummer verwendet.
-- Das Testskript `ci-px-version.sh` überprüft, ob `px version` einen String zurückgibt, welcher dem regulären Ausdruck `^v[0-9]+\.[0-9]+\.[0-9]+(-[0-9]+-g[0-9a-fA-F]{7})?$` entspricht.
-- Der Build-Step der CI-Pipeline muss sicherstellen, dass die Versionsangaben ebenfalls mitkompiliert werden.
+- In einem Branch wird die Tag-Nummer jeweils um die Anzahl der Commits und die
+  ersten sieben Stellen des letzten Commit-Hashes ergänzt. Der Tag
+  `v0.2.4-9-gdc83825` sagt etwa aus, dass es sich um Version 0.2.4 mit
+  zusätzlichen neun Commits handelt, und nach dem Präfix `g` die ersten sieben
+  Stellen des letzten Commit-Hashes (`dc83825`, hexadezimal) stehen. Das ist
+  nützlich für ad-hoc erstellte Zwischenreleases.
+- Im `master`-Branch wird nur die Tag-Nummer verwendet.
+- Das Testskript `ci-px-version.sh` überprüft, ob `px version` einen String
+  zurückgibt, welcher dem regulären Ausdruck
+  `^v[0-9]+\.[0-9]+\.[0-9]+(-[0-9]+-g[0-9a-fA-F]{7})?$` entspricht.
+- Der Build-Step der CI-Pipeline muss sicherstellen, dass die Versionsangaben
+  ebenfalls mitkompiliert werden.
 
 ## Story 13: Einliefern von Dokumenten per Agent API
 
@@ -645,13 +737,13 @@ Akzeptanzkriterien:
 
 ### Notizen
 
+- Zunächst wurde wieder der Hilfetext verfasst.
 - Die API von PEAX bietet nur sehr wenige Endpoints an, die `PUT` unterstützen.
   Das einzige Beispiel, das auf Anhieb ermittelt werden konnte, ist die
   Aktualisierung des Profilbildes. Da es sich hierbei nicht um JSON-Daten
   handelt, sondern um ein Bild beliebigen Formats, muss der MIME-Type des
-  Payloads automatisch ermittelt werden. Hierzu wurde im Package `utils` eine
-  Funktion `utils.DetectContentType` entwickelt.
-- Zunächst wurde wieder der Hilfetext verfasst.
+  Payloads automatisch ermittelt werden können. Hierzu wurde im Package `utils`
+  eine Funktion `utils.DetectContentType` entwickelt.
 - Der Befehl ist wie `get` und `post` mit automatischer Token-Erneuerung
   umgesetzt worden.
 - Zusätzlich wurde eine Utility-Funktion `ReadFile` entwickelt, die einen
@@ -666,12 +758,12 @@ Akzeptanzkriterien:
   woraus mithilfe von `dot` verschiedenste Formate generiert werden konnten:
   GIF, JPEG, PDF, PNG und PostScript.
 - Der Testfall `TestDetectContentType` arbeitet eine Map ab, welche die
-  Dateipfade der generierten Grafiken zu ihrem manuell ermittelten Mime-Type
+  Dateipfade der generierten Grafiken zu ihrem manuell ermittelten MIME-Type
   zuordnet. Für jede Iteration wird geprüft, ob für die jeweilige Datei der
-  passende Mime-Type ermittelt werden kann. Für GIF, JPG, PDF, PNG und
+  passende MIME-Type ermittelt werden kann. Für GIF, JPG, PDF, PNG und
   PostScript hat das auf Anhieb funktioniert.
 - Das Testskript `ci-px-put-test.sh` aktualisiert das Profilbild dreimal: im
-  PNG, im JPEG und schliesslich im GIF-Format.
+  PNG-, im JPEG- und schliesslich im GIF-Format.
 - Das Testskript `ci-px-help-test.sh` wurde um den Aufruf `px help put`
   erweitert.
 
@@ -697,7 +789,7 @@ Akzeptanzkriterien:
 - Es wurden wiederum zuerst die Hilfetexte verfasst.
 - Da die Command-Funktionen für die generischen HTTP-Funktionen `POST`, `PUT`
   und `PATCH` die gleichen Flags verwenden (Environment und Payload, inkl.
-  Kurzformen, konnten deren Verarbeitung mit einer Funktion vereinheitlicht
+  Kurzformen), konnte deren Verarbeitung mit einer Funktion vereinheitlicht
   werden.
 - Weitere Vereinheitlichungen gab es im `requests`-Package; so unterscheiden
   sich bei `POST`, `PUT` und `PATCH` nur die HTTP-Methoden; bei `PUT` wird
@@ -713,12 +805,11 @@ Akzeptanzkriterien:
   Anschliessend werden die Metadaten dieses Dokuments mittels `px patch`
   verändert. Für den Ressourcenzugriff wird die zurückgegebene UUID vom ersten
   Schritt (`px upload`) verwendet. Die `PATCH`-Operation liefert wiederum
-  Metadaten zurück. Die UUID des modifizierten Dokuments wird wiederum
-  extrahiert und gegen die ursprüngliche UUID auf Gleichheit geprüft.
-  (Natürlich ändert sich die UUID im Fehlerfall nicht; es geht nur darum, den
-  Erfolg der Operation mittels korrekt zurückgeliefertert Metadaten zu
-  überprüfen).
-- Der Test schlug zunächst fehl, weil fälschlicherweise der `application/json`
+  Metadaten zurück. Die UUID des modifizierten Dokuments wird extrahiert und
+  gegen die ursprüngliche UUID auf Gleichheit geprüft. (Natürlich ändert sich
+  die UUID im Fehlerfall nicht; es geht nur darum, den Erfolg der Operation
+  mittels korrekt zurückgeliefertert Metadaten zu überprüfen).
+- Der Test schlug zunächst fehl, weil fälschlicherweise `application/json`
   statt `application/json-patch+json` als `Content-Type`-Header verwendet
   worden ist. Nach dieser Korrektur lief er durch.
 - Das Testskript `ci-px-help-test.sh` wurde um den Aufruf `px help patch`
@@ -751,10 +842,10 @@ Akzeptanzkriterien:
   neues Testskript erstellt. Stattdessen werden bestehende Testskripts, die
   Ressourcen erzeugen, um eine Löschung derselben erweitert.
 - Es stellte sich heraus, dass das Profilbild (siehe Testprotokoll zu `px put`)
-  die einzige in den Testskripts erstellte Ressource ist, die auch gelöscht
-  werden kann. Dementsprechend wurde das Testskript `ci-px-put-test.sh` um die
-  Löschung des Profilbildes erweitert und zu `ci-px-put-delete-test.sh`
-  umbenannt.
+  die einzige in den Testskripts erstellte Ressource ist, die auch ohne
+  Weiteres gelöscht werden kann. Dementsprechend wurde das Testskript
+  `ci-px-put-test.sh` um die Löschung des Profilbildes erweitert und zu
+  `ci-px-put-delete-test.sh` umbenannt.
 - Ein erster Aufruf schlug fehl, da beim Authorization-Header der Abstand
   zwischen `Bearer` und dem Access Token vergessen worden war. Nach dieser
   Korrektur lief das Skript durch. Das Profilbild verschwand damit aus dem
@@ -771,8 +862,8 @@ erscheinen.
 
 Akzeptanzkriterien:
 
-1. Es soll der bereits bestehende Befehl `px upload` um ein
-   `-r`/`-recursive`-Flag ergänzt werden, der als Parameter ein Verzeichnis
+1. Es soll der bereits bestehende Befehl `px upload` um ein Flag
+   `-r`/`-recursive` ergänzt werden, der als Parameter ein Verzeichnis
    erwartet.
 2. Es sollen sämtliche in diesem Ordner (und dessen Unterordner beliebiger
    Tiefe) enthaltenen Dateien hochgeladen werden.
@@ -793,7 +884,7 @@ Akzeptanzkriterien:
   Funktion als Argument, welche auf jeden gefundenen Eintrag angewendet wird.
   Die Funktion `isReadable`, die hierfür entwickelt worden ist, prüft für jeden
   Eintrag, ob er lesbar ist, und fügt ihn in diesem Fall in eine Liste ein
-  (`isReadable` ist als Closure implementiert). Für unlesbare Fehler wird ein
+  (`isReadable` ist als Closure implementiert). Für unlesbare Dateien wird ein
   Fehler zurückgegeben. Tritt im ganzen zu prüfenden Verzeichnisbaum auch nur
   ein Fehler auf, gibt `ListRecursively` einen Fehler und keine Einträge
   zurück. Dies, weil der Benutzer gleich zu Beginn einer grösseren Operation
@@ -822,7 +913,7 @@ Akzeptanzkriterien:
   (Go-Namenskonvention: `ID`), die Response selber jedoch das Feld `documentId`
   (`Id` mit kleinem `d`). Aus diesem Grund scheiterte das Mapping der
   resultierenden UUID. Mithilfe eines entsprechenden Tags `json:"documentId"`
-  konnte dieses Mappng korrigiert werden. Da in Go nur exportierte, d.h.
+  konnte dieses Mapping korrigiert werden. Da in Go nur exportierte, d.h.
   grossgeschriebene Felder für die Serialisierung berücksichtigt werden, musste
   das Feld weiter in `DocumentID` umbenannt werden. Die UUIDs erschienen
   schliesslich in der Antwort.
@@ -848,7 +939,7 @@ Akzeptanzkriterien:
 - Beim ersten Test fiel auf, dass für erfolgreich hochgeladenen Dokumente in
   der erstellten Datenstruktur keine `documentId` vorhanden ist. Ausserdem
   wurde versucht, Verzeichnisse hochzuladen. Nach den entsprechenden
-  Korrekturen (siehe Notizen) funktionierte alles wie gewünscth.
+  Korrekturen (siehe Notizen) funktionierte alles wie gewünscht.
 - Das Testskript `ci-px-login-upload-test.sh` wurde umbenannt zu
   `ci-px-upload-test.sh`, also ohne das `login`, da die meisten Testskripts ein
   Login ausführen, ohne dies im Namen zu tragen.
@@ -920,10 +1011,10 @@ Akzeptanzkriterien:
 
 - Nach der ersten Korrektur (Token Pair beim Laden aus dem Keystore vollständig
   aufbauen) funktionierte `px logout` auf eine bestimmte Umgebung, jedoch nicht
-  mit dem `-a`/`-all`-Flag.
-- Nach der zweiten Korrektur (erweiterter Dummy-Eintrag,
-  serialisieren/abspeichern er Umgebungsinformation) funktionierte auch das
-  Logout auf allen Umgebungen wieder.
+  mit dem Flag `-a`/`-all`.
+- Nach der zweiten Korrektur (erweiterter Dummy-Eintrag, serialisieren der
+  Umgebungsinformation) funktionierte auch das Logout auf allen Umgebungen
+  wieder.
 - Nach einem Login auf `dev` und `test` (in dieser Reihenfolge) war die
   Umgebung `test` als Standard gesetzt. Ein Logout von `dev` setzte die
   Standardumgebung nicht zurück. Beim Logout von `test` wurde die
@@ -936,7 +1027,7 @@ Akzeptanzkriterien:
   nach einem Login überprüft wird, ob der Token Type und die Umgebung korrekt
   gesetzt sind, was bei sicher verwahrten Tokens nötig zu deren Löschung ist.
 
-## Story 20: Statusangabe bei Upload von Dokument-Ordnern
+## Story 20: Statusangabe beim Upload von Dokument-Ordnern
 
 Als Benutzer möchte ich über den Verlauf des rekursiven Uploadvorgangs
 informiert werden, damit ich die verbleibende Zeitdauer besser abschätzen kann.
@@ -954,7 +1045,7 @@ Akzeptanzkriterien:
 
 ### Notizen
 
-- Zunächst wurde das Verhalten des `-v`/`-verbose`-Flags für Einzelnuploads
+- Zunächst wurde das Verhalten des `-v`/`-verbose`-Flags für Einzeluploads
   definiert: Hier wird eine einfache Statusmeldung ausgegeben, dass das
   Dokument erfolgreich hochgeladen worden sei.
 - Beim rekursiven Upload wird das `-v`/`-verbose`-Flag jedoch an die Funktion
@@ -973,7 +1064,7 @@ Akzeptanzkriterien:
 ## Story 21: Nebenläufiger Upload von Dokument-Ordnern
 
 Als Benutzer möchte ich, dass beim rekursiven Upload von Dokument-Ordnern
-mehrere Uploadvorgänge nebenläufig ausgeführt werden, um die Zeitdauer des
+mehrere Uploadvorgänge nebenläufig ausgeführt werden, um die Zeitdauer der
 Uploads so zu verkürzen.
 
 Akzeptanzkriterien:
@@ -998,10 +1089,10 @@ Akzeptanzkriterien:
   Starten der beiden Goroutinen darauf, bis alle Vorgänge abgeschlossen sind,
   und schliesst anschliessend den Channel, sodass der Loop der
   Producer-Goroutine zu Ende geht. Die Procuder-Goroutine meldet die
-  gesammelten Statistik wiederum per Channel an die Hauptgoroutine zurück,
-  welches von dieser in eine JSON-Struktur umgewandelt und zurückgegeben wird.
-  Das Prinzip ist in _The Go Programming Language_ in Kapitel 8.5 (Seite 234
-  ff.) beschrieben.
+  gesammelte Statistik wiederum per Channel an die Hauptgoroutine zurück,
+  welche von dieser in eine JSON-Struktur umgewandelt und zurückgegeben wird.
+  Das Prinzip ist in _The Go Programming Language_ in Kapitel 8.5 beschrieben
+  (Donovan & Kernighan, 2015, S. 234 ff.).
 - Der automatische Token-Refresh führte anfänglich zu einer Race-Condition. Da
   jeder parallelle Uploadvorgang theoretisch einen Token-Refresh zur Folge
   haben kann, kann der Seiteneffekt (Abspeicherung des Tokens) von mehreren
@@ -1012,7 +1103,8 @@ Akzeptanzkriterien:
   unnötigen Token-Refreshs führen; würde aber der kritische Bereich weiter
   gefasst, wäre der ganze Uploadvorgang wiederum serialisiert, womit man die
   Nebenläufigkeit gleich von Anfang an weglassen könnte. Semaphoren sind in
-  _The Go Programming Language_ in Kapitel 9.2 (Seite 262 ff.) beschrieben.
+  _The Go Programming Language_ in Kapitel 9.2 (Donovan & Kernighan, 2015, S.
+  262 ff.) beschrieben.
 - Um die Anzahl gleichzeitiger Vorgänge ‒ und somit die Anzahl parallel
   laufender HTTP-Anfragen ‒ auf zehn zu beschränken, wurde wiederum eine
   Semaphore eingesetzt; dieses mal eine der Grösse zehn. Vor jedem Request wird
@@ -1020,7 +1112,7 @@ Akzeptanzkriterien:
   dem Request wird wieder ein Dummy-Eintrag vom Channel gelesen. Beim Schreiben
   wird die Semaphore heruntergezählt, beim Lesen wieder hochgezählt. Ein gutes
   Beispiel dafür findet sich in _The Go Programming Language_ in Kapitel 8.6
-  (Seite 239 ff.).
+  (Donovan & Kernighan, 2015, Seite 239 ff.).
 - Der Aufwand ist unterschätzt worden. Einerseits wurde die mögliche
   Race-Condition beim Abspeichern der aktualisierten Token nicht bedacht;
   andererseits führte das instabile Testsystem zu Verzögerungen. Die
@@ -1065,7 +1157,7 @@ Regel für das Tagging:
 
 Der Benutzer `johndoe` befindet sich im Arbeitsverzeichnis `/home/johndoe`, wo
 er das Verzeichnis `documents` mittels `px upload -r` mit folgenden absoluten
-Pfaden rekursiv hochlädt.
+Pfaden rekursiv hochlädt:
 
     /home/johndoe/documents/taxes/2018/deductions/insurances.pdf
     /home/johndoe/documents/taxes/2018/deductions/donations.pdf
@@ -1089,15 +1181,15 @@ abgebrochen, ohne dass auch nur ein Dokument hochgeladen worden ist.
 
 - Zum Umsetzen der Tagging-Regel (_«der Ordner oberhalb des ersten
   differenzierenden Ordners»_) muss zunächst anhand einer Reihe von Pfaden der
-  gemeinsame und der jeweils für jeden Pfad distinguirende Teil gefunden
+  gemeinsame und der jeweils für jeden Pfad differenzierende Teil gefunden
   werden. Dies wird mithilfe der Funktion `SplitCommonDistinct`
   (`utils/filesystem.go`) bewerkstelligt.
 - Der Befehl `px upload` erhält zusätzlich das Flag `-t`/`-tag`, womit das
   automatische Tagging aktiviert wird. Es kann nur im Zusammenhang mit
   `-r`/`-recurisve` verwendet werden, nicht für einzelne Dokumente.
-- Anhand der gemeinsamen und distinguirenden Pfadelementen wird eine Liste der
-  benötigten Tags erstellt, indem für die gemeinsamen Pfadsegmente nur das
-  letzte, und für die distinguirenden Pfadsegmente alle ausser das letzte
+- Anhand der gemeinsamen und differenzierenden Pfadelemente wird eine Liste
+  der benötigten Tags erstellt, indem für die gemeinsamen Pfadsegmente nur das
+  letzte, und für die differenzierenden Pfadsegmente alle ausser das letzte
   (welches der Dateiname ist) verwendet.
 - Vom Portal wird eine Liste der existierenden Tags abgeholt. Hierzu konnte die
   Funktion `requests.Get` wiederverwendet werden. Die benötigten Tags werden
@@ -1105,7 +1197,7 @@ abgebrochen, ohne dass auch nur ein Dokument hochgeladen worden ist.
   reduziert. Diese Liste wird wiederum für die Erstellung neuer Tags verwendet,
   wozu `requests.Post` wiederverwendet wird. Da diese Funktion eine
   Payload-Datei erwartet, werden die Payloads zuerst in temporäre Dateien
-  geschrieben, die nach dem Request wieder gelöscht werden können.
+  geschrieben, die nach dem Request wieder gelöscht werden.
 - Das Zuordnen der ‒ bestehenden und neu erstellten ‒ Tags wird nach dem Upload
   eines Dokuments anhand der UUID des Dokuments und der zuvor erstellten
   Tagliste für jedes Dokument vorgenommen. Hierzu konnte die Funktion
@@ -1122,7 +1214,7 @@ abgebrochen, ohne dass auch nur ein Dokument hochgeladen worden ist.
 - Zur Funktion `SplitCommonDistinct` wurde ein Unit Test
   (`TestSplitCommonDistinct` in `utils/filesystem_test.go`), der für Pfade
   analog der oben stehenden prüft, ob der Teil bis `taxes` zum gemeinsamen und
-  der Rest zum distinguirenden Teil der Pfadangabe gehört. Da die Testdaten der
+  der Rest zum differnezierenden Teil der Pfadangabe gehört. Da die Testdaten der
   Bequemlichkeit halber als Unix-Pfade geschrieben worden sind, müssen die
   Pfadtrennzeichen (`/`) vor dem Test durch `os.PathSeparator` ersetzt werden,
   damit der Testfall auch auf Windows durchläuft. Die Implementierung verwendet
@@ -1175,10 +1267,10 @@ verwendet:
 
 ## Testprotokolle
 
-Die manuellen Tests wurden erst seit Ende von Sprint 3 systematisch ausgeführt.
-Hierbei werden nur gefundene Probleme aufgezeichnet, nicht erfolgreich
-verlaufene Tests. Letztere werden am Ende des Testdurchlaufs als «durchgeführt»
-erwähnt.
+Die manuellen Tests wurden erst seit Ende von Sprint 3 systematisch
+durchgeführt.  Hierbei werden nur gefundene Probleme aufgezeichnet, nicht
+erfolgreich verlaufene Tests. Letztere werden am Ende des Testdurchlaufs als
+«durchgeführt» erwähnt.
 
 ### Sprint 3
 
@@ -1189,7 +1281,7 @@ erwähnt.
 
 Dieses Verhalten konnte auf allen drei Plattformen (Windows, macOS, Linux) nachvollzogen werden.
 
-Alle andere Testfälle konnten erfolgreich durchgeführt werden.
+Alle anderen Testfälle konnten erfolgreich durchgeführt werden.
 
 ### Sprint 4
 
@@ -1199,7 +1291,7 @@ Sämtliche Tests konnten erfolgreich durchgeführt werden.
 
 | # | Beschreibung                                    | Status               |
 |--:|-------------------------------------------------|----------------------|
-| 1 | Interaktive Eingabe auf Windows                 | behoben/workaround   |
+| 1 | Interaktive Eingabe auf Windows                 | behoben/Workaround   |
 | 2 | Refresh-Mechanismus für Agent                   | offen (serverseitig) |
 | 3 | Fehlende Löschung von Tokens aus Keystore       | behoben              |
 | 4 | Login setzt `token_type` nicht                  | behoben              |
@@ -1230,21 +1322,23 @@ analysiert werden.
 Beim Logout werden die sicher verwahrten Tokens nicht aus dem nativen Keystore
 gelöscht. Zwar verschwindet die Referenz auf die Tokens in `~/.px-tokens`,
 könnte aber einfach wieder manuell erstellt werden. Dieser Fehler muss somit
-korrigiert werden. (Falls die Fehlerursache in der Fremdkomponente `go-keyring`
+korrigiert werden. Falls die Fehlerursache in der Fremdkomponente `go-keyring`
 ist, könnten die Tokens stattdessen mit einem ungültigen  Wert überschrieben
-werden.)
+werden. (Der Fehler wurde in Sprint 4 korrigiert.)
 
 ## 4: Login setzt `token_type` nicht
 
 Beim Login wird der `token_type` nicht korrekt gesetzt in `~/.px-tokens`.
 Hierbei handelt es sich eher um ein kosmetisches Problem, da der `token_type`
-bereits Teil des Keys ist, der auf den jeweiligen Eintrag verweist.
+bereits Teil des Keys ist, der auf den jeweiligen Eintrag verweist. (Der Fehler
+wurde in Sprint 4 korrigiert.)
 
 ## 5: Logout setzt `default_environment` nicht zurück
 
 Beim Logout wird die `default_environment` nicht zurückgesetzt. Dies ist ein
 potenzielles Usability-Problem, da beim nächsten Aufruf eine Standardumgebung
-angenommen wird, für die es keine Tokens mehr gibt.
+angenommen wird, für die es keine Tokens mehr gibt. (Der Fehler wurde in Sprint
+4 korrigiert.)
 
 ## 6: Fehlende `client_id` bei sicherem Keystore
 
