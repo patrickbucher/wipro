@@ -83,7 +83,7 @@ Parameter werden nicht von allen Befehlen erwartet/unterstützt. Beim \texttt{up
 
 Die grundlegende Voraussetzung zur Interaktion mit der PEAX API und die wichtigste Erleichterung durch \texttt{px} ist das Token-Handling. Bei einem Login-Vorgang wird ein Token Pair bestehend aus Refresh Token und Access Token vom Identity Provider geholt. Dabei wird zwischen drei Bereichen der API unterschieden: User API, Agent API und Admin API (siehe auch \secref{sec:Systemkontext}).
 
-Die User API deckt die Funktionen des PEAX-Portals ab. Für das Login wird ein Benutzername (E-Mail-Adresse), ein Passwort und ein optionaler zweiter Faktor verwendet. Letzteres kann ein SMS-Code oder eine Time-based One-time-Password (TOTP) sein. 
+Die User API deckt die Funktionen des PEAX-Portals ab. Für das Login wird ein Benutzername (E-Mail-Adresse), ein Passwort und ein optionaler zweiter Faktor verwendet. Letzteres kann ein SMS-Code oder eine Time-based One-time Password (TOTP) sein. 
 
 Die Quelle für diesen zweiten Faktor wird im Portal konfiguriert: Entweder als Mobiltelefonnummer (SMS-Code) oder mittels einer entsprechenden Authenticator-App. Stimmen Benutzername und Passwort im ersten Schritt mit den Angaben auf dem Identity Provider überein, wird interaktiv nach dem zweiten Faktor gefragt, der dann wiederum auf dem Identity Provider überprüft wird. 
 
