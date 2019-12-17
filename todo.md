@@ -3,10 +3,10 @@
 - [x] Evaluation und Validation
     - [x] Auswertung und Interpretation der Ergebnisse
     - [x] Nachweis der Zielerreichung (v.a. Abdeckung der API)
-- [ ] Ausblick
+- [x] Ausblick
     - [x] Reflexion
-    - [ ] ungelöste Probleme
-    - [ ] weitere Ideen
+    - [x] ungelöste Probleme
+    - [x] weitere Ideen
 - [x] Anhänge
     - [x] SysSpec
 - [ ] Glossar
