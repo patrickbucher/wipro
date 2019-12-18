@@ -1,6 +1,6 @@
 \section{Problemstellung}
 
-Die Problemstellung setzt sich einerseits aus dem gestellten Projektauftrag (siehe Anhang) und andererseits aus der damit implizierten Umgebung (Systeme, Technologien, Benutzer, etc.) zusammen (siehe dazu auch \secref{sec:Systemkontext}).
+Die Problemstellung setzt sich einerseits aus dem gestellten Projektauftrag (siehe \secref{apx:WeitereDokumente}) und andererseits aus der damit implizierten Umgebung (Systeme, Technologien, Benutzer etc.) zusammen (siehe dazu auch \secref{sec:Systemkontext}).
 
 \subsection{Analyse des Projektauftrags}
 
@@ -9,7 +9,7 @@ Der Projektauftrag beschreibt einen Command Line Client für eine RESTful API. I
 \begin{description}
     \item[Technologien] das Protokoll HTTP und der Authentifizierungsmechanismus OAuth 2.0
     \item[Server-Umgebungen] die Umgebungen, die eine PEAX API anbieten
-    \item[Client-Umgebungen] die Benutzer, ihr Betriebssystem und ihre Kommandozeile
+    \item[Client-Umgebungen] die Benutzer, ihre Betriebssysteme und ihre Kommandozeilen
 \end{description}
 
 \subsubsection{Endpoints}
@@ -45,7 +45,7 @@ Eine Antwort auf eine HTTP-Anfrage enthält jeweils einen Status-Code \cite[Absc
 	\item \texttt{404 Not Found}: Die Ressource wurde nicht gefunden; deutet auf eine fehlerhafte URL hin.
 	\item \texttt{405 Method Not Allowed}: Die Ressource unterstützt die gewählte Methode nicht.
 	\item \texttt{415 Unsupported Media Type}: Das Format des mitgelieferten Payloads wird nicht unterstützt. In der PEAX API sind dies etwa Dokumentformate, die beim Hochladen nicht erlaubt sind (z.B. \texttt{.exe}-Dateien).
-	\item \texttt{500 Internal Server Error}: Obwohl die Anfrage korrekt formuliert und angenommen worden ist, kommt es bei der Verarbeitung derselben zu einem serverseitigem Fehler.\footnote{In der PEAX API kommt es gelegentlich zu solchen Fehlern, die stattdessen mit dem Status \texttt{400 Bad Request} und einer aussagekräftigen Fehlermeldung beantwortet werden müssten. Wird z.B. bei der Einlieferung von Dokument-Metadaten zu einer Rechnung eine syntaktisch fehlerhafte IBAN mitgegeben, tritt der Fehler erst bei der internen Verarbeitung, und nicht schon bei der Validierung der Anfrage auf. Hier besteht Handlungsbedarf aufseiten der Backend-Entwicklung.}
+	\item \texttt{500 Internal Server Error}: Obwohl die Anfrage korrekt formuliert und angenommen worden ist, kommt es bei der Verarbeitung derselben zu einem serverseitigen Fehler.\footnote{In der PEAX API kommt es gelegentlich zu solchen Fehlern, die stattdessen mit dem Status \texttt{400 Bad Request} und einer aussagekräftigen Fehlermeldung beantwortet werden müssten. Wird z.B. bei der Einlieferung von Dokument-Metadaten zu einer Rechnung eine syntaktisch fehlerhafte IBAN mitgegeben, tritt der Fehler erst bei der internen Verarbeitung, und nicht schon bei der Validierung der Anfrage auf. Hier besteht Handlungsbedarf aufseiten der Backend-Entwicklung.}
 	\item \texttt{380 Unknown}: Dieser Status ist nicht Teil der HTTP-Spezifikation, wird aber nach einem Login-Versuch verwendet, wenn eine Zwei-Faktor-Authentifizierung (SMS-Code, Time-Based One Time Password) verlangt wird, und ist somit für die vorliegende Arbeit von hoher Relevanz.
 \end{itemize}
 
@@ -55,18 +55,18 @@ Im Hinblick auf das Wirtschaftsprojekt hat sich der Autor dieser Arbeit bereits 
 
 An dieser Stelle sollen nur die Grundlagen beschrieben werden, die dann im Umsetzungsteil (siehe \secref{sec:Realisierung}) bei Bedarf vertieft werden.
 
-Bei einem Login-Vorgang mit OAuth 2.0 sendet der Benutzer seine Credentials (Benutzername, Passwort, optionaler zweiter Faktor wie SMS-Code) an den Token-Endpoint eines \textit{Identity Providers} (IDP). Stimmen diese Angaben mit den Informationen auf dem IDP überein, erhält der Benutzer ein \textit{Token Pair} bestehend aus \textit{Access Token} und \textit{Refresh Token}. Der Access Token dient zum Zugriff auf eine geschützte Ressource und ist in der Regel kurzlebig. (Bei PEAX läuft er nach fünf Minuten ab.) Mithilfe des Refresh Tokens kann der Benutzer einen neues Token Pair vom IDP anfordern. Der Refresh Token ist darum langlebiger (30 Minuten bei PEAX).
+Bei einem Login-Vorgang mit OAuth 2.0 sendet der Benutzer seine Credentials (Benutzername, Passwort, optionaler zweiter Faktor wie SMS-Code) an den Token-Endpoint eines \textit{Identity Providers} (IDP). Stimmen diese Angaben mit den Informationen auf dem IDP überein, erhält der Benutzer ein \textit{Token Pair} bestehend aus \textit{Access Token} und \textit{Refresh Token}. Der Access Token dient zum Zugriff auf eine geschützte Ressource und ist in der Regel kurzlebig. (Bei PEAX läuft er nach fünf Minuten ab.) Mithilfe des Refresh Tokens kann der Benutzer ein neues Token Pair vom IDP anfordern. Der Refresh Token ist darum langlebiger (30 Minuten bei PEAX).
 
-Werden die Tokens jeweils vor Ablauf dieser Zeitspanne aktualisiert, kann eine Session beliebig lange aufrecht erhalten werden (siehe \secref{sec:Retry-Mechanismus}). Aufgrund der Handhabung dieser Tokens (sehr lange Base64-codierte Strings) ist das Ansteuern der PEAX API mit Programmen wie \texttt{curl} und \textsc{Postman} sehr umständlich.\footnote{Eine beispielhafte Analyse ergab, dass ein Access Token 1604 Zeichen lang ist. Refersh Token sind in der Regel etwas kürzer, da sie weniger Informationen zum Gültigkeitsbereich des Tokens enthalten.}
+Werden die Tokens jeweils vor Ablauf dieser Zeitspanne aktualisiert, kann eine Session beliebig lange aufrecht erhalten werden (siehe \secref{sec:Retry-Mechanismus}). Aufgrund der Handhabung dieser Tokens (sehr lange Base64-codierte Strings) ist das Ansteuern der PEAX API mit Programmen wie \texttt{curl} und \textsc{Postman} (siehe \secref{sec:Ansprechen-der-PEAX-API}) sehr umständlich.\footnote{Eine beispielhafte Analyse ergab, dass ein Access Token 1604 Zeichen lang ist. Refresh Tokens sind in der Regel etwas kürzer, da sie weniger Informationen zum Gültigkeitsbereich des Tokens enthalten.}
 
-Die Anfragen werden vom Client (d.h. Frontend ‒ oder der hier beschriebene Command Line Client) nicht direkt an das Backend geschickt, sondern an einen Proxy-Server. Dieser entscheidet aufgrund der Anfrage, ob die Kombination aus Ressource und Methode einen gültigen Access Token benötigt.\footnote{Eine \texttt{POST}-Anfrage auf den \texttt{account}-Endpoint, der zur Registrierung dient, benötigt etwa keinen Access Token, da man einen solchen vor der Registrierung noch nicht haben kann.} 
+Die Anfragen werden vom Client (d.h. Frontend ‒ oder vom hier beschriebenen Command Line Client) nicht direkt an das Backend geschickt, sondern an einen Proxy-Server. Dieser entscheidet aufgrund der Anfrage, ob die Kombination aus Ressource und Methode einen gültigen Access Token benötigt.\footnote{Eine \texttt{POST}-Anfrage auf den \texttt{account}-Endpoint, der zur Registrierung dient, benötigt etwa keinen Access Token, da man einen solchen vor der Registrierung noch nicht haben kann.} 
 
 Der Access Token wird auf seine Gültigkeit geprüft; die Anfrage im Erfolgsfall an das Backend weitergeleitet. Die Prüfung, ob der mitgelieferte Access Token für die jeweilige Aktion über den richtigen Scope verfügt, wird teilweise vom Proxy-Server anhand des URL-Schemas (eindeutige PEAX ID des Benutzers im Ressourcenpfad) geprüft. Für andere Aktionen, v.a. im Backoffice-Bereich\footnote{Als \textit{Backoffice} wird in diesem Zusammenhang nicht die Organisationseinheit, sondern die Web-Oberfläche zur Administration der PEAX-Anwendung verstanden.}, finden zusätzliche Scope-Prüfungen anhand von Benutzerattributen statt.
 
 \subsubsection{Umgebungen}
 \label{sec:Umgebungen}
 
-Bei PEAX gibt es verschiedene Umgebungen oder «Stufen», welche den ganzen PEAX-Stack (Datenbank, Backend, Frontend, IDP, Proxy) für einen bestimmten Zweck zur Verfügung stellen:
+Bei PEAX gibt es verschiedene Umgebungen oder «Stufen», welche den ganzen PEAX-Stack (Datenbank, Backend, Frontend, IDP, Proxy usw.) für einen bestimmten Zweck zur Verfügung stellen:
 
 \begin{description}
     \item[local] Die Entwickler können den PEAX-Stack zum Entwickeln und Testen lokal ausführen. Da diese Umgebung von jedem Entwickler selbständig aufgesetzt und konfiguriert wird, kann sie an dieser Stelle nicht genauer beschrieben werden.\footnote{Aufgrund der unterschiedlichen lokalen Konfigurationen soll die lokale Umgebung im Rahmen dieser Arbeit nicht unterstützt werden.}
@@ -75,7 +75,7 @@ Bei PEAX gibt es verschiedene Umgebungen oder «Stufen», welche den ganzen PEAX
     \item[stage] Diese Stufe dient für die Regressionstests. Hier wird nach jedem Sprint der letzte Stand von \texttt{test} übertragen. Bei einem Release wird der Stand von hier verwendet. Diese Umgebung ist stabil und jeweils maximal zwei Wochen alt.
     \item[prod] Von \texttt{stage} werden die Änderungen mehrmals pro Jahr (mittelfristiges Ziel: nach jedem Sprint) auf die Produktivumgebung übertragen. Dies ist die einzige Umgebung, auf der produktive Kundendaten abgelegt werden. Datenschutz und Sicherheit spielen auf dieser Umgebung eine besonders hohe Rolle. (Die Konsequenzen daraus sind in \secref{sec:Konzept-Token-Store} und \secref{sec:Realisierung-Token-Store} beschrieben.)
     \item[devpatch] Dies ist die Entwicklungsumgebung für den Hotfix-Pfad. Nach einem Release wird der aktuelle Stand von \texttt{prod} auf diese Stufe deployed. Bis zum nächsten Release können hier dringende Fehlerkorrekturen vorgenommen werden.
-    \item[testpatch] Dies ist die Testumgebung für den Hotfix-Pfad. Dringende Fehlerkorrekturen werden von \texttt{devpatch} auf diese Stufe übernommen und hier abgenommen. Die Änderungen werden von hier aus direkt auf \texttt{prod} deployed.
+    \item[testpatch] Dies ist die Testumgebung für den Hotfix-Pfad. Dringende Fehlerkorrekturen werden von \texttt{devpatch} auf diese Stufe übertragen und hier abgenommen. Die Änderungen werden von hier aus direkt auf \texttt{prod} deployed.
     \item[prototype] Hierbei handelt es sich um eine Umgebung, die sporadisch für Prototypen und Demos verwendet wird.
     \item[perf] Diese Umgebung wurde vor dem grossen v3-Release im Frühling 2019 für Last- und Performance-Tests verwendet und ist seither nur sporadisch in Betrieb, etwa zum Ausprobieren neuer Konfigurationen oder Technologien.
 \end{description}
@@ -95,18 +95,18 @@ Es gibt verschiedene Gruppen von Benutzern, die \texttt{px} gewinnbringend einse
 
 \begin{description}
     \item[Backend-Entwickler] Diese entwickeln, erweitern und korrigieren die RESTful APIs, die das Backend von PEAX ausmachen. Von ihnen kann \texttt{px} einerseits für schnelle Tests und das Erstellen von Testdaten verwendet werden, andererseits kann \texttt{px} auch dabei hilfreich sein, die API (gerade Datenstrukturen) explorativ kennenzulernen.
-    \item[Frontend-Entwickler] Ist die Spezifikation eines Endpoints unvollständig, unklar oder gar fehlerhaft, kann darauf kein funktionierendes Frontend aufsetzen. Hier kann \texttt{px} dabei hilfreich sein, das tatsächliche Verhalten des Backends zu überprüfen, und die Struktur der zurückgelieferten Payloads zu betrachten.
+    \item[Frontend-Entwickler] Ist die Spezifikation eines Endpoints unvollständig, unklar oder gar fehlerhaft, kann darauf kein funktionierendes Frontend aufgebaut werden. Hier kann \texttt{px} dabei hilfreich sein, das tatsächliche Verhalten des Backends zu überprüfen, und die Struktur der zurückgelieferten Payloads zu betrachten.
     \item[Tester] Die manuellen Regressionstests finden direkt auf dem Portal bzw. auf der App statt. Oftmals wäre es hilfreich, Testdaten grösseren Umfangs für einen neu registrierten Benutzer zu erstellen. Mithilfe von \texttt{px} können hierzu einfache Skripts zur Verfügung gestellt werden. (Die Skripts werden tendenziell eher von Entwicklern zur Verfügung gestellt, aber die Tester können diese nach Instruktion selbständig ausführen.)
     \item[Projektleiter] Sollen grosse Verzeichnisse von Dokumenten eines Firmenkunden auf das PEAX-Portal übertragen werden, ist dies per Web-Interface sehr aufwändig. Hier könnte \texttt{px} zur Automatisierung herangezogen werden.
 \end{description}
 
 \subsubsection{Betriebssysteme}
 
-Zu Beginn des Projekts (September 2019) waren auf den persönlichen Computern der Entwickler \textsc{macOS} und \textsc{Windows} im Einsatz. Mittlerweile (Stand Oktober 2019) wurden alle \textsc{Windows}-Rechner durch Geräte mit macOS ausgetauscht. Mit den Testern und Projektleitern gibt es dennoch einige potenzielle Benutzer (siehe \secref{sec:Benutzer}), die \texttt{px} immer noch auf \textsc{Windows} einsetzen würden.
+Zu Beginn des Projekts (September 2019) waren auf den persönlichen Computern der Entwickler \textsc{macOS} und \textsc{Windows} im Einsatz. Mittlerweile (Stand Oktober 2019) wurden alle \textsc{Windows}-Rechner durch Geräte mit \textsc{macOS} ausgetauscht. Mit den Testern und Projektleitern gibt es dennoch einige potenzielle Benutzer (siehe \secref{sec:Benutzer}), die \texttt{px} immer noch auf \textsc{Windows} einsetzen würden.
 
 Auf zahlreichen virtuellen Maschinen der PEAX-Infrastruktur (etwa für Datenbanken) läuft \textsc{Linux} als Betriebssystem. Hier könnte \texttt{px} für verschiedene Service-Tasks (Monitoring, Alerting) eingesetzt werden.
 
-Es sind somit die Betriebssysteme macOS, Windows und Linux für die Ausführung von \texttt{px} relevant. Was die Architektur betrifft, kommen derzeit nur Intel-Prozessoren mit 64-Bit-Architektur (\texttt{x86\_64}) zum Einsatz.
+Es sind somit die Betriebssysteme \textsc{macOS}, \textsc{Windows} und \textsc{Linux} für die Ausführung von \texttt{px} relevant. Was die Architektur betrifft, kommen derzeit nur \textsc{Intel}-Prozessoren mit 64-Bit-Architektur (\texttt{x86\_64}) zum Einsatz.
 
 \subsubsection{Shells} 
 
@@ -123,7 +123,7 @@ Auf den ersten Blick scheint \texttt{px} ein risikoarmes Unterfangen zu sein, ha
 
 Ein Projekt bringt aber immer das Risiko des Scheiterns mit sich. Solche Risiken beziehen sich auf die Ziele des Projekts, bzw. darauf, dass diese Ziele nicht erreicht werden können, oder das Projekt trotz formal erreichter Ziele das gestellte Problem nicht löst.
 
-Für das vorliegende Projekt könne folgende Risiken identifiziert werden:
+Für das vorliegende Projekt können folgende Risiken identifiziert werden:
 
 \begin{description}
     \item[Projektrisiken] Diese Risiken beziehen sich auf den Erfolg des Projekts als Ganzes:

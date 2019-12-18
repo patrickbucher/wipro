@@ -146,6 +146,7 @@ author: Patrick Bucher
 | Mo, 16.12.2019 |       1.5 | Umsetzung     | Bug 6: Vorhandensein einer `client_id` sicherstellen               |
 | Di, 17.12.2019 |       1.5 | Dokumentation | Ausblick, Korrekturen, Glossar                                     |
 | Di, 17.12.2019 |       2.0 | Dokumentation | Schlusskorrektur des Backlog-Dokuments                             |
-| Di, 17.12.2019 |       1.0 | Umsetzung     | Korrektur an Palette/Randomisierung der Tag-Farben                 |
+| Di, 17.12.2019 |       1.0 | Umsetzung     | Korrektur an Palette/Randomisierung der Tag-Farben; Testing        |
 | Di, 17.12.2019 |       1.0 | Dokumentation | Abstract umgeschrieben; Titelseite neu gestaltet                   |
-|                | **170.5** | **Total**     |                                                                    |
+| Mi, 18.12.2019 |       2.0 | Dokumentation | Schlusskorrektur der Kapitel 1-3                                   |
+|                | **172.5** | **Total**     |                                                                    |
