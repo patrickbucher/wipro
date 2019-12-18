@@ -18,20 +18,20 @@ Bei \texttt{px} handelt es sich um ein modular aufgebautes Kommandozeilenprogram
 \begin{figure}
 	\centering
 	\includegraphics[width=\linewidth]{pics/kontextdiagramm.png}
-	\caption{Kontextdiagramm: \texttt{px} als der Gegenstand der Arbeit innerhalb des Systemkontexts}
+    \caption{\texttt{px} als der Gegenstand der Arbeit innerhalb des Systemkontexts (Kontextdiagramm)}
 	\label{fig:kontextdiagramm}
 \end{figure}
 
-Im Kontextdiagramm (\imgref{fig:kontextdiagramm}) wird die zu entwickelnde Komponente \texttt{px} im Systemkontext von PEAX dargestellt. Andere Komponenten sind als Ellipsen, Schnittstellen als Rechtecke dargestellt. Ausserhalb vom Systemkontexts befindet sich die irrelevante Umgebung (d.h. die Frontend-Anwendungen). Die im Kontextdiagramm verwendeten Begriffe haben folgende Bedeutungen:
+Im Kontextdiagramm (\imgref{fig:kontextdiagramm}) wird die Komponente \texttt{px} im Systemkontext von PEAX dargestellt. Andere Komponenten sind als Ellipsen, Schnittstellen als Rechtecke dargestellt. Ausserhalb vom Systemkontexts befindet sich die irrelevante Umgebung (d.h. die Frontend-Anwendungen). Die im Kontextdiagramm verwendeten Begriffe haben folgende Bedeutungen:
 
 \begin{itemize}
 	\item \texttt{px}: Der PEAX Command Line Client (Gegenstand der vorliegenden Arbeit)
-	\item Developer: Ein Softwareentwickler (im weitesten Sinne) bei PEAX, der \texttt{px} verwendet.
-	\item Backoffice User: Ein PEAX-Angestellter mit administrativen Befugnissen (Benutzerverwaltung).
-	\item Portal User: Ein Benutzer des PEAX-Portals (Kunde).
-	\item Scanning Center: Zulieferfirma, welche die umgeleitete Papierpost der PEAX-Kunden erhält, diese einscannt und dem betreffenden Kunden ins Portal stellt.
-	\item Frontend (Backoffice): Ein Web-GUI für administrative Tätigkeiten zum internen Gebrauch.
-	\item Frontend (Portal): Ein Web-GUI für die Kunden von PEAX (das eigentliche Portal).
+	\item Developer: Ein Softwareentwickler (im weitesten Sinne) bei PEAX, der \texttt{px} verwendet
+	\item Backoffice User: Ein PEAX-Angestellter mit administrativen Befugnissen (Benutzerverwaltung)
+	\item Portal User: Ein Benutzer des PEAX-Portals (Kunde)
+	\item Scanning Center: Zulieferfirma, welche die umgeleitete Papierpost der PEAX-Kunden erhält, diese einscannt und dem betreffenden Kunden ins Portal stellt
+	\item Frontend (Backoffice): Ein Web-GUI für administrative Tätigkeiten zum internen Gebrauch
+	\item Frontend (Portal): Ein Web-GUI für die Kunden von PEAX (das eigentliche Portal)
 	\item Admin API: RESTful API für administrative Aufgaben
 	\item Agent API: RESTful API zum Einliefern von Dokumenten über Zulieferer
 	\item User API: RESTful API für die Operationen der Kunden
@@ -42,17 +42,17 @@ Im Kontextdiagramm (\imgref{fig:kontextdiagramm}) wird die zu entwickelnde Kompo
 
 \subsubsection{Architektur und Designentscheide}
 
-Die Architektur der Anwendung ist im \secref{sec:Realisierung}, Designentscheide sind im \secref{sec:Ideen-und-Konzepte} beschrieben.
+Die Architektur der Anwendung ist im \secref{sec:Realisierung}; Designentscheide sind im \secref{sec:Ideen-und-Konzepte} beschrieben.
 
-Limitierende Mengengerüste sind im relevanten Systemkontext aufseiten des Backends zu verorten und liegen daher nicht im Scope der vorliegenden Arbeit. Lokal fallen pro Umgebung maximal zwei Token Pairs (Access und Refresh Token; User- und Agent-API) an, d.h. vier Tokens. Mit den bis dato acht verfügbaren Umgebungen ergibt dies eine maximale Anzahl von 32 gleichzeitig abzuspeichernden Tokens. Ein Access Token, der grössere der beiden Tokens, hat eine Länge von ca. 1800 Bytes; der kürzere Refresh Token wiegt die zusätzlichen abgespeicherten Informationen (PEAX ID, Token Type usw.) und den JSON-Overhead bei weitem auf, sodass lokal maximal 57'600 Bytes abzuspeichern sind. Die ausführbaren \texttt{px}-Dateien sind mit ca. 7.5 bis 9.5 MB (je nach Plattform) wesentlich grösser. 
+Limitierende Mengengerüste sind im relevanten Systemkontext aufseiten des Backends zu verorten und liegen daher nicht im Scope der vorliegenden Arbeit. Lokal fallen pro Umgebung maximal zwei Token Pairs (Access und Refresh Token; User- und Agent-API) an, d.h. vier Tokens. Mit den bis dato acht verfügbaren Umgebungen ergibt dies eine maximale Anzahl von 32 gleichzeitig abzuspeichernden Tokens. Ein Access Token ‒ der grössere der beiden Tokens ‒ hat eine Länge von ca. 1800 Bytes; der kürzere Refresh Token wiegt die zusätzlichen abgespeicherten Informationen (PEAX ID, Token Type usw.) und den JSON-Overhead bei weitem auf, sodass lokal maximal 57'600 Bytes abzuspeichern sind. Die ausführbaren \texttt{px}-Dateien sind mit ca. 7.5 bis 9.5 MB (je nach Plattform) wesentlich grösser. 
 
 \subsubsection{Schnittstellen}
 
-Als externe Schnittstellen verwendet \texttt{px} die im Kontextdiagramm (\imgref{fig:kontextdiagramm}) verwendeten APIs des Backends und des IDPs. Diese Interaktionen sind im Kapitel \secref{sec:Realisierung} beschrieben. Weiter interagiert \texttt{px} mit dem Dateisystem (Token Store \texttt{\~{}/.px-tokens}, temporäre Dateien für Payloads) des Betriebssystems. Die Schnittstelle zum nativen Keystore wurde mit der Fremdkomponente \texttt{go-keyring} von \textsc{Zalando} (\secref{sec:Go-Keyring}) gelöst.
+Als externe Schnittstellen verwendet \texttt{px} die im Kontextdiagramm (\imgref{fig:kontextdiagramm}) verwendeten APIs des Backends und des IDPs. Diese Interaktionen sind im \secref{sec:Realisierung} beschrieben. Weiter interagiert \texttt{px} mit dem Dateisystem (Token Store \texttt{\~{}/.px-tokens}, temporäre Dateien für Payloads) des Betriebssystems. Die Schnittstelle zum nativen Keystore wurde mit der Fremdkomponente \texttt{go-keyring} von \textsc{Zalando} (\secref{sec:Go-Keyring}) gelöst.
 
 Die internen Schnittstellen sind am besten in der Package-Übersicht (\secref{sec:Architektur-Package-Übersicht}) ersichtlich.\footnote{Führt man im Quellcodeverzeichnis von \texttt{px} den Befehl \texttt{godoc} aus, kann die Quellcodedokumentation komfortabel im Browser unter \url{http://localhost:6060/pkg/px/} betrachtet werden.}
 
-Die Benutzerschnittstelle ist im Kapitel \secref{sec:Swiss-Army-Knive} konzeptionell und anhand konkreter Beispiele erläutert. 
+Die Benutzerschnittstelle ist im \secref{sec:Swiss-Army-Knive} konzeptionell und anhand konkreter Beispiele erläutert. 
 
 \subsubsection{Environment-Anforderungen}
 
@@ -60,11 +60,11 @@ An die Umgebung stellt \texttt{px} nur geringe Anforderungen. Zur Ausführung wi
 
 Grundsätzlich kann \texttt{px} auf allen Betriebssystemen und Plattformen kompiliert werden, auf denen \textsc{Go} läuft.\footnote{siehe \url{https://github.com/golang/go/wiki/MinimumRequirements}} Die aktuelle Build-Konfiguration geht von der \texttt{amd64}-Architek\-tur aus. Mithilfe der Umgebungsvariablen \texttt{GOOS} und \texttt{GOARCH} kann \texttt{px} auf eine Vielzahl von Umgebungen cross-kompiliert werden.\footnote{\url{https://gist.github.com/asukakenji/f15ba7e588ac42795f421b48b8aede63} bietet eine gute Übersicht.}
 
-Dateien werden jeweils mit dem Encoding \texttt{UTF-8} gelesen und geschrieben. Für Quellcodedateien ist dies bei \textsc{Go} sogar eine verbindliche Vorgabe.\footnote{siehe \url{https://golang.org/ref/spec\#Source_code_representation}}
+Dateien werden jeweils mit dem Encoding UTF-8 gelesen und geschrieben. Für Quellcodedateien ist dies bei \textsc{Go} sogar eine verbindliche Vorgabe.\footnote{siehe \url{https://golang.org/ref/spec\#Source_code_representation}}
 
 \subsection{Technologie-Evaluation}
 
-Im Bereich der Technologie gilt es vor allem eine passende Programmiersprache auszuwählen. Die API von PEAX wird bereits durch den Projektrahmen vorgegeben, und dadurch auch die Protokolle OAuth 2.0 und HTTP.
+Im Bereich der Technologie gilt es vor allem eine passende Programmiersprache auszuwählen. Die API von PEAX wird bereits durch den Projektrahmen vorgegeben ‒ und dadurch auch die Protokolle OAuth 2.0 und HTTP.
 
 \subsubsection{Programmiersprache}
 
@@ -82,7 +82,7 @@ Aus der Aufgabenstellung und dem Umfeld bei PEAX ergeben sich folgende nicht-fun
 
 \textsc{Python}, \textsc{Ruby}, \textsc{Perl} und andere Skriptsprachen benötigen ebenfalls einen vorinstallierten Interpreter in der richtigen Version.
 
-Zwar gibt es mit Mono eine Variante von .Net, die überall lauffähig ist, hier werden aber wiederum eine Laufzeitumgebung bzw. vorinstallierte Libraries benötigt.
+Zwar gibt es mit \textsc{Mono} eine Variante von \textsc{.Net}, die überall lauffähig ist, hier werden aber wiederum eine Laufzeitumgebung bzw. vorinstallierte Libraries benötigt.
 
 Für die Problemstellung am besten geeignet sind kompilierte Sprachen (C, C++, \textsc{Go}, \textsc{Rust}, \textsc{Nim}). Mit einer statischen Kompilierung lässt sich das ganze Programm in eine einzige Binärdatei überführen, welches denkbar einfach zu installieren ist (Kopieren nach einem der Verzeichnisse innerhalb von \texttt{\$PATH}).
 
@@ -103,7 +103,7 @@ Mit \textsc{Go} konnte der Autor dieser Arbeit bereits einges an Erfahrung samme
     \item[+] hervorragendes Tooling out-of-the-box
     \item[+] Cross-Compilation ohne Zusatztools auf alle unterstützte Plattformen möglich
     \item[+] schnelle Kompilierung
-    \item[+] umfassende Standard-Library, die u.a. ein hervorrangendes HTTP-Package beinhaltet
+    \item[+] umfassende Standard-Library, die ein hervorrangendes HTTP-Package beinhaltet
     \item[+] persönlich bereits viel (positive) Erfahrungen damit gesammelt
     \item[+] wird bereits für andere bei PEAX gebräuchliche CLI-Tools eingesetzt (\texttt{oc}, \texttt{docker})
     \item[+] fügt sich sehr gut in die \textsc{Unix}-Philosophie ein (Tooling, Libraries)
@@ -116,7 +116,7 @@ Mit \textsc{Go} konnte der Autor dieser Arbeit bereits einges an Erfahrung samme
 
 \subsubsection{\textsc{Rust}}
 
-Der Autor dieser Arbeit konnte sich bereits letztes Jahr im Rahmen des Moduls \textit{Programming Concepts and Paradigms} an der HSLU Informatik mit \textsc{Rust} befassen \cite[S. 12]{pcp-rust}. Nach selbständiger Beschäftigung mit dieser Programmiersprache im Sommer können (teils ergänzend) folgende Vor- und Nachteile genannt werden:
+Der Autor dieser Arbeit konnte sich bereits letztes Jahr im Modul \textit{Programming Concepts and Paradigms} an der HSLU Informatik mit \textsc{Rust} befassen \cite[S. 12]{pcp-rust}. Nach selbständiger Beschäftigung mit dieser Programmiersprache im Sommer können (teils ergänzend) folgende Vor- und Nachteile genannt werden:
 
 \begin{itemize}
     \item[+] viele moderne Features (Generics, \texttt{filter}/\texttt{map}/\texttt{reduce})
@@ -154,9 +154,9 @@ Wie bereits in \secref{sec:Go-Keyring} geschildert, wird nur eine einzige Fremdk
 \begin{description}
     \item[Projektauftrag] Im Projektauftrag (\texttt{Anhang/Projektauftrag.pdf}) ist die Aufgabe beschrieben, wie sie zu Beginn des Projekts definiert worden ist.
     \item[Projektplan] Der Projektplan (\texttt{Anhang/Projektplan.pdf}) besteht aus einem Rahmenplan, einem Meilensteinplan und einem Wochenplan.
-    \item[Backlog] Das Backlog (\texttt{Anhang/Backlog.pdf}) enthält die einzelnen User Stories, die Sprint-Planung, Umsetzungsnotizen zu einzelnen User Stories mit Testprotokolle dazu, sowie Informationen zu manuellen Tests und gefundenen Bugs.
+    \item[Backlog] Das Backlog (\texttt{Anhang/Backlog.pdf}) enthält die einzelnen User Stories, die Sprint-Planung, Umsetzungsnotizen zu einzelnen User Stories und Testprotokolle dazu, sowie Informationen zu manuellen Tests und gefundenen Bugs.
     \item[Meilensteinbericht 1] Der erste Meilensteinbericht (\texttt{Anhang/Meilensteinbericht-1.pdf}) beschreibt die Vorgeschichte des Projekts und die Phase der Projektinitialisierung.
     \item[Meilensteinbericht 2] In diesem Meilensteinbericht (\texttt{Anhang/Meilensteinbericht-2.pdf}) geht es um die ersten beiden Sprints.
     \item[Meilensteinbericht 3] In diesem Meilensteinbericht (\texttt{Anhang/Meilensteinbericht-3.pdf}) geht es um die letzten beiden Sprints.
-    \item[Arbeitsjournal] Im Arbeitsjournal (\texttt{Anhang/Arbeitsjournal.pdf}) sind die einzelnen Aufwände auf halbe Stunden gerundet nach Bereich ‒ Projekt(administration), Dokumentation, Umsetzung ‒ rapportiert. Mithilfe eines AWK-Skripts können die Aufwände nach Bereich und User Story ausgewertet werden.
+    \item[Arbeitsjournal] Im Arbeitsjournal (\texttt{Anhang/Arbeitsjournal.pdf}) sind die einzelnen Aufwände auf halbe Stunden gerundet nach Bereich ‒ Projekt(administration), Recherche, Dokumentation, Umsetzung ‒ rapportiert. Mithilfe eines AWK-Skripts können die Aufwände nach Bereich und User Story ausgewertet werden.
 \end{description}

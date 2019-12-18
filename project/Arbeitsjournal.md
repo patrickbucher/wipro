@@ -149,4 +149,6 @@ author: Patrick Bucher
 | Di, 17.12.2019 |       1.0 | Umsetzung     | Korrektur an Palette/Randomisierung der Tag-Farben; Testing        |
 | Di, 17.12.2019 |       1.0 | Dokumentation | Abstract umgeschrieben; Titelseite neu gestaltet                   |
 | Mi, 18.12.2019 |       2.0 | Dokumentation | Schlusskorrektur der Kapitel 1-3                                   |
-|                | **172.5** | **Total**     |                                                                    |
+| Mi, 18.12.2019 |       2.0 | Dokumentation | Schlusskorrektur der Kapitel 4-8                                   |
+| Mi, 18.12.2019 |       0.5 | Projekt       | Abgabe vorbereitet                                                 |
+|                | **175.0** | **Total**     |                                                                    |

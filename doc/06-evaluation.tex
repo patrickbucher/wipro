@@ -1,10 +1,10 @@
 \section{Evaluation und Validierung}
 
-Das vorliegende Projekt entstammt dem PEAX-Ideation-Prozess, worin sich Phasen der Entwicklung (\textit{Ideate}) und der Validierung (\textit{Validate}) abwechseln. Innerhalb des Projekts wechselten sich Sprints zur Entwicklung mit einzelnen Wochen zur Dokumentation ab, wobei während letzterer jeweils Rückmeldungen von Kollegen (v.a. Entwickler) aufgenommen wurden (siehe Folgeabschnitt). Aus der Perspektive des Ideation-Prozesses war \texttt{px} jedoch für die letzten drei Monate in der \textit{Ideate}-Phase, worauf nach Abschluss der vorliegenden Projektarbeit eine Validierung im Rahmen des Ideation-Gremiums folgen soll.
+Das vorliegende Projekt entstammt dem PEAX-Ideation-Prozess, worin sich Phasen der Entwicklung (\textit{Ideate}) und der Validierung (\textit{Validate}) abwechseln. Innerhalb des Projekts wechselten sich Sprints zur Entwicklung mit einzelnen Wochen zur Dokumentation ab, wobei während letzterer jeweils Rückmeldungen von Kollegen (v.a. Entwicklern) aufgenommen wurden (siehe Folgeabschnitt). Aus der Perspektive des Ideation-Prozesses war \texttt{px} jedoch für die letzten drei Monate in der \textit{Ideate}-Phase, worauf nach Abschluss der vorliegenden Projektarbeit eine Validierung im Rahmen des Ideation-Gremiums folgen soll.
 
 \subsection{Rückmeldungen von Entwicklern}
 
-Nach jedem Sprint wird ein Inkrement an die Entwickler ausgeliefert (siehe \secref{sec:Vorgehen}). Die Rückmeldungen werden hier gesammelt und kommentiert ‒ und fliessen ins Backlog und nach Möglichkeit ins den jeweils nachfolgenden Sprint ein.
+Nach jedem Sprint wird ein Inkrement an die Entwickler ausgeliefert (siehe \secref{sec:Vorgehen}). Die Rückmeldungen werden hier gesammelt und kommentiert ‒ und fliessen ins Backlog und nach Möglichkeit in den jeweils nachfolgenden Sprint ein.
 
 \subsubsection{Sprint 1}
 \label{sec:Feedback-Sprint1}
@@ -53,7 +53,7 @@ Nach jedem Sprint wird ein Inkrement an die Entwickler ausgeliefert (siehe \secr
         \item Eine bereits angedachte Lösung sind Variablen im Ressourcenpfad, die vom Client automatisch ergänzt werden, z.B. \texttt{profile/api/v3/profile/\{peaxid\}}. Hiermit kann eine generische Schnittstelle gewährleistet werden ‒ und für den Benutzer wird die Handhabung einfacher.
         \item Evtl. wäre es sinnvoll, zu jeder Umgebung, die ein Login repräsentiert, ergänzende Token-Informationen ausgeben zu können, z.B. die PEAX ID.
     \end{itemize}
-    \item \textsc{Stephan Korner} meldet eine Reihe spezifischer Use-Cases, die ihm beim Testen der Mobile App (\textsc{iOS}) nützlich sein würden:
+    \item \textsc{Stephan Korner} meldet eine Reihe spezifischer Use Cases, die ihm beim Testen der Mobile App (\textsc{iOS}) nützlich sein würden:
         \begin{enumerate}
             \item den Dokumentstatus eines eingelieferten Dokuments (Agent API) setzen
             \item den Check-In-Prozess nach der Registrierung wiederholbar machen, d.h. zurücksetzen
@@ -72,7 +72,7 @@ Nach jedem Sprint wird ein Inkrement an die Entwickler ausgeliefert (siehe \secr
         \begin{itemize}
             \item Technisch ist dies möglich, die Umgebung \texttt{local} benötigt jedoch eine spezielle Konfiguration. So werden hier keine Domains verwendet, sondern bloss Hostnamen und Ports.
             \item Der lokale Proxy ist unter Port \texttt{8050}, der IDP unter Port \texttt{8080} verfügbar. Der Host heisst jeweils \texttt{localhost}.
-            \item Das Keycloak-Realm heisst \texttt{peax-id-local}; die \texttt{clientId} \texttt{peax.local}.
+            \item Das Keycloak-Realm heisst \texttt{peax-id-local}; die \texttt{clientId} lautet \texttt{peax.local}.
             \item Die Idee wird ins Backlog aufgenommen.
         \end{itemize}
 \end{itemize}
