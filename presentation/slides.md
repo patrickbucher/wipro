@@ -1,5 +1,5 @@
 ---
-title: '`px`: PEAX Command Line Client'
+title: 'px: PEAX Command Line Client'
 subtitle: Wirtschaftsprojekt
 author: Patrick Bucher
 ---
@@ -16,7 +16,7 @@ author: Patrick Bucher
         username=683.4839.1914.79&password=Geheim" \
         https://sv-idp-keycloak-test.osapps.peax.ch/auth/ ⏎
         realms/peax-id-test/protocol/openid-connect/token \
-        | jq -r .access_token > access-token
+        | jq -r .access_token > access_token
     curl -X POST -H "Authorization: Bearer $(cat access_token)" \
         -H "Content-Type: multipart/form-data; charset=UTF-8" \
         -F "document=@document.pdf;type=application/pdf" \
@@ -31,9 +31,13 @@ author: Patrick Bucher
 
 # Swiss Army Knive
 
+Git:
+
     git status
     git add *.sh
     git commit -m 'added shell scripts'
+
+px:
 
     px login -e test -u john.doe@foobar.com -p topsecret1337
     px upload document.pdf
@@ -41,16 +45,24 @@ author: Patrick Bucher
 
 # Unix-Philosophie 
 
+Verwendung als Befehl:
+
     px upload document.pdf
+
+Verwendung im "Skript":
 
     px upload document.pdf | jq -r '.documentId' >> documentIds.txt
 
 # Kompromiss
 
+Hardcore:
+
     for doc in $(find /home/joe/docs -type f | grep '\.pdf$')
     do
         px upload "$doc"
     done
+
+Benutzerfreundlich:
 
     px upload -r /home/joe/docs
 
