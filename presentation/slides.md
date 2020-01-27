@@ -55,7 +55,7 @@ px:
 
 # Unix-Philosophie 
 
-Verwendung als Befehl:
+Verwendung als interaktiver Befehl:
 
     px upload document.pdf
 
