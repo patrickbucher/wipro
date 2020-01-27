@@ -65,16 +65,16 @@ Verwendung im "Skript":
 
 # Kompromiss
 
-Hardcore:
+"hardcore":
 
-    for doc in $(find /home/joe/docs -type f | grep '\.pdf$')
+    for doc in $(find /home/joe/docs -type f | grep -i '\.pdf$')
     do
-        px upload "$doc"
+        px upload "$doc" | jq -r '.documentId' >> documentIds.txt
     done
 
-Benutzerfreundlich:
+"casual":
 
-    px upload -r /home/joe/docs
+    px upload -r /home/joe/docs > report.json
 
 # Teststrategie
 
