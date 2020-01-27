@@ -4,11 +4,21 @@ subtitle: Wirtschaftsprojekt
 author: Patrick Bucher
 ---
 
+# Ablauf
+
+1. Systemkontext
+2. Problemstellung
+3. Lösungsansatz: Swiss Army Knive & Unix-Philosophie
+4. Teststrategie
+5. Umsetzung
+6. Programmiersprache Go
+7. Live-Demo
+
 # Systemkontext
 
 ![Kontextdiagramm](kontextdiagramm-trans.png){height=240px}
 
-# Problem
+# Problemstellung
 
     curl -X POST -H "Cache-Control: no-cache" \
         -H "Content-Type: application/x-www-form-urlencoded" \
@@ -24,7 +34,7 @@ author: Patrick Bucher
         https://sv-oauth-proxy-test.osapps.peax.ch/document/ ⏎
         api/v3/account/683.4839.1914.79/collection/upload
 
-# Lösung
+# Lösungsansatz
 
     px login -e test -u patrick.bucher@stud.hslu.ch
     px upload document.pdf -meta metadata.json
