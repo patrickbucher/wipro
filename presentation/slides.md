@@ -1,6 +1,6 @@
 ---
 title: 'px: PEAX Command Line Client'
-subtitle: Wirtschaftsprojekt
+subtitle: Wirtschaftsprojekt (Herbstsemester 2019)
 author: Patrick Bucher
 ---
 
